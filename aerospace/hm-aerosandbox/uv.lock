@@ -24,6 +24,15 @@ wheels = [
 ]
 
 [[package]]
+name = "attrs"
+version = "25.4.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/6b/5c/685e6633917e101e5dcb62b9dd76946cbb57c26e133bae9e0cd36033c0a9/attrs-25.4.0.tar.gz", hash = "sha256:16d5969b87f0859ef33a48b35d55ac1be6e42ae49d5e853b597db70c35c57e11", size = 934251, upload-time = "2025-10-06T13:54:44.725Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/3a/2a/7cc015f5b9f5db42b7d48157e23356022889fc354a2813c15934b7cb5c0e/attrs-25.4.0-py3-none-any.whl", hash = "sha256:adcf7e2a1fb3b36ac48d97835bb6d8ade15b8dcce26aba8bf1d14847b57a3373", size = 67615, upload-time = "2025-10-06T13:54:43.17Z" },
+]
+
+[[package]]
 name = "casadi"
 version = "3.7.2"
 source = { registry = "https://pypi.org/simple" }
@@ -156,12 +165,45 @@ wheels = [
 ]
 
 [[package]]
+name = "cyclopts"
+version = "4.5.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "attrs" },
+    { name = "docstring-parser" },
+    { name = "rich" },
+    { name = "rich-rst" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/50/cd/1fd03921a95113182e6fdf84af5d47f07aa91c00c03ac074c192b0d4672c/cyclopts-4.5.2.tar.gz", hash = "sha256:7fe01b2d184c55c4555e06a0397602b319d87faa5b086b41913eaeaea52fae16", size = 162381, upload-time = "2026-02-11T16:30:46.051Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2b/03/f906829bcfcbb945f19d6a64240ffb66a31d69ca5533e95882f0efc9c13c/cyclopts-4.5.2-py3-none-any.whl", hash = "sha256:ee56ee23c2c81abc34b66b5aa8fd2698ca699740054e84e534449ec3eb7f944d", size = 200165, upload-time = "2026-02-11T16:30:46.942Z" },
+]
+
+[[package]]
 name = "dill"
 version = "0.4.0"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/12/80/630b4b88364e9a8c8c5797f4602d0f76ef820909ee32f0bacb9f90654042/dill-0.4.0.tar.gz", hash = "sha256:0633f1d2df477324f53a895b02c901fb961bdbf65a17122586ea7019292cbcf0", size = 186976, upload-time = "2025-04-16T00:41:48.867Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/50/3d/9373ad9c56321fdab5b41197068e1d8c25883b3fea29dd361f9b55116869/dill-0.4.0-py3-none-any.whl", hash = "sha256:44f54bf6412c2c8464c14e8243eb163690a9800dbe2c367330883b19c7561049", size = 119668, upload-time = "2025-04-16T00:41:47.671Z" },
+]
+
+[[package]]
+name = "docstring-parser"
+version = "0.17.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b2/9d/c3b43da9515bd270df0f80548d9944e389870713cc1fe2b8fb35fe2bcefd/docstring_parser-0.17.0.tar.gz", hash = "sha256:583de4a309722b3315439bb31d64ba3eebada841f2e2cee23b99df001434c912", size = 27442, upload-time = "2025-07-21T07:35:01.868Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/55/e2/2537ebcff11c1ee1ff17d8d0b6f4db75873e3b0fb32c2d4a2ee31ecb310a/docstring_parser-0.17.0-py3-none-any.whl", hash = "sha256:cf2569abd23dce8099b300f9b4fa8191e9582dda731fd533daf54c4551658708", size = 36896, upload-time = "2025-07-21T07:35:00.684Z" },
+]
+
+[[package]]
+name = "docutils"
+version = "0.22.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ae/b6/03bb70946330e88ffec97aefd3ea75ba575cb2e762061e0e62a213befee8/docutils-0.22.4.tar.gz", hash = "sha256:4db53b1fde9abecbb74d91230d32ab626d94f6badfc575d6db9194a49df29968", size = 2291750, upload-time = "2025-12-18T19:00:26.443Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/02/10/5da547df7a391dcde17f59520a231527b8571e6f46fc8efb02ccb370ab12/docutils-0.22.4-py3-none-any.whl", hash = "sha256:d0013f540772d1420576855455d050a2180186c91c15779301ac2ccb3eeb68de", size = 633196, upload-time = "2025-12-18T19:00:18.077Z" },
 ]
 
 [[package]]
@@ -202,7 +244,7 @@ dev = [
 requires-dist = [
     { name = "aerosandbox", specifier = "==4.2.9" },
     { name = "matplotlib", specifier = "==3.10.8" },
-    { name = "pyvista", specifier = "==0.46.5" },
+    { name = "pyvista", specifier = "==0.47.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -264,6 +306,18 @@ wheels = [
 ]
 
 [[package]]
+name = "markdown-it-py"
+version = "4.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "mdurl" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5b/f5/4ec618ed16cc4f8fb3b701563655a69816155e79e24a17b651541804721d/markdown_it_py-4.0.0.tar.gz", hash = "sha256:cb0a2b4aa34f932c007117b194e945bd74e0ec24133ceb5bac59009cda1cb9f3", size = 73070, upload-time = "2025-08-11T12:57:52.854Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/94/54/e7d793b573f298e1c9013b8c4dade17d481164aa517d1d7148619c2cedbf/markdown_it_py-4.0.0-py3-none-any.whl", hash = "sha256:87327c59b172c5011896038353a81343b6754500a08cd7a4973bb48c6d578147", size = 87321, upload-time = "2025-08-11T12:57:51.923Z" },
+]
+
+[[package]]
 name = "matplotlib"
 version = "3.10.8"
 source = { registry = "https://pypi.org/simple" }
@@ -294,6 +348,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/c0/3d/8b94a481456dfc9dfe6e39e93b5ab376e50998cddfd23f4ae3b431708f16/matplotlib-3.10.8-cp313-cp313t-musllinux_1_2_x86_64.whl", hash = "sha256:0a33deb84c15ede243aead39f77e990469fff93ad1521163305095b77b72ce4a", size = 9614000, upload-time = "2025-12-10T22:56:05.411Z" },
     { url = "https://files.pythonhosted.org/packages/bd/cd/bc06149fe5585ba800b189a6a654a75f1f127e8aab02fd2be10df7fa500c/matplotlib-3.10.8-cp313-cp313t-win_amd64.whl", hash = "sha256:3a48a78d2786784cc2413e57397981fb45c79e968d99656706018d6e62e57958", size = 8220043, upload-time = "2025-12-10T22:56:07.551Z" },
     { url = "https://files.pythonhosted.org/packages/e3/de/b22cf255abec916562cc04eef457c13e58a1990048de0c0c3604d082355e/matplotlib-3.10.8-cp313-cp313t-win_arm64.whl", hash = "sha256:15d30132718972c2c074cd14638c7f4592bd98719e2308bccea40e0538bc0cb5", size = 8062075, upload-time = "2025-12-10T22:56:09.178Z" },
+]
+
+[[package]]
+name = "mdurl"
+version = "0.1.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d6/54/cfe61301667036ec958cb99bd3efefba235e65cdeb9c84d24a8293ba1d90/mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba", size = 8729, upload-time = "2022-08-14T12:40:10.846Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8", size = 9979, upload-time = "2022-08-14T12:40:09.779Z" },
 ]
 
 [[package]]
@@ -533,9 +596,10 @@ wheels = [
 
 [[package]]
 name = "pyvista"
-version = "0.46.5"
+version = "0.47.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
+    { name = "cyclopts" },
     { name = "matplotlib" },
     { name = "numpy" },
     { name = "pillow" },
@@ -544,9 +608,9 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "vtk" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/1b/bd/a4e4131b2d4b908a060b43f8346ce863d76a6fecf8a1c2c845602e96c610/pyvista-0.46.5.tar.gz", hash = "sha256:b637bfa32136b95e5e5a6d972871606a68e3c625fc652ff5d9f00390294e99c0", size = 2397682, upload-time = "2026-01-15T00:29:12.727Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b2/0e/8bddb1cc2fe44d1cae33c867d63810e11dfd305af2c066ec915490d2d5ed/pyvista-0.47.0.tar.gz", hash = "sha256:3956348e3e1529ef51bb1d08ceb102d2bf1972bc52fe9545a1c53c2a35406025", size = 2463052, upload-time = "2026-02-08T20:21:02.727Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f2/df/39a108f198dd2240f2c9dad06c7c81d44809aeb83f3eb2c9d5a1ae9e4311/pyvista-0.46.5-py3-none-any.whl", hash = "sha256:d254e1e32e1df0dc04b409f989bd56b24d9e94086d868597af6c501151ec17fa", size = 2448206, upload-time = "2026-01-15T00:29:10.035Z" },
+    { url = "https://files.pythonhosted.org/packages/95/c1/c8efb5c0696fa3f7f7c424234dc08fa1e0ecc2292c53500090d93c81a648/pyvista-0.47.0-py3-none-any.whl", hash = "sha256:35d9b003d3bfac709da5b76dd264919b6847c469be08283d3295833f6a7ea657", size = 2508448, upload-time = "2026-02-08T20:21:00.614Z" },
 ]
 
 [[package]]
@@ -580,6 +644,32 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/c9/74/b3ff8e6c8446842c3f5c837e9c3dfcfe2018ea6ecef224c710c85ef728f4/requests-2.32.5.tar.gz", hash = "sha256:dbba0bac56e100853db0ea71b82b4dfd5fe2bf6d3754a8893c3af500cec7d7cf", size = 134517, upload-time = "2025-08-18T20:46:02.573Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/1e/db/4254e3eabe8020b458f1a747140d32277ec7a271daf1d235b70dc0b4e6e3/requests-2.32.5-py3-none-any.whl", hash = "sha256:2462f94637a34fd532264295e186976db0f5d453d1cdd31473c85a6a161affb6", size = 64738, upload-time = "2025-08-18T20:46:00.542Z" },
+]
+
+[[package]]
+name = "rich"
+version = "14.3.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "markdown-it-py" },
+    { name = "pygments" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/74/99/a4cab2acbb884f80e558b0771e97e21e939c5dfb460f488d19df485e8298/rich-14.3.2.tar.gz", hash = "sha256:e712f11c1a562a11843306f5ed999475f09ac31ffb64281f73ab29ffdda8b3b8", size = 230143, upload-time = "2026-02-01T16:20:47.908Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ef/45/615f5babd880b4bd7d405cc0dc348234c5ffb6ed1ea33e152ede08b2072d/rich-14.3.2-py3-none-any.whl", hash = "sha256:08e67c3e90884651da3239ea668222d19bea7b589149d8014a21c633420dbb69", size = 309963, upload-time = "2026-02-01T16:20:46.078Z" },
+]
+
+[[package]]
+name = "rich-rst"
+version = "1.3.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "docutils" },
+    { name = "rich" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/bc/6d/a506aaa4a9eaa945ed8ab2b7347859f53593864289853c5d6d62b77246e0/rich_rst-1.3.2.tar.gz", hash = "sha256:a1196fdddf1e364b02ec68a05e8ff8f6914fee10fbca2e6b6735f166bb0da8d4", size = 14936, upload-time = "2025-10-14T16:49:45.332Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/13/2f/b4530fbf948867702d0a3f27de4a6aab1d156f406d72852ab902c4d04de9/rich_rst-1.3.2-py3-none-any.whl", hash = "sha256:a99b4907cbe118cf9d18b0b44de272efa61f15117c61e39ebdc431baf5df722a", size = 12567, upload-time = "2025-10-14T16:49:42.953Z" },
 ]
 
 [[package]]
