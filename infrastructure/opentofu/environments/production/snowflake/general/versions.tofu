@@ -8,7 +8,7 @@ terraform {
     # https://search.opentofu.org/provider/snowflakedb/snowflake/latest
     snowflake = {
       source  = "snowflakedb/snowflake"
-      version = "2.12.0"
+      version = "2.13.0"
     }
   }
   required_version = ">= 1.11"
