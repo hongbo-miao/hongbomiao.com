@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket  = "production-hm-opentofu-bucket"
-    key     = "production/harbor/terraform.tfstate"
+    key     = "production/nats/terraform.tfstate"
     region  = "us-central1"
     profile = "nebius"
     endpoints = {
@@ -9,15 +9,15 @@ terraform {
     }
     # Skip AWS-specific validations as Nebius provides different settings
     skip_credentials_validation = true
-    skip_region_validation      = true
     skip_requesting_account_id  = true
     skip_s3_checksum            = true
+    skip_region_validation      = true
   }
   required_providers {
-    # https://search.opentofu.org/provider/goharbor/harbor/latest
-    harbor = {
-      source  = "goharbor/harbor"
-      version = "3.11.3"
+    // https://search.opentofu.org/provider/nats-io/jetstream/latest
+    jetstream = {
+      source  = "nats-io/jetstream"
+      version = "0.3.0"
     }
   }
   required_version = ">= 1.11"

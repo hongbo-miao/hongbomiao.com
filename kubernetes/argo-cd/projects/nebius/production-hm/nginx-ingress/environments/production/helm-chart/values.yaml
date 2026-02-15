@@ -17,6 +17,9 @@ controller:
   replicaCount: 3
   service:
     type: LoadBalancer
+    annotations:
+      # https://docs.nebius.com/kubernetes/clusters/load-balancer
+      nebius.com/load-balancer-type: internal
   resources:
     requests:
       cpu: 50m

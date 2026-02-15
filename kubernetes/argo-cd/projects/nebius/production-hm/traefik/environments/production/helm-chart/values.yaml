@@ -12,6 +12,9 @@ providers:
 service:
   enabled: true
   type: LoadBalancer
+  annotations:
+    # https://docs.nebius.com/kubernetes/clusters/load-balancer
+    nebius.com/load-balancer-type: internal
 ports:
   web:
     redirections:
@@ -23,6 +26,11 @@ ports:
       respondingTimeouts:
         readTimeout: 30m
   websecure:
+    forwardedHeaders:
+      trustedIPs:
+        - 10.0.0.0/8
+        - 172.16.0.0/12
+        - 192.168.0.0/16
     transport:
       respondingTimeouts:
         readTimeout: 30m

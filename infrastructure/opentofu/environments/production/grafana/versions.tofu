@@ -19,11 +19,6 @@ terraform {
       source  = "grafana/grafana"
       version = "4.25.0"
     }
-    # https://search.opentofu.org/provider/hashicorp/http/latest
-    http = {
-      source  = "hashicorp/http"
-      version = "3.5.0"
-    }
   }
   required_version = ">= 1.11"
 }
