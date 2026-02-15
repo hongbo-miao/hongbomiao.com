@@ -13,9 +13,14 @@ servingEngineSpec:
       tag: v0.3.13
       modelURL: Qwen/Qwen3-0.6B
       replicaCount: 1
-      requestCPU: 2
+      requestCPU: 1
+      limitCPU: 2
+      requestMemory: 3Gi
+      limitMemory: 4Gi
       requestGPU: 1
-      requestMemory: 2Gi
+      requestGPUType: nvidia.com/mig-2g.35gb
+      nodeSelector:
+        nvidia.com/mig.config: all-2g.35gb
       vllmConfig:
         enablePrefixCaching: true
         enableChunkedPrefill: true
@@ -28,6 +33,22 @@ servingEngineSpec:
       tag: v0.3.13
       modelURL: s3://production-hm-models/qwen3-0-6b-20260101
       replicaCount: 1
+      requestCPU: 1
+      limitCPU: 2
+      requestMemory: 3Gi
+      limitMemory: 4Gi
+      requestGPU: 1
+      requestGPUType: nvidia.com/mig-2g.35gb
+      nodeSelector:
+        nvidia.com/mig.config: all-2g.35gb
+      vllmConfig:
+        enablePrefixCaching: true
+        enableChunkedPrefill: true
+        maxModelLen: 8192
+        dtype: auto
+        tensorParallelSize: 1
+        extraArgs:
+          - "--served-model-name=qwen3-0-6b-20260101"
       env:
         - name: AWS_ENDPOINT_URL
           value: https://storage.us-central1.nebius.cloud
@@ -41,17 +62,13 @@ servingEngineSpec:
             secretKeyRef:
               name: hm-vllm-secret
               key: AWS_SECRET_ACCESS_KEY
-      requestCPU: 2
-      requestGPU: 1
-      requestMemory: 2Gi
-      vllmConfig:
-        enablePrefixCaching: true
-        enableChunkedPrefill: true
-        maxModelLen: 8192
-        dtype: auto
-        tensorParallelSize: 1
-        extraArgs:
-          - "--served-model-name=qwen3-0-6b-20260101"
+  startupProbe:
+    initialDelaySeconds: 15
+    periodSeconds: 10
+    failureThreshold: 360
+    httpGet:
+      path: /health
+      port: 8000
 routerSpec:
   enableRouter: true
   repository: harbor.hongbomiao.com/docker-hub-proxy-cache/lmcache/lmstack-router
@@ -60,6 +77,13 @@ routerSpec:
   replicaCount: 3
   serviceDiscovery: k8s
   routingLogic: roundrobin
+  startupProbe:
+    initialDelaySeconds: 15
+    periodSeconds: 10
+    failureThreshold: 60
+    httpGet:
+      path: /health
+      port: 8000
   resources:
     requests:
       cpu: 500m

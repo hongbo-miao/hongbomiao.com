@@ -1,0 +1,62 @@
+# https://github.com/NVIDIA/gpu-operator/blob/main/deployments/gpu-operator/values.yaml
+---
+# Nebius GPU node group must have drivers disabled
+# See: https://docs.nebius.com/kubernetes/gpu/set-up#nodes
+# The GPU Operator installs drivers instead (required for MIG support)
+driver:
+  enabled: true
+# Device plugin with MIG strategy for exposing MIG partitions
+devicePlugin:
+  enabled: true
+  env:
+    - name: MIG_STRATEGY
+      value: mixed
+# Container toolkit for GPU container support
+toolkit:
+  enabled: true
+# MIG Manager - required for MIG partitioning
+# Available MIG profiles (hardware-defined by NVIDIA):
+#
+# H200 (141 GiB):
+# - all-1g.18gb (up to 7 x 18 GiB)
+# - all-2g.35gb (up to 4 x 35 GiB)
+# - all-4g.71gb (up to 2 x 71 GiB)
+# - all-7g.141gb (up to 1 x 141 GiB)
+#
+# B200 (192 GiB):
+# - all-1g.24gb (up to 7 x 24 GiB)
+# - all-2g.48gb (up to 4 x 48 GiB)
+# - all-4g.96gb (up to 2 x 96 GiB)
+# - all-7g.192gb (up to 1 x 192 GiB)
+#
+# To enable MIG on a node: kubectl label nodes <node> nvidia.com/mig.config=all-2g.35gb
+migManager:
+  enabled: true
+  env:
+    - name: WITH_REBOOT
+      value: "true"
+  config:
+    name: default-mig-parted-config
+    default: all-disabled
+# GPU Feature Discovery - exposes GPU info as node labels
+gfd:
+  enabled: true
+# DCGM for GPU monitoring
+dcgm:
+  enabled: true
+dcgmExporter:
+  enabled: true
+# Node Feature Discovery
+nfd:
+  enabled: true
+# Validator to check GPU stack health
+validator:
+  enabled: true
+# Only deploy on GPU nodes
+daemonsets:
+  tolerations:
+    - key: nvidia.com/gpu
+      operator: Exists
+      effect: NoSchedule
+  nodeSelector:
+    nebius.com/gpu: "true"

@@ -15,13 +15,16 @@ resource "nebius_mk8s_v1_node_group" "main" {
     max_node_count = var.max_node_count
   }
   template = {
+    metadata = length(var.node_labels) > 0 ? {
+      labels = var.node_labels
+    } : null
     resources = {
       platform = var.platform
       preset   = var.preset
     }
-    gpu_settings = {
+    gpu_settings = var.drivers_preset != null ? {
       drivers_preset = var.drivers_preset
-    }
+    } : null
     boot_disk = {
       type           = var.boot_disk_type
       size_gibibytes = var.boot_disk_size_gibibytes

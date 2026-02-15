@@ -1,0 +1,78 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: default-mig-parted-config
+  namespace: production-hm-nvidia-gpu-operator
+data:
+  config.yaml: |
+    version: v1
+    mig-configs:
+      # ============================================
+      # Disabled - Use full GPU (no MIG partitioning)
+      # ============================================
+      all-disabled:
+        - devices: all
+          mig-enabled: false
+
+      # ============================================
+      # H200 Profiles (141GB HBM3e)
+      # ============================================
+      # 4 x 35GB instances
+      all-2g.35gb:
+        - devices: all
+          mig-enabled: true
+          mig-devices:
+            "2g.35gb": 4
+
+      # 7 x 18GB instances
+      all-1g.18gb:
+        - devices: all
+          mig-enabled: true
+          mig-devices:
+            "1g.18gb": 7
+
+      # 2 x 71GB instances
+      all-4g.71gb:
+        - devices: all
+          mig-enabled: true
+          mig-devices:
+            "4g.71gb": 2
+
+      # 1 x 141GB instance (full GPU with MIG enabled)
+      all-7g.141gb:
+        - devices: all
+          mig-enabled: true
+          mig-devices:
+            "7g.141gb": 1
+
+      # ============================================
+      # B200 Profiles (192GB HBM3e)
+      # ============================================
+      # 4 x 48GB instances
+      all-2g.48gb:
+        - devices: all
+          mig-enabled: true
+          mig-devices:
+            "2g.48gb": 4
+
+      # 7 x 24GB instances
+      all-1g.24gb:
+        - devices: all
+          mig-enabled: true
+          mig-devices:
+            "1g.24gb": 7
+
+      # 2 x 96GB instances
+      all-4g.96gb:
+        - devices: all
+          mig-enabled: true
+          mig-devices:
+            "4g.96gb": 2
+
+      # 1 x 192GB instance (full GPU with MIG enabled)
+      all-7g.192gb:
+        - devices: all
+          mig-enabled: true
+          mig-devices:
+            "7g.192gb": 1

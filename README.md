@@ -268,6 +268,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Cloudflare Tunnel** - Tunneling
 - **Vertical Pod Autoscaler** - Kubernetes vertical pod autoscaler
 - **KEDA** - Kubernetes event-driven autoscaler
+- **NVIDIA GPU Operator** - Kubernetes operator for GPU driver and device plugin management
 - **RKE2** - Lightweight Kubernetes
 - **K3s** - Lightweight Kubernetes
 - **containerd** - Container runtime
