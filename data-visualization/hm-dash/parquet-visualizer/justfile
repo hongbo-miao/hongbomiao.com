@@ -13,6 +13,9 @@ test:
 test-coverage:
     uv run poe test-coverage
 
+static-type-check-python:
+    uv run poe static-type-check-python
+
 publish-docker-image:
     docker build --platform=linux/amd64 --tag=harbor.hongbomiao.com/hm/parquet-visualizer:latest .
     docker push harbor.hongbomiao.com/hm/parquet-visualizer:latest

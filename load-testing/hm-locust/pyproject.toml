@@ -13,6 +13,7 @@ dev = [
   "poethepoet==0.41.0",
   "pytest-cov==7.0.0",
   "pytest==9.0.2",
+  "ty==0.0.17",
 ]
 
 [tool.uv]
@@ -23,3 +24,4 @@ required-version = ">=0.10.0"
 dev = "locust --config=src/locust.conf"
 test = { cmd = "pytest --verbose --verbose", env = { ENVIRONMENT = "test" } }
 test-coverage = { cmd = "pytest --cov=. --cov-report=xml", env = { ENVIRONMENT = "test" } }
+static-type-check-python = "ty check"

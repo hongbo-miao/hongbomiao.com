@@ -21,6 +21,9 @@ test:
 test-coverage:
     uv run poe test-coverage
 
+static-type-check-python:
+    uv run poe static-type-check-python
+
 docker-build:
     cd ../.. && \
     docker build --file=api/api-python/Dockerfile --tag="{{ PRODUCTION_DOCKER_IMAGE_TAG }}" .
