@@ -5,17 +5,17 @@ metadata:
   name: hm-litellm-deployment
   namespace: production-hm-litellm
   labels:
-    app.kubernetes.io/name: litellm-deployment
+    app.kubernetes.io/name: litellm
     app.kubernetes.io/part-of: production-hm-litellm
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: hm-litellm
+      app.kubernetes.io/name: litellm
   template:
     metadata:
       labels:
-        app: hm-litellm
+        app.kubernetes.io/name: litellm
     spec:
       serviceAccountName: hm-litellm-service-account
       containers:

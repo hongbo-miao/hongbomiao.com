@@ -5,12 +5,12 @@ metadata:
   name: hm-litellm-service
   namespace: production-hm-litellm
   labels:
-    app.kubernetes.io/name: litellm-service
+    app.kubernetes.io/name: litellm
     app.kubernetes.io/part-of: production-hm-litellm
 spec:
   type: ClusterIP
   selector:
-    app: hm-litellm
+    app.kubernetes.io/name: litellm
   ports:
     - name: litellm
       protocol: TCP

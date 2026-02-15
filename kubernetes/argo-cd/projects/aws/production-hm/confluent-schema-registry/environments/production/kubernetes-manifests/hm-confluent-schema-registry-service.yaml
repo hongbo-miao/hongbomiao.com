@@ -5,12 +5,12 @@ metadata:
   name: hm-confluent-schema-registry-service
   namespace: production-hm-confluent-schema-registry
   labels:
-    app.kubernetes.io/name: confluent-schema-registry-service
+    app.kubernetes.io/name: confluent-schema-registry
     app.kubernetes.io/part-of: production-hm-confluent-schema-registry
 spec:
   type: ClusterIP
   selector:
-    app: hm-confluent-schema-registry
+    app.kubernetes.io/name: confluent-schema-registry
   ports:
     - name: schema-registry
       protocol: TCP

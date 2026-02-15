@@ -5,17 +5,17 @@ metadata:
   name: hm-s3-browser-deployment
   namespace: production-hm-s3-browser
   labels:
-    app.kubernetes.io/name: s3-browser-deployment
+    app.kubernetes.io/name: s3-browser
     app.kubernetes.io/part-of: production-hm-s3-browser
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hm-s3-browser
+      app.kubernetes.io/name: s3-browser
   template:
     metadata:
       labels:
-        app: hm-s3-browser
+        app.kubernetes.io/name: s3-browser
     spec:
       containers:
         - name: s3-browser
