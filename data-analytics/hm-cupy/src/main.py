@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 def sum_of_squares_numpy(n: int) -> float:
     array = np.arange(n)
-    return np.sum(array * array)
+    return float(np.sum(array * array))
 
 
 def sum_of_squares_cupy(n: int) -> float:

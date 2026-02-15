@@ -22,7 +22,8 @@ def test(model: Module, test_loader: DataLoader, device: str | torch.device) -> 
             pred = output.max(1, keepdim=True)[1]
             correct += pred.eq(device_target.view_as(pred)).sum().item()
 
-    test_loss /= len(test_loader.dataset)
+    dataset_len: int = len(test_loader.dataset)  # type: ignore[arg-type]
+    test_loss /= dataset_len
     logger.info(
-        f"Test set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len(test_loader.dataset)} ({100.0 * correct / len(test_loader.dataset):.0f}%)\n",
+        f"Test set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{dataset_len} ({100.0 * correct / dataset_len:.0f}%)\n",
     )

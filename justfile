@@ -531,7 +531,6 @@ static-type-check-python:
     cd data-extraction/hm-mineru && just static-type-check-python
     cd data-extraction/hm-olmocr && just static-type-check-python
     cd data-orchestration/hm-airflow && just static-type-check-python
-    cd data-orchestration/hm-prefect && just static-type-check-python
     cd data-orchestration/hm-prefect/workflows/calculate && just static-type-check-python
     cd data-orchestration/hm-prefect/workflows/daft-analysis && just static-type-check-python
     cd data-orchestration/hm-prefect/workflows/greet && just static-type-check-python

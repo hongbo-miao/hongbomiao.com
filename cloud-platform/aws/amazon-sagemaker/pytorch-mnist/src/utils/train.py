@@ -41,14 +41,14 @@ def train(args: argparse.Namespace) -> None:
         os.environ["WORLD_SIZE"] = str(world_size)
         host_rank = args.hosts.index(args.current_host)
         os.environ["RANK"] = str(host_rank)
-        dist.init_process_group(
+        dist.init_process_group(  # type: ignore[possibly-missing-attribute]
             backend=args.backend,
             rank=host_rank,
             world_size=world_size,
         )
         logger.info(
-            f"Initialized the distributed environment: '{args.backend}' backend on {dist.get_world_size()} nodes. "
-            f"Current host rank is {dist.get_rank()}. Number of gpus: {args.num_gpus}",
+            f"Initialized the distributed environment: '{args.backend}' backend on {dist.get_world_size()} nodes. "  # type: ignore[possibly-missing-attribute]
+            f"Current host rank is {dist.get_rank()}. Number of gpus: {args.num_gpus}",  # type: ignore[possibly-missing-attribute]
         )
 
     # set the seed for generating random numbers
@@ -64,12 +64,17 @@ def train(args: argparse.Namespace) -> None:
     )
     test_loader = get_test_data_loader(args.test_batch_size, args.data_dir, **kwargs)
 
+    train_sampler_len: int = len(train_loader.sampler)  # type: ignore[arg-type]
+    train_dataset_len: int = len(train_loader.dataset)  # type: ignore[arg-type]
+    test_sampler_len: int = len(test_loader.sampler)  # type: ignore[arg-type]
+    test_dataset_len: int = len(test_loader.dataset)  # type: ignore[arg-type]
+
     logger.info(
-        f"Processes {len(train_loader.sampler)}/{len(train_loader.dataset)} ({100.0 * len(train_loader.sampler) / len(train_loader.dataset):.0f}%) of train data",
+        f"Processes {train_sampler_len}/{train_dataset_len} ({100.0 * train_sampler_len / train_dataset_len:.0f}%) of train data",
     )
 
     logger.info(
-        f"Processes {len(test_loader.sampler)}/{len(test_loader.dataset)} ({100.0 * len(test_loader.sampler) / len(test_loader.dataset):.0f}%) of test data",
+        f"Processes {test_sampler_len}/{test_dataset_len} ({100.0 * test_sampler_len / test_dataset_len:.0f}%) of test data",
     )
 
     model = Net().to(device)
@@ -96,7 +101,7 @@ def train(args: argparse.Namespace) -> None:
             optimizer.step()
             if batch_idx % args.log_interval == 0:
                 logger.info(
-                    f"Train Epoch: {epoch} [{batch_idx * len(device_data)}/{len(train_loader.sampler)} ({100.0 * batch_idx / len(train_loader):.0f}%)] Loss: {loss.item():.6f}",
+                    f"Train Epoch: {epoch} [{batch_idx * len(device_data)}/{train_sampler_len} ({100.0 * batch_idx / len(train_loader):.0f}%)] Loss: {loss.item():.6f}",
                 )
         test(model, test_loader, device)
     save_model(model, Path(args.model_dir))
