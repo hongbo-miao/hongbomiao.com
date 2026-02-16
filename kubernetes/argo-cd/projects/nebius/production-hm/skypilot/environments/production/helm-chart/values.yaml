@@ -4,6 +4,12 @@ apiService:
   image: harbor.hongbomiao.com/docker-hub-proxy-cache/berkeleyskypilot/skypilot:0.11.1
   dbConnectionSecretName: hm-skypilot-secret
   enableUserManagement: true
+  resources:
+    requests:
+      cpu: 4
+      memory: 10Gi
+    limits:
+      memory: 12Gi
 ingress:
   enabled: true
   host: skypilot.hongbomiao.com

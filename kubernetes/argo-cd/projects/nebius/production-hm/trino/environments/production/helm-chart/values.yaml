@@ -13,7 +13,6 @@ coordinator:
       cpu: 2
       memory: 12Gi
     limits:
-      cpu: 4
       memory: 16Gi
 worker:
   jvm:
@@ -26,7 +25,6 @@ worker:
       cpu: 8
       memory: 48Gi
     limits:
-      cpu: 14
       memory: 56Gi
 server:
   config:
@@ -103,6 +101,12 @@ jmx:
   exporter:
     enabled: true
     image: harbor.hongbomiao.com/docker-hub-proxy-cache/bitnamilegacy/jmx-exporter:1.4.0
+    resources:
+      requests:
+        cpu: 30m
+        memory: 1400Mi
+      limits:
+        memory: 1600Mi
     # https://github.com/prometheus/jmx_exporter?tab=readme-ov-file#configuration
     # https://trino.io/docs/current/admin/jmx.html
     configProperties: |

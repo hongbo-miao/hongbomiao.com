@@ -24,68 +24,61 @@ core:
   replicas: 3
   resources:
     requests:
-      cpu: 50m
-      memory: 128Mi
+      cpu: 20m
+      memory: 100Mi
     limits:
-      cpu: 100m
-      memory: 256Mi
+      memory: 200Mi
 jobservice:
   replicas: 3
   jobLoggers:
     - stdout
   resources:
     requests:
-      cpu: 50m
-      memory: 128Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      cpu: 100m
-      memory: 256Mi
+      memory: 200Mi
 portal:
   replicas: 3
   resources:
     requests:
-      cpu: 50m
-      memory: 128Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      cpu: 100m
-      memory: 256Mi
+      memory: 200Mi
 registry:
   replicas: 3
   registry:
     resources:
       requests:
-        cpu: 50m
-        memory: 128Mi
+        cpu: 300m
+        memory: 600Mi
       limits:
-        cpu: 500m
-        memory: 512Mi
+        memory: 800Mi
   controller:
     resources:
       requests:
-        cpu: 50m
-        memory: 128Mi
+        cpu: 10m
+        memory: 100Mi
       limits:
-        cpu: 100m
-        memory: 256Mi
+        memory: 200Mi
 trivy:
   replicas: 1
   resources:
     requests:
-      cpu: 200m
-      memory: 128Mi
+      cpu: 10m
+      memory: 300Mi
     limits:
-      cpu: 500m
-      memory: 1Gi
+      memory: 600Mi
 redis:
   type: internal
   internal:
     resources:
       requests:
-        cpu: 50m
-        memory: 128Mi
+        cpu: 10m
+        memory: 100Mi
       limits:
-        cpu: 100m
-        memory: 256Mi
+        memory: 200Mi
 persistence:
   enabled: true
   resourcePolicy: keep

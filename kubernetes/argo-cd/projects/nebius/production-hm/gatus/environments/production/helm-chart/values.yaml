@@ -4,11 +4,10 @@ image:
   registry: harbor.hongbomiao.com/docker-hub-proxy-cache
 resources:
   requests:
-    cpu: 50m
-    memory: 128Mi
+    cpu: 10m
+    memory: 200Mi
   limits:
-    cpu: 200m
-    memory: 256Mi
+    memory: 400Mi
 env:
   POSTGRES_USER_NAME:
     valueFrom:
@@ -26,6 +25,20 @@ config:
     path: postgres://${POSTGRES_USER_NAME}:${POSTGRES_PASSWORD}@private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432/gatus_db?sslmode=require
     caching: true
   endpoints:
+    - name: Argo CD
+      group: production
+      url: https://argo-cd.hongbomiao.com
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Gatus
+      group: production
+      url: https://gatus.hongbomiao.com/health
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
     - name: Grafana
       group: production
       url: https://grafana.hongbomiao.com
@@ -50,6 +63,13 @@ config:
     - name: NATS
       group: production
       url: http://nats-headless.production-hm-nats.svc:8222/healthz
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Ingress NGINX
+      group: production
+      url: http://ingress-nginx-controller-metrics.production-hm-ingress-nginx.svc:10254/healthz
       interval: 60s
       conditions:
         - "[STATUS] == 200"
@@ -85,6 +105,13 @@ config:
     - name: Speaches
       group: staging
       url: https://speaches.hongbomiao.com/health
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Traefik
+      group: production
+      url: http://traefik.production-hm-traefik.svc:8080/ping
       interval: 60s
       conditions:
         - "[STATUS] == 200"

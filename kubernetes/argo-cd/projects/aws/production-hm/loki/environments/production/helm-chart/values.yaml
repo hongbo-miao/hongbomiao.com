@@ -80,7 +80,6 @@ gateway:
       cpu: 100m
       memory: 128Mi
     limits:
-      cpu: 200m
       memory: 256Mi
 indexGateway:
   replicas: 3
@@ -90,7 +89,6 @@ indexGateway:
       cpu: 100m
       memory: 128Mi
     limits:
-      cpu: 200m
       memory: 2Gi
 distributor:
   autoscaling:
@@ -104,7 +102,6 @@ distributor:
       cpu: 1
       memory: 256Mi
     limits:
-      cpu: 8
       memory: 8Gi
 ingester:
   zoneAwareReplication:
@@ -120,7 +117,6 @@ ingester:
       cpu: 2
       memory: 2Gi
     limits:
-      cpu: 8
       memory: 8Gi
 queryFrontend:
   autoscaling:
@@ -134,7 +130,6 @@ queryFrontend:
       cpu: 100m
       memory: 256Mi
     limits:
-      cpu: 200m
       memory: 1Gi
 queryScheduler:
   replicas: 3
@@ -143,7 +138,6 @@ queryScheduler:
       cpu: 100m
       memory: 256Mi
     limits:
-      cpu: 500m
       memory: 2Gi
 querier:
   autoscaling:
@@ -157,7 +151,6 @@ querier:
       cpu: 2
       memory: 1Gi
     limits:
-      cpu: 4
       memory: 2Gi
 compactor:
   replicas: 3
@@ -166,7 +159,6 @@ compactor:
       cpu: 100m
       memory: 256Mi
     limits:
-      cpu: 500m
       memory: 2Gi
 chunksCache:
   replicas: 3
@@ -175,7 +167,6 @@ chunksCache:
       cpu: 100m
       memory: 1Gi
     limits:
-      cpu: 200m
       memory: 8Gi
 memcachedExporter:
   resources:
@@ -183,7 +174,6 @@ memcachedExporter:
       cpu: 100m
       memory: 128Mi
     limits:
-      cpu: 200m
       memory: 256Mi
 lokiCanary:
   enabled: true
@@ -192,7 +182,6 @@ lokiCanary:
       cpu: 100m
       memory: 128Mi
     limits:
-      cpu: 200m
       memory: 256Mi
 bloomPlanner:
   replicas: 0

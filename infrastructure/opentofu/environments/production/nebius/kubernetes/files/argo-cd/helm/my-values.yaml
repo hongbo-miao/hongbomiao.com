@@ -11,64 +11,57 @@ controller:
   replicas: 1
   resources:
     requests:
-      cpu: 200m
-      memory: 1Gi
+      cpu: 100m
+      memory: 1800Mi
     limits:
-      cpu: 500m
       memory: 2Gi
 server:
   replicas: 3
   resources:
     requests:
-      cpu: 20m
-      memory: 128Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      cpu: 50m
-      memory: 256Mi
+      memory: 200Mi
 repoServer:
   replicas: 3
   resources:
     requests:
-      cpu: 500m
-      memory: 512Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      cpu: 1
-      memory: 1Gi
+      memory: 200Mi
 applicationSet:
   replicas: 3
   resources:
     requests:
-      cpu: 20m
-      memory: 128Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      cpu: 50m
-      memory: 256Mi
+      memory: 200Mi
 dex:
   enabled: true
   resources:
     requests:
-      cpu: 20m
-      memory: 128Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      cpu: 50m
-      memory: 256Mi
+      memory: 200Mi
   initImage:
     resources:
       requests:
-        cpu: 20m
-        memory: 128Mi
+        cpu: 10m
+        memory: 100Mi
       limits:
-        cpu: 50m
-        memory: 256Mi
+        memory: 200Mi
 redisSecretInit:
   enabled: true
   resources:
     requests:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      cpu: 200m
-      memory: 256Mi
+      memory: 200Mi
 redis:
   enabled: false
 redis-ha:
@@ -76,26 +69,23 @@ redis-ha:
   redis:
     resources:
       requests:
-        cpu: 100m
-        memory: 128Mi
+        cpu: 10m
+        memory: 100Mi
       limits:
-        cpu: 200m
-        memory: 256Mi
+        memory: 200Mi
   haproxy:
     enabled: true
     resources:
       requests:
-        cpu: 50m
-        memory: 64Mi
+        cpu: 10m
+        memory: 100Mi
       limits:
-        cpu: 100m
-        memory: 128Mi
+        memory: 200Mi
 notifications:
   enabled: true
   resources:
     requests:
-      cpu: 20m
-      memory: 128Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      cpu: 50m
-      memory: 256Mi
+      memory: 200Mi
