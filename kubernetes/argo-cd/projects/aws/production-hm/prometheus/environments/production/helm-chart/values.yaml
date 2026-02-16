@@ -5,38 +5,34 @@ alertmanager:
   alertmanagerSpec:
     resources:
       requests:
-        cpu: 50m
-        memory: 128Mi
+        cpu: 10m
+        memory: 100Mi
       limits:
-        cpu: 100m
-        memory: 256Mi
+        memory: 200Mi
 prometheusOperator:
   enabled: true
   resources:
     requests:
-      cpu: 50m
-      memory: 128Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      cpu: 100m
-      memory: 256Mi
+      memory: 200Mi
   admissionWebhooks:
     patch:
       enabled: true
       resources:
         requests:
-          cpu: 50m
-          memory: 128Mi
+          cpu: 10m
+          memory: 100Mi
         limits:
-          cpu: 100m
-          memory: 256Mi
+          memory: 200Mi
   prometheusConfigReloader:
     resources:
       requests:
-        cpu: 50m
-        memory: 128Mi
+        cpu: 10m
+        memory: 100Mi
       limits:
-        cpu: 100m
-        memory: 256Mi
+        memory: 200Mi
 prometheus:
   enabled: true
   prometheusSpec:
@@ -51,26 +47,23 @@ prometheus:
       outOfOrderTimeWindow: 30m
     resources:
       requests:
-        cpu: 500m
-        memory: 2Gi
+        cpu: 400m
+        memory: 7Gi
       limits:
-        cpu: 1
-        memory: 6Gi
+        memory: 8Gi
 prometheus-node-exporter:
   resources:
     requests:
-      cpu: 50m
-      memory: 128Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      cpu: 100m
-      memory: 256Mi
+      memory: 200Mi
 kube-state-metrics:
   resources:
     requests:
-      cpu: 100m
-      memory: 512Mi
+      cpu: 10m
+      memory: 300Mi
     limits:
-      cpu: 200m
-      memory: 1Gi
+      memory: 600Mi
 grafana:
   enabled: false

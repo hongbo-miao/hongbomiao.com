@@ -18,6 +18,9 @@ service:
     service.beta.kubernetes.io/aws-load-balancer-internal: "true"
     service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-xxxxxxxxxxxxxxxxx,subnet-xxxxxxxxxxxxxxxxx,subnet-xxxxxxxxxxxxxxxxx,subnet-xxxxxxxxxxxxxxxxx
 ports:
+  traefik:
+    expose:
+      default: true
   web:
     redirections:
       entryPoint:
@@ -33,11 +36,10 @@ ports:
         readTimeout: 30m
 resources:
   requests:
-    cpu: 50m
-    memory: 512Mi
+    cpu: 20m
+    memory: 100Mi
   limits:
-    cpu: 200m
-    memory: 1Gi
+    memory: 200Mi
 globalArguments: []
 # additionalArguments:
 #   - --log.level=DEBUG

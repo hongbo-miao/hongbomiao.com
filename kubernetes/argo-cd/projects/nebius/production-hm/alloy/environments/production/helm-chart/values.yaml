@@ -4,6 +4,12 @@ image:
   registry: harbor.hongbomiao.com/docker-hub-proxy-cache
 alloy:
   stabilityLevel: generally-available
+  resources:
+    requests:
+      cpu: 1200m
+      memory: 4Gi
+    limits:
+      memory: 5Gi
   extraEnv:
     - name: LOKI_URL
       value: http://loki-gateway.production-hm-loki.svc:80/loki/api/v1/push

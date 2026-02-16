@@ -5,15 +5,33 @@
 # The GPU Operator installs drivers instead (required for MIG support)
 driver:
   enabled: true
+  resources:
+    requests:
+      cpu: 2000m
+      memory: 1400Mi
+    limits:
+      memory: 1600Mi
 # Device plugin with MIG strategy for exposing MIG partitions
 devicePlugin:
   enabled: true
   env:
     - name: MIG_STRATEGY
       value: mixed
+  resources:
+    requests:
+      cpu: 30m
+      memory: 100Mi
+    limits:
+      memory: 200Mi
 # Container toolkit for GPU container support
 toolkit:
   enabled: true
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 200Mi
 # MIG Manager - required for MIG partitioning
 # Available MIG profiles (hardware-defined by NVIDIA):
 #
@@ -38,20 +56,50 @@ migManager:
   config:
     name: default-mig-parted-config
     default: all-disabled
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 200Mi
 # GPU Feature Discovery - exposes GPU info as node labels
 gfd:
   enabled: true
+  resources:
+    requests:
+      cpu: 20m
+      memory: 100Mi
+    limits:
+      memory: 200Mi
 # DCGM for GPU monitoring
 dcgm:
   enabled: true
+  resources:
+    requests:
+      cpu: 30m
+      memory: 100Mi
+    limits:
+      memory: 200Mi
 dcgmExporter:
   enabled: true
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 200Mi
 # Node Feature Discovery
 nfd:
   enabled: true
 # Validator to check GPU stack health
 validator:
   enabled: true
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 200Mi
 # Only deploy on GPU nodes
 daemonsets:
   tolerations:

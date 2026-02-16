@@ -20,10 +20,13 @@ controller:
     annotations:
       # https://docs.nebius.com/kubernetes/clusters/load-balancer
       nebius.com/load-balancer-type: internal
+  metrics:
+    enabled: true
+    service:
+      type: ClusterIP
   resources:
     requests:
-      cpu: 50m
-      memory: 128Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      cpu: 200m
-      memory: 256Mi
+      memory: 200Mi

@@ -64,11 +64,10 @@ sidecar:
       foldersFromFilesStructure: true
   resources:
     requests:
-      cpu: 50m
-      memory: 256Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      cpu: 100m
-      memory: 512Mi
+      memory: 200Mi
 topologySpreadConstraints:
   - maxSkew: 1
     topologyKey: kubernetes.io/hostname
@@ -78,8 +77,7 @@ topologySpreadConstraints:
         app.kubernetes.io/name: grafana
 resources:
   requests:
-    cpu: 200m
-    memory: 1Gi
+    cpu: 30m
+    memory: 400Mi
   limits:
-    cpu: 500m
-    memory: 2Gi
+    memory: 800Mi

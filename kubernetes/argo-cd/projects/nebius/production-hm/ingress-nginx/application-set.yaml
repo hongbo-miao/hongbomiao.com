@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: production-nginx-ingress
+  name: production-ingress-nginx
   namespace: production-hm-argo-cd
 spec:
   goTemplate: true
@@ -11,10 +11,10 @@ spec:
         repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
         revision: main
         files:
-          - path: kubernetes/argo-cd/projects/nebius/production-hm/nginx-ingress/environments/*/config.yaml
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/ingress-nginx/environments/*/config.yaml
   template:
     metadata:
-      name: '{{.environment}}-nginx-ingress'
+      name: '{{.environment}}-ingress-nginx'
     spec:
       project: production-hm
       sources:
@@ -29,7 +29,7 @@ spec:
           targetRevision: main
           ref: config
       destination:
-        namespace: '{{.environment}}-hm-nginx-ingress'
+        namespace: '{{.environment}}-hm-ingress-nginx'
         server: https://kubernetes.default.svc
       syncPolicy:
         syncOptions:

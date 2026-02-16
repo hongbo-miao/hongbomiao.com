@@ -27,11 +27,10 @@ container:
           key: NATS_AUTH_TOKEN
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      cpu: 500m
-      memory: 512Mi
+      memory: 200Mi
 service:
   merge:
     spec:
@@ -50,3 +49,19 @@ podDisruptionBudget:
   merge:
     spec:
       maxUnavailable: 1
+natsBox:
+  container:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100Mi
+      limits:
+        memory: 200Mi
+reloader:
+  merge:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100Mi
+      limits:
+        memory: 200Mi
