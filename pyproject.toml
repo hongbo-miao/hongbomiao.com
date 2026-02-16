@@ -43,3 +43,9 @@ lint-vhdl = { shell = "vsg --filename $(git ls-files '**/*.vhd')" }
 lint-vhdl-fix = { shell = "vsg --filename $(git ls-files '**/*.vhd') --fix" }
 lint-yaml = "yamllint ."
 static-type-check-python = "mypy"
+
+[tool.mypy]
+mypy_path = [
+  "data-processing/nats/telemetry-stream-publisher/.generated",
+  "data-processing/nats/telemetry-stream-subscriber/.generated",
+]

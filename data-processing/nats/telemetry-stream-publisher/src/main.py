@@ -3,11 +3,18 @@ import logging
 from datetime import UTC, datetime
 from pathlib import Path
 from random import SystemRandom
+from typing import TYPE_CHECKING
 from uuid import uuid4
 
 import capnp
 import nats
 from nats.js.client import JetStreamContext
+
+if TYPE_CHECKING:
+    from capnp_types.telemetry import (
+        EntryBuilder,
+        TelemetryBuilder,
+    )
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +56,7 @@ async def publish_random_telemetry_stream(
                 value = random_number_generator.uniform(minimum_value, maximum_value)
                 sensor_entries.append((entry_name, round(value, 2)))
 
-            telemetry = TELEMETRY_SCHEMA.Telemetry.new_message()
+            telemetry: TelemetryBuilder = TELEMETRY_SCHEMA.Telemetry.new_message()
             telemetry.timestamp = timestamp
 
             sensor_entries_builder = telemetry.init(
@@ -58,7 +65,7 @@ async def publish_random_telemetry_stream(
             )
 
             for index, (entry_name, entry_value) in enumerate(sensor_entries):
-                entry = sensor_entries_builder[index]
+                entry: EntryBuilder = sensor_entries_builder[index]
                 entry.name = entry_name
                 if entry_value is None:
                     entry.data.missing = None

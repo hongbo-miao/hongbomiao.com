@@ -34,6 +34,7 @@ module "hm_project" {
     { group = "apiregistration.k8s.io", kind = "APIService" },
     { group = "cert-manager.io", kind = "ClusterIssuer" },
     { group = "networking.k8s.io", kind = "IngressClass" },
+    { group = "nvidia.com", kind = "ClusterPolicy" },
     { group = "rbac.authorization.k8s.io", kind = "ClusterRole" },
     { group = "rbac.authorization.k8s.io", kind = "ClusterRoleBinding" },
     { group = "storage.k8s.io", kind = "CSIDriver" },

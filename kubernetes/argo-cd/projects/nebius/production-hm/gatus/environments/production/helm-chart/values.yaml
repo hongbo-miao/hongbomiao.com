@@ -82,6 +82,13 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
+    - name: Speaches
+      group: staging
+      url: https://speaches.hongbomiao.com/health
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
     - name: Trino
       group: production
       url: https://trino.hongbomiao.com
@@ -92,6 +99,13 @@ config:
     - name: Trino Gateway
       group: production
       url: https://trino-gateway.hongbomiao.com
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: vLLM
+      group: staging
+      url: https://vllm.hongbomiao.com/health
       interval: 60s
       conditions:
         - "[STATUS] == 200"

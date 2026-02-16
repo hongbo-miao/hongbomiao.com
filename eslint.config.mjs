@@ -99,6 +99,8 @@ export default [
       'data-processing/flink/applications/*/src/main/resources/*.properties',
       'data-processing/hm-spark/applications/*/.bsp/**/*',
       'data-processing/kafka/kafka-client/kafka-c/*/config.ini',
+      'data-processing/nats/telemetry-stream-publisher/.generated/**/*',
+      'data-processing/nats/telemetry-stream-subscriber/.generated/**/*',
       'data-transformation/dbt/projects/*/dbt_packages/**/*',
       'data-transformation/dbt/projects/*/logs/**/*',
       'data-visualization/grafana/hm-panel-plugin/.config/**/*',
