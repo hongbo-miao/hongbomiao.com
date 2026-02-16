@@ -2,10 +2,17 @@ import asyncio
 import logging
 from collections.abc import Awaitable, Callable
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import capnp
 import nats
 from nats.aio.msg import Msg
+
+if TYPE_CHECKING:
+    from capnp_types.telemetry import (
+        EntryReader,
+        TelemetryReader,
+    )
 
 logger = logging.getLogger(__name__)
 
@@ -20,10 +27,12 @@ TELEMETRY_SCHEMA = capnp.load(str(Path(__file__).with_name("telemetry.capnp")))
 def create_telemetry_message_handler() -> Callable[[Msg], Awaitable[None]]:
     async def handle_telemetry_message(message: Msg) -> None:
         try:
+            telemetry: TelemetryReader
             with TELEMETRY_SCHEMA.Telemetry.from_bytes(message.data) as telemetry:
                 timestamp = telemetry.timestamp
 
                 entries: dict[str, float | None] = {}
+                entry: EntryReader
                 for entry in telemetry.entries:
                     data_type = entry.data.which()
                     if data_type == "value":

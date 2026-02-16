@@ -323,6 +323,8 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **flink-connector-jdbc** - Flink JDBC Connector
   - **flink-connector-redis** - Flink Redis connector
 - **NATS** - Edge and cloud native messaging system
+  - **nats-py** - NATS Python client
+  - **async-nats** - NATS Rust client
 - **Apache Kafka** - Distributed event streaming platform
   - Client
     - **librdkafka** - Kafka C/C++ client
@@ -1188,6 +1190,10 @@ The diagram illustrates the repository's architecture, which is considered overl
         - **Protocol Buffers (Protobuf)**
         - **FlatBuffers**
         - **Cap'n Proto**
+          - **pycapnp** - Python bindings for Cap'n Proto C++ runtime library
+          - **capnp-stub-gen** - Cap'n Proto Python type stub generator
+          - **capnp** - Cap'n Proto Rust runtime library
+          - **capnpc** - Cap'n Proto schema compiler for Rust
   - Layer 7: Application layer
     - **Hypertext Transfer Protocol (HTTP)**
       - **Hypertext Transfer Protocol Secure (HTTPS)**
