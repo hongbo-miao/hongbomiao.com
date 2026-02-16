@@ -1,4 +1,4 @@
-FROM docker.io/prefecthq/prefect:3.6.17-python3.12-kubernetes AS base
+FROM docker.io/prefecthq/prefect:3.6.17-python3.13-kubernetes AS base
 WORKDIR /opt/prefect/workflow
 
 FROM base AS builder
@@ -8,10 +8,10 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
   UV_LINK_MODE=copy \
   # Target the system Python environment
   UV_PROJECT_ENVIRONMENT=/usr/local
-COPY --from=ghcr.io/astral-sh/uv:0.9.30-python3.12-alpine /usr/local/bin/uv /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.10.2-python3.13-alpine /usr/local/bin/uv /bin/
 COPY ["pyproject.toml", "uv.lock", ".python-version", "./"]
 RUN uv sync --frozen
 
 FROM base AS release
-COPY --from=builder /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
+COPY --from=builder /usr/local/lib/python3.13/site-packages/ /usr/local/lib/python3.13/site-packages/
 COPY ["src/", "/opt/prefect/workflow/src/"]
