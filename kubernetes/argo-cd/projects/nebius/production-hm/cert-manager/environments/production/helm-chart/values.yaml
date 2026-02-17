@@ -20,6 +20,13 @@ resources:
     memory: 200Mi
 startupapicheck:
   enabled: true
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 10m
@@ -27,6 +34,13 @@ startupapicheck:
     limits:
       memory: 200Mi
 webhook:
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 10m
@@ -35,6 +49,13 @@ webhook:
       memory: 200Mi
 cainjector:
   enabled: true
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 10m

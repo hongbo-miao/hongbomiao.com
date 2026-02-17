@@ -282,6 +282,7 @@ module "harbor_postgres_cluster" {
 }
 
 # Mimir
+# Mimir - service account
 module "hm_mimir_service_account" {
   source               = "../../../../modules/nebius/service_account"
   project_id           = var.project_id
@@ -311,6 +312,7 @@ module "hm_mimir_access_permit" {
   role        = "storage.object-editor"
   labels      = var.common_labels
 }
+# Mimir - object storage
 module "hm_mimir_object_storage" {
   for_each              = local.mimir_buckets
   source                = "../../../../modules/nebius/object_storage"

@@ -32,6 +32,22 @@ module "grafana_data_source_hm_loki" {
     "X-Scope-OrgID" = "hm"
   }
 }
+# Data Source - hm-mimir
+module "grafana_data_source_hm_mimir" {
+  source     = "../../../modules/grafana/grafana_data_source"
+  for_each   = toset(local.org_ids)
+  org_id     = each.value
+  name       = "hm-mimir"
+  type       = "prometheus"
+  url        = "http://mimir-gateway.production-hm-mimir.svc:80/prometheus"
+  is_default = false
+  http_headers = {
+    "X-Scope-OrgID" = "hm"
+  }
+  json_data_encoded = jsonencode({
+    prometheusType = "Mimir"
+  })
+}
 
 # Dashboard
 # Dashboard - Cilium
@@ -108,6 +124,42 @@ module "grafana_dashboard_kubernetes" {
   org_id      = each.value.org_id
   folder_uid  = module.grafana_folder_kubernetes[each.value.org_id].uid
   config_json = data.http.kubernetes_dashboards[each.value.dashboard_name].response_body
+  uid_prefix  = var.grafana_dashboard_uid_prefix
+  tags        = [var.managed_tag]
+}
+
+# Dashboard - Node Exporter
+# https://grafana.com/grafana/dashboards/1860-node-exporter-full/
+locals {
+  node_exporter_dashboard_urls = {
+    "node-exporter-full" = "https://grafana.com/api/dashboards/1860/revisions/latest/download"
+  }
+  node_exporter_org_dashboard_combinations = flatten([
+    for org_id in local.org_ids : [
+      for dashboard_name in keys(local.node_exporter_dashboard_urls) : {
+        key            = "${org_id}-${dashboard_name}"
+        org_id         = org_id
+        dashboard_name = dashboard_name
+      }
+    ]
+  ])
+}
+data "http" "node_exporter_dashboards" {
+  for_each = local.node_exporter_dashboard_urls
+  url      = each.value
+}
+module "grafana_folder_node_exporter" {
+  source   = "../../../modules/grafana/grafana_folder"
+  for_each = toset(local.org_ids)
+  org_id   = each.value
+  title    = "Node Exporter"
+}
+module "grafana_dashboard_node_exporter" {
+  source      = "../../../modules/grafana/grafana_dashboard"
+  for_each    = { for combination in local.node_exporter_org_dashboard_combinations : combination.key => combination }
+  org_id      = each.value.org_id
+  folder_uid  = module.grafana_folder_node_exporter[each.value.org_id].uid
+  config_json = data.http.node_exporter_dashboards[each.value.dashboard_name].response_body
   uid_prefix  = var.grafana_dashboard_uid_prefix
   tags        = [var.managed_tag]
 }

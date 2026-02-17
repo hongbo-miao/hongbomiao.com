@@ -79,16 +79,6 @@ datasources:
     # deleteDatasources:
     #   - name: xxx
     datasources:
-      - name: hm-mimir
-        type: prometheus
-        isDefault: false
-        url: http://mimir-query-frontend.production-hm-mimir.svc:8080/prometheus
-        access: proxy
-        jsonData:
-          prometheusType: Mimir
-          httpHeaderName1: X-Scope-OrgID
-        secureJsonData:
-          httpHeaderValue1: hm
       - name: hm-tempo
         type: tempo
         isDefault: false

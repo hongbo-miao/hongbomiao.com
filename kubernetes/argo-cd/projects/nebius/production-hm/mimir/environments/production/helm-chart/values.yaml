@@ -9,17 +9,17 @@ mimir:
       storage:
         backend: s3
         s3:
-          endpoint: s3.us-west-2.amazonaws.com
-          region: us-west-2
+          endpoint: storage.us-central1.nebius.cloud
+          region: us-central1
     alertmanager_storage:
       s3:
-        bucket_name: production-hm-mimir-alertmanager-bucket
+        bucket_name: production-hm-mimir-alertmanager
     blocks_storage:
       s3:
-        bucket_name: production-hm-mimir-block-bucket
+        bucket_name: production-hm-mimir-block
     ruler_storage:
       s3:
-        bucket_name: production-hm-mimir-ruler-bucket
+        bucket_name: production-hm-mimir-ruler
     limits:
       max_global_series_per_user: 10000000000
       ingestion_burst_size: 100000000
@@ -40,9 +40,6 @@ runtimeConfig:
     max_tenants: 1000
 serviceAccount:
   create: true
-  name: hm-mimir
-  annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/MimirRole-hm-mimir
 alertmanager:
   enabled: true
   replicas: 3
@@ -53,6 +50,16 @@ alertmanager:
       labelSelector:
         matchLabels:
           app.kubernetes.io/component: alertmanager
+  extraEnvFrom:
+    - secretRef:
+        name: hm-mimir-secret
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   persistentVolume:
     accessModes: ["ReadWriteOnce"]
     size: 10Gi
@@ -73,6 +80,16 @@ compactor:
       labelSelector:
         matchLabels:
           app.kubernetes.io/component: compactor
+  extraEnvFrom:
+    - secretRef:
+        name: hm-mimir-secret
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   persistentVolume:
     accessModes: ["ReadWriteOnce"]
     size: 100Gi
@@ -93,6 +110,16 @@ distributor:
       labelSelector:
         matchLabels:
           app.kubernetes.io/component: distributor
+  extraEnvFrom:
+    - secretRef:
+        name: hm-mimir-secret
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 200m
@@ -118,6 +145,16 @@ ingester:
       labelSelector:
         matchLabels:
           app.kubernetes.io/component: ingester
+  extraEnvFrom:
+    - secretRef:
+        name: hm-mimir-secret
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   persistentVolume:
     accessModes: ["ReadWriteOnce"]
     size: 100Gi
@@ -138,6 +175,13 @@ overrides_exporter:
       labelSelector:
         matchLabels:
           app.kubernetes.io/component: overrides-exporter
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 100m
@@ -154,6 +198,16 @@ querier:
       labelSelector:
         matchLabels:
           app.kubernetes.io/component: querier
+  extraEnvFrom:
+    - secretRef:
+        name: hm-mimir-secret
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 100m
@@ -170,6 +224,13 @@ query_frontend:
       labelSelector:
         matchLabels:
           app.kubernetes.io/component: query-frontend
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 100m
@@ -186,6 +247,13 @@ query_scheduler:
       labelSelector:
         matchLabels:
           app.kubernetes.io/component: query-scheduler
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 100m
@@ -194,6 +262,13 @@ query_scheduler:
       memory: 500Mi
 rollout_operator:
   enabled: true
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 100m
@@ -210,6 +285,16 @@ ruler:
       labelSelector:
         matchLabels:
           app.kubernetes.io/component: ruler
+  extraEnvFrom:
+    - secretRef:
+        name: hm-mimir-secret
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 100m
@@ -226,6 +311,16 @@ store_gateway:
       labelSelector:
         matchLabels:
           app.kubernetes.io/component: store-gateway
+  extraEnvFrom:
+    - secretRef:
+        name: hm-mimir-secret
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   persistentVolume:
     accessModes: ["ReadWriteOnce"]
     size: 100Gi
@@ -246,6 +341,16 @@ gateway:
       labelSelector:
         matchLabels:
           app.kubernetes.io/component: gateway
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  nginx:
+    config:
+      resolver: coredns.kube-system.svc.cluster.local.
 minio:
   enabled: false
 nginx:
