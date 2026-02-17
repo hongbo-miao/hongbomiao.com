@@ -31,6 +31,13 @@ authentication:
       rsaKeyPair:
         publicKey: public.pem
         privateKey: private.pem
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule
 resources:
   requests:
     cpu: 10m

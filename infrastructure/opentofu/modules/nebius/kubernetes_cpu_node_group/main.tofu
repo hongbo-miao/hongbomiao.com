@@ -15,6 +15,10 @@ resource "nebius_mk8s_v1_node_group" "main" {
     max_node_count = var.max_node_count
   }
   template = {
+    metadata = length(var.node_labels) > 0 ? {
+      labels = var.node_labels
+    } : null
+    taints = length(var.node_taints) > 0 ? var.node_taints : null
     resources = {
       platform = var.platform
       preset   = var.preset
@@ -26,5 +30,6 @@ resource "nebius_mk8s_v1_node_group" "main" {
     os                   = var.os
     cloud_init_user_data = var.cloud_init_user_data != "" ? var.cloud_init_user_data : null
   }
-  labels = var.labels
+  version = var.kubernetes_version
+  labels  = var.labels
 }

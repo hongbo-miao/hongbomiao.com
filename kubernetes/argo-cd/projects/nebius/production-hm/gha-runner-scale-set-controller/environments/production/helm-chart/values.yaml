@@ -12,3 +12,10 @@ resources:
 flags:
   logLevel: info
   logFormat: json
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule

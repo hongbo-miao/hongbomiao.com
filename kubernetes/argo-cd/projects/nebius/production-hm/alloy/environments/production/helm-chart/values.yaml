@@ -2,14 +2,19 @@
 ---
 image:
   registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+controller:
+  tolerations:
+    - key: environment
+      operator: Exists
+      effect: NoSchedule
 alloy:
   stabilityLevel: generally-available
   resources:
     requests:
-      cpu: 1200m
-      memory: 4Gi
+      cpu: 200m
+      memory: 800m
     limits:
-      memory: 5Gi
+      memory: 1Gi
   extraEnv:
     - name: LOKI_URL
       value: http://loki-gateway.production-hm-loki.svc:80/loki/api/v1/push

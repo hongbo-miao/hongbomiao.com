@@ -1,5 +1,12 @@
 # https://github.com/kedacore/charts/blob/main/keda/values.yaml
 ---
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule
 operator:
   replicaCount: 3
 metricsServer:

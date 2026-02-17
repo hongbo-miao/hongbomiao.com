@@ -44,6 +44,15 @@ podTemplate:
     kubernetes.io/hostname:
       maxSkew: 1
       whenUnsatisfiable: DoNotSchedule
+  merge:
+    spec:
+      nodeSelector:
+        environment: production
+      tolerations:
+        - key: environment
+          operator: Equal
+          value: production
+          effect: NoSchedule
 podDisruptionBudget:
   enabled: true
   merge:
@@ -57,6 +66,16 @@ natsBox:
         memory: 100Mi
       limits:
         memory: 200Mi
+  podTemplate:
+    merge:
+      spec:
+        nodeSelector:
+          environment: production
+        tolerations:
+          - key: environment
+            operator: Equal
+            value: production
+            effect: NoSchedule
 reloader:
   merge:
     resources:

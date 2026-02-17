@@ -64,3 +64,10 @@ serviceMonitor:
   enabled: true
 podDisruptionBudget:
   minAvailable: 1
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule

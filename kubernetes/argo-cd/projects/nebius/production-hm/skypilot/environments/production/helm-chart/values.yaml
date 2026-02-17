@@ -2,6 +2,7 @@
 ---
 apiService:
   image: harbor.hongbomiao.com/docker-hub-proxy-cache/berkeleyskypilot/skypilot:0.11.1
+  imagePullPolicy: IfNotPresent
   dbConnectionSecretName: hm-skypilot-secret
   enableUserManagement: true
   resources:
@@ -10,6 +11,14 @@ apiService:
       memory: 10Gi
     limits:
       memory: 12Gi
+  # TODO: nodeSelector and tolerations not supported in chart 0.11.1, added in main branch - uncomment after next release
+  # nodeSelector:
+  #   environment: production
+  # tolerations:
+  #   - key: environment
+  #     operator: Equal
+  #     value: production
+  #     effect: NoSchedule
 ingress:
   enabled: true
   host: skypilot.hongbomiao.com

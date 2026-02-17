@@ -3,6 +3,11 @@
 servingEngineSpec:
   enableEngine: true
   runtimeClassName: nebius-nvidia
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   vllmApiKey:
     secretName: hm-vllm-secret
     secretKey: VLLM_API_KEY
@@ -18,8 +23,19 @@ servingEngineSpec:
       limitMemory: 4200Mi
       requestGPU: 1
       requestGPUType: nvidia.com/mig-2g.35gb
-      nodeSelector:
-        nvidia.com/mig.config: all-2g.35gb
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: nvidia.com/mig.config
+                    operator: In
+                    values:
+                      - all-2g.35gb
+                  - key: environment
+                    operator: In
+                    values:
+                      - production
       vllmConfig:
         enablePrefixCaching: true
         enableChunkedPrefill: true
@@ -37,8 +53,19 @@ servingEngineSpec:
       limitMemory: 4200Mi
       requestGPU: 1
       requestGPUType: nvidia.com/mig-2g.35gb
-      nodeSelector:
-        nvidia.com/mig.config: all-2g.35gb
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: nvidia.com/mig.config
+                    operator: In
+                    values:
+                      - all-2g.35gb
+                  - key: environment
+                    operator: In
+                    values:
+                      - production
       vllmConfig:
         enablePrefixCaching: true
         enableChunkedPrefill: true
@@ -75,6 +102,13 @@ routerSpec:
   replicaCount: 3
   serviceDiscovery: k8s
   routingLogic: roundrobin
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   startupProbe:
     initialDelaySeconds: 15
     periodSeconds: 10

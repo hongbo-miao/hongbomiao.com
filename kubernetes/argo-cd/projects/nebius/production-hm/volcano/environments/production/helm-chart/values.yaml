@@ -6,6 +6,21 @@ custom:
   metrics_enable: false
   scheduler_metrics_enable: true
   controller_metrics_enable: true
+  admission_tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  controller_tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  scheduler_tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   admission_resources:
     requests:
       cpu: 10m

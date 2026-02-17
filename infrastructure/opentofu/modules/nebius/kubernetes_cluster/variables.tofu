@@ -10,3 +10,9 @@ variable "vpc_subnet_id" {
 variable "labels" {
   type = map(string)
 }
+variable "service_cidrs" {
+  type = list(string)
+}
+variable "kubernetes_version" {
+  type = string
+}

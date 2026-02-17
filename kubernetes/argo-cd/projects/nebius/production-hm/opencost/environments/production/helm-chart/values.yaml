@@ -22,3 +22,10 @@ opencost:
         memory: 100Mi
       limits:
         memory: 200Mi
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  nodeSelector:
+    environment: production

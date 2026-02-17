@@ -22,6 +22,13 @@ existingSecretAdminPassword: hm-harbor-secret
 existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
 core:
   replicas: 3
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 20m
@@ -30,6 +37,13 @@ core:
       memory: 200Mi
 jobservice:
   replicas: 3
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   jobLoggers:
     - stdout
   resources:
@@ -40,6 +54,13 @@ jobservice:
       memory: 200Mi
 portal:
   replicas: 3
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 10m
@@ -48,6 +69,13 @@ portal:
       memory: 200Mi
 registry:
   replicas: 3
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   registry:
     resources:
       requests:
@@ -64,6 +92,13 @@ registry:
         memory: 200Mi
 trivy:
   replicas: 1
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 10m
@@ -73,6 +108,13 @@ trivy:
 redis:
   type: internal
   internal:
+    nodeSelector:
+      environment: production
+    tolerations:
+      - key: environment
+        operator: Equal
+        value: production
+        effect: NoSchedule
     resources:
       requests:
         cpu: 10m

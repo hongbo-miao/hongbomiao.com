@@ -10,7 +10,7 @@ driver:
       cpu: 2000m
       memory: 1400Mi
     limits:
-      memory: 1600Mi
+      memory: 1800Mi
 # Device plugin with MIG strategy for exposing MIG partitions
 devicePlugin:
   enabled: true
@@ -91,6 +91,32 @@ dcgmExporter:
 # Node Feature Discovery
 nfd:
   enabled: true
+node-feature-discovery:
+  master:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 150Mi
+      limits:
+        memory: 300Mi
+  worker:
+    tolerations:
+      - key: node-role.kubernetes.io/control-plane
+        operator: Equal
+        value: ""
+        effect: NoSchedule
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule
+      - key: environment
+        operator: Exists
+        effect: NoSchedule
+    resources:
+      requests:
+        cpu: 5m
+        memory: 30Mi
+      limits:
+        memory: 100Mi
 # Validator to check GPU stack health
 validator:
   enabled: true
@@ -104,6 +130,9 @@ validator:
 daemonsets:
   tolerations:
     - key: nvidia.com/gpu
+      operator: Exists
+      effect: NoSchedule
+    - key: environment
       operator: Exists
       effect: NoSchedule
   nodeSelector:

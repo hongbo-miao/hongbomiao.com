@@ -561,30 +561,6 @@ dgraph-delete-ha:
     kubectl delete persistentvolumeclaims --namespace=hm --selector=app=dgraph-zero
     kubectl delete persistentvolumeclaims --namespace=hm --selector=app=dgraph-alpha
 
-# MinIO
-
-# https://docs.min.io/docs/minio-client-complete-guide.html
-mc-ls:
-    mc ls
-
-mc-alias-set:
-    mc alias set hm https://localhost:9000 minio minio123
-
-mc-alias-ls:
-    mc alias list
-
-mc-make-bucket:
-    mc mb play/production-hm-bucket
-
-mc-cp:
-    mc cp README.md play/production-hm-bucket
-
-minio-console-ui:
-    kubectl port-forward service/storage-tiny-console --namespace=tenant-tiny 9443:9443
-
-minio-headless:
-    kubectl port-forward service/storage-tiny-hl --namespace=tenant-tiny 9000:9000
-
 # PostgreSQL
 postgres-connect:
     psql postgresql://admin@localhost:5432/postgres

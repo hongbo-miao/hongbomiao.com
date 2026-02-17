@@ -5,6 +5,13 @@ image:
   repository: docker/library/traefik
 deployment:
   replicas: 3
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule
 providers:
   kubernetesIngress:
     publishedService:

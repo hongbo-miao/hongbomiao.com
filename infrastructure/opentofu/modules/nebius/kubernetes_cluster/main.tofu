@@ -13,10 +13,13 @@ resource "nebius_mk8s_v1_cluster" "main" {
   control_plane = {
     subnet_id         = var.vpc_subnet_id
     etcd_cluster_size = 3
-    version           = "1.31"
+    version           = var.kubernetes_version
     endpoints = {
       public_endpoint = {}
     }
+  }
+  kube_network = {
+    service_cidrs = var.service_cidrs
   }
   labels = var.labels
 }

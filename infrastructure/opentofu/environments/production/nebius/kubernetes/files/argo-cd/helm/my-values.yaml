@@ -1,5 +1,13 @@
 # https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
 ---
+global:
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
 configs:
   cm:
     # Enable Helm chart inflation in Kustomize

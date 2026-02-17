@@ -14,6 +14,13 @@ coordinator:
       memory: 12Gi
     limits:
       memory: 16Gi
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
 worker:
   jvm:
     maxHeapSize: 40G
@@ -26,6 +33,13 @@ worker:
       memory: 48Gi
     limits:
       memory: 56Gi
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
 server:
   config:
     authenticationType: OAUTH2,PASSWORD

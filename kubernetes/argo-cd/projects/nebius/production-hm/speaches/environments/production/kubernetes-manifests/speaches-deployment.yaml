@@ -20,6 +20,14 @@ spec:
       serviceAccountName: speaches-service-account
       nodeSelector:
         nvidia.com/mig.config: all-2g.35gb
+      tolerations:
+        - key: environment
+          operator: Equal
+          value: production
+          effect: NoSchedule
+        - key: nvidia.com/mig-2g.35gb
+          operator: Exists
+          effect: NoSchedule
       containers:
         - name: speaches
           image: ghcr.io/speaches-ai/speaches:0.9.0-rc.3-cuda
@@ -35,8 +43,8 @@ spec:
               value: '["hongbo-miao/whisper-large-v3-turbo-20260101"]'
           resources:
             requests:
-              cpu: 100m
-              memory: 3Gi
+              cpu: 200m
+              memory: 3600Mi
               nvidia.com/mig-2g.35gb: 1
             limits:
               memory: 4Gi
