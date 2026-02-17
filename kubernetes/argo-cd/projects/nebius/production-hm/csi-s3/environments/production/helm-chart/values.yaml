@@ -11,3 +11,12 @@ storageClass:
 secret:
   # Using per-application secrets instead of a global secret
   create: false
+tolerations:
+  node:
+    - key: environment
+      operator: Exists
+      effect: NoSchedule
+  controller:
+    - key: environment
+      operator: Exists
+      effect: NoSchedule

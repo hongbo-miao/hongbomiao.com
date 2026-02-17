@@ -59,6 +59,11 @@ prometheus:
         effect: NoSchedule
     podMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelectorNilUsesHelmValues: false
+    # https://grafana.com/docs/grafana-cloud/monitor-infrastructure/kubernetes-monitoring/configuration/config-other-methods/prometheus/remote-write-helm-operator/#create-a-helm-values-file-with-prometheus-remote_write-configuration
+    remoteWrite:
+      - url: http://mimir-gateway.production-hm-mimir.svc:80/api/v1/push
+        headers:
+          X-Scope-OrgID: hm
     tsdb:
       outOfOrderTimeWindow: 30m
     resources:
