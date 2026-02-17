@@ -122,7 +122,6 @@ export default [
       'kubernetes/data/hm-kafka/hm-kafka/**/*',
       'kubernetes/data/hm-kafka/logging-kafka-connect/**/*',
       'kubernetes/data/hm-kafka/opa-kafka-connect/**/*',
-      'kubernetes/data/minio/**/*',
       'kubernetes/data/model-server/model-store/**/*',
       'kubernetes/data/opal-server/**/*',
       'kubernetes/data/yugabyte/**/*',

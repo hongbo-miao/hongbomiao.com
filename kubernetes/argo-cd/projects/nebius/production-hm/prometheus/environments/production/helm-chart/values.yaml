@@ -3,6 +3,13 @@
 alertmanager:
   enabled: true
   alertmanagerSpec:
+    nodeSelector:
+      environment: production
+    tolerations:
+      - key: environment
+        operator: Equal
+        value: production
+        effect: NoSchedule
     resources:
       requests:
         cpu: 10m
@@ -11,6 +18,13 @@ alertmanager:
         memory: 200Mi
 prometheusOperator:
   enabled: true
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 10m
@@ -36,6 +50,13 @@ prometheusOperator:
 prometheus:
   enabled: true
   prometheusSpec:
+    nodeSelector:
+      environment: production
+    tolerations:
+      - key: environment
+        operator: Equal
+        value: production
+        effect: NoSchedule
     podMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelectorNilUsesHelmValues: false
     tsdb:
@@ -77,6 +98,13 @@ prometheus-node-exporter:
     limits:
       memory: 200Mi
 kube-state-metrics:
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 10m

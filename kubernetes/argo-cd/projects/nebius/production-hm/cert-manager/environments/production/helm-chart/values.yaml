@@ -5,6 +5,13 @@ crds:
   keep: true
 securityContext:
   fsGroup: 1001
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule
 resources:
   requests:
     cpu: 10m

@@ -7,6 +7,13 @@ minRunners: 0
 maxRunners: 10
 template:
   spec:
+    nodeSelector:
+      environment: production
+    tolerations:
+      - key: environment
+        operator: Equal
+        value: production
+        effect: NoSchedule
     initContainers:
       - name: init-dind-externals
         image: ghcr.io/actions/actions-runner:2.331.0

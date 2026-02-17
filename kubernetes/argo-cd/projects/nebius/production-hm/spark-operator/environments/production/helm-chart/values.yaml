@@ -5,6 +5,13 @@ image:
 operatorDeployment:
   replicas: 3
   operatorPod:
+    nodeSelector:
+      environment: production
+    tolerations:
+      - key: environment
+        operator: Equal
+        value: production
+        effect: NoSchedule
     operatorContainer:
       resources:
         requests:

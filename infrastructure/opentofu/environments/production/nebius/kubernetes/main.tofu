@@ -4,6 +4,8 @@ module "hm_kubernetes_cluster" {
   project_id              = var.project_id
   kubernetes_cluster_name = "hm-kubernetes-cluster"
   vpc_subnet_id           = var.vpc_subnet_id
+  kubernetes_version      = "1.32"
+  service_cidrs           = ["/16"]
   labels                  = var.common_labels
 }
 
@@ -13,34 +15,47 @@ module "hm_kubernetes_cluster" {
 locals {
   cloud_init_user_data = file("${path.module}/files/scripts/configure_sysctl.yaml")
   cpu_node_groups = {
-    lion = {
-      min_node_count           = 3
-      max_node_count           = 10
-      preset                   = "4vcpu-16gb"
-      boot_disk_type           = "NETWORK_SSD"
-      boot_disk_size_gibibytes = 256
-    },
     badger = {
-      min_node_count           = 0
-      max_node_count           = 1000
+      min_node_count           = 5
+      max_node_count           = 50
       preset                   = "8vcpu-32gb"
       boot_disk_type           = "NETWORK_SSD"
-      boot_disk_size_gibibytes = 256
+      boot_disk_size_gibibytes = 150
+      kubernetes_version       = "1.32"
+      node_labels              = { "environment" = "production" }
+      node_taints              = [{ key = "environment", value = "production", effect = "NO_SCHEDULE" }]
     },
     hyena = {
       min_node_count           = 0
-      max_node_count           = 200
+      max_node_count           = 50
       preset                   = "16vcpu-64gb"
       boot_disk_type           = "NETWORK_SSD"
-      boot_disk_size_gibibytes = 256
+      boot_disk_size_gibibytes = 200
+      kubernetes_version       = "1.32"
+      node_labels              = { "environment" = "production" }
+      node_taints              = [{ key = "environment", value = "production", effect = "NO_SCHEDULE" }]
     },
+    # staging
     dingo = {
-      min_node_count           = 0
-      max_node_count           = 100
-      preset                   = "32vcpu-128gb"
+      min_node_count           = 5
+      max_node_count           = 50
+      preset                   = "8vcpu-32gb"
       boot_disk_type           = "NETWORK_SSD"
-      boot_disk_size_gibibytes = 256
-    }
+      boot_disk_size_gibibytes = 150
+      kubernetes_version       = "1.32"
+      node_labels              = { "environment" = "staging" }
+      node_taints              = [{ key = "environment", value = "staging", effect = "NO_SCHEDULE" }]
+    },
+    # development
+    hare = {
+      min_node_count           = 5
+      max_node_count           = 50
+      preset                   = "16vcpu-64gb"
+      boot_disk_type           = "NETWORK_SSD"
+      boot_disk_size_gibibytes = 200
+      kubernetes_version       = "1.32"
+      node_labels              = { "environment" = "development" }
+    },
   }
 }
 module "hm_kubernetes_cpu_node_group" {
@@ -53,9 +68,12 @@ module "hm_kubernetes_cpu_node_group" {
   platform                 = "cpu-d3"
   preset                   = each.value.preset
   os                       = "ubuntu24.04"
+  kubernetes_version       = each.value.kubernetes_version
   boot_disk_type           = each.value.boot_disk_type
   boot_disk_size_gibibytes = each.value.boot_disk_size_gibibytes
   cloud_init_user_data     = local.cloud_init_user_data
+  node_labels              = lookup(each.value, "node_labels", {})
+  node_taints              = lookup(each.value, "node_taints", [])
   labels                   = var.common_labels
 }
 
@@ -63,18 +81,21 @@ module "hm_kubernetes_cpu_node_group" {
 locals {
   gpu_node_groups = {
     dragon = {
-      min_node_count = 0
+      min_node_count = 1
       max_node_count = 10
       platform       = "gpu-h200-sxm"
       preset         = "1gpu-16vcpu-200gb"
       # Using base image without pre-installed drivers (required for MIG support)
       drivers_preset           = null
       boot_disk_type           = "NETWORK_SSD"
-      boot_disk_size_gibibytes = 1024
+      boot_disk_size_gibibytes = 500
+      kubernetes_version       = "1.32"
       node_labels = {
         # MIG profiles: all-disabled, all-1g.18gb, all-2g.35gb, all-4g.71gb, all-7g.141gb (H200)
         "nvidia.com/mig.config" = "all-2g.35gb"
+        "environment"           = "production"
       }
+      node_taints = [{ key = "environment", value = "production", effect = "NO_SCHEDULE" }]
     }
   }
 }
@@ -88,9 +109,12 @@ module "hm_kubernetes_gpu_node_group" {
   platform                 = each.value.platform
   preset                   = each.value.preset
   os                       = "ubuntu24.04"
+  kubernetes_version       = each.value.kubernetes_version
   drivers_preset           = each.value.drivers_preset
   boot_disk_type           = each.value.boot_disk_type
   boot_disk_size_gibibytes = each.value.boot_disk_size_gibibytes
+  node_labels              = lookup(each.value, "node_labels", {})
+  node_taints              = lookup(each.value, "node_taints", [])
   cloud_init_user_data     = local.cloud_init_user_data
   labels                   = var.common_labels
 }
@@ -257,6 +281,45 @@ module "harbor_postgres_cluster" {
   backup_retention_policy      = "14d"
 }
 
+# Mimir
+module "hm_mimir_service_account" {
+  source               = "../../../../modules/nebius/service_account"
+  project_id           = var.project_id
+  service_account_name = "${var.environment}-mimir-service-account"
+  labels               = var.common_labels
+}
+module "hm_mimir_iam_group" {
+  source     = "../../../../modules/nebius/iam_group"
+  parent_id  = var.tenant_id
+  group_name = "${var.environment}-mimir-group"
+  labels     = var.common_labels
+}
+module "hm_mimir_iam_group_membership" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = module.hm_mimir_iam_group.id
+  member_id = module.hm_mimir_service_account.id
+  labels    = var.common_labels
+}
+locals {
+  mimir_buckets = toset(["alertmanager", "block", "ruler"])
+}
+module "hm_mimir_access_permit" {
+  for_each    = local.mimir_buckets
+  source      = "../../../../modules/nebius/access_permit"
+  parent_id   = module.hm_mimir_iam_group.id
+  resource_id = module.hm_mimir_object_storage[each.key].id
+  role        = "storage.object-editor"
+  labels      = var.common_labels
+}
+module "hm_mimir_object_storage" {
+  for_each              = local.mimir_buckets
+  source                = "../../../../modules/nebius/object_storage"
+  project_id            = var.project_id
+  object_storage_name   = "${var.environment}-hm-mimir-${each.key}"
+  default_storage_class = "STANDARD"
+  versioning_policy     = "DISABLED"
+  labels                = var.common_labels
+}
 
 # Loki
 # Loki - service account
@@ -296,7 +359,7 @@ module "hm_loki_object_storage" {
   project_id            = var.project_id
   object_storage_name   = "${var.environment}-hm-loki-${each.key}"
   default_storage_class = "STANDARD"
-  versioning_policy     = "ENABLED"
+  versioning_policy     = "DISABLED"
   labels                = var.common_labels
 }
 
@@ -356,7 +419,6 @@ module "mlflow_postgres_cluster" {
   backup_window_start_time_utc = "9:00:00"
   backup_retention_policy      = "14d"
 }
-
 
 # Polaris
 module "hm_polaris_service_account" {

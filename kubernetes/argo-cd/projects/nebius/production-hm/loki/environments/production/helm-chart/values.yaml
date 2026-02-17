@@ -77,6 +77,13 @@ gateway:
   replicas: 3
   nginxConfig:
     resolver: coredns.kube-system.svc.cluster.local.
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 100m
@@ -86,6 +93,13 @@ gateway:
 indexGateway:
   replicas: 3
   maxUnavailable: 1
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   extraEnvFrom:
     - secretRef:
         name: hm-loki-secret
@@ -102,6 +116,13 @@ distributor:
     maxReplicas: 15
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 1
@@ -114,6 +135,13 @@ ingester:
         name: hm-loki-secret
   zoneAwareReplication:
     enabled: true
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   autoscaling:
     enabled: true
     minReplicas: 3
@@ -133,6 +161,13 @@ queryFrontend:
     maxReplicas: 6
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 100m
@@ -144,6 +179,13 @@ queryScheduler:
     - secretRef:
         name: hm-loki-secret
   replicas: 3
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 100m
@@ -160,6 +202,13 @@ querier:
     maxReplicas: 15
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 2
@@ -171,6 +220,13 @@ compactor:
     - secretRef:
         name: hm-loki-secret
   replicas: 3
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 100m
@@ -179,6 +235,13 @@ compactor:
       memory: 2Gi
 chunksCache:
   replicas: 3
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
   resources:
     requests:
       cpu: 100m

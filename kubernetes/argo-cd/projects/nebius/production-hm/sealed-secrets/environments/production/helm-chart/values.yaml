@@ -1,5 +1,12 @@
 # https://github.com/bitnami-labs/sealed-secrets/blob/main/helm/sealed-secrets/values.yaml
 ---
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule
 resources:
   requests:
     cpu: 10m

@@ -66,3 +66,10 @@ resources:
     memory: 1000Mi
   limits:
     memory: 1200Mi
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule
