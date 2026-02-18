@@ -1,0 +1,32 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-goldilocks-ingress
+  namespace: production-hm-goldilocks
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: goldilocks.hongbomiao.com
+  labels:
+    app.kubernetes.io/name: goldilocks
+    app.kubernetes.io/part-of: production-hm-goldilocks
+spec:
+  rules:
+    - host: goldilocks.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: goldilocks-dashboard
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - goldilocks.hongbomiao.com
+      secretName: hm-goldilocks-certificate

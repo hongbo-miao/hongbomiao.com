@@ -1,0 +1,35 @@
+# https://github.com/FairwindsOps/charts/blob/master/stable/goldilocks/values.yaml
+---
+dashboard:
+  flags:
+    on-by-default: true
+  replicaCount: 3
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  resources:
+    requests:
+      cpu: 30m
+      memory: 400Mi
+    limits:
+      memory: 400Mi
+controller:
+  flags:
+    on-by-default: true
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  resources:
+    requests:
+      cpu: 1200m
+      memory: 500Mi
+    limits:
+      memory: 500Mi

@@ -233,9 +233,6 @@ module "kubernetes_manifest_gateway_api" {
 module "kubernetes_namespace_hm_argo_cd" {
   source               = "../../../../modules/kubernetes/kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-argo-cd"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
   depends_on = [
     module.amazon_eks_cluster
   ]
@@ -245,7 +242,7 @@ module "argo_cd_helm_chart" {
   source              = "../../../../modules/kubernetes/helm_chart"
   repository          = "https://argoproj.github.io/argo-helm"
   chart_name          = "argo-cd"
-  chart_version       = "8.3.1" # https://artifacthub.io/packages/helm/argo/argo-cd
+  chart_version       = "9.4.2" # https://artifacthub.io/packages/helm/argo/argo-cd
   release_name        = "argo-cd"
   namespace           = module.kubernetes_namespace_hm_argo_cd.namespace
   my_values_yaml_path = "files/argo-cd/helm/my-values.yaml"

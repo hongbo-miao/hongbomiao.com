@@ -77,19 +77,19 @@ gateway:
   replicas: 3
   resources:
     requests:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 70m
+      memory: 100Mi
     limits:
-      memory: 256Mi
+      memory: 100Mi
 indexGateway:
   replicas: 3
   maxUnavailable: 1
   resources:
     requests:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 10m
+      memory: 260Mi
     limits:
-      memory: 2Gi
+      memory: 260Mi
 distributor:
   autoscaling:
     enabled: true
@@ -135,10 +135,10 @@ queryScheduler:
   replicas: 3
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 20m
+      memory: 100Mi
     limits:
-      memory: 2Gi
+      memory: 100Mi
 querier:
   autoscaling:
     enabled: true
@@ -156,33 +156,43 @@ compactor:
   replicas: 3
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 20m
+      memory: 280Mi
     limits:
-      memory: 2Gi
+      memory: 280Mi
 chunksCache:
   replicas: 3
   resources:
     requests:
-      cpu: 100m
-      memory: 1Gi
+      cpu: 10m
+      memory: 9200Mi
     limits:
-      memory: 8Gi
-memcachedExporter:
+      memory: 9200Mi
+resultsCache:
+  enabled: true
+  replicas: 3
   resources:
     requests:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      memory: 256Mi
+      memory: 100Mi
+memcachedExporter:
+  enabled: true
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
 lokiCanary:
   enabled: true
   resources:
     requests:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      memory: 256Mi
+      memory: 100Mi
 bloomPlanner:
   replicas: 0
 bloomBuilder:

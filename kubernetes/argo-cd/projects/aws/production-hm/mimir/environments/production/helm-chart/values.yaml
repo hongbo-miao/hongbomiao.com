@@ -13,13 +13,13 @@ mimir:
           region: us-west-2
     alertmanager_storage:
       s3:
-        bucket_name: production-hm-mimir-alertmanager-bucket
+        bucket_name: production-hm-mimir-alertmanager
     blocks_storage:
       s3:
-        bucket_name: production-hm-mimir-block-bucket
+        bucket_name: production-hm-mimir-block
     ruler_storage:
       s3:
-        bucket_name: production-hm-mimir-ruler-bucket
+        bucket_name: production-hm-mimir-ruler
     limits:
       max_global_series_per_user: 10000000000
       ingestion_burst_size: 100000000
@@ -59,10 +59,10 @@ alertmanager:
     storageClass: production-hm-mimir-storage-class
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 20m
+      memory: 100Mi
     limits:
-      memory: 500Mi
+      memory: 100Mi
 compactor:
   enabled: true
   replicas: 3
@@ -79,10 +79,10 @@ compactor:
     storageClass: production-hm-mimir-storage-class
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 20m
+      memory: 3600Mi
     limits:
-      memory: 500Mi
+      memory: 3600Mi
 distributor:
   enabled: true
   replicas: 3
@@ -95,10 +95,10 @@ distributor:
           app.kubernetes.io/component: distributor
   resources:
     requests:
-      cpu: 200m
-      memory: 300Mi
+      cpu: 500m
+      memory: 800Mi
     limits:
-      memory: 500Mi
+      memory: 800Mi
 kafka:
   enabled: true
   nodeSelector:
@@ -108,6 +108,15 @@ kafka:
       operator: Equal
       value: production
       effect: NoSchedule
+  persistence:
+    size: 1Ti
+    storageClass: production-hm-mimir-storage-class
+  resources:
+    requests:
+      cpu: 200m
+      memory: 4200Mi
+    limits:
+      memory: 4200Mi
 ingester:
   enabled: true
   replicas: 3
@@ -124,10 +133,10 @@ ingester:
     storageClass: production-hm-mimir-storage-class
   resources:
     requests:
-      cpu: 200m
-      memory: 4Gi
+      cpu: 600m
+      memory: 10Gi
     limits:
-      memory: 8Gi
+      memory: 10Gi
 overrides_exporter:
   enabled: true
   replicas: 3
@@ -138,12 +147,13 @@ overrides_exporter:
       labelSelector:
         matchLabels:
           app.kubernetes.io/component: overrides-exporter
+      effect: NoSchedule
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      memory: 500Mi
+      memory: 100Mi
 querier:
   enabled: true
   replicas: 3
@@ -156,10 +166,10 @@ querier:
           app.kubernetes.io/component: querier
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 30m
+      memory: 200Mi
     limits:
-      memory: 500Mi
+      memory: 200Mi
 query_frontend:
   enabled: true
   replicas: 3
@@ -172,10 +182,10 @@ query_frontend:
           app.kubernetes.io/component: query-frontend
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 20m
+      memory: 200Mi
     limits:
-      memory: 500Mi
+      memory: 200Mi
 query_scheduler:
   enabled: true
   replicas: 3
@@ -188,18 +198,18 @@ query_scheduler:
           app.kubernetes.io/component: query-scheduler
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      memory: 500Mi
+      memory: 100Mi
 rollout_operator:
   enabled: true
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      memory: 500Mi
+      memory: 100Mi
 ruler:
   enabled: true
   replicas: 3
@@ -212,10 +222,10 @@ ruler:
           app.kubernetes.io/component: ruler
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 20m
+      memory: 100Mi
     limits:
-      memory: 500Mi
+      memory: 100Mi
 store_gateway:
   enabled: true
   replicas: 3
@@ -232,10 +242,10 @@ store_gateway:
     storageClass: production-hm-mimir-storage-class
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 20m
+      memory: 200Mi
     limits:
-      memory: 500Mi
+      memory: 200Mi
 gateway:
   enabled: true
   replicas: 3
@@ -246,6 +256,12 @@ gateway:
       labelSelector:
         matchLabels:
           app.kubernetes.io/component: gateway
+  resources:
+    requests:
+      cpu: 30m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
 minio:
   enabled: false
 nginx:

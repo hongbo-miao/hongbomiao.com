@@ -46,6 +46,13 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
+    - name: Goldilocks
+      group: production
+      url: https://goldilocks.hongbomiao.com/health
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
     - name: Grafana
       group: production
       url: https://grafana.hongbomiao.com
@@ -77,6 +84,13 @@ config:
     - name: Ingress NGINX
       group: production
       url: http://ingress-nginx-controller-metrics.production-hm-ingress-nginx.svc:10254/healthz
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Simple KRR Dashboard
+      group: production
+      url: https://krr.hongbomiao.com
       interval: 60s
       conditions:
         - "[STATUS] == 200"

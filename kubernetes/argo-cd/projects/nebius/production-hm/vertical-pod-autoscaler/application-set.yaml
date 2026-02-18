@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: production-goldilocks
+  name: production-vertical-pod-autoscaler
   namespace: production-hm-argo-cd
 spec:
   goTemplate: true
@@ -11,25 +11,25 @@ spec:
         repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
         revision: main
         files:
-          - path: kubernetes/argo-cd/projects/aws/production-hm/goldilocks/environments/*/config.yaml
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/vertical-pod-autoscaler/environments/*/config.yaml
   template:
     metadata:
-      name: '{{.environment}}-hm-goldilocks'
+      name: '{{.environment}}-vertical-pod-autoscaler'
     spec:
       project: production-hm
       sources:
         - repoURL: https://charts.fairwinds.com/stable
           targetRevision: '{{.helmChartVersion}}'
-          chart: goldilocks
+          chart: vpa
           helm:
-            releaseName: goldilocks
+            releaseName: vertical-pod-autoscaler
             valueFiles:
               - '$config/{{.path.path}}/helm-chart/values.yaml'
         - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
           targetRevision: main
           ref: config
       destination:
-        namespace: '{{.environment}}-hm-goldilocks'
+        namespace: '{{.environment}}-hm-vertical-pod-autoscaler'
         server: https://kubernetes.default.svc
       syncPolicy:
         syncOptions:

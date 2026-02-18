@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: production-vertical-pod-autoscaler
+  name: production-simple-krr-dashboard
   namespace: production-hm-argo-cd
 spec:
   goTemplate: true
@@ -11,25 +11,28 @@ spec:
         repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
         revision: main
         files:
-          - path: kubernetes/argo-cd/projects/aws/production-hm/vertical-pod-autoscaler/environments/*/config.yaml
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/simple-krr-dashboard/environments/*/config.yaml
   template:
     metadata:
-      name: '{{.environment}}-hm-vertical-pod-autoscaler'
+      name: '{{.environment}}-simple-krr-dashboard'
     spec:
       project: production-hm
       sources:
-        - repoURL: https://charts.fairwinds.com/stable
+        - repoURL: https://devops-ia.github.io/helm-simple-krr-dashboard/
           targetRevision: '{{.helmChartVersion}}'
-          chart: vpa
+          chart: simple-krr-dashboard
           helm:
-            releaseName: vertical-pod-autoscaler
+            releaseName: simple-krr-dashboard
             valueFiles:
               - '$config/{{.path.path}}/helm-chart/values.yaml'
         - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
           targetRevision: main
           ref: config
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          path: '{{.path.path}}/kubernetes-manifests'
       destination:
-        namespace: '{{.environment}}-hm-vertical-pod-autoscaler'
+        namespace: '{{.environment}}-hm-simple-krr-dashboard'
         server: https://kubernetes.default.svc
       syncPolicy:
         syncOptions:
