@@ -12,14 +12,12 @@ alloy:
   resources:
     requests:
       cpu: 200m
-      memory: 800m
+      memory: 1200Mi
     limits:
-      memory: 1Gi
+      memory: 1200Mi
   extraEnv:
     - name: LOKI_URL
       value: http://loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
-    - name: MIMIR_URL
-      value: http://mimir-gateway.production-hm-mimir.svc:80/api/v1/push
   configMap:
     content: |-
       // https://grafana.com/docs/alloy/latest/configure/kubernetes/
@@ -158,16 +156,6 @@ alloy:
       loki.write "hm_loki" {
         endpoint {
           url = env("LOKI_URL")
-          headers = {
-            "X-Scope-OrgID" = "hm",
-          }
-        }
-      }
-
-      // hm-mimir
-      prometheus.remote_write "hm_mimir" {
-        endpoint {
-          url = env("MIMIR_URL")
           headers = {
             "X-Scope-OrgID" = "hm",
           }

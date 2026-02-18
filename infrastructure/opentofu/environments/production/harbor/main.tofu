@@ -24,6 +24,12 @@ module "harbor_registry_microsoft_artifact_registry" {
   name          = "microsoft-artifact-registry"
   endpoint_url  = "https://mcr.microsoft.com"
 }
+module "harbor_registry_quay_io" {
+  source        = "../../../modules/harbor/harbor_registry"
+  provider_name = "docker-registry"
+  name          = "quay-io"
+  endpoint_url  = "https://quay.io"
+}
 
 # Garbage Collection
 module "harbor_garbage_collection" {
@@ -46,6 +52,13 @@ module "harbor_project_microsoft_artifact_registry_proxy_cache" {
   name        = "microsoft-artifact-registry-proxy-cache"
   public      = true
   registry_id = module.harbor_registry_microsoft_artifact_registry.id
+}
+# Project - quay-io-proxy-cache
+module "harbor_project_quay_io_proxy_cache" {
+  source      = "../../../modules/harbor/harbor_project"
+  name        = "quay-io-proxy-cache"
+  public      = true
+  registry_id = module.harbor_registry_quay_io.id
 }
 # Project - hm-application
 module "harbor_project_hm_application" {

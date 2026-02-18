@@ -66,10 +66,10 @@ alertmanager:
     storageClass: production-hm-mimir-storage-class
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 20m
+      memory: 100Mi
     limits:
-      memory: 500Mi
+      memory: 100Mi
 compactor:
   enabled: true
   replicas: 3
@@ -96,10 +96,10 @@ compactor:
     storageClass: production-hm-mimir-storage-class
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 20m
+      memory: 3600Mi
     limits:
-      memory: 500Mi
+      memory: 3600Mi
 distributor:
   enabled: true
   replicas: 3
@@ -122,10 +122,10 @@ distributor:
       effect: NoSchedule
   resources:
     requests:
-      cpu: 200m
-      memory: 300Mi
+      cpu: 500m
+      memory: 800Mi
     limits:
-      memory: 500Mi
+      memory: 800Mi
 kafka:
   enabled: true
   nodeSelector:
@@ -135,6 +135,15 @@ kafka:
       operator: Equal
       value: production
       effect: NoSchedule
+  persistence:
+    size: 1Ti
+    storageClass: production-hm-mimir-storage-class
+  resources:
+    requests:
+      cpu: 200m
+      memory: 4200Mi
+    limits:
+      memory: 4200Mi
 ingester:
   enabled: true
   replicas: 3
@@ -161,10 +170,10 @@ ingester:
     storageClass: production-hm-mimir-storage-class
   resources:
     requests:
-      cpu: 200m
-      memory: 4Gi
+      cpu: 600m
+      memory: 10Gi
     limits:
-      memory: 8Gi
+      memory: 10Gi
 overrides_exporter:
   enabled: true
   replicas: 3
@@ -184,10 +193,10 @@ overrides_exporter:
       effect: NoSchedule
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      memory: 500Mi
+      memory: 100Mi
 querier:
   enabled: true
   replicas: 3
@@ -210,10 +219,10 @@ querier:
       effect: NoSchedule
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 30m
+      memory: 200Mi
     limits:
-      memory: 500Mi
+      memory: 200Mi
 query_frontend:
   enabled: true
   replicas: 3
@@ -233,10 +242,10 @@ query_frontend:
       effect: NoSchedule
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 20m
+      memory: 200Mi
     limits:
-      memory: 500Mi
+      memory: 200Mi
 query_scheduler:
   enabled: true
   replicas: 3
@@ -256,10 +265,10 @@ query_scheduler:
       effect: NoSchedule
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      memory: 500Mi
+      memory: 100Mi
 rollout_operator:
   enabled: true
   nodeSelector:
@@ -271,10 +280,10 @@ rollout_operator:
       effect: NoSchedule
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      memory: 500Mi
+      memory: 100Mi
 ruler:
   enabled: true
   replicas: 3
@@ -297,10 +306,10 @@ ruler:
       effect: NoSchedule
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 20m
+      memory: 100Mi
     limits:
-      memory: 500Mi
+      memory: 100Mi
 store_gateway:
   enabled: true
   replicas: 3
@@ -327,10 +336,10 @@ store_gateway:
     storageClass: production-hm-mimir-storage-class
   resources:
     requests:
-      cpu: 100m
-      memory: 300Mi
+      cpu: 20m
+      memory: 200Mi
     limits:
-      memory: 500Mi
+      memory: 200Mi
 gateway:
   enabled: true
   replicas: 3
@@ -348,6 +357,12 @@ gateway:
       operator: Equal
       value: production
       effect: NoSchedule
+  resources:
+    requests:
+      cpu: 30m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
   nginx:
     config:
       resolver: coredns.kube-system.svc.cluster.local.

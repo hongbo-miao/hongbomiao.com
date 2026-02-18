@@ -1,0 +1,34 @@
+# https://github.com/devops-ia/helm-simple-krr-dashboard/blob/main/charts/simple-krr-dashboard/values.yaml
+---
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule
+resources:
+  requests:
+    cpu: 50m
+    memory: 200Mi
+  limits:
+    memory: 400Mi
+job:
+  image:
+    repository: harbor.hongbomiao.com/docker-hub-proxy-cache/robustadev/krr
+  # At minute 17 of every hour
+  schedule: "17 * * * *"
+  krrExtraArguments: '--prometheus-headers="X-Scope-OrgID: hm"'
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  resources:
+    requests:
+      cpu: 50m
+      memory: 200Mi
+    limits:
+      memory: 500Mi
