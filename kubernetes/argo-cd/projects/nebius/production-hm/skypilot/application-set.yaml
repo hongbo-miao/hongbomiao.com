@@ -34,9 +34,23 @@ spec:
       destination:
         namespace: '{{.environment}}-hm-skypilot'
         server: https://kubernetes.default.svc
+      # https://github.com/skypilot-org/skypilot/issues/8867
+      ignoreDifferences:
+        - group: apps
+          kind: Deployment
+          name: skypilot-oauth2-proxy
+          jqPathExpressions:
+            - .spec.template.spec.containers[].env[] | select(.name == "OAUTH2_PROXY_COOKIE_SECRET")
+        - group: apps
+          kind: Deployment
+          name: skypilot-api-server
+          jsonPointers:
+            - /spec/template/spec/containers/0/env/5/valueFrom/resourceFieldRef/divisor
+            - /spec/template/spec/containers/0/env/6/valueFrom/resourceFieldRef/divisor
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
+          - RespectIgnoreDifferences=true
         automated:
           prune: true
