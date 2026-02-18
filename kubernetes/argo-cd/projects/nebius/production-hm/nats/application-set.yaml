@@ -34,9 +34,17 @@ spec:
       destination:
         namespace: '{{.environment}}-hm-nats'
         server: https://kubernetes.default.svc
+      ignoreDifferences:
+        - group: apps
+          kind: StatefulSet
+          name: nats
+          jqPathExpressions:
+            - .spec.volumeClaimTemplates[].apiVersion
+            - .spec.volumeClaimTemplates[].kind
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
+          - RespectIgnoreDifferences=true
         automated:
           prune: true

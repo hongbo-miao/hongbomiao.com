@@ -34,9 +34,20 @@ spec:
       destination:
         namespace: '{{.environment}}-hm-harbor'
         server: https://kubernetes.default.svc
+      ignoreDifferences:
+        - kind: Secret
+          jsonPointers:
+            - /data
+        - group: apps
+          kind: Deployment
+          jqPathExpressions:
+            - .spec.template.metadata.annotations["checksum/secret"]
+            - .spec.template.metadata.annotations["checksum/secret-core"]
+            - .spec.template.metadata.annotations["checksum/secret-jobservice"]
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
+          - RespectIgnoreDifferences=true
         automated:
           prune: true
