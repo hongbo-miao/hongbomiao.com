@@ -3,21 +3,40 @@
 image:
   registry: harbor.hongbomiao.com/docker-hub-proxy-cache
 controller:
+  # https://github.com/grafana/beyla/blob/main/examples/k8s/unprivileged.yaml
+  hostPID: true
   tolerations:
     - key: environment
       operator: Exists
       effect: NoSchedule
 alloy:
   stabilityLevel: generally-available
-  resources:
-    requests:
-      cpu: 200m
-      memory: 1200Mi
-    limits:
-      memory: 1200Mi
+  securityContext:
+    # https://grafana.com/docs/grafana-cloud/send-data/alloy/reference/components/beyla/beyla.ebpf/
+    appArmorProfile:
+      type: Unconfined
+    # https://github.com/grafana/beyla/blob/main/examples/k8s/unprivileged.yaml
+    runAsUser: 0
+    capabilities:
+      drop:
+        - ALL
+      add:
+        - BPF
+        - CHECKPOINT_RESTORE
+        - DAC_READ_SEARCH
+        - NET_RAW
+        - PERFMON
+        - SYS_ADMIN
+        - SYS_PTRACE
   extraEnv:
     - name: LOKI_URL
       value: http://loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
+    - name: TEMPO_ENDPOINT
+      value: tempo-distributor.production-hm-tempo.svc:4317
+    - name: MIMIR_URL
+      value: http://mimir-gateway.production-hm-mimir.svc:80/api/v1/push
+    - name: PYROSCOPE_URL
+      value: http://pyroscope.production-hm-pyroscope.svc:4040
   configMap:
     content: |-
       // https://grafana.com/docs/alloy/latest/configure/kubernetes/
@@ -156,6 +175,155 @@ alloy:
       loki.write "hm_loki" {
         endpoint {
           url = env("LOKI_URL")
+          headers = {
+            "X-Scope-OrgID" = "hm",
+          }
+        }
+      }
+
+      // hm-pyroscope
+      // https://grafana.com/docs/alloy/latest/reference/components/pyroscope/pyroscope.scrape/
+      discovery.relabel "pyroscope_pods" {
+        targets = discovery.kubernetes.pod.targets
+
+        rule {
+          source_labels = ["__meta_kubernetes_namespace"]
+          action = "replace"
+          target_label = "namespace"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_name"]
+          action = "replace"
+          target_label = "pod"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_container_name"]
+          action = "replace"
+          target_label = "container"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_label_app_kubernetes_io_name"]
+          action = "replace"
+          target_label = "app"
+        }
+
+        // Keep only pods that have profiling annotations
+        rule {
+          source_labels = ["__meta_kubernetes_pod_annotation_profiles_grafana_com_cpu_scrape"]
+          action = "keep"
+          regex = "true"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_annotation_profiles_grafana_com_cpu_port_name"]
+          action = "replace"
+          target_label = "__meta_kubernetes_pod_annotation_profiles_grafana_com_port_name"
+        }
+      }
+
+      pyroscope.scrape "pods" {
+        targets    = discovery.relabel.pyroscope_pods.output
+        forward_to = [pyroscope.write.hm_pyroscope.receiver]
+        profiling_config {
+          profile.process_cpu {
+            enabled = true
+          }
+          profile.memory {
+            enabled = true
+          }
+          profile.goroutine {
+            enabled = true
+          }
+          profile.block {
+            enabled = false
+          }
+          profile.mutex {
+            enabled = false
+          }
+        }
+      }
+
+      pyroscope.write "hm_pyroscope" {
+        endpoint {
+          url = env("PYROSCOPE_URL")
+          headers = {
+            "X-Scope-OrgID" = "hm",
+          }
+        }
+      }
+
+      // hm-beyla
+      // https://grafana.com/docs/grafana-cloud/send-data/alloy/reference/components/beyla/beyla.ebpf/
+      beyla.ebpf "hm_beyla" {
+        open_port = "80,443,8000-8999"
+        attributes {
+          kubernetes {
+            enable = "true"
+          }
+        }
+        discovery {
+          services {
+            kubernetes {
+              namespace = "."
+            }
+          }
+        }
+        routes {
+          unmatched = "heuristic"
+        }
+        metrics {
+          features = [
+            "application",
+            "application_process",
+            "application_service_graph",
+            "application_span",
+            "network",
+          ]
+          instrumentations = ["*"]
+          network {
+            enable = true
+          }
+        }
+        output {
+          traces = [otelcol.processor.batch.hm_beyla.input]
+        }
+      }
+
+      // hm-beyla - Trace
+      otelcol.processor.batch "hm_beyla" {
+        output {
+          traces = [otelcol.exporter.otlp.hm_tempo_for_hm_beyla.input]
+        }
+      }
+      // https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.auth.headers/
+      otelcol.auth.headers "hm_tempo_for_hm_beyla" {
+        header {
+          key   = "X-Scope-OrgID"
+          value = "hm"
+        }
+      }
+      otelcol.exporter.otlp "hm_tempo_for_hm_beyla" {
+        client {
+          endpoint = env("TEMPO_ENDPOINT")
+          compression = "zstd"
+          auth = otelcol.auth.headers.hm_tempo_for_hm_beyla.handler
+          tls {
+            insecure = true
+            insecure_skip_verify = true
+          }
+        }
+      }
+
+      // hm-beyla - Metrics
+      // https://grafana.com/docs/alloy/latest/reference/components/beyla/beyla.ebpf/
+      prometheus.scrape "hm_beyla" {
+        targets = beyla.ebpf.hm_beyla.targets
+        honor_labels = true
+        forward_to = [prometheus.remote_write.hm_mimir.receiver]
+      }
+
+      prometheus.remote_write "hm_mimir" {
+        endpoint {
+          url = env("MIMIR_URL")
           headers = {
             "X-Scope-OrgID" = "hm",
           }

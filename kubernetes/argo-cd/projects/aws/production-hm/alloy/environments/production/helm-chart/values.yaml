@@ -7,12 +7,6 @@ controller:
   hostPID: true
 alloy:
   stabilityLevel: generally-available
-  resources:
-    requests:
-      cpu: 200m
-      memory: 800m
-    limits:
-      memory: 1Gi
   securityContext:
     # https://grafana.com/docs/grafana-cloud/send-data/alloy/reference/components/beyla/beyla.ebpf/
     appArmorProfile:
@@ -271,7 +265,6 @@ alloy:
       // hm Beyla
       // https://grafana.com/docs/grafana-cloud/send-data/alloy/reference/components/beyla/beyla.ebpf/
       beyla.ebpf "hm_beyla" {
-        debug = true
         open_port = "80,443,8000-8999"
         attributes {
           kubernetes {

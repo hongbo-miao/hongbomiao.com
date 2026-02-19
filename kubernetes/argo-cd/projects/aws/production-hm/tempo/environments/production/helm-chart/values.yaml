@@ -51,15 +51,18 @@ traces:
 # https://github.com/grafana/helm-charts/tree/main/charts/tempo-distributed#activate-metrics-generator
 metricsGenerator:
   enabled: true
+  replicas: 3
   config:
     processor:
       # https://grafana.com/docs/tempo/latest/operations/traceql-metrics/
       local_blocks:
         filter_server_spans: false
+      service_graphs:
+        max_items: 200000
     storage:
       remote_write_add_org_id_header: true
       remote_write:
-        - url: http://mimir-distributor-headless.production-hm-mimir.svc:8080/api/v1/push
+        - url: http://mimir-gateway.production-hm-mimir.svc:80/api/v1/push
           headers:
             X-Scope-OrgID: hm
 global_overrides:
@@ -69,6 +72,9 @@ global_overrides:
         - local-blocks
         - service-graphs
         - span-metrics
+      # https://grafana.com/docs/tempo/latest/configuration/
+      forwarder:
+        queue_size: 300
 # https://grafana.com/docs/tempo/latest/setup/operator/object-storage/
 storage:
   admin:

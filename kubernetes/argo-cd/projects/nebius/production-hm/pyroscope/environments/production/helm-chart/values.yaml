@@ -1,0 +1,41 @@
+# https://github.com/grafana/pyroscope/blob/main/operations/pyroscope/helm/pyroscope/values.yaml
+---
+pyroscope:
+  image:
+    repository: harbor.hongbomiao.com/docker-hub-proxy-cache/grafana/pyroscope
+  replicaCount: 3
+  config: |
+    multitenancy_enabled: true
+    storage:
+      backend: s3
+      s3:
+        endpoint: storage.us-central1.nebius.cloud
+        bucket_name: production-hm-pyroscope
+        region: us-central1
+  extraArgs:
+    log.level: info
+  extraEnvFrom:
+    - secretRef:
+        name: hm-pyroscope-secret
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+  # Disable self-profiling annotations to avoid "cpu profiling already in use" errors
+  # when Alloy DaemonSet pods across all nodes try to scrape Pyroscope's pprof endpoint simultaneously
+  podAnnotations:
+    profiles.grafana.com/cpu.scrape: "false"
+    profiles.grafana.com/memory.scrape: "false"
+    profiles.grafana.com/goroutine.scrape: "false"
+  resources:
+    requests:
+      cpu: 200m
+      memory: 500Mi
+    limits:
+      memory: 1Gi
+alloy:
+  enabled: false
+minio:
+  enabled: false

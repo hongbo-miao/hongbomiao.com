@@ -49,6 +49,79 @@ module "grafana_data_source_hm_mimir" {
   })
 }
 
+# Data Source - hm-tempo
+module "grafana_data_source_hm_tempo" {
+  source     = "../../../modules/grafana/grafana_data_source"
+  for_each   = toset(local.org_ids)
+  org_id     = each.value
+  name       = "hm-tempo"
+  type       = "tempo"
+  url        = "http://tempo-gateway.production-hm-tempo.svc:80"
+  is_default = false
+  http_headers = {
+    "X-Scope-OrgID" = "hm"
+  }
+  json_data_encoded = jsonencode({
+    tracesToLogsV2 = {
+      datasourceUid      = module.grafana_data_source_hm_loki[each.value].uid
+      spanStartTimeShift = "-1h"
+      spanEndTimeShift   = "1h"
+      tags               = ["job", "instance", "pod", "namespace"]
+      filterByTraceID    = true
+      filterBySpanID     = true
+      customQuery        = true
+      query              = "method=\"$${__span.tags.method}\""
+    }
+    tracesToMetrics = {
+      datasourceUid      = module.grafana_data_source_hm_mimir[each.value].uid
+      spanStartTimeShift = "-1h"
+      spanEndTimeShift   = "1h"
+      tags               = [{ key = "service.name", value = "service" }, { key = "job" }]
+      queries = [
+        {
+          name  = "Sample query"
+          query = "sum(rate(traces_spanmetrics_latency_bucket{$$__tags}[5m]))"
+        }
+      ]
+    }
+    serviceMap = {
+      datasourceUid = module.grafana_data_source_hm_mimir[each.value].uid
+    }
+    nodeGraph = {
+      enabled = true
+    }
+    search = {
+      hide = false
+    }
+    traceQuery = {
+      timeShiftEnabled   = true
+      spanStartTimeShift = "-1h"
+      spanEndTimeShift   = "1h"
+    }
+    spanBar = {
+      type = "Tag"
+      tag  = "http.path"
+    }
+    streamingEnabled = {
+      search = true
+    }
+  })
+}
+
+# Data Source - hm-pyroscope
+module "grafana_data_source_hm_pyroscope" {
+  source     = "../../../modules/grafana/grafana_data_source"
+  for_each   = toset(local.org_ids)
+  org_id     = each.value
+  name       = "hm-pyroscope"
+  type       = "grafana-pyroscope-datasource"
+  url        = "http://pyroscope.production-hm-pyroscope.svc:4040"
+  is_default = false
+  http_headers = {
+    "X-Scope-OrgID" = "hm"
+  }
+}
+
 # Dashboard
 # Dashboard - Cilium
 locals {

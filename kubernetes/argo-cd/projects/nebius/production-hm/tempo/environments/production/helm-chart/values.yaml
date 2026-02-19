@@ -1,0 +1,161 @@
+# https://github.com/grafana/helm-charts/blob/main/charts/tempo-distributed/values.yaml
+# https://grafana.com/docs/tempo/latest/setup/operator/object-storage/
+---
+global:
+  image:
+    registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+serviceAccount:
+  create: true
+  name: hm-tempo
+multitenancyEnabled: true
+streamOverHTTPEnabled: true
+tempo:
+  structuredConfig:
+    storage:
+      trace:
+        # https://grafana.com/docs/tempo/latest/configuration/compression/
+        block:
+          v2_encoding: zstd
+        wal:
+          v2_encoding: zstd
+server:
+  logLevel: info
+gateway:
+  enabled: true
+  replicas: 3
+  nginxConfig:
+    resolver: coredns.kube-system.svc.cluster.local.
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+distributor:
+  replicas: 3
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  extraEnvFrom:
+    - secretRef:
+        name: hm-tempo-secret
+ingester:
+  replicas: 3
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  extraEnvFrom:
+    - secretRef:
+        name: hm-tempo-secret
+compactor:
+  replicas: 3
+  config:
+    compaction:
+      # 31 days
+      block_retention: 744h
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  extraEnvFrom:
+    - secretRef:
+        name: hm-tempo-secret
+querier:
+  replicas: 3
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  extraEnvFrom:
+    - secretRef:
+        name: hm-tempo-secret
+queryFrontend:
+  replicas: 3
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  extraEnvFrom:
+    - secretRef:
+        name: hm-tempo-secret
+memcached:
+  replicas: 3
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+traces:
+  otlp:
+    http:
+      enabled: true
+    grpc:
+      enabled: true
+# https://grafana.com/docs/tempo/latest/configuration/#metrics-generator
+# https://github.com/grafana/helm-charts/tree/main/charts/tempo-distributed#activate-metrics-generator
+metricsGenerator:
+  enabled: true
+  config:
+    processor:
+      # https://grafana.com/docs/tempo/latest/operations/traceql-metrics/
+      local_blocks:
+        filter_server_spans: false
+      service_graphs:
+        max_items: 100000
+    storage:
+      remote_write_add_org_id_header: true
+      remote_write:
+        - url: http://mimir-gateway.production-hm-mimir.svc:80/api/v1/push
+          headers:
+            X-Scope-OrgID: hm
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  extraEnvFrom:
+    - secretRef:
+        name: hm-tempo-secret
+overrides:
+  defaults:
+    metrics_generator:
+      processors:
+        - local-blocks
+        - service-graphs
+        - span-metrics
+      # https://grafana.com/docs/tempo/latest/configuration/
+      forwarder:
+        queue_size: 300
+# https://grafana.com/docs/tempo/latest/setup/operator/object-storage/
+storage:
+  trace:
+    backend: s3
+    s3:
+      endpoint: storage.us-central1.nebius.cloud
+      region: us-central1
+      bucket: production-hm-tempo-trace
+minio:
+  enabled: false
+reportingEnabled: false

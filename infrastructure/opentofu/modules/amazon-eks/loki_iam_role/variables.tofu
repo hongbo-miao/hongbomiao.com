@@ -7,9 +7,6 @@ variable "loki_service_account_name" {
 variable "loki_namespace" {
   type = string
 }
-variable "loki_admin_s3_bucket_name" {
-  type = string
-}
 variable "loki_chunk_s3_bucket_name" {
   type = string
 }

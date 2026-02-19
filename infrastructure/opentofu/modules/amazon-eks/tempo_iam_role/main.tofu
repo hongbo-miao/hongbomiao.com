@@ -47,7 +47,6 @@ resource "aws_iam_role_policy" "hm_tempo_iam_role_policy" {
           "s3:ListBucket"
         ]
         Resource = [
-          "arn:aws:s3:::${var.tempo_admin_s3_bucket_name}",
           "arn:aws:s3:::${var.tempo_trace_s3_bucket_name}"
         ]
       },
@@ -59,7 +58,6 @@ resource "aws_iam_role_policy" "hm_tempo_iam_role_policy" {
           "s3:PutObject"
         ]
         Resource = [
-          "arn:aws:s3:::${var.tempo_admin_s3_bucket_name}/*",
           "arn:aws:s3:::${var.tempo_trace_s3_bucket_name}/*"
         ]
       }
