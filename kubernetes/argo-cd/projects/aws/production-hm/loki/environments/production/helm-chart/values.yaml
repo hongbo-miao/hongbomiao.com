@@ -39,19 +39,20 @@ loki:
     # https://grafana.com/docs/loki/latest/operations/storage/retention/
     retention_period: 744h
     # https://grafana.com/docs/loki/latest/operations/request-validation-rate-limits/
-    ingestion_rate_mb: 50
-    ingestion_burst_size_mb: 100
-    per_stream_rate_limit: 50MB
-    per_stream_rate_limit_burst: 100MB
+    ingestion_rate_mb: 500
+    ingestion_burst_size_mb: 1000
+    per_stream_rate_limit: 200MB
+    per_stream_rate_limit_burst: 500MB
+    unordered_writes: true
   query_scheduler:
     max_outstanding_requests_per_tenant: 32768
   querier:
     max_concurrent: 16
   server:
-    # 128 MiB
-    grpc_server_max_recv_msg_size: 134217728
-    # 128 MiB
-    grpc_server_max_send_msg_size: 134217728
+    # 100 MB
+    grpc_server_max_recv_msg_size: 100000000
+    # 100 MB
+    grpc_server_max_send_msg_size: 100000000
   compactor:
     retention_enabled: true
     delete_request_store: s3
@@ -61,7 +62,7 @@ loki:
       type: s3
       s3:
         region: us-west-2
-        bucketnames: production-hm-loki-ruler-bucket
+        bucketnames: production-hm-loki-ruler
         s3forcepathstyle: false
       alertmanager_url: http://prometheus-kube-pr-alertmanager.production-hm-prometheus:9093
   storage:
@@ -69,9 +70,8 @@ loki:
     s3:
       region: us-west-2
     bucketNames:
-      chunks: production-hm-loki-chunk-bucket
-      ruler: production-hm-loki-ruler-bucket
-      admin: production-hm-loki-admin-bucket
+      chunks: production-hm-loki-chunk
+      ruler: production-hm-loki-ruler
 gateway:
   enabled: true
   replicas: 3
@@ -146,6 +146,19 @@ querier:
     maxReplicas: 15
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
+    behavior:
+      scaleUp:
+        stabilizationWindowSeconds: 600
+        policies:
+          - type: Pods
+            value: 2
+            periodSeconds: 300
+      scaleDown:
+        stabilizationWindowSeconds: 1800
+        policies:
+          - type: Pods
+            value: 1
+            periodSeconds: 300
   resources:
     requests:
       cpu: 2
@@ -161,7 +174,7 @@ compactor:
     limits:
       memory: 280Mi
 chunksCache:
-  replicas: 3
+  replicas: 6
   resources:
     requests:
       cpu: 10m

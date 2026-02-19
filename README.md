@@ -276,12 +276,13 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ## Monitoring
 
-- **Grafana** - Observability and Data visualization
+- **Grafana** - Observability and data visualization
   - **Grafana Alloy** - OpenTelemetry collector
   - **Grafana Beyla** - eBPF-based auto-instrumentation tool
   - **Grafana Loki** - Log aggregation system
   - **Grafana Mimir** - Prometheus metrics storage
   - **Grafana Tempo** - Distributed tracing backend
+  - **Grafana Pyroscope** - Continuous profiling platform
   - **Grafana k6** - Load testing
 - **Vector** - Log collector
 - **Fluent Bit** - Log collector
@@ -847,7 +848,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Rancher** - Kubernetes container management platform
 - **KRR** - Kubernetes resource recommendation based on Prometheus metrics
   - **Simple KRR Dashboard** - KRR dashboard
-- **Goldilocks** - Kubernetes resource requests recommendation
+- **Goldilocks** - Kubernetes resource recommendation based on Vertical Pod Autoscaler (VPA)
 - **Polaris** - Kubernetes best practices validation
 - **Sloop** - Kubernetes history visualization
 - **OpenCost** - Kubernetes cost monitoring

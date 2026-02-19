@@ -7,9 +7,6 @@ variable "tempo_service_account_name" {
 variable "tempo_namespace" {
   type = string
 }
-variable "tempo_admin_s3_bucket_name" {
-  type = string
-}
 variable "tempo_trace_s3_bucket_name" {
   type = string
 }

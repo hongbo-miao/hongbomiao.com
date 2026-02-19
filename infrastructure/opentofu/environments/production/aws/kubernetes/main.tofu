@@ -607,19 +607,19 @@ locals {
 module "s3_bucket_hm_mimir_alertmanager" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/amazon_s3_bucket"
-  s3_bucket_name = "${local.mimir_alertmanager_name}-bucket"
+  s3_bucket_name = local.mimir_alertmanager_name
   common_tags    = var.common_tags
 }
 module "s3_bucket_hm_mimir_block" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/amazon_s3_bucket"
-  s3_bucket_name = "${local.mimir_block_name}-bucket"
+  s3_bucket_name = local.mimir_block_name
   common_tags    = var.common_tags
 }
 module "s3_bucket_hm_mimir_ruler" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/amazon_s3_bucket"
-  s3_bucket_name = "${local.mimir_ruler_name}-bucket"
+  s3_bucket_name = local.mimir_ruler_name
   common_tags    = var.common_tags
 }
 module "mimir_iam_role" {
@@ -638,26 +638,19 @@ module "mimir_iam_role" {
 # Loki
 # Loki - S3 bucket
 locals {
-  loki_admin_name = "${var.environment}-hm-loki-admin"
   loki_chunk_name = "${var.environment}-hm-loki-chunk"
   loki_ruler_name = "${var.environment}-hm-loki-ruler"
-}
-module "s3_bucket_hm_loki_admin" {
-  providers      = { aws = aws.production }
-  source         = "../../../../modules/aws/amazon_s3_bucket"
-  s3_bucket_name = "${local.loki_admin_name}-bucket"
-  common_tags    = var.common_tags
 }
 module "s3_bucket_hm_loki_chunk" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/amazon_s3_bucket"
-  s3_bucket_name = "${local.loki_chunk_name}-bucket"
+  s3_bucket_name = local.loki_chunk_name
   common_tags    = var.common_tags
 }
 module "s3_bucket_hm_loki_ruler" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/amazon_s3_bucket"
-  s3_bucket_name = "${local.loki_ruler_name}-bucket"
+  s3_bucket_name = local.loki_ruler_name
   common_tags    = var.common_tags
 }
 module "loki_iam_role" {
@@ -665,7 +658,6 @@ module "loki_iam_role" {
   source                               = "../../../../modules/amazon-eks/loki_iam_role"
   loki_service_account_name            = "hm-loki"
   loki_namespace                       = "${var.environment}-hm-loki"
-  loki_admin_s3_bucket_name            = module.s3_bucket_hm_loki_admin.name
   loki_chunk_s3_bucket_name            = module.s3_bucket_hm_loki_chunk.name
   loki_ruler_s3_bucket_name            = module.s3_bucket_hm_loki_ruler.name
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
@@ -675,20 +667,10 @@ module "loki_iam_role" {
 
 # Tempo
 # Tempo - S3 bucket
-locals {
-  tempo_admin_name = "${var.environment}-hm-tempo-admin"
-  tempo_trace_name = "${var.environment}-hm-tempo-trace"
-}
-module "s3_bucket_hm_tempo_admin" {
-  providers      = { aws = aws.production }
-  source         = "../../../../modules/aws/amazon_s3_bucket"
-  s3_bucket_name = "${local.tempo_admin_name}-bucket"
-  common_tags    = var.common_tags
-}
 module "s3_bucket_hm_tempo_trace" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/amazon_s3_bucket"
-  s3_bucket_name = "${local.tempo_trace_name}-bucket"
+  s3_bucket_name = "${var.environment}-hm-tempo-trace"
   common_tags    = var.common_tags
 }
 module "tempo_iam_role" {
@@ -696,7 +678,6 @@ module "tempo_iam_role" {
   source                               = "../../../../modules/amazon-eks/tempo_iam_role"
   tempo_service_account_name           = "hm-tempo"
   tempo_namespace                      = "${var.environment}-hm-tempo"
-  tempo_admin_s3_bucket_name           = module.s3_bucket_hm_tempo_admin.name
   tempo_trace_s3_bucket_name           = module.s3_bucket_hm_tempo_trace.name
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn

@@ -79,48 +79,6 @@ datasources:
     # deleteDatasources:
     #   - name: xxx
     datasources:
-      - name: hm-tempo
-        type: tempo
-        isDefault: false
-        url: http://tempo-query-frontend.production-hm-tempo:3100
-        access: proxy
-        # https://grafana.com/docs/grafana/next/datasources/tempo/configure-tempo-data-source/#example-file
-        jsonData:
-          tracesToLogsV2:
-            datasourceUid: hm-loki
-            spanStartTimeShift: -1h
-            spanEndTimeShift: 1h
-            tags: ["job", "instance", "pod", "namespace"]
-            filterByTraceID: false
-            filterBySpanID: false
-            customQuery: true
-            query: method="$${__span.tags.method}"
-          tracesToMetrics:
-            datasourceUid: hm-prometheus
-            spanStartTimeShift: -1h
-            spanEndTimeShift: 1h
-            tags: [{key: "service.name", value: "service"}, {key: "job"}]
-            queries:
-              - name: Sample query
-                query: sum(rate(traces_spanmetrics_latency_bucket{$$__tags}[5m]))
-          serviceMap:
-            datasourceUid: hm-prometheus
-          nodeGraph:
-            enabled: true
-          search:
-            hide: false
-          traceQuery:
-            timeShiftEnabled: true
-            spanStartTimeShift: -1h
-            spanEndTimeShift: 1h
-          spanBar:
-            type: Tag
-            tag: http.path
-          streamingEnabled:
-            search: true
-          httpHeaderName1: X-Scope-OrgID
-        secureJsonData:
-          httpHeaderValue1: hm
       - name: hm-starrocks
         type: mysql
         isDefault: false

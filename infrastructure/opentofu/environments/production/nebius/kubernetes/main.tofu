@@ -341,7 +341,7 @@ module "hm_loki_iam_group_membership" {
   labels    = var.common_labels
 }
 locals {
-  loki_buckets = toset(["admin", "chunk", "ruler"])
+  loki_buckets = toset(["chunk", "ruler"])
 }
 module "hm_loki_access_permit" {
   for_each    = local.loki_buckets
@@ -357,6 +357,80 @@ module "hm_loki_object_storage" {
   source                = "../../../../modules/nebius/object_storage"
   project_id            = var.project_id
   object_storage_name   = "${var.environment}-hm-loki-${each.key}"
+  default_storage_class = "STANDARD"
+  versioning_policy     = "DISABLED"
+  labels                = var.common_labels
+}
+
+# Tempo
+# Tempo - service account
+module "hm_tempo_service_account" {
+  source               = "../../../../modules/nebius/service_account"
+  project_id           = var.project_id
+  service_account_name = "${var.environment}-tempo-service-account"
+  labels               = var.common_labels
+}
+module "hm_tempo_iam_group" {
+  source     = "../../../../modules/nebius/iam_group"
+  parent_id  = var.tenant_id
+  group_name = "${var.environment}-tempo-group"
+  labels     = var.common_labels
+}
+module "hm_tempo_iam_group_membership" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = module.hm_tempo_iam_group.id
+  member_id = module.hm_tempo_service_account.id
+  labels    = var.common_labels
+}
+module "hm_tempo_access_permit" {
+  source      = "../../../../modules/nebius/access_permit"
+  parent_id   = module.hm_tempo_iam_group.id
+  resource_id = module.hm_tempo_object_storage.id
+  role        = "storage.object-editor"
+  labels      = var.common_labels
+}
+# Tempo - object storage
+module "hm_tempo_object_storage" {
+  source                = "../../../../modules/nebius/object_storage"
+  project_id            = var.project_id
+  object_storage_name   = "${var.environment}-hm-tempo-trace"
+  default_storage_class = "STANDARD"
+  versioning_policy     = "DISABLED"
+  labels                = var.common_labels
+}
+
+# Pyroscope
+# Pyroscope - service account
+module "hm_pyroscope_service_account" {
+  source               = "../../../../modules/nebius/service_account"
+  project_id           = var.project_id
+  service_account_name = "${var.environment}-pyroscope-service-account"
+  labels               = var.common_labels
+}
+module "hm_pyroscope_iam_group" {
+  source     = "../../../../modules/nebius/iam_group"
+  parent_id  = var.tenant_id
+  group_name = "${var.environment}-pyroscope-group"
+  labels     = var.common_labels
+}
+module "hm_pyroscope_iam_group_membership" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = module.hm_pyroscope_iam_group.id
+  member_id = module.hm_pyroscope_service_account.id
+  labels    = var.common_labels
+}
+module "hm_pyroscope_access_permit" {
+  source      = "../../../../modules/nebius/access_permit"
+  parent_id   = module.hm_pyroscope_iam_group.id
+  resource_id = module.hm_pyroscope_object_storage.id
+  role        = "storage.object-editor"
+  labels      = var.common_labels
+}
+# Pyroscope - object storage
+module "hm_pyroscope_object_storage" {
+  source                = "../../../../modules/nebius/object_storage"
+  project_id            = var.project_id
+  object_storage_name   = "${var.environment}-hm-pyroscope"
   default_storage_class = "STANDARD"
   versioning_policy     = "DISABLED"
   labels                = var.common_labels
