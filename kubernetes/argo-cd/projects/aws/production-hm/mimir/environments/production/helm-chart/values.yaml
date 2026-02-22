@@ -38,6 +38,8 @@ runtimeConfig:
     max_ingestion_rate: 5000000
     max_series: 100000000
     max_tenants: 1000
+kedaAutoscaling:
+  prometheusAddress: http://prometheus-kube-prometheus-prometheus.production-hm-prometheus.svc:9090
 serviceAccount:
   create: true
   name: hm-mimir
@@ -85,7 +87,18 @@ compactor:
       memory: 3600Mi
 distributor:
   enabled: true
-  replicas: 3
+  kedaAutoscaling:
+    enabled: true
+    minReplicaCount: 3
+    maxReplicaCount: 15
+    targetCPUUtilizationPercentage: 100
+    targetMemoryUtilizationPercentage: 100
+    behavior:
+      scaleDown:
+        policies:
+          - periodSeconds: 600
+            type: Percent
+            value: 10
   topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: kubernetes.io/hostname
@@ -96,9 +109,9 @@ distributor:
   resources:
     requests:
       cpu: 500m
-      memory: 800Mi
+      memory: 1Gi
     limits:
-      memory: 800Mi
+      memory: 1Gi
 kafka:
   enabled: true
   nodeSelector:
@@ -119,7 +132,7 @@ kafka:
       memory: 4200Mi
 ingester:
   enabled: true
-  replicas: 3
+  replicas: 9
   topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: kubernetes.io/hostname
@@ -134,9 +147,9 @@ ingester:
   resources:
     requests:
       cpu: 600m
-      memory: 10Gi
+      memory: 3Gi
     limits:
-      memory: 10Gi
+      memory: 20Gi
 overrides_exporter:
   enabled: true
   replicas: 3
@@ -156,7 +169,27 @@ overrides_exporter:
       memory: 100Mi
 querier:
   enabled: true
-  replicas: 3
+  kedaAutoscaling:
+    enabled: true
+    minReplicaCount: 3
+    maxReplicaCount: 10
+    querySchedulerInflightRequestsThreshold: 12
+    behavior:
+      scaleDown:
+        policies:
+          - periodSeconds: 120
+            type: Percent
+            value: 10
+        stabilizationWindowSeconds: 600
+      scaleUp:
+        policies:
+          - periodSeconds: 120
+            type: Percent
+            value: 50
+          - periodSeconds: 120
+            type: Pods
+            value: 15
+        stabilizationWindowSeconds: 60
   topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: kubernetes.io/hostname
@@ -172,7 +205,18 @@ querier:
       memory: 200Mi
 query_frontend:
   enabled: true
-  replicas: 3
+  kedaAutoscaling:
+    enabled: true
+    minReplicaCount: 3
+    maxReplicaCount: 10
+    targetCPUUtilizationPercentage: 75
+    targetMemoryUtilizationPercentage: 100
+    behavior:
+      scaleDown:
+        policies:
+          - periodSeconds: 60
+            type: Percent
+            value: 10
   topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: kubernetes.io/hostname
@@ -212,7 +256,18 @@ rollout_operator:
       memory: 100Mi
 ruler:
   enabled: true
-  replicas: 3
+  kedaAutoscaling:
+    enabled: true
+    minReplicaCount: 3
+    maxReplicaCount: 10
+    targetCPUUtilizationPercentage: 100
+    targetMemoryUtilizationPercentage: 100
+    behavior:
+      scaleDown:
+        policies:
+          - periodSeconds: 600
+            type: Percent
+            value: 10
   topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: kubernetes.io/hostname
@@ -226,6 +281,55 @@ ruler:
       memory: 100Mi
     limits:
       memory: 100Mi
+ruler_querier:
+  enabled: true
+  kedaAutoscaling:
+    enabled: true
+    minReplicaCount: 1
+    maxReplicaCount: 10
+    querySchedulerInflightRequestsThreshold: 12
+    behavior:
+      scaleDown:
+        policies:
+          - periodSeconds: 120
+            type: Percent
+            value: 10
+        stabilizationWindowSeconds: 600
+      scaleUp:
+        policies:
+          - periodSeconds: 120
+            type: Percent
+            value: 50
+          - periodSeconds: 120
+            type: Pods
+            value: 15
+        stabilizationWindowSeconds: 60
+  resources:
+    requests:
+      cpu: 30m
+      memory: 200Mi
+    limits:
+      memory: 200Mi
+ruler_query_frontend:
+  enabled: true
+  kedaAutoscaling:
+    enabled: true
+    minReplicaCount: 1
+    maxReplicaCount: 10
+    targetCPUUtilizationPercentage: 75
+    targetMemoryUtilizationPercentage: 100
+    behavior:
+      scaleDown:
+        policies:
+          - periodSeconds: 60
+            type: Percent
+            value: 10
+  resources:
+    requests:
+      cpu: 20m
+      memory: 200Mi
+    limits:
+      memory: 200Mi
 store_gateway:
   enabled: true
   replicas: 3
@@ -245,7 +349,7 @@ store_gateway:
       cpu: 20m
       memory: 200Mi
     limits:
-      memory: 200Mi
+      memory: 1Gi
 gateway:
   enabled: true
   replicas: 3

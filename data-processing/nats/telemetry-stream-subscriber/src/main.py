@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 NATS_URL = "nats://localhost:4222"
 SUBJECT_PREFIX = "SENSOR_TELEMETRY_STREAMS"
 STREAM_SUBJECT = f"{SUBJECT_PREFIX}.random"
-CONSUMER_NAME = "telemetry_consumer"
+QUEUE_GROUP = "telemetry_queue_group"
 
 TELEMETRY_SCHEMA = capnp.load(str(Path(__file__).with_name("telemetry.capnp")))
 
@@ -65,11 +65,13 @@ async def main() -> None:
 
         await jetstream_context.subscribe(
             STREAM_SUBJECT,
-            durable=CONSUMER_NAME,
+            queue=QUEUE_GROUP,
             cb=message_handler,
             manual_ack=True,
         )
-        logger.info(f"Subscribed to '{STREAM_SUBJECT}' with consumer '{CONSUMER_NAME}'")
+        logger.info(
+            f"Subscribed to '{STREAM_SUBJECT}' in queue group '{QUEUE_GROUP}'",
+        )
 
         await asyncio.Event().wait()
 

@@ -112,8 +112,8 @@ indexGateway:
 distributor:
   autoscaling:
     enabled: true
-    minReplicas: 6
-    maxReplicas: 15
+    minReplicas: 3
+    maxReplicas: 30
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
   nodeSelector:
@@ -144,8 +144,8 @@ ingester:
       effect: NoSchedule
   autoscaling:
     enabled: true
-    minReplicas: 6
-    maxReplicas: 15
+    minReplicas: 3
+    maxReplicas: 30
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
     behavior:
@@ -171,7 +171,7 @@ queryFrontend:
   autoscaling:
     enabled: true
     minReplicas: 3
-    maxReplicas: 6
+    maxReplicas: 30
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
   nodeSelector:
@@ -211,8 +211,8 @@ querier:
         name: hm-loki-secret
   autoscaling:
     enabled: true
-    minReplicas: 6
-    maxReplicas: 15
+    minReplicas: 3
+    maxReplicas: 30
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
   nodeSelector:
@@ -224,10 +224,10 @@ querier:
       effect: NoSchedule
   resources:
     requests:
-      cpu: 2
+      cpu: 125m
       memory: 1Gi
     limits:
-      memory: 2Gi
+      memory: 5Gi
 compactor:
   extraEnvFrom:
     - secretRef:
@@ -245,7 +245,7 @@ compactor:
       cpu: 20m
       memory: 280Mi
     limits:
-      memory: 280Mi
+      memory: 900Mi
 chunksCache:
   replicas: 6
   nodeSelector:
