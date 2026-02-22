@@ -3,26 +3,25 @@ package utils
 import (
 	"context"
 	"github.com/hongbo-miao/hongbomiao.com/api/api-go/internal/graphql_server/types"
-	"github.com/redis/go-redis/v9"
 	"github.com/rs/zerolog/log"
+	"github.com/valkey-io/valkey-go"
 	"strconv"
 )
 
-func GetTrendingTwitterHashtags(rdb *redis.Client) ([]types.TwitterHashtag, error) {
+func GetTrendingTwitterHashtags(valkeyClient valkey.Client) ([]types.TwitterHashtag, error) {
 	ctx := context.Background()
 	var trendingTwitterHashtags []types.TwitterHashtag
 
-	res := rdb.HGetAll(ctx, "trending-twitter-hashtags")
-	err := res.Err()
-	if err == redis.Nil {
-		log.Error().Err(err).Msg("rdb.HGet")
-		return trendingTwitterHashtags, nil
-	} else if err != nil {
-		log.Error().Err(err).Msg("rdb.HGet")
+	result, err := valkeyClient.Do(ctx, valkeyClient.B().Hgetall().Key("trending-twitter-hashtags").Build()).AsStrMap()
+	if err != nil {
+		if valkey.IsValkeyNil(err) {
+			return trendingTwitterHashtags, nil
+		}
+		log.Error().Err(err).Msg("valkeyClient.Do Hgetall")
 		return nil, err
 	}
 
-	for k, v := range res.Val() {
+	for k, v := range result {
 		count, err := strconv.Atoi(v)
 		if err != nil {
 			return nil, err

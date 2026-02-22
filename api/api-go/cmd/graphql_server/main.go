@@ -6,8 +6,8 @@ import (
 	sharedUtils "github.com/hongbo-miao/hongbomiao.com/api/api-go/internal/shared/utils"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
-	"github.com/redis/go-redis/v9"
 	"github.com/rs/zerolog/log"
+	"github.com/valkey-io/valkey-go"
 	"go.opencensus.io/plugin/ochttp"
 	"net/http"
 	"strconv"
@@ -39,17 +39,15 @@ func main() {
 	if err != nil {
 		log.Error().Err(err).Msg("strconv.Atoi")
 	}
-	rdb := redis.NewClient(&redis.Options{
-		Addr:     config.RedisHost + ":" + config.RedisPort,
-		Password: config.RedisPassword,
-		DB:       redisDB,
+	valkeyClient, err := valkey.NewClient(valkey.ClientOption{
+		InitAddress: []string{config.RedisHost + ":" + config.RedisPort},
+		Password:    config.RedisPassword,
+		SelectDB:    redisDB,
 	})
-	defer func(rdb *redis.Client) {
-		err := rdb.Close()
-		if err != nil {
-			log.Error().Err(err).Msg("rdb.Close")
-		}
-	}(rdb)
+	if err != nil {
+		log.Fatal().Err(err).Msg("valkey.NewClient")
+	}
+	defer valkeyClient.Close()
 
 	sharedUtils.InitOpenCensusTracer(config.OpenCensusAgentHost, config.OpenCensusAgentPort, "graphql_server")
 
@@ -61,7 +59,7 @@ func main() {
 		log.Error().Err(err).Msg("minio.New")
 	}
 
-	r := routes.SetupRouter(config.AppEnv, rdb, minioClient)
+	r := routes.SetupRouter(config.AppEnv, valkeyClient, minioClient)
 	_ = http.ListenAndServe(
 		":"+config.Port,
 		&ochttp.Handler{

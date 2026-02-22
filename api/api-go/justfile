@@ -22,14 +22,17 @@ go-test:
 go-test-coverage:
     go test ./... -race -coverprofile=coverage.txt -covermode=atomic
 
-go-fmt:
-    gofmt .
-
-go-fmt-check:
+lint-go-fmt:
     gofmt -l .
 
-go-lint:
+lint-go-fmt-fix:
+    gofmt -w .
+
+lint-go:
     golangci-lint run ./...
+
+lint-go-fix:
+    golangci-lint run ./... --fix
 
 # Protocol Buffers
 proto-generate:
@@ -37,7 +40,7 @@ proto-generate:
     protoc api/graphql_server/proto/torchserve/v1/inference.proto --go_out=plugins=grpc:.
     protoc api/graphql_server/proto/torchserve/v1/management.proto --go_out=plugins=grpc:.
 
-proto-lint:
+lint-protocol-buffers:
     buf lint
 
 # OPA
@@ -47,10 +50,13 @@ opa-test:
 opa-test-coverage:
     opa test internal/graphql_server/policies/*.rego --coverage --format=json
 
-opa-fmt:
-    opa fmt internal/graphql_server/policies/*.rego -w
+lint-opa-fmt:
+    opa fmt -l internal/graphql_server/policies/*.rego
 
-opa-check:
+lint-opa-fmt-fix:
+    opa fmt -w internal/graphql_server/policies/*.rego
+
+lint-opa:
     opa check internal/graphql_server/policies/*.rego
 
 # Decision Logger

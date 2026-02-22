@@ -1,9 +1,10 @@
 package routes
 
 import (
-	"github.com/go-redis/redismock/v9"
 	"github.com/hongbo-miao/hongbomiao.com/api/api-go/internal/graphql_server/utils"
 	"github.com/stretchr/testify/assert"
+	"github.com/valkey-io/valkey-go/mock"
+	"go.uber.org/mock/gomock"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -11,8 +12,10 @@ import (
 
 func TestHealthRoute(t *testing.T) {
 	config := utils.GetConfig()
-	rdb, _ := redismock.NewClientMock()
-	r := SetupRouter(config.AppEnv, rdb, nil)
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+	valkeyClient := mock.NewClient(ctrl)
+	r := SetupRouter(config.AppEnv, valkeyClient, nil)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/", nil)
