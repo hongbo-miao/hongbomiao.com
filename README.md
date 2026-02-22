@@ -174,7 +174,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **pgx** - PostgreSQL driver
 - **dgo** - Dgraph client
 - **valkey-go** - Valkey client
-- **minio-go** - MinIO client
+- **AWS SDK for Go** - Amazon Web Services (AWS) SDK
 - **Resty** - HTTP client
 - **Squirrel** - SQL query builder
 - **apm-agent-go** - Application performance monitoring (APM) agent

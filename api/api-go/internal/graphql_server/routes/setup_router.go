@@ -1,19 +1,19 @@
 package routes
 
 import (
+	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/gin-contrib/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/hongbo-miao/hongbomiao.com/api/api-go/internal/graphql_server/controllers"
 	"github.com/hongbo-miao/hongbomiao.com/api/api-go/internal/graphql_server/handlers"
 	sharedControllers "github.com/hongbo-miao/hongbomiao.com/api/api-go/internal/shared/controllers"
 	sharedHandlers "github.com/hongbo-miao/hongbomiao.com/api/api-go/internal/shared/handlers"
-	"github.com/minio/minio-go/v7"
 	"github.com/valkey-io/valkey-go"
 	"go.elastic.co/apm/module/apmgin/v2"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 )
 
-func SetupRouter(env string, valkeyClient valkey.Client, minioClient *minio.Client) *gin.Engine {
+func SetupRouter(env string, valkeyClient valkey.Client, s3Client *s3.Client) *gin.Engine {
 	r := gin.New()
 	r.Use(apmgin.Middleware(r))
 	if env == "development" {
@@ -27,6 +27,6 @@ func SetupRouter(env string, valkeyClient valkey.Client, minioClient *minio.Clie
 	r.POST("/hasura/update-seed", controllers.UpdateSeed)
 	r.POST("/hasura/role-event-trigger", controllers.RoleEventTrigger)
 	r.POST("/predict", controllers.Predict)
-	r.POST("/upload", controllers.Upload(minioClient))
+	r.POST("/upload", controllers.Upload(s3Client))
 	return r
 }
