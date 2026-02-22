@@ -51,8 +51,8 @@ server:
     enabled: true
     pollingInterval: 30 # How often KEDA checks metrics (seconds)
     cooldownPeriod: 600 # Wait time after last trigger before scaling to 0 (seconds)
-    minReplicaCount: 1
-    maxReplicaCount: 10
+    minReplicaCount: 3
+    maxReplicaCount: 30
     # Fallback replicas if metrics are unavailable
     fallback:
       failureThreshold: 3 # Number of failures before fallback

@@ -107,7 +107,7 @@ distributor:
   kedaAutoscaling:
     enabled: true
     minReplicaCount: 3
-    maxReplicaCount: 15
+    maxReplicaCount: 30
     targetCPUUtilizationPercentage: 100
     targetMemoryUtilizationPercentage: 100
     behavior:
@@ -215,7 +215,7 @@ querier:
   kedaAutoscaling:
     enabled: true
     minReplicaCount: 3
-    maxReplicaCount: 10
+    maxReplicaCount: 30
     querySchedulerInflightRequestsThreshold: 12
     behavior:
       scaleDown:
@@ -261,7 +261,7 @@ query_frontend:
   kedaAutoscaling:
     enabled: true
     minReplicaCount: 3
-    maxReplicaCount: 10
+    maxReplicaCount: 30
     targetCPUUtilizationPercentage: 75
     targetMemoryUtilizationPercentage: 100
     behavior:
@@ -333,7 +333,7 @@ ruler:
   kedaAutoscaling:
     enabled: true
     minReplicaCount: 3
-    maxReplicaCount: 10
+    maxReplicaCount: 30
     targetCPUUtilizationPercentage: 100
     targetMemoryUtilizationPercentage: 100
     behavior:
@@ -369,8 +369,8 @@ ruler_querier:
   enabled: true
   kedaAutoscaling:
     enabled: true
-    minReplicaCount: 1
-    maxReplicaCount: 10
+    minReplicaCount: 3
+    maxReplicaCount: 30
     querySchedulerInflightRequestsThreshold: 12
     behavior:
       scaleDown:
@@ -405,8 +405,8 @@ ruler_query_frontend:
   enabled: true
   kedaAutoscaling:
     enabled: true
-    minReplicaCount: 1
-    maxReplicaCount: 10
+    minReplicaCount: 3
+    maxReplicaCount: 30
     targetCPUUtilizationPercentage: 75
     targetMemoryUtilizationPercentage: 100
     behavior:

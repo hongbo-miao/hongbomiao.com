@@ -659,20 +659,18 @@ jobs:
               - 'hardware-in-the-loop/national-instruments/veristand/hm-veristand/**'
             national-instruments-veristand-zeromq-bridge:
               - 'hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge/**'
-            nats-audio-file-publisher:
-              - 'data-processing/nats/audio-file-publisher/**'
-            nats-audio-file-subscriber:
-              - 'data-processing/nats/audio-file-subscriber/**'
             nats-audio-stream-publisher:
-              - 'data-processing/nats/audio-stream-publisher/**'
+              - 'data-processing/nats/audio-stream/audio-stream-publisher/**'
+            nats-audio-stream-sinker:
+              - 'data-processing/nats/audio-stream/audio-stream-sinker/**'
             nats-audio-stream-transcriber:
-              - 'data-processing/nats/audio-stream-transcriber/**'
+              - 'data-processing/nats/audio-stream/audio-stream-transcriber/**'
             nats-postgres-bridge:
-              - 'data-processing/nats/nats-postgres-bridge/**'
+              - 'data-processing/nats/audio-stream/nats-postgres-bridge/**'
             nats-telemetry-stream-publisher:
-              - 'data-processing/nats/telemetry-stream-publisher/**'
+              - 'data-processing/nats/telemetry-stream/telemetry-stream-publisher/**'
             nats-telemetry-stream-subscriber:
-              - 'data-processing/nats/telemetry-stream-subscriber/**'
+              - 'data-processing/nats/telemetry-stream/telemetry-stream-subscriber/**'
             neo-bert:
               - 'large-language-model-pre-training/training-paradigm/masked-language-model/neo-bert/**'
             neural-forecasting-forecast-air-passenger-number:
@@ -1005,9 +1003,8 @@ jobs:
       national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
       national-instruments-hm-veristand: ${{ steps.filter.outputs.national-instruments-hm-veristand }}
       national-instruments-veristand-zeromq-bridge: ${{ steps.filter.outputs.national-instruments-veristand-zeromq-bridge }}
-      nats-audio-file-publisher: ${{ steps.filter.outputs.nats-audio-file-publisher }}
-      nats-audio-file-subscriber: ${{ steps.filter.outputs.nats-audio-file-subscriber }}
       nats-audio-stream-publisher: ${{ steps.filter.outputs.nats-audio-stream-publisher }}
+      nats-audio-stream-sinker: ${{ steps.filter.outputs.nats-audio-stream-sinker }}
       nats-audio-stream-transcriber: ${{ steps.filter.outputs.nats-audio-stream-transcriber }}
       nats-postgres-bridge: ${{ steps.filter.outputs.nats-postgres-bridge }}
       nats-telemetry-stream-publisher: ${{ steps.filter.outputs.nats-telemetry-stream-publisher }}
@@ -1236,9 +1233,8 @@ jobs:
       kafka-rust-proto-producer: ${{ needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}
       kafka-rust-udp-kafka-bridge: ${{ needs.detect-changes.outputs.kafka-rust-udp-kafka-bridge == 'true' }}
       kafka-rust-zeromq-kafka-bridge: ${{ needs.detect-changes.outputs.kafka-rust-zeromq-kafka-bridge == 'true' }}
-      nats-audio-file-publisher: ${{ needs.detect-changes.outputs.nats-audio-file-publisher == 'true' }}
-      nats-audio-file-subscriber: ${{ needs.detect-changes.outputs.nats-audio-file-subscriber == 'true' }}
       nats-audio-stream-publisher: ${{ needs.detect-changes.outputs.nats-audio-stream-publisher == 'true' }}
+      nats-audio-stream-sinker: ${{ needs.detect-changes.outputs.nats-audio-stream-sinker == 'true' }}
       nats-audio-stream-transcriber: ${{ needs.detect-changes.outputs.nats-audio-stream-transcriber == 'true' }}
       nats-postgres-bridge: ${{ needs.detect-changes.outputs.nats-postgres-bridge == 'true' }}
       nats-telemetry-stream-publisher: ${{ needs.detect-changes.outputs.nats-telemetry-stream-publisher == 'true' }}
