@@ -20,7 +20,7 @@ spec:
         - name: graphql-server
           image: ghcr.io/hongbo-miao/hm-graphql-server:latest
           env:
-            - name: APP_ENV
+            - name: ENVIRONMENT
               valueFrom:
                 configMapKeyRef:
                   name: graphql-server-configmap
@@ -60,41 +60,46 @@ spec:
                 configMapKeyRef:
                   name: graphql-server-configmap
                   key: dgraph_grpc_port
-            - name: REDIS_HOST
+            - name: VALKEY_HOST
               valueFrom:
                 configMapKeyRef:
                   name: graphql-server-configmap
-                  key: redis_host
-            - name: REDIS_PORT
+                  key: valkey_host
+            - name: VALKEY_PORT
               valueFrom:
                 configMapKeyRef:
                   name: graphql-server-configmap
-                  key: redis_port
-            - name: REDIS_DB
+                  key: valkey_port
+            - name: VALKEY_DB
               valueFrom:
                 configMapKeyRef:
                   name: graphql-server-configmap
-                  key: redis_db
-            - name: REDIS_PASSWORD
+                  key: valkey_db
+            - name: VALKEY_PASSWORD
               valueFrom:
                 configMapKeyRef:
                   name: graphql-server-configmap
-                  key: redis_password
-            - name: MINIO_ENDPOINT
+                  key: valkey_password
+            - name: S3_ENDPOINT_URL
               valueFrom:
                 configMapKeyRef:
                   name: graphql-server-configmap
-                  key: minio_endpoint
-            - name: MINIO_ACCESS_KEY_ID
+                  key: s3_endpoint_url
+            - name: S3_REGION
               valueFrom:
                 configMapKeyRef:
                   name: graphql-server-configmap
-                  key: minio_access_key_id
-            - name: MINIO_SECRET_ACCESS_KEY
+                  key: s3_region
+            - name: S3_ACCESS_KEY_ID
               valueFrom:
                 configMapKeyRef:
                   name: graphql-server-configmap
-                  key: minio_secret_access_key
+                  key: s3_access_key_id
+            - name: S3_SECRET_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: s3_secret_access_key
             - name: TORCH_SERVE_GRPC_HOST
               valueFrom:
                 configMapKeyRef:

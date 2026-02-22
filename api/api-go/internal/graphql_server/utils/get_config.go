@@ -1,8 +1,9 @@
 package utils
 
 import (
-	"github.com/joho/godotenv"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 type Config struct {
@@ -14,13 +15,14 @@ type Config struct {
 	OPAPort                      string
 	DgraphHost                   string
 	DgraphGRPCPort               string
-	RedisHost                    string
-	RedisPort                    string
-	RedisDB                      string
-	RedisPassword                string
-	MinIOEndpoint                string
-	MinIOAccessKeyID             string
-	MinIOSecretAccessKey         string
+	ValkeyHost                   string
+	ValkeyPort                   string
+	ValkeyDB                     string
+	ValkeyPassword               string
+	S3EndpointURL                string
+	S3Region                     string
+	S3AccessKeyID                string
+	S3SecretAccessKey            string
 	TorchServeGRPCHost           string
 	TorchServeGRPCPort           string
 	OpenCensusAgentHost          string
@@ -32,7 +34,7 @@ type Config struct {
 func GetConfig() *Config {
 	path := "config/graphql_server/"
 
-	appEnv := os.Getenv("APP_ENV")
+	appEnv := os.Getenv("ENVIRONMENT")
 	if appEnv == "" {
 		appEnv = "development"
 	}
@@ -49,13 +51,14 @@ func GetConfig() *Config {
 		OPAPort:                      os.Getenv("OPA_PORT"),
 		DgraphHost:                   os.Getenv("DGRAPH_HOST"),
 		DgraphGRPCPort:               os.Getenv("DGRAPH_GRPC_PORT"),
-		RedisHost:                    os.Getenv("REDIS_HOST"),
-		RedisPort:                    os.Getenv("REDIS_PORT"),
-		RedisDB:                      os.Getenv("REDIS_DB"),
-		RedisPassword:                os.Getenv("REDIS_PASSWORD"),
-		MinIOEndpoint:                os.Getenv("MINIO_ENDPOINT"),
-		MinIOAccessKeyID:             os.Getenv("MINIO_ACCESS_KEY_ID"),
-		MinIOSecretAccessKey:         os.Getenv("MINIO_SECRET_ACCESS_KEY"),
+		ValkeyHost:                   os.Getenv("VALKEY_HOST"),
+		ValkeyPort:                   os.Getenv("VALKEY_PORT"),
+		ValkeyDB:                     os.Getenv("VALKEY_DB"),
+		ValkeyPassword:               os.Getenv("VALKEY_PASSWORD"),
+		S3EndpointURL:                os.Getenv("S3_ENDPOINT_URL"),
+		S3Region:                     os.Getenv("S3_REGION"),
+		S3AccessKeyID:                os.Getenv("S3_ACCESS_KEY_ID"),
+		S3SecretAccessKey:            os.Getenv("S3_SECRET_ACCESS_KEY"),
 		TorchServeGRPCHost:           os.Getenv("TORCH_SERVE_GRPC_HOST"),
 		TorchServeGRPCPort:           os.Getenv("TORCH_SERVE_GRPC_PORT"),
 		OpenCensusAgentHost:          os.Getenv("OPEN_CENSUS_AGENT_HOST"),

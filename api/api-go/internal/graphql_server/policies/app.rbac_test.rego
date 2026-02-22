@@ -1,7 +1,7 @@
 package app.rbac
 
 # Define test roles
-roles = {
+roles := {
 	"billing": {
 		"role": "billing",
 		"allow": [
@@ -52,7 +52,7 @@ roles = {
 }
 
 # Test admin role permissions
-test_admin_permissions {
+test_admin_permissions if {
 	# Admin should have access to all resources and actions
 	allow with input as {"roles": ["admin"], "action": "read", "resource": "dog"}
 		with data.roles as roles
@@ -74,7 +74,7 @@ test_admin_permissions {
 }
 
 # Test employee role permissions
-test_employee_permissions {
+test_employee_permissions if {
 	# Employee should be able to read animals
 	allow with input as {"roles": ["employee"], "action": "read", "resource": "dog"}
 		with data.roles as roles
@@ -98,7 +98,7 @@ test_employee_permissions {
 }
 
 # Test customer role permissions
-test_customer_permissions {
+test_customer_permissions if {
 	# Customer should be able to read and adopt animals
 	allow with input as {"roles": ["customer"], "action": "read", "resource": "dog"}
 		with data.roles as roles
@@ -121,7 +121,7 @@ test_customer_permissions {
 }
 
 # Test billing role permissions
-test_billing_permissions {
+test_billing_permissions if {
 	# Billing should have access to finance
 	allow with input as {"roles": ["billing"], "action": "read", "resource": "finance"}
 		with data.roles as roles
