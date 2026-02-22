@@ -1,0 +1,134 @@
+import asyncio
+import logging
+from datetime import UTC, datetime
+from pathlib import Path
+from random import SystemRandom
+from typing import TYPE_CHECKING
+from uuid import uuid4
+
+import capnp
+import nats
+from nats.js.client import JetStreamContext
+
+if TYPE_CHECKING:
+    from capnp_types.telemetry import (
+        EntryBuilder,
+        TelemetryBuilder,
+    )
+
+logger = logging.getLogger(__name__)
+
+NATS_URL = "nats://localhost:4222"
+SUBJECT_PREFIX = "SENSOR_TELEMETRY_STREAMS"
+STREAM_SUBJECT = f"{SUBJECT_PREFIX}.random"
+DATA_MISSING_PROBABILITY = 0.35
+PUBLISH_INTERVAL_SECONDS = 1.0
+
+SENSOR_NAMES: list[str] = [
+    "temperature_c",
+    "humidity_pct",
+    "wind_speed_mps",
+    "wind_direction_deg",
+    "pressure_hpa",
+]
+
+TELEMETRY_SCHEMA = capnp.load(
+    str(Path(__file__).parents[2] / "schemas" / "telemetry.capnp"),
+)
+
+
+async def publish_random_telemetry_stream(
+    jetstream_context: JetStreamContext,
+    subject: str,
+) -> int:
+    published_sample_count = 0
+    random_number_generator = SystemRandom()
+    try:
+        sample_index = 0
+        while True:
+            timestamp = datetime.now(UTC).isoformat()
+            sensor_entries: list[tuple[str, float | None]] = []
+
+            for sensor_name in SENSOR_NAMES:
+                if random_number_generator.random() < DATA_MISSING_PROBABILITY:
+                    sensor_entries.append((sensor_name, None))
+                else:
+                    sensor_entries.append((sensor_name, float(sample_index)))
+
+            telemetry: TelemetryBuilder = TELEMETRY_SCHEMA.Telemetry.new_message()
+            telemetry.timestamp = timestamp
+
+            sensor_entries_builder = telemetry.init(
+                "entries",
+                len(sensor_entries),
+            )
+
+            for index, (entry_name, entry_value) in enumerate(sensor_entries):
+                entry: EntryBuilder = sensor_entries_builder[index]
+                entry.name = entry_name
+                if entry_value is None:
+                    entry.data.missing = None
+                else:
+                    entry.data.value = entry_value
+
+            telemetry_payload_bytes = telemetry.to_bytes()
+
+            published_sample_count += 1
+            publish_acknowledgement = await jetstream_context.publish(
+                subject,
+                telemetry_payload_bytes,
+                headers={
+                    "Nats-Msg-Id": str(uuid4()),
+                },
+            )
+
+            if published_sample_count % 10 == 0:
+                logger.info(
+                    f"Published {published_sample_count} telemetry samples "
+                    f"(latest sequence: {publish_acknowledgement.seq})",
+                )
+
+            await asyncio.sleep(PUBLISH_INTERVAL_SECONDS)
+            sample_index += 1
+
+    except asyncio.CancelledError:
+        logger.info("Telemetry streaming cancelled")
+        raise
+    except Exception:
+        logger.exception("Failed to publish telemetry stream")
+        raise
+
+    return published_sample_count
+
+
+async def main() -> None:
+    nats_client = None
+    try:
+        logger.info(f"Connecting to NATS at {NATS_URL}")
+        nats_client = await nats.connect(NATS_URL)
+        jetstream_context = nats_client.jetstream()
+
+        published_sample_count = await publish_random_telemetry_stream(
+            jetstream_context=jetstream_context,
+            subject=STREAM_SUBJECT,
+        )
+
+        logger.info(
+            f"Telemetry streaming completed with {published_sample_count} samples published",
+        )
+
+    except Exception:
+        logger.exception("Publisher error")
+        raise
+    finally:
+        if nats_client:
+            await nats_client.drain()
+            logger.info("NATS connection closed")
+
+
+if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
+    asyncio.run(main())
