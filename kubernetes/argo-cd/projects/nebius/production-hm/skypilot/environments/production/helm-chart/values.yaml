@@ -3,6 +3,8 @@
 apiService:
   image: harbor.hongbomiao.com/docker-hub-proxy-cache/berkeleyskypilot/skypilot:0.11.1
   imagePullPolicy: IfNotPresent
+  replicas: 3
+  upgradeStrategy: RollingUpdate
   dbConnectionSecretName: hm-skypilot-secret
   enableUserManagement: true
   resources:
@@ -40,10 +42,7 @@ ingress:
 ingress-nginx:
   enabled: false
 storage:
-  enabled: true
-  storageClassName: production-hm-skypilot-storage-class
-  accessMode: ReadWriteOnce
-  size: 10Gi
+  enabled: false
 rbac:
   manageSystemComponents: true
 lambdaCredentials:

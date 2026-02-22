@@ -24,13 +24,13 @@ STREAM_SUBJECT = f"{SUBJECT_PREFIX}.random"
 DATA_MISSING_PROBABILITY = 0.35
 PUBLISH_INTERVAL_SECONDS = 1.0
 
-SENSOR_DEFINITIONS: dict[str, tuple[float, float]] = {
-    "temperature_c": (-20.0, 45.0),
-    "humidity_pct": (5.0, 95.0),
-    "wind_speed_mps": (0.0, 30.0),
-    "wind_direction_deg": (0.0, 360.0),
-    "pressure_hpa": (950.0, 1050.0),
-}
+SENSOR_NAMES: list[str] = [
+    "temperature_c",
+    "humidity_pct",
+    "wind_speed_mps",
+    "wind_direction_deg",
+    "pressure_hpa",
+]
 
 TELEMETRY_SCHEMA = capnp.load(str(Path(__file__).with_name("telemetry.capnp")))
 
@@ -42,19 +42,16 @@ async def publish_random_telemetry_stream(
     published_sample_count = 0
     random_number_generator = SystemRandom()
     try:
-        # Generate and stream random telemetry samples
+        sample_index = 0
         while True:
             timestamp = datetime.now(UTC).isoformat()
             sensor_entries: list[tuple[str, float | None]] = []
 
-            for entry_name, value_range in SENSOR_DEFINITIONS.items():
-                minimum_value, maximum_value = value_range
+            for sensor_name in SENSOR_NAMES:
                 if random_number_generator.random() < DATA_MISSING_PROBABILITY:
-                    sensor_entries.append((entry_name, None))
-                    continue
-
-                value = random_number_generator.uniform(minimum_value, maximum_value)
-                sensor_entries.append((entry_name, round(value, 2)))
+                    sensor_entries.append((sensor_name, None))
+                else:
+                    sensor_entries.append((sensor_name, float(sample_index)))
 
             telemetry: TelemetryBuilder = TELEMETRY_SCHEMA.Telemetry.new_message()
             telemetry.timestamp = timestamp
@@ -83,13 +80,14 @@ async def publish_random_telemetry_stream(
                 },
             )
 
-            if published_sample_count % 50 == 0:
+            if published_sample_count % 10 == 0:
                 logger.info(
                     f"Published {published_sample_count} telemetry samples "
                     f"(latest sequence: {publish_acknowledgement.seq})",
                 )
 
             await asyncio.sleep(PUBLISH_INTERVAL_SECONDS)
+            sample_index += 1
 
     except asyncio.CancelledError:
         logger.info("Telemetry streaming cancelled")

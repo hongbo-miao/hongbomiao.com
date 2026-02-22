@@ -61,6 +61,7 @@ module "grafana_data_source_hm_tempo" {
   http_headers = {
     "X-Scope-OrgID" = "hm"
   }
+  # https://grafana.com/docs/grafana/latest/datasources/tempo/configure-tempo-data-source/
   json_data_encoded = jsonencode({
     tracesToLogsV2 = {
       datasourceUid      = module.grafana_data_source_hm_loki[each.value].uid
@@ -235,6 +236,64 @@ module "grafana_dashboard_node_exporter" {
   config_json = data.http.node_exporter_dashboards[each.value.dashboard_name].response_body
   uid_prefix  = var.grafana_dashboard_uid_prefix
   tags        = [var.managed_tag]
+}
+
+# Dashboard - NVIDIA DCGM Exporter
+# https://grafana.com/grafana/dashboards/12239-nvidia-dcgm-exporter-dashboard/
+locals {
+  nvidia_dcgm_exporter_dashboard_urls = {
+    "nvidia-dcgm-exporter" = "https://grafana.com/api/dashboards/12239/revisions/latest/download"
+  }
+  nvidia_dcgm_exporter_org_dashboard_combinations = flatten([
+    for org_id in local.org_ids : [
+      for dashboard_name in keys(local.nvidia_dcgm_exporter_dashboard_urls) : {
+        key            = "${org_id}-${dashboard_name}"
+        org_id         = org_id
+        dashboard_name = dashboard_name
+      }
+    ]
+  ])
+}
+data "http" "nvidia_dcgm_exporter_dashboards" {
+  for_each = local.nvidia_dcgm_exporter_dashboard_urls
+  url      = each.value
+}
+module "grafana_folder_nvidia_dcgm_exporter" {
+  source   = "../../../modules/grafana/grafana_folder"
+  for_each = toset(local.org_ids)
+  org_id   = each.value
+  title    = "NVIDIA DCGM Exporter"
+}
+# https://github.com/NVIDIA/dcgm-exporter/pull/634
+locals {
+  nvidia_dcgm_exporter_dashboard_processed = {
+    for name, _ in local.nvidia_dcgm_exporter_dashboard_urls : name => replace(
+      replace(
+        replace(
+          data.http.nvidia_dcgm_exporter_dashboards[name].response_body,
+          "DCGM_FI_DEV_GPU_UTIL",
+          "DCGM_FI_PROF_GR_ENGINE_ACTIVE"
+        ),
+        "\"format\": \"percent\"",
+        "\"format\": \"percentunit\""
+      ),
+      "\"max\": \"100\"",
+      "\"max\": \"1\""
+    )
+  }
+}
+module "grafana_dashboard_nvidia_dcgm_exporter" {
+  source     = "../../../modules/grafana/grafana_dashboard"
+  for_each   = { for combination in local.nvidia_dcgm_exporter_org_dashboard_combinations : combination.key => combination }
+  org_id     = each.value.org_id
+  folder_uid = module.grafana_folder_nvidia_dcgm_exporter[each.value.org_id].uid
+  config_json = replace(
+    local.nvidia_dcgm_exporter_dashboard_processed[each.value.dashboard_name],
+    "$${DS_PROMETHEUS}",
+    module.grafana_data_source_hm_prometheus[each.value.org_id].uid
+  )
+  uid_prefix = var.grafana_dashboard_uid_prefix
+  tags       = [var.managed_tag]
 }
 
 # Dashboard - NATS
