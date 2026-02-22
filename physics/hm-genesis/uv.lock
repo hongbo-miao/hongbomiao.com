@@ -270,14 +270,13 @@ wheels = [
 
 [[package]]
 name = "genesis-world"
-version = "0.3.14"
+version = "0.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "coacd" },
     { name = "fast-simplification" },
     { name = "freetype-py" },
     { name = "gs-madrona", marker = "(platform_machine == 'AMD64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
-    { name = "gstaichi" },
     { name = "libigl" },
     { name = "moviepy" },
     { name = "mujoco" },
@@ -296,6 +295,7 @@ dependencies = [
     { name = "pymeshlab" },
     { name = "pyopengl" },
     { name = "pysplashsurf" },
+    { name = "quadrants" },
     { name = "rtree" },
     { name = "scikit-image" },
     { name = "tetgen" },
@@ -304,7 +304,7 @@ dependencies = [
     { name = "z3-solver" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b1/c1/43467a84b29d6758223efc096d1601886e36dfa4fe52c55d30796e7a939e/genesis_world-0.3.14-py3-none-any.whl", hash = "sha256:e6e90f57cdfb7754eb34fa7461b2ab349be26bceea5e52157be4098fad3a0df0", size = 82462664, upload-time = "2026-02-10T10:42:54.649Z" },
+    { url = "https://files.pythonhosted.org/packages/f9/9f/c1c533a1d067bdbc171109a813e7eb9bf624809efaae1e7416a847ad14c4/genesis_world-0.4.0-py3-none-any.whl", hash = "sha256:3dece7ecb8fc60d9c49ec315fdfaefd7317b9f63fc6db53d4ffcf3c401e26f8e", size = 82512449, upload-time = "2026-02-18T21:28:19.648Z" },
 ]
 
 [[package]]
@@ -340,26 +340,6 @@ wheels = [
 ]
 
 [[package]]
-name = "gstaichi"
-version = "4.6.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "cffi" },
-    { name = "colorama" },
-    { name = "dill" },
-    { name = "numpy" },
-    { name = "pydantic" },
-    { name = "rich" },
-    { name = "setuptools" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/06/63/484e26fab64ac9167ee9c2963fa27551e2e67ef13d05f74de0addc18c36e/gstaichi-4.6.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:3d6b2ab3859a9e70d3a5afb4e354a5b9c949754f218cbf85035639462f2c052a", size = 30434267, upload-time = "2025-12-30T14:21:42.968Z" },
-    { url = "https://files.pythonhosted.org/packages/eb/2a/099f29274a0b8a806fed1d929963b36d4240ce4cf1abd9e820ff43afd453/gstaichi-4.6.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_34_aarch64.whl", hash = "sha256:5430c1980fa0f7752fc0ecddd8f4b0bbcca92600af16f2ed832480e5fb18acf1", size = 41632936, upload-time = "2025-12-30T14:22:56.71Z" },
-    { url = "https://files.pythonhosted.org/packages/d7/72/9f19293e3a9e0166a8b5d64f24bb75e343ab937f211eb022c87a9ef64521/gstaichi-4.6.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:6f16710f1af5967b0c303e7bf9055380cb07c3b71fb97963e85d50276d70489b", size = 44633363, upload-time = "2025-12-30T14:22:51.582Z" },
-    { url = "https://files.pythonhosted.org/packages/b5/ea/71e562b09307b7095c07cb702ac50f006133c1f148e2d0606ff793cce82b/gstaichi-4.6.0-cp312-cp312-win_amd64.whl", hash = "sha256:6e8cf212c8558cfe397e58450402c2d676bd47aaecb5aea013b142bef4a62a3f", size = 56173952, upload-time = "2025-12-30T14:13:41.726Z" },
-]
-
-[[package]]
 name = "hm-genesis"
 version = "1.0.0"
 source = { virtual = "." }
@@ -377,7 +357,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "genesis-world", specifier = "==0.3.14" },
+    { name = "genesis-world", specifier = "==0.4.0" },
     { name = "torch", specifier = "==2.10.0" },
 ]
 
@@ -1193,6 +1173,26 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/74/93/7baea19427dcfbe1e5a372d81473250b379f04b1bd3c4c5ff825e2327202/pyyaml-6.0.3-cp312-cp312-win32.whl", hash = "sha256:96b533f0e99f6579b3d4d4995707cf36df9100d67e0c8303a0c55b27b5f99bc5", size = 137658, upload-time = "2025-09-25T21:32:20.209Z" },
     { url = "https://files.pythonhosted.org/packages/86/bf/899e81e4cce32febab4fb42bb97dcdf66bc135272882d1987881a4b519e9/pyyaml-6.0.3-cp312-cp312-win_amd64.whl", hash = "sha256:5fcd34e47f6e0b794d17de1b4ff496c00986e1c83f7ab2fb8fcfe9616ff7477b", size = 154003, upload-time = "2025-09-25T21:32:21.167Z" },
     { url = "https://files.pythonhosted.org/packages/1a/08/67bd04656199bbb51dbed1439b7f27601dfb576fb864099c7ef0c3e55531/pyyaml-6.0.3-cp312-cp312-win_arm64.whl", hash = "sha256:64386e5e707d03a7e172c0701abfb7e10f0fb753ee1d773128192742712a98fd", size = 140344, upload-time = "2025-09-25T21:32:22.617Z" },
+]
+
+[[package]]
+name = "quadrants"
+version = "0.4.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "cffi" },
+    { name = "colorama" },
+    { name = "dill" },
+    { name = "numpy" },
+    { name = "pydantic" },
+    { name = "rich" },
+    { name = "setuptools" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/8c/56/ac529a35ccbda22c02ed2f337f639017d4f3d1c16e1d154b21d85c5942db/quadrants-0.4.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:4bc52fb6f411ec36aaed83ed27d5675ed5d73f6cea86497b5c9d2bb15f70f879", size = 30451374, upload-time = "2026-02-15T21:51:37.306Z" },
+    { url = "https://files.pythonhosted.org/packages/39/43/7275cd23857c96d6825fcd5e58aaf9e075bfd65c88ac7ccd8ba53fb98818/quadrants-0.4.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_34_aarch64.whl", hash = "sha256:a5a1e0622ab635138759ddd05a9ce343f245b11a7ffe06ae27e4a1d68d550456", size = 41706695, upload-time = "2026-02-15T21:54:58.125Z" },
+    { url = "https://files.pythonhosted.org/packages/4a/7e/8b126614c6e33cdaeda0108306f7eae0ef790e3a566b512647d45cb161a3/quadrants-0.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:4b578043566c3abee10057c859c503e881d11263bbf384d832bb5a8bfcba1762", size = 44699126, upload-time = "2026-02-15T21:55:01.287Z" },
+    { url = "https://files.pythonhosted.org/packages/62/f6/113dbaa265a02676f9a23fcd88d1987b3628cab1de244a4433a2c0b26851/quadrants-0.4.0-cp312-cp312-win_amd64.whl", hash = "sha256:0603239deee14aa37dd168c8a50d7a359a8eb38b5bbbda2332690a87ae4e64bb", size = 53397110, upload-time = "2026-02-15T21:43:26.617Z" },
 ]
 
 [[package]]
