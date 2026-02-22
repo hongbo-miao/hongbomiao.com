@@ -173,7 +173,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **opa** - Open Policy Agent
 - **pgx** - PostgreSQL driver
 - **dgo** - Dgraph client
-- **go-redis** - Redis client
+- **valkey-go** - Valkey client
 - **minio-go** - MinIO client
 - **Resty** - HTTP client
 - **Squirrel** - SQL query builder

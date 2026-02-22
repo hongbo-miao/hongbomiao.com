@@ -8,24 +8,24 @@ import (
 	"github.com/hongbo-miao/hongbomiao.com/api/api-go/internal/graphql_server/schemas"
 	"github.com/hongbo-miao/hongbomiao.com/api/api-go/internal/graphql_server/types"
 	"github.com/hongbo-miao/hongbomiao.com/api/api-go/internal/graphql_server/utils"
-	"github.com/redis/go-redis/v9"
 	"github.com/rs/zerolog/log"
+	"github.com/valkey-io/valkey-go"
 	"net/http"
 )
 
-func addContext(next *handler.Handler, rdb *redis.Client) http.Handler {
+func addContext(next *handler.Handler, valkeyClient valkey.Client) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		myID, err := utils.VerifyJWTTokenAndExtractMyID(r)
 		if err != nil {
 			log.Error().Err(err).Msg("VerifyJWTTokenAndExtractMyID")
 		}
 		ctx := context.WithValue(r.Context(), types.ContextKey("myID"), myID)
-		ctx = context.WithValue(ctx, types.ContextKey("rdb"), rdb)
+		ctx = context.WithValue(ctx, types.ContextKey("valkeyClient"), valkeyClient)
 		next.ContextHandler(ctx, w, r)
 	})
 }
 
-func GraphQLHandler(rdb *redis.Client) gin.HandlerFunc {
+func GraphQLHandler(valkeyClient valkey.Client) gin.HandlerFunc {
 	h := handler.New(&handler.Config{
 		Schema:   &schemas.Schema,
 		Pretty:   true,
@@ -35,5 +35,5 @@ func GraphQLHandler(rdb *redis.Client) gin.HandlerFunc {
 			return gqlerrors.FormatError(err)
 		},
 	})
-	return gin.WrapH(addContext(h, rdb))
+	return gin.WrapH(addContext(h, valkeyClient))
 }
