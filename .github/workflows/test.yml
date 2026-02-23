@@ -537,6 +537,8 @@ jobs:
               - 'data-orchestration/hm-prefect/workflows/daft-analysis/**'
             hm-prefect-greet:
               - 'data-orchestration/hm-prefect/workflows/greet/**'
+            hm-prefect-ingest-to-iceberg:
+              - 'data-orchestration/hm-prefect/workflows/ingest-to-iceberg/**'
             hm-prefect-print-platform:
               - 'data-orchestration/hm-prefect/workflows/print-platform/**'
             hm-protobuf:
@@ -942,6 +944,7 @@ jobs:
       hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
       hm-prefect-daft-analysis: ${{ steps.filter.outputs.hm-prefect-daft-analysis }}
       hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
+      hm-prefect-ingest-to-iceberg: ${{ steps.filter.outputs.hm-prefect-ingest-to-iceberg }}
       hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
       hm-protobuf: ${{ steps.filter.outputs.hm-protobuf }}
       hm-prowler: ${{ steps.filter.outputs.hm-prowler }}
@@ -1207,6 +1210,7 @@ jobs:
       hm-prefect-calculate: ${{ needs.detect-changes.outputs.hm-prefect-calculate == 'true' }}
       hm-prefect-daft-analysis: ${{ needs.detect-changes.outputs.hm-prefect-daft-analysis == 'true' }}
       hm-prefect-greet: ${{ needs.detect-changes.outputs.hm-prefect-greet == 'true' }}
+      hm-prefect-ingest-to-iceberg: ${{ needs.detect-changes.outputs.hm-prefect-ingest-to-iceberg == 'true' }}
       hm-prefect-print-platform: ${{ needs.detect-changes.outputs.hm-prefect-print-platform == 'true' }}
 
   test-data-processing:

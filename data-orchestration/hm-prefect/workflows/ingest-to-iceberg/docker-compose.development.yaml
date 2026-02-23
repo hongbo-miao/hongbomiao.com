@@ -1,0 +1,228 @@
+---
+services:
+  prefect-server:
+    image: docker.io/prefecthq/prefect:3.6.18-python3.14
+    container_name: prefect-server
+    command: prefect server start --host 0.0.0.0
+    ports:
+      - "127.0.0.1:4200:4200"
+    restart: unless-stopped
+
+  rustfs:
+    image: docker.io/rustfs/rustfs:1.0.0-alpha.76
+    container_name: rustfs
+    volumes:
+      - rustfs-data:/data
+    environment:
+      RUSTFS_ACCESS_KEY: rustfs_admin
+      RUSTFS_SECRET_KEY: rustfs_passw0rd
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:9000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rustfs-initialize:
+    image: docker.io/amazon/aws-cli:2.33.27
+    container_name: rustfs-initialize
+    depends_on:
+      rustfs:
+        condition: service_healthy
+    volumes:
+      - ./data:/data:ro
+    environment:
+      AWS_ACCESS_KEY_ID: rustfs_admin
+      AWS_SECRET_ACCESS_KEY: rustfs_passw0rd
+      AWS_DEFAULT_REGION: us-west-2
+    entrypoint: >
+      /bin/sh -c "
+      aws --endpoint-url http://rustfs:9000 s3 mb s3://iceberg-bucket || true;
+      aws --endpoint-url http://rustfs:9000 s3 sync /data s3://iceberg-bucket/data/ --exclude '*' --include '*.parquet';
+      exit 0;
+      "
+    restart: "no"
+
+  polaris-postgres:
+    image: docker.io/library/postgres:18.2-trixie
+    container_name: polaris-postgres
+    volumes:
+      - polaris-postgres-data:/var/lib/postgresql
+    environment:
+      POSTGRES_USER: postgres_admin
+      POSTGRES_PASSWORD: postgres_passw0rd
+      POSTGRES_DB: polaris
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready --username=postgres_admin -p 5432 -d polaris"]
+      interval: 2s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+
+  polaris-bootstrap:
+    image: docker.io/apache/polaris-admin-tool:1.3.0-incubating
+    container_name: polaris-bootstrap
+    depends_on:
+      polaris-postgres:
+        condition: service_healthy
+    environment:
+      POLARIS_PERSISTENCE_TYPE: relational-jdbc
+      QUARKUS_DATASOURCE_USERNAME: postgres_admin
+      QUARKUS_DATASOURCE_PASSWORD: postgres_passw0rd
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://polaris-postgres:5432/polaris
+    command: ["bootstrap", "--realm", "POLARIS", "--credential", "POLARIS,root,polaris_passw0rd"]
+    restart: "no"
+
+  polaris:
+    image: docker.io/apache/polaris:1.3.0-incubating
+    container_name: polaris
+    depends_on:
+      rustfs:
+        condition: service_healthy
+      polaris-bootstrap:
+        condition: service_completed_successfully
+    environment:
+      AWS_REGION: us-west-2
+      AWS_ACCESS_KEY_ID: rustfs_admin
+      AWS_SECRET_ACCESS_KEY: rustfs_passw0rd
+      AWS_ENDPOINT_URL_S3: http://rustfs:9000
+      POLARIS_PERSISTENCE_TYPE: relational-jdbc
+      QUARKUS_DATASOURCE_USERNAME: postgres_admin
+      QUARKUS_DATASOURCE_PASSWORD: postgres_passw0rd
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://polaris-postgres:5432/polaris
+    ports:
+      - "127.0.0.1:8181:8181"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8182/q/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 180s
+
+  polaris-initialize:
+    image: docker.io/curlimages/curl:8.18.0
+    container_name: polaris-initialize
+    depends_on:
+      rustfs-initialize:
+        condition: service_completed_successfully
+      polaris:
+        condition: service_healthy
+    volumes:
+      - ./polaris/scripts/create-polaris-catalog.sh:/create-polaris-catalog.sh:ro
+    command: ["/bin/sh", "/create-polaris-catalog.sh"]
+    restart: "no"
+
+  spark-master:
+    image: docker.io/apache/spark:4.1.1
+    container_name: spark-master
+    command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
+    ports:
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:7077:7077"
+
+  spark-worker:
+    image: docker.io/apache/spark:4.1.1
+    container_name: spark-worker
+    command: >
+      /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker
+      spark://spark-master:7077
+    environment:
+      - SPARK_WORKER_CORES=2
+      - SPARK_WORKER_MEMORY=2G
+      - AWS_REGION=us-west-2
+      - AWS_ACCESS_KEY_ID=rustfs_admin
+      - AWS_SECRET_ACCESS_KEY=rustfs_passw0rd
+      - AWS_ENDPOINT_URL_S3=http://rustfs:9000
+    depends_on:
+      - spark-master
+
+  spark-connect:
+    image: docker.io/apache/spark:4.1.1
+    container_name: spark-connect
+    ports:
+      - "15002:15002"
+    environment:
+      - SPARK_HOME=/opt/spark
+      - AWS_REGION=us-west-2
+      - AWS_ACCESS_KEY_ID=rustfs_admin
+      - AWS_SECRET_ACCESS_KEY=rustfs_passw0rd
+      - AWS_ENDPOINT_URL_S3=http://rustfs:9000
+    depends_on:
+      spark-master:
+        condition: service_started
+      polaris-initialize:
+        condition: service_completed_successfully
+    command: >
+      /opt/spark/bin/spark-submit
+      --class org.apache.spark.sql.connect.service.SparkConnectServer
+      --master spark://spark-master:7077
+      --packages org.apache.iceberg:iceberg-spark-runtime-4.0_2.13:1.10.1,org.apache.iceberg:iceberg-aws-bundle:1.10.1,org.apache.hadoop:hadoop-aws:3.4.2
+      --conf spark.jars.ivy=/tmp/.ivy2
+      --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions
+      --conf spark.sql.catalog.iceberg=org.apache.iceberg.spark.SparkCatalog
+      --conf spark.sql.catalog.iceberg.type=rest
+      --conf spark.sql.catalog.iceberg.uri=http://polaris:8181/api/catalog
+      --conf spark.sql.catalog.iceberg.warehouse=emergency-catalog
+      --conf spark.sql.catalog.iceberg.credential=root:polaris_passw0rd
+      --conf spark.sql.catalog.iceberg.scope=PRINCIPAL_ROLE:ALL
+      --conf spark.sql.catalog.iceberg.io-impl=org.apache.iceberg.aws.s3.S3FileIO
+      --conf spark.sql.catalog.iceberg.s3.endpoint=http://rustfs:9000
+      --conf spark.sql.catalog.iceberg.s3.access-key-id=rustfs_admin
+      --conf spark.sql.catalog.iceberg.s3.secret-access-key=rustfs_passw0rd
+      --conf spark.sql.catalog.iceberg.s3.path-style-access=true
+      --conf spark.sql.catalog.iceberg.s3.region=us-west-2
+      --conf spark.hadoop.fs.s3a.endpoint=http://rustfs:9000
+      --conf spark.hadoop.fs.s3a.access.key=rustfs_admin
+      --conf spark.hadoop.fs.s3a.secret.key=rustfs_passw0rd
+      --conf spark.hadoop.fs.s3a.path.style.access=true
+      --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
+      --conf spark.executorEnv.AWS_REGION=us-west-2
+      --conf spark.executorEnv.AWS_ACCESS_KEY_ID=rustfs_admin
+      --conf spark.executorEnv.AWS_SECRET_ACCESS_KEY=rustfs_passw0rd
+      --conf spark.executorEnv.AWS_ENDPOINT_URL_S3=http://rustfs:9000
+
+  ingest-to-iceberg:
+    build:
+      context: .
+      target: release
+    container_name: ingest-to-iceberg
+    command: ["python", "src/main.py"]
+    depends_on:
+      prefect-server:
+        condition: service_started
+      spark-connect:
+        condition: service_started
+      rustfs-initialize:
+        condition: service_completed_successfully
+    environment:
+      PREFECT_API_URL: http://prefect-server:4200/api
+      SPARK_CONNECT_URL: sc://spark-connect:15002
+      PARQUET_DATA_PATH: s3a://iceberg-bucket/data/
+    restart: "no"
+
+  trino:
+    image: docker.io/trinodb/trino:479
+    container_name: trino
+    depends_on:
+      polaris-initialize:
+        condition: service_completed_successfully
+    volumes:
+      - ./trino/etc/trino/catalog:/etc/trino/catalog:ro
+    ports:
+      - "127.0.0.1:8085:8080"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "trino", "--execute", "SELECT 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  rustfs-data:
+  polaris-postgres-data:

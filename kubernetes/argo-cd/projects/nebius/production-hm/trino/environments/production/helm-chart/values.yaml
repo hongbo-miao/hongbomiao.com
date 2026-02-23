@@ -49,20 +49,20 @@ server:
   # https://medium.com/bestsecret-tech/maximize-performance-the-bestsecret-to-scaling-trino-clusters-with-keda-c209efe4a081
   keda:
     enabled: true
-    pollingInterval: 30 # How often KEDA checks metrics (seconds)
-    cooldownPeriod: 600 # Wait time after last trigger before scaling to 0 (seconds)
+    pollingInterval: 30  # How often KEDA checks metrics (seconds)
+    cooldownPeriod: 600  # Wait time after last trigger before scaling to 0 (seconds)
     minReplicaCount: 3
     maxReplicaCount: 30
     # Fallback replicas if metrics are unavailable
     fallback:
-      failureThreshold: 3 # Number of failures before fallback
-      replicas: 3 # Replicas to maintain during fallback
+      failureThreshold: 3  # Number of failures before fallback
+      replicas: 3  # Replicas to maintain during fallback
     advanced:
       horizontalPodAutoscalerConfig:
         behavior:
           # Gradual scale down to prevent disruption
           scaleDown:
-            stabilizationWindowSeconds: 600 # Wait before scale down decision
+            stabilizationWindowSeconds: 600  # Wait before scale down decision
             policies:
               # Remove 1 pod every 2 minutes
               - type: Pods
@@ -70,7 +70,7 @@ server:
                 periodSeconds: 120
           # Responsive scale up for demand
           scaleUp:
-            stabilizationWindowSeconds: 0 # Immediate response
+            stabilizationWindowSeconds: 0  # Immediate response
             policies:
               # Add up to 2 pods every 30 seconds for traffic spikes
               - type: Pods

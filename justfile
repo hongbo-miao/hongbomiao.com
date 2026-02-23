@@ -529,6 +529,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.calculate
     uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.daft-analysis
     uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.greet
+    uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.ingest-to-iceberg
     uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.print-platform
     uv run poe static-type-check-python --package=data-processing.hm-cocoindex.flows.embed-markdown-to-postgres
     uv run poe static-type-check-python --package=data-processing.hm-pathway.pipelines.aggregate-hourly-events

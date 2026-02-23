@@ -1,0 +1,33 @@
+update-lock-file:
+    uv lock
+
+install-dependencies:
+    uv sync --dev
+
+dev:
+    PREFECT_API_URL=http://localhost:4200/api uv run poe dev
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
+
+docker-compose-up:
+    docker compose --file=docker-compose.development.yaml up --detach
+
+docker-compose-stop:
+    docker compose --file=docker-compose.development.yaml stop
+
+docker-compose-down:
+    docker compose --file=docker-compose.development.yaml down --volumes
+
+docker-compose-restart:
+    docker compose --file=docker-compose.development.yaml down --volumes
+    docker compose --file=docker-compose.development.yaml up --detach
+
+query-emergency-audio-segment:
+    trino http://localhost:8085 --execute "select stream_id, timestamp_ns, text, language, duration_s, sample_rate_hz, audio_format, audio_data from iceberg.emergency.audio_segments order by timestamp_ns limit 1"
+
+play-emergency-audio-segment segment_number="1":
+    trino http://localhost:8085 --execute "select audio_data from (select audio_data, row_number() over (order by timestamp_ns desc) as segment_number from iceberg.emergency.audio_segments) where segment_number = {{ segment_number }}" 2>/dev/null | xxd -r -p > /tmp/audio_segment.flac && ffplay -autoexit -nodisp /tmp/audio_segment.flac

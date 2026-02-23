@@ -21,6 +21,9 @@ name: . Test Data Orchestration
       hm-prefect-greet:
         required: true
         type: boolean
+      hm-prefect-ingest-to-iceberg:
+        required: true
+        type: boolean
       hm-prefect-print-platform:
         required: true
         type: boolean
@@ -157,6 +160,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: data-orchestration/hm-prefect/workflows/greet
+
+  prefect-ingest-to-iceberg-test:
+    name: Prefect (ingest-to-iceberg) | Test
+    if: ${{ inputs.workflow || inputs.hm-prefect-ingest-to-iceberg }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.3.0
+        with:
+          version: 0.10.4
+          enable-cache: true
+          cache-dependency-glob: data-orchestration/hm-prefect/workflows/ingest-to-iceberg/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.2.0
+        with:
+          python-version-file: data-orchestration/hm-prefect/workflows/ingest-to-iceberg/.python-version
+      - name: Install dependencies
+        working-directory: data-orchestration/hm-prefect/workflows/ingest-to-iceberg
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-orchestration/hm-prefect/workflows/ingest-to-iceberg
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: data-orchestration/hm-prefect/workflows/ingest-to-iceberg
 
   prefect-print-platform-test:
     name: Prefect (print-platform) | Test
