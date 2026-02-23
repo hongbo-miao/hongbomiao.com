@@ -2,9 +2,9 @@ use anyhow::Result;
 use async_nats::header::{HeaderName, HeaderValue};
 use async_nats::jetstream;
 use tracing::{error, info};
-use uuid::Uuid;
 
 use crate::shared::nats::types::audio_metadata::AudioMetadata;
+use crate::shared::nats::utils::build_deterministic_message_id::build_deterministic_message_id;
 use crate::shared::speaches::types::transcription_response::TranscriptionResponse;
 use crate::transcription_capnp;
 
@@ -45,10 +45,11 @@ pub async fn publish_transcription(
         bytes
     };
 
+    let message_id = build_deterministic_message_id(stream_id, timestamp_ns);
     let mut headers = async_nats::HeaderMap::new();
     headers.insert(
         HeaderName::from_static("Nats-Msg-Id"),
-        HeaderValue::from(Uuid::new_v4().to_string()),
+        HeaderValue::from(message_id),
     );
 
     match jetstream_context

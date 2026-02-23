@@ -1,0 +1,81 @@
+#!/bin/sh
+set -e
+
+POLARIS_HOST="polaris"
+POLARIS_PORT="8181"
+CLIENT_ID="root"
+CLIENT_SECRET="polaris_passw0rd"
+CATALOG_NAME="emergency-catalog"
+S3_BUCKET_NAME="iceberg-bucket"
+S3_ENDPOINT="http://rustfs:9000"
+
+echo "Waiting for Polaris to be ready..."
+until curl --silent "http://${POLARIS_HOST}:8182/q/health" > /dev/null 2>&1; do
+  echo "Polaris not ready yet, waiting..."
+  sleep 2
+done
+echo "Polaris is ready!"
+
+echo "Getting OAuth2 token..."
+TOKEN_RESPONSE=$(curl --silent --request POST "http://${POLARIS_HOST}:${POLARIS_PORT}/api/catalog/v1/oauth/tokens" \
+  --header "Content-Type: application/x-www-form-urlencoded" \
+  --data "grant_type=client_credentials" \
+  --data "client_id=${CLIENT_ID}" \
+  --data "client_secret=${CLIENT_SECRET}" \
+  --data "scope=PRINCIPAL_ROLE:ALL")
+
+ACCESS_TOKEN=$(echo "${TOKEN_RESPONSE}" | sed -n 's/.*"access_token":"\([^"]*\)".*/\1/p')
+
+if [ -z "${ACCESS_TOKEN}" ]; then
+  echo "Failed to get access token. Response: ${TOKEN_RESPONSE}"
+  exit 1
+fi
+echo "Got access token successfully!"
+
+echo "Creating catalog '${CATALOG_NAME}'..."
+CATALOG_RESPONSE=$(curl --silent --write-out "\n%{http_code}" --request POST "http://${POLARIS_HOST}:${POLARIS_PORT}/api/management/v1/catalogs" \
+  --header "Authorization: Bearer ${ACCESS_TOKEN}" \
+  --header "Content-Type: application/json" \
+  --data "{
+    \"name\": \"${CATALOG_NAME}\",
+    \"type\": \"INTERNAL\",
+    \"properties\": {
+      \"default-base-location\": \"s3://${S3_BUCKET_NAME}\"
+    },
+    \"storageConfigInfo\": {
+      \"storageType\": \"S3\",
+      \"allowedLocations\": [\"s3://${S3_BUCKET_NAME}\"],
+      \"endpointInternal\": \"${S3_ENDPOINT}\",
+      \"pathStyleAccess\": true,
+      \"stsUnavailable\": true
+    }
+  }")
+
+HTTP_CODE=$(echo "${CATALOG_RESPONSE}" | tail -n1)
+RESPONSE_BODY=$(echo "${CATALOG_RESPONSE}" | sed '$d')
+
+if [ "${HTTP_CODE}" = "201" ] || [ "${HTTP_CODE}" = "200" ]; then
+  echo "Catalog '${CATALOG_NAME}' created successfully!"
+elif [ "${HTTP_CODE}" = "409" ]; then
+  echo "Catalog '${CATALOG_NAME}' already exists."
+else
+  echo "Failed to create catalog. HTTP ${HTTP_CODE}: ${RESPONSE_BODY}"
+fi
+
+echo "Granting CATALOG_MANAGE_CONTENT privilege to catalog_admin role..."
+GRANT_RESPONSE=$(curl --silent --write-out "\n%{http_code}" --request PUT "http://${POLARIS_HOST}:${POLARIS_PORT}/api/management/v1/catalogs/${CATALOG_NAME}/catalog-roles/catalog_admin/grants" \
+  --header "Authorization: Bearer ${ACCESS_TOKEN}" \
+  --header "Content-Type: application/json" \
+  --data "{
+    \"type\": \"catalog\",
+    \"privilege\": \"CATALOG_MANAGE_CONTENT\"
+  }")
+
+HTTP_CODE=$(echo "${GRANT_RESPONSE}" | tail -n1)
+if [ "${HTTP_CODE}" = "201" ] || [ "${HTTP_CODE}" = "200" ]; then
+  echo "Privilege granted successfully!"
+else
+  echo "Note: Could not grant privilege (may already exist or different API version)"
+fi
+
+echo "Polaris catalog setup complete!"

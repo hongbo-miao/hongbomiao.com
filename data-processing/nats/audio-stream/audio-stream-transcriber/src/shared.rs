@@ -13,6 +13,7 @@ pub mod nats {
         pub mod audio_metadata;
     }
     pub mod utils {
+        pub mod build_deterministic_message_id;
         pub mod publish_transcription;
     }
 }
