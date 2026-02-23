@@ -27,7 +27,9 @@ def ingest_to_iceberg(spark_connect_url: str, parquet_data_path: str) -> None:
     row_count = data_frame.count()
     logger.info(f"Ingesting {row_count} rows to {iceberg_table_name}")
 
-    data_frame.writeTo(iceberg_table_name).using("iceberg").createOrReplace()
+    data_frame.write.format("iceberg").option("mergeSchema", "true").mode(
+        "append",
+    ).saveAsTable(iceberg_table_name)
 
     logger.info(
         "Successfully wrote parquet data to Iceberg table via Spark Connect",

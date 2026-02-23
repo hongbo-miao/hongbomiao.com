@@ -1,0 +1,42 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: production-argo-cd-image-updater
+  namespace: production-hm-argo-cd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        revision: main
+        files:
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/argo-cd-image-updater/environments/*/config.yaml
+  template:
+    metadata:
+      name: '{{.environment}}-argo-cd-image-updater'
+    spec:
+      project: production-hm
+      sources:
+        - repoURL: https://argoproj.github.io/argo-helm
+          targetRevision: '{{.helmChartVersion}}'
+          chart: argocd-image-updater
+          helm:
+            releaseName: argocd-image-updater
+            valueFiles:
+              - '$config/{{.path.path}}/helm-chart/values.yaml'
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          ref: config
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          path: '{{.path.path}}/kubernetes-manifests'
+      destination:
+        namespace: '{{.environment}}-hm-argo-cd-image-updater'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true

@@ -1,0 +1,39 @@
+# https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-server/values.yaml
+---
+global:
+  prefect:
+    image:
+      repository: harbor.hongbomiao.com/docker-hub-proxy-cache/prefecthq/prefect
+      prefectTag: 3.6.19-python3.14-kubernetes
+server:
+  uiConfig:
+    prefectUiApiUrl: https://prefect.hongbomiao.com/api
+  basicAuth:
+    enabled: true
+    existingSecret: hm-prefect-server-secret
+  replicaCount: 3
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      memory: 1Gi
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: prefect-server
+          topologyKey: kubernetes.io/hostname
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+postgresql:
+  enabled: false
+secret:
+  create: false
+  name: hm-prefect-server-secret

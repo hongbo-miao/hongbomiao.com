@@ -1,36 +1,26 @@
 # https://artifacthub.io/packages/helm/skypilot/skypilot?modal=values
 ---
 apiService:
-  image: harbor.hongbomiao.com/docker-hub-proxy-cache/berkeleyskypilot/skypilot:0.11.1
+  image: harbor.hongbomiao.com/docker-hub-proxy-cache/berkeleyskypilot/skypilot:0.11.2rc3
   imagePullPolicy: IfNotPresent
-  replicas: 3
-  upgradeStrategy: RollingUpdate
   dbConnectionSecretName: hm-skypilot-secret
-  enableUserManagement: true
   resources:
     requests:
       cpu: 4
       memory: 10Gi
     limits:
       memory: 12Gi
-  # TODO: nodeSelector and tolerations not supported in chart 0.11.1, added in main branch - uncomment after next release
-  # nodeSelector:
-  #   environment: production
-  # tolerations:
-  #   - key: environment
-  #     operator: Equal
-  #     value: production
-  #     effect: NoSchedule
-ingress:
-  enabled: true
-  host: skypilot.hongbomiao.com
-  ingressClassName: nginx
-  annotations:
-    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
-    external-dns.alpha.kubernetes.io/hostname: skypilot.hongbomiao.com
-  tls:
+  metrics:
     enabled: true
-  oauth2-proxy:
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+auth:
+  oauth:
     enabled: true
     image: harbor.hongbomiao.com/quay-io-proxy-cache/oauth2-proxy/oauth2-proxy:v7.9.0
     oidc-issuer-url: https://accounts.google.com
@@ -39,10 +29,24 @@ ingress:
     use-https: true
     session-store-type: redis
     redis-secret: hm-skypilot-secret
+ingress:
+  enabled: true
+  host: skypilot.hongbomiao.com
+  ingressClassName: traefik
+  annotations:
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: skypilot.hongbomiao.com
+  tls:
+    enabled: true
+  oauth2-proxy:
+    enabled: false
 ingress-nginx:
   enabled: false
 storage:
-  enabled: false
+  enabled: true
+  storageClassName: production-hm-skypilot-storage-class
+  accessMode: ReadWriteOnce
+  size: 10Gi
 rbac:
   manageSystemComponents: true
 lambdaCredentials:

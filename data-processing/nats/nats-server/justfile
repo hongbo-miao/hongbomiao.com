@@ -7,8 +7,11 @@ install:
     # NATS Command Line Interface
     brew install nats-io/nats-tools/nats
 
-start:
-    nats-server --jetstream
+start-nats-server:
+    nats-server --config=config/nats-server.conf
+
+start-nats-server-leafnode:
+    nats-server --config=config/nats-server-leafnode.conf
 
 account-info:
     nats account info --server={{ NATS_SERVER_URL }}

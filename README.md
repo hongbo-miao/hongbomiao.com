@@ -845,6 +845,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 ## Ops
 
 - **Argo CD** - Declarative GitOps CD for Kubernetes
+  - **Argo CD Image Updater** - Automatic container image updating
 - **Rancher** - Kubernetes container management platform
 - **KRR** - Kubernetes resource recommendation based on Prometheus metrics
   - **Simple KRR Dashboard** - KRR dashboard
