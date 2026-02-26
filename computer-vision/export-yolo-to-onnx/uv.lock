@@ -100,12 +100,12 @@ name = "chex"
 version = "0.1.91"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "absl-py" },
-    { name = "jax" },
-    { name = "jaxlib" },
-    { name = "numpy" },
-    { name = "toolz" },
-    { name = "typing-extensions" },
+    { name = "absl-py", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "jax", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "jaxlib", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "numpy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "toolz", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "typing-extensions", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/5b/7d/812f01e7b2ddf28a0caa8dde56bd951a2c8f691c9bbfce38d469458d1502/chex-0.1.91.tar.gz", hash = "sha256:65367a521415ada905b8c0222b0a41a68337fcadf79a1fb6fc992dbd95dd9f76", size = 90302, upload-time = "2025-09-01T21:49:32.834Z" }
 wheels = [
@@ -151,7 +151,8 @@ dependencies = [
     { name = "attrs", marker = "sys_platform != 'win32'" },
     { name = "cattrs", marker = "sys_platform != 'win32'" },
     { name = "numpy", marker = "sys_platform != 'win32'" },
-    { name = "packaging", marker = "sys_platform != 'win32'" },
+    { name = "packaging", version = "23.2", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'linux' and sys_platform != 'win32')" },
+    { name = "packaging", version = "26.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
     { name = "protobuf", marker = "sys_platform != 'win32'" },
     { name = "pyaml", marker = "sys_platform != 'win32'" },
     { name = "sympy", marker = "sys_platform != 'win32'" },
@@ -206,13 +207,13 @@ wheels = [
 
 [package.optional-dependencies]
 epath = [
-    { name = "fsspec" },
-    { name = "importlib-resources" },
-    { name = "typing-extensions" },
-    { name = "zipp" },
+    { name = "fsspec", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "importlib-resources", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "typing-extensions", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "zipp", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 epy = [
-    { name = "typing-extensions" },
+    { name = "typing-extensions", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 
 [[package]]
@@ -238,16 +239,16 @@ name = "flax"
 version = "0.12.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "jax" },
-    { name = "msgpack" },
-    { name = "numpy" },
-    { name = "optax" },
-    { name = "orbax-checkpoint" },
-    { name = "pyyaml" },
-    { name = "rich" },
-    { name = "tensorstore" },
-    { name = "treescope" },
-    { name = "typing-extensions" },
+    { name = "jax", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "msgpack", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "numpy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "optax", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "orbax-checkpoint", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "pyyaml", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "rich", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "tensorstore", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "treescope", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "typing-extensions", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/8b/02/2d4fbc31dcf5fb02e2b8ce733f8eecaffc7f24e905df2da39539809b195b/flax-0.12.0.tar.gz", hash = "sha256:cb3d4a2028666640c1a2e5b267dadfbd42ef14c6db41896fb4c765a7f05ebe74", size = 5038989, upload-time = "2025-09-25T23:59:00.919Z" }
 wheels = [
@@ -382,11 +383,11 @@ name = "jax"
 version = "0.7.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "jaxlib" },
-    { name = "ml-dtypes" },
-    { name = "numpy" },
-    { name = "opt-einsum" },
-    { name = "scipy" },
+    { name = "jaxlib", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "ml-dtypes", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "numpy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "opt-einsum", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "scipy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/bc/e8/b393ee314d3b042bd66b986d38e52f4e6046590399d916381265c20467d3/jax-0.7.1.tar.gz", hash = "sha256:118f56338c503361d2791f069d24339d8d44a8db442ed851d2e591222fb7a56d", size = 2428411, upload-time = "2025-08-20T15:55:46.098Z" }
 wheels = [
@@ -398,9 +399,9 @@ name = "jaxlib"
 version = "0.7.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ml-dtypes" },
-    { name = "numpy" },
-    { name = "scipy" },
+    { name = "ml-dtypes", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "numpy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "scipy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ef/1f/10543d7a3f7e76dd4bbdc77134890ac2f41bc8570c565961464f6320009b/jaxlib-0.7.1-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:127c07c727703e5d59f84f655169bec849f4422e52f8546349cecc30a8a13e1d", size = 57682851, upload-time = "2025-08-20T15:56:13.395Z" },
@@ -441,7 +442,8 @@ dependencies = [
     { name = "namex" },
     { name = "numpy" },
     { name = "optree" },
-    { name = "packaging" },
+    { name = "packaging", version = "23.2", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "packaging", version = "26.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
     { name = "rich" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9b/b8/8df141314a64a31d3a21762658826f716cdf4c261c7fcdb3f729958def55/keras-3.12.0.tar.gz", hash = "sha256:536e3f8385a05ae04e82e08715a1a59988578087e187b04cb0a6fad11743f07f", size = 1129187, upload-time = "2025-10-27T20:23:11.574Z" }
@@ -537,7 +539,8 @@ dependencies = [
     { name = "fonttools" },
     { name = "kiwisolver" },
     { name = "numpy" },
-    { name = "packaging" },
+    { name = "packaging", version = "23.2", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "packaging", version = "26.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
     { name = "pillow" },
     { name = "pyparsing" },
     { name = "python-dateutil" },
@@ -830,7 +833,8 @@ dependencies = [
     { name = "ml-dtypes" },
     { name = "onnx", version = "1.17.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'darwin'" },
     { name = "onnx", version = "1.19.1", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'darwin'" },
-    { name = "packaging" },
+    { name = "packaging", version = "23.2", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "packaging", version = "26.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
     { name = "sympy" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/8b/c6/cdc34ac3ef262cabb00b94d6f0cce763a9f6eab74f53adcf9a300ba3a3b0/onnxslim-0.1.82.tar.gz", hash = "sha256:4f48decf32863e583976fff6e9cfd9d6fe6a4a9814e7577c2cf8ce082973c6eb", size = 573786, upload-time = "2026-01-01T21:02:46.677Z" }
@@ -862,7 +866,8 @@ source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "numpy" },
     { name = "openvino-telemetry" },
-    { name = "packaging" },
+    { name = "packaging", version = "23.2", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "packaging", version = "26.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/dc/f8/0bca9783eda61d445b3c4bc1a141ecdbfa864d96d34fdf07aacd103609d7/openvino-2025.3.0-19807-cp312-cp312-macosx_10_15_x86_64.whl", hash = "sha256:3e9ebe81b17b8d92290191551c25c74da07358bd4c6e25058f6f906596f062ef", size = 39529889, upload-time = "2025-09-03T09:26:53.341Z" },
@@ -895,11 +900,11 @@ name = "optax"
 version = "0.2.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "absl-py" },
-    { name = "chex" },
-    { name = "jax" },
-    { name = "jaxlib" },
-    { name = "numpy" },
+    { name = "absl-py", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "chex", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "jax", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "jaxlib", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "numpy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6d/3b/90c11f740a3538200b61cd2b7d9346959cb9e31e0bdea3d2f886b7262203/optax-0.2.6.tar.gz", hash = "sha256:ba8d1e12678eba2657484d6feeca4fb281b8066bdfd5efbfc0f41b87663109c0", size = 269660, upload-time = "2025-09-15T22:41:24.76Z" }
 wheels = [
@@ -932,20 +937,20 @@ name = "orbax-checkpoint"
 version = "0.11.28"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "absl-py" },
-    { name = "aiofiles" },
-    { name = "etils", extra = ["epath", "epy"] },
-    { name = "humanize" },
-    { name = "jax" },
-    { name = "msgpack" },
-    { name = "nest-asyncio" },
-    { name = "numpy" },
-    { name = "protobuf" },
-    { name = "psutil" },
-    { name = "pyyaml" },
-    { name = "simplejson" },
-    { name = "tensorstore" },
-    { name = "typing-extensions" },
+    { name = "absl-py", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "aiofiles", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "etils", extra = ["epath", "epy"], marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "humanize", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "jax", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "msgpack", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "nest-asyncio", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "numpy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "protobuf", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "psutil", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "pyyaml", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "simplejson", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "tensorstore", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "typing-extensions", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c1/b7/cc0826b55de34f664486b6520bb23e473927676fc55cc53195b5230ec65d/orbax_checkpoint-0.11.28.tar.gz", hash = "sha256:a72075411c8aa4b48ddd9f2b247348bdfcf7b72f633b4d9c99541648089e90e9", size = 393676, upload-time = "2025-11-06T20:43:10.046Z" }
 wheels = [
@@ -956,9 +961,26 @@ wheels = [
 name = "packaging"
 version = "23.2"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "sys_platform == 'win32'",
+    "sys_platform == 'darwin'",
+    "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
+]
 sdist = { url = "https://files.pythonhosted.org/packages/fb/2b/9b9c33ffed44ee921d0967086d653047286054117d584f1b1a7c22ceaf7b/packaging-23.2.tar.gz", hash = "sha256:048fb0e9405036518eaaf48a55953c750c11e1a1b68e0dd1a9d62ed0c092cfc5", size = 146714, upload-time = "2023-10-01T13:50:05.279Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ec/1a/610693ac4ee14fcdf2d9bf3c493370e4f2ef7ae2e19217d7a237ff42367d/packaging-23.2-py3-none-any.whl", hash = "sha256:8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7", size = 53011, upload-time = "2023-10-01T13:50:03.745Z" },
+]
+
+[[package]]
+name = "packaging"
+version = "26.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "platform_machine == 'aarch64' and sys_platform == 'linux'",
+]
+sdist = { url = "https://files.pythonhosted.org/packages/65/ee/299d360cdc32edc7d2cf530f3accf79c4fca01e96ffc950d8a52213bd8e4/packaging-26.0.tar.gz", hash = "sha256:00243ae351a257117b6a241061796684b084ed1c516a08c48a3f7e147a9d80b4", size = 143416, upload-time = "2026-01-21T20:50:39.064Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b7/b9/c538f279a4e237a006a2c98387d081e9eb060d203d8ed34467cc0f0b9b53/packaging-26.0-py3-none-any.whl", hash = "sha256:b36f1fef9334a5588b4166f8bcd26a14e521f2b55e6b9de3aaa80d3ff7a37529", size = 74366, upload-time = "2026-01-21T20:50:37.788Z" },
 ]
 
 [[package]]
@@ -966,10 +988,10 @@ name = "pandas"
 version = "2.3.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy" },
-    { name = "python-dateutil" },
-    { name = "pytz" },
-    { name = "tzdata" },
+    { name = "numpy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "python-dateutil", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "pytz", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "tzdata", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/33/01/d40b85317f86cf08d853a4f495195c73815fdf205eef3993821720274518/pandas-2.3.3.tar.gz", hash = "sha256:e05e1af93b977f7eafa636d043f9f94c7ee3ac81af99c13508215942e64c993b", size = 4495223, upload-time = "2025-09-29T23:34:51.853Z" }
 wheels = [
@@ -1123,7 +1145,8 @@ source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "colorama", marker = "sys_platform == 'win32'" },
     { name = "iniconfig" },
-    { name = "packaging" },
+    { name = "packaging", version = "23.2", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "packaging", version = "26.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
     { name = "pluggy" },
     { name = "pygments" },
 ]
@@ -1313,7 +1336,8 @@ dependencies = [
     { name = "grpcio" },
     { name = "markdown" },
     { name = "numpy" },
-    { name = "packaging" },
+    { name = "packaging", version = "23.2", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "packaging", version = "26.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
     { name = "protobuf" },
     { name = "setuptools" },
     { name = "six" },
@@ -1351,7 +1375,8 @@ dependencies = [
     { name = "ml-dtypes" },
     { name = "numpy" },
     { name = "opt-einsum" },
-    { name = "packaging" },
+    { name = "packaging", version = "23.2", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "packaging", version = "26.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
     { name = "protobuf" },
     { name = "requests" },
     { name = "setuptools" },
@@ -1373,15 +1398,15 @@ name = "tensorflow-decision-forests"
 version = "1.12.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "absl-py" },
-    { name = "numpy" },
-    { name = "pandas" },
-    { name = "six" },
-    { name = "tensorflow" },
-    { name = "tf-keras" },
-    { name = "wheel" },
-    { name = "wurlitzer" },
-    { name = "ydf" },
+    { name = "absl-py", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "numpy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "pandas", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "six", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "tensorflow", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "tf-keras", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "wheel", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "wurlitzer", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "ydf", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/31/cf/8b6850fc8b55d5477e54687533cf5019df41e64621e57a6d27cb3ca1a41a/tensorflow_decision_forests-1.12.0-cp312-cp312-macosx_12_0_arm64.whl", hash = "sha256:14ffa15864d10782445044302e42d0d88d07536669578f66fbeccdc20b1a9ed2", size = 12211419, upload-time = "2025-03-13T12:58:08.551Z" },
@@ -1390,12 +1415,32 @@ wheels = [
 
 [[package]]
 name = "tensorflow-hub"
+version = "0.12.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "platform_machine == 'aarch64' and sys_platform == 'linux'",
+]
+dependencies = [
+    { name = "numpy", marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
+    { name = "protobuf", marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/29/32/899878aa65cae5429f30449cdda61224e3f4319e6a155027bc3af4c3f07b/tensorflow_hub-0.12.0-py2.py3-none-any.whl", hash = "sha256:822fe5f7338c95efcc3a534011c6689e4309ba2459def87194179c4de8a6e1fc", size = 108809, upload-time = "2021-04-14T12:54:13.1Z" },
+]
+
+[[package]]
+name = "tensorflow-hub"
 version = "0.16.1"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "sys_platform == 'win32'",
+    "sys_platform == 'darwin'",
+    "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
+]
 dependencies = [
-    { name = "numpy" },
-    { name = "protobuf" },
-    { name = "tf-keras" },
+    { name = "numpy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "protobuf", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "tf-keras", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e5/50/00dba77925bf2a0a1e45d7bcf8a69a1d2534fb4bb277d9010bd148d2235e/tensorflow_hub-0.16.1-py2.py3-none-any.whl", hash = "sha256:e10c184b3d08daeafada11ffea2dd46781725b6bef01fad1f74d6634ad05311f", size = 30771, upload-time = "2024-01-30T14:49:07.005Z" },
@@ -1403,19 +1448,40 @@ wheels = [
 
 [[package]]
 name = "tensorflowjs"
+version = "3.15.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "platform_machine == 'aarch64' and sys_platform == 'linux'",
+]
+dependencies = [
+    { name = "six", marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
+    { name = "tensorflow", marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
+    { name = "tensorflow-hub", version = "0.12.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d3/63/557470a3576377a84ec00f6f5546e5773971e6ff2a429313e87614cb75ed/tensorflowjs-3.15.0-py3-none-any.whl", hash = "sha256:271e543d357652964d7b34f9367ff940481d339c2039e3d0b6426a878c43b72f", size = 77380, upload-time = "2022-03-25T21:08:33.741Z" },
+]
+
+[[package]]
+name = "tensorflowjs"
 version = "4.22.0"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "sys_platform == 'win32'",
+    "sys_platform == 'darwin'",
+    "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
+]
 dependencies = [
-    { name = "flax" },
-    { name = "importlib-resources" },
-    { name = "jax" },
-    { name = "jaxlib" },
-    { name = "packaging" },
-    { name = "six" },
-    { name = "tensorflow" },
-    { name = "tensorflow-decision-forests" },
-    { name = "tensorflow-hub" },
-    { name = "tf-keras" },
+    { name = "flax", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "importlib-resources", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "jax", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "jaxlib", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "packaging", version = "23.2", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "six", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "tensorflow", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "tensorflow-decision-forests", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "tensorflow-hub", version = "0.16.1", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "tf-keras", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a2/40/c363bdb7ef69b27c941c622b1f6e12eba5e3563abde737690fd1a13969ba/tensorflowjs-4.22.0-py3-none-any.whl", hash = "sha256:bd4deb1e7feab538ee7f2625fe85446742bb4765bebab345b534688ab41e3e1c", size = 89131, upload-time = "2024-10-21T21:35:41.663Z" },
@@ -1452,7 +1518,7 @@ name = "tf-keras"
 version = "2.19.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "tensorflow" },
+    { name = "tensorflow", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a9/71/a6e82b8e8ce04a8ab1ff0560791698b70d1b2dda1a0270f1d69a834e8880/tf_keras-2.19.0.tar.gz", hash = "sha256:b09a407d87a4571ce1e8ca985cfc68483e3d63b2518a5d79a97ad92cb64dbe9c", size = 1261172, upload-time = "2025-03-03T21:24:13.582Z" }
 wheels = [
@@ -1543,7 +1609,7 @@ name = "treescope"
 version = "0.1.10"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy" },
+    { name = "numpy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f0/2a/d13d3c38862632742d2fe2f7ae307c431db06538fd05ca03020d207b5dcc/treescope-0.1.10.tar.gz", hash = "sha256:20f74656f34ab2d8716715013e8163a0da79bdc2554c16d5023172c50d27ea95", size = 138870, upload-time = "2025-08-08T05:43:48.048Z" }
 wheels = [
@@ -1578,7 +1644,7 @@ wheels = [
 
 [[package]]
 name = "ultralytics"
-version = "8.4.14"
+version = "8.4.18"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "matplotlib" },
@@ -1594,9 +1660,9 @@ dependencies = [
     { name = "torchvision" },
     { name = "ultralytics-thop" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3c/dc/7947df41679c009bc33b61e10d6274a8ec885206b726ebb6027d5f204b35/ultralytics-8.4.14.tar.gz", hash = "sha256:360dff28ecb6cc7bf561aadf5bfe208c3900380bf1d4b2b190cb8db60e7b7626", size = 1014432, upload-time = "2026-02-10T11:31:51.342Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ee/b8/fbb45a58ca9d90a4a8b617be76a8fe398a45a80468f9adf818e844a37b9d/ultralytics-8.4.18.tar.gz", hash = "sha256:99988130fc7e2667245ff41354db86249eea38889f7ca3263102ecb833fc85e0", size = 1016661, upload-time = "2026-02-26T18:40:02.689Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/89/39/3b19ee32a174c285c6b2bdf5cec222155938e5f0cf3fef997df131f98189/ultralytics-8.4.14-py3-none-any.whl", hash = "sha256:0ce8f4081c1e7dd96a7a3ac82a820681443042609c4b48adca85a2289cdaef17", size = 1188742, upload-time = "2026-02-10T11:31:47.44Z" },
+    { url = "https://files.pythonhosted.org/packages/4a/44/4224299ce6f4547d518163925115408f4689db2879d49221559dc0888886/ultralytics-8.4.18-py3-none-any.whl", hash = "sha256:da8f1168196ccd32fab1675f198b277cef4bfb294475758a43aaf19e49ba1f36", size = 1191535, upload-time = "2026-02-26T18:39:58.477Z" },
 ]
 
 [package.optional-dependencies]
@@ -1608,10 +1674,12 @@ export = [
     { name = "onnx", version = "1.19.1", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'darwin'" },
     { name = "onnxslim" },
     { name = "openvino" },
+    { name = "packaging", version = "26.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
     { name = "scikit-learn", marker = "sys_platform != 'win32'" },
     { name = "setuptools" },
     { name = "tensorflow" },
-    { name = "tensorflowjs" },
+    { name = "tensorflowjs", version = "3.15.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
+    { name = "tensorflowjs", version = "4.22.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
     { name = "tensorstore", marker = "platform_machine == 'aarch64'" },
 ]
 
@@ -1693,9 +1761,9 @@ name = "ydf"
 version = "0.13.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "absl-py" },
-    { name = "numpy" },
-    { name = "protobuf" },
+    { name = "absl-py", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "numpy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "protobuf", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e1/6b/77a7850c22fe56c1294a043534712d0c7338f67a9828408ae6d630c66daa/ydf-0.13.0-cp312-cp312-macosx_12_0_arm64.whl", hash = "sha256:20108f07edac014cbf6bd38c14fdb93e547a91ebf71ed36246df4d5c85943960", size = 9035280, upload-time = "2025-07-15T15:53:05.353Z" },
@@ -1718,7 +1786,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "ultralytics", extras = ["export"], specifier = "==8.4.14" }]
+requires-dist = [{ name = "ultralytics", extras = ["export"], specifier = "==8.4.18" }]
 
 [package.metadata.requires-dev]
 dev = [
