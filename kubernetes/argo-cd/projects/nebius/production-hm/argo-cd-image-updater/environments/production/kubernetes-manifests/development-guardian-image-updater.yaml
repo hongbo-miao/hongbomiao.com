@@ -1,0 +1,22 @@
+---
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: development-hm
+  namespace: production-hm-argo-cd-image-updater
+spec:
+  namespace: production-hm-argo-cd
+  commonUpdateSettings:
+    updateStrategy: alphabetical
+  writeBackConfig:
+    method: git:secret:production-hm-argo-cd-image-updater/hm-kubernetes-applications-ssh-secret
+    gitConfig:
+      branch: main
+      writeBackTarget: kustomization
+  applicationRefs:
+    - namePattern: development-hm
+      images:
+        - alias: engine
+          imageName: harbor.hongbomiao.com/hm/api-rust
+        - alias: web
+          imageName: harbor.hongbomiao.com/hm/web

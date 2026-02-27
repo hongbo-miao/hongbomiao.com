@@ -18,14 +18,14 @@ data:
           model: bedrock/global.anthropic.claude-haiku-4-5-20251001-v1:0
           aws_region_name: us-west-2
       # Claude Opus
-      - model_name: claude-opus-4-5
+      - model_name: claude-opus-4-6
         litellm_params:
-          model: bedrock/global.anthropic.claude-opus-4-5-20251101-v1:0
+          model: bedrock/global.anthropic.claude-opus-4-6-v1
           aws_region_name: us-west-2
       # Claude Sonnet
-      - model_name: claude-sonnet-4-5
+      - model_name: claude-sonnet-4-6
         litellm_params:
-          model: bedrock/global.anthropic.claude-sonnet-4-5-20250929-v1:0
+          model: bedrock/global.anthropic.claude-sonnet-4-6
           aws_region_name: us-west-2
       # Amazon Titan Text G1 - Premier
       - model_name: titan-text-g1-premier
@@ -33,13 +33,13 @@ data:
           model: bedrock/amazon.titan-text-premier-v1:0
           aws_region_name: us-east-1
       # Google Gemini
-      - model_name: gemini-pro-2-5
+      - model_name: gemini-pro-3-1-preview
         litellm_params:
-          model: gemini/gemini-2.5-pro
+          model: gemini/gemini-3.1-pro-preview
           api_key: os.environ/GEMINI_API_KEY
-      - model_name: gemini-flash-2-5
+      - model_name: gemini-flash-3-preview
         litellm_params:
-          model: gemini/gemini-2.5-flash
+          model: gemini/gemini-3-flash-preview
           api_key: os.environ/GEMINI_API_KEY
     litellm_settings:
       drop_params: True

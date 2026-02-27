@@ -1,0 +1,33 @@
+# https://github.com/argoproj/argo-helm/blob/main/charts/argocd-image-updater/values.yaml
+---
+replicaCount: 3
+image:
+  repository: harbor.hongbomiao.com/quay-io-proxy-cache/argoprojlabs/argocd-image-updater
+config:
+  registries:
+    - name: Harbor
+      api_url: https://harbor.hongbomiao.com
+      prefix: harbor.hongbomiao.com
+      credentials: secret:production-hm-argo-cd-image-updater/argo-cd-image-updater-harbor-secret#credentials
+      defaultns: hm
+  git.user: hm-argo-cd-image-updater
+  git.email: hm-argo-cd-image-updater@hongbomiao.com
+  git.commit-message-template: |
+    build({{ .AppName }}): bump versions
+
+    {{ range .AppChanges -}}
+    - {{ .Image }} {{ .OldTag }} -> {{ .NewTag }}
+    {{ end -}}
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule
+resources:
+  requests:
+    cpu: 10m
+    memory: 100Mi
+  limits:
+    memory: 200Mi
