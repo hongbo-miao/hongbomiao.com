@@ -16,7 +16,7 @@ template:
         effect: NoSchedule
     initContainers:
       - name: init-dind-externals
-        image: ghcr.io/actions/actions-runner:2.331.0
+        image: ghcr.io/actions/actions-runner:2.332.0
         command:
           - cp
           - -r
@@ -27,7 +27,7 @@ template:
             mountPath: /home/runner/tmpDir
     containers:
       - name: runner
-        image: ghcr.io/actions/actions-runner:2.331.0
+        image: ghcr.io/actions/actions-runner:2.332.0
         command:
           - /home/runner/run.sh
         env:
