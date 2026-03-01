@@ -1,6 +1,6 @@
 # https://github.com/devops-ia/helm-simple-krr-dashboard/blob/main/charts/simple-krr-dashboard/values.yaml
 ---
-replicaCount: 3
+replicaCount: 1
 nodeSelector:
   environment: production
 tolerations:
@@ -17,8 +17,8 @@ resources:
 job:
   image:
     repository: harbor.hongbomiao.com/docker-hub-proxy-cache/robustadev/krr
-  # At minute 17 of every hour
-  schedule: "17 * * * *"
+  # Every 10 minutes starting at minute 3
+  schedule: "3/10 * * * *"
   krrExtraArguments: '--prometheus-headers="X-Scope-OrgID: hm"'
   nodeSelector:
     environment: production
