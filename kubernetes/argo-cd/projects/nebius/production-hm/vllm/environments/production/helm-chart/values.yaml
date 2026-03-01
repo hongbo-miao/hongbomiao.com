@@ -8,6 +8,10 @@ servingEngineSpec:
       operator: Equal
       value: production
       effect: NoSchedule
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
   vllmApiKey:
     secretName: hm-vllm-secret
     secretKey: VLLM_API_KEY
@@ -15,9 +19,9 @@ servingEngineSpec:
     - name: qwen3-0-6b
       repository: harbor.hongbomiao.com/docker-hub-proxy-cache/lmcache/vllm-openai
       # https://hub.docker.com/r/lmcache/vllm-openai/tags
-      tag: v0.3.13
+      tag: v0.3.14
       modelURL: Qwen/Qwen3-0.6B
-      replicaCount: 1
+      replicaCount: 3
       requestCPU: 1
       requestMemory: 4200Mi
       limitMemory: 4200Mi
@@ -36,6 +40,15 @@ servingEngineSpec:
                     operator: In
                     values:
                       - production
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: model
+                    operator: In
+                    values:
+                      - qwen3-0-6b
+              topologyKey: kubernetes.io/hostname
       vllmConfig:
         enablePrefixCaching: true
         enableChunkedPrefill: true
@@ -45,9 +58,9 @@ servingEngineSpec:
     - name: qwen3-0-6b-20260101
       repository: harbor.hongbomiao.com/docker-hub-proxy-cache/lmcache/vllm-openai
       # https://hub.docker.com/r/lmcache/vllm-openai/tags
-      tag: v0.3.13
+      tag: v0.3.14
       modelURL: s3://production-hm-models/qwen3-0-6b-20260101
-      replicaCount: 1
+      replicaCount: 3
       requestCPU: 1
       requestMemory: 4200Mi
       limitMemory: 4200Mi
@@ -66,6 +79,15 @@ servingEngineSpec:
                     operator: In
                     values:
                       - production
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: model
+                    operator: In
+                    values:
+                      - qwen3-0-6b-20260101
+              topologyKey: kubernetes.io/hostname
       vllmConfig:
         enablePrefixCaching: true
         enableChunkedPrefill: true
@@ -98,7 +120,7 @@ routerSpec:
   enableRouter: true
   repository: harbor.hongbomiao.com/docker-hub-proxy-cache/lmcache/lmstack-router
   # https://hub.docker.com/r/lmcache/lmstack-router/tags
-  tag: 0.1.10.dev3-g9753b1979.d20260203
+  tag: v0.1.10
   replicaCount: 3
   serviceDiscovery: k8s
   routingLogic: roundrobin
@@ -109,6 +131,20 @@ routerSpec:
       operator: Equal
       value: production
       effect: NoSchedule
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                  - router
+          topologyKey: kubernetes.io/hostname
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
   startupProbe:
     initialDelaySeconds: 15
     periodSeconds: 10

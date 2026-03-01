@@ -39,6 +39,13 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
+    - name: Atlantis
+      group: production
+      url: https://atlantis.hongbomiao.com/healthz
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
     - name: Gatus
       group: production
       url: https://gatus.hongbomiao.com/health
@@ -55,7 +62,7 @@ config:
         - "[RESPONSE_TIME] < 5000"
     - name: Grafana
       group: production
-      url: https://grafana.hongbomiao.com
+      url: https://grafana.hongbomiao.com/api/health
       interval: 60s
       conditions:
         - "[STATUS] == 200"
@@ -90,7 +97,7 @@ config:
         - "[RESPONSE_TIME] < 5000"
     - name: Simple KRR Dashboard
       group: production
-      url: https://krr.hongbomiao.com
+      url: https://krr.hongbomiao.com/healthz
       interval: 60s
       conditions:
         - "[STATUS] == 200"

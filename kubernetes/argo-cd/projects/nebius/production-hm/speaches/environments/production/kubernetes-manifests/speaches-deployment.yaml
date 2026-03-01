@@ -9,6 +9,10 @@ metadata:
     app.kubernetes.io/part-of: production-speaches
 spec:
   replicas: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: speaches
@@ -28,6 +32,16 @@ spec:
         - key: nvidia.com/mig-2g.35gb
           operator: Exists
           effect: NoSchedule
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - speaches
+              topologyKey: kubernetes.io/hostname
       containers:
         - name: speaches
           image: ghcr.io/speaches-ai/speaches:0.9.0-rc.3-cuda
@@ -43,9 +57,9 @@ spec:
               value: '["hongbo-miao/whisper-large-v3-turbo-20260101"]'
           resources:
             requests:
-              cpu: 200m
-              memory: 3600Mi
+              cpu: 400m
+              memory: 3Gi
               nvidia.com/mig-2g.35gb: 1
             limits:
-              memory: 4Gi
+              memory: 5Gi
               nvidia.com/mig-2g.35gb: 1

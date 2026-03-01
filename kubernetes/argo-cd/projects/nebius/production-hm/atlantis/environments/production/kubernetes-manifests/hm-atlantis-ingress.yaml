@@ -1,0 +1,32 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-atlantis-ingress
+  namespace: production-hm-atlantis
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: atlantis.hongbomiao.com
+  labels:
+    app.kubernetes.io/name: atlantis
+    app.kubernetes.io/part-of: production-hm-atlantis
+spec:
+  rules:
+    - host: atlantis.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: atlantis
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - atlantis.hongbomiao.com
+      secretName: hm-atlantis-certificate

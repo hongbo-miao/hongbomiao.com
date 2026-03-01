@@ -267,6 +267,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Multipass** - Virtual machine management
 - **Cloudflare Tunnel** - Tunneling
 - **Vertical Pod Autoscaler** - Kubernetes vertical pod autoscaler
+- **Karpenter** - Kubernetes node autoscaler
 - **KEDA** - Kubernetes event-driven autoscaler
 - **NVIDIA GPU Operator** - Kubernetes operator for GPU driver and device plugin management
 - **RKE2** - Lightweight Kubernetes
@@ -838,9 +839,9 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **OpenTofu** - Infrastructure as code (IaC)
 - **Pulumi** - Infrastructure as code (IaC)
+- **Atlantis** - OpenTofu and Terraform pull request automation
 - **Ansible** - Configuration management and automation
 - **Vagrant** - Development environments building and distributing
-- **Karpenter** - Kubernetes node autoscaler
 
 ## Ops
 

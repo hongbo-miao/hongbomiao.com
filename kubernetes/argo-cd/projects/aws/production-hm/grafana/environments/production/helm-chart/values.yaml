@@ -2,7 +2,13 @@
 ---
 global:
   imageRegistry: harbor.hongbomiao.com/docker-hub-proxy-cache
-replicas: 10
+replicas: 3
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 20
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
 admin:
   existingSecret: hm-grafana-secret
   userKey: GRAFANA_ADMIN_USER_NAME
@@ -129,7 +135,7 @@ topologySpreadConstraints:
         app.kubernetes.io/name: grafana
 resources:
   requests:
-    cpu: 30m
+    cpu: 100m
     memory: 400Mi
   limits:
     memory: 800Mi

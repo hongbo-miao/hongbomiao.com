@@ -1,0 +1,54 @@
+# https://github.com/runatlantis/helm-charts/blob/main/charts/atlantis/values.yaml
+---
+replicaCount: 1
+atlantisUrl: https://atlantis.hongbomiao.com
+orgAllowlist: github.com/hongbo-miao/*
+github:
+  user: hongbo-miao
+vcsSecretName: hm-atlantis-secret
+basicAuthSecretName: hm-atlantis-secret
+defaultTFDistribution: opentofu
+logLevel: info
+hidePrevPlanComments: true
+enableDiffMarkdownFormat: true
+disableApply: false
+disableApplyAll: true
+repoConfig: |
+  ---
+  repos:
+    - id: github.com/hongbo-miao/*
+      apply_requirements:
+        - approved
+        - mergeable
+        - undiverged
+      import_requirements:
+        - approved
+        - mergeable
+        - undiverged
+      allowed_overrides:
+        - apply_requirements
+        - import_requirements
+        - workflow
+ingress:
+  enabled: false
+test:
+  enabled: false
+volumeClaim:
+  enabled: true
+  dataStorage: 50Gi
+  storageClassName: production-hm-atlantis-storage-class
+  accessModes:
+    - ReadWriteOnce
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule
+resources:
+  requests:
+    cpu: 100m
+    memory: 200Mi
+  limits:
+    memory: 500Mi

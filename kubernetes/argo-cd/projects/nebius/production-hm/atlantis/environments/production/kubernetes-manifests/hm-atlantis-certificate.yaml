@@ -1,0 +1,21 @@
+# https://cert-manager.io/docs/usage/certificate
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hm-atlantis-certificate
+  namespace: production-hm-atlantis
+  labels:
+    app.kubernetes.io/name: atlantis
+    app.kubernetes.io/part-of: production-hm-atlantis
+spec:
+  secretName: hm-atlantis-certificate
+  issuerRef:
+    name: hm-lets-encrypt-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - atlantis.hongbomiao.com
+  privateKey:
+    algorithm: ECDSA
+    size: 384
+    rotationPolicy: Always
