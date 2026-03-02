@@ -1,0 +1,41 @@
+# https://github.com/falcosecurity/charts/blob/master/charts/falcosidekick/values.yaml
+---
+image:
+  registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+replicaCount: 3
+webui:
+  enabled: true
+  replicaCount: 3
+  existingSecret: hm-falcosidekick-secret
+  image:
+    registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  redis:
+    image:
+      registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+    nodeSelector:
+      environment: production
+    tolerations:
+      - key: environment
+        operator: Equal
+        value: production
+        effect: NoSchedule
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule
+resources:
+  requests:
+    cpu: 100m
+    memory: 200Mi
+  limits:
+    memory: 500Mi

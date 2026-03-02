@@ -868,6 +868,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Ory Hydra** - OAuth 2.0 and OpenID Connect server
 - **Open Policy Agent (OPA)** - Policy-based control
 - **OPAL** - Open-policy administration layer
+- **Falco** - Cloud-native runtime security & threat detection
+  - **Falcosidekick** - Falco alert forwarding and integration hub
 - **Prowler** - Cloud security assessments
 - **CodeQL** - Variant analysis
 - **Gitleaks** - Git secret scanning

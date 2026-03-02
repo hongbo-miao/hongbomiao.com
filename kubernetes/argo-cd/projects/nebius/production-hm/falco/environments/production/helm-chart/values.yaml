@@ -1,0 +1,51 @@
+# https://github.com/falcosecurity/charts/blob/master/charts/falco/values.yaml
+---
+image:
+  registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+driver:
+  kind: modern_ebpf
+  loader:
+    initContainer:
+      image:
+        registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+tty: false
+falco:
+  json_output: true
+  http_output:
+    enabled: true
+    url: http://falcosidekick.production-hm-falcosidekick.svc:2801
+customRules:
+  rules-exceptions.yaml: |-
+    # Exception: gha-runner-scale-set DinD containers execute build artifacts at runtime.
+    # These nested containers have no Kubernetes metadata (container.name = <NA>).
+    - macro: known_drop_and_execute_activities
+      condition: or (container.name = "<NA>")
+      override:
+        condition: append
+falcosidekick:
+  enabled: false
+falcoctl:
+  image:
+    registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+collectors:
+  kubernetes:
+    enabled: true
+
+k8s-metacollector:
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+tolerations:
+  - key: environment
+    operator: Exists
+    effect: NoSchedule
+resources:
+  requests:
+    cpu: 20m
+    memory: 100Mi
+  limits:
+    memory: 200Mi

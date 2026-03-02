@@ -46,6 +46,13 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
+    - name: Falcosidekick
+      group: production
+      url: https://falcosidekick.hongbomiao.com
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
     - name: Gatus
       group: production
       url: https://gatus.hongbomiao.com/health

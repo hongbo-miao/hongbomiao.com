@@ -128,6 +128,8 @@ jmx:
       ssl: false
       lowercaseOutputName: true
       lowercaseOutputLabelNames: true
+      whitelistObjectNames:
+        - "trino.execution:name=ClusterSizeMonitor"
       rules:
         # Pattern: JMX MBean ObjectName format (domain<property=value><>attribute)
         #   - trino.execution: JMX domain
