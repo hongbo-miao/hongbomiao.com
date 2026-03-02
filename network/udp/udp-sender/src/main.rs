@@ -7,7 +7,7 @@ use std::time::Instant;
 
 use chrono::Utc;
 use prost::Message;
-use rand::Rng;
+use rand::RngExt;
 use tokio::net::UdpSocket;
 
 pub mod iot {

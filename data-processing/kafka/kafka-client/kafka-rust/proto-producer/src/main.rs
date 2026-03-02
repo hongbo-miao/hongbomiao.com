@@ -9,7 +9,7 @@ use std::time::Duration;
 
 use chrono::Utc;
 use prost::Message;
-use rand::Rng;
+use rand::RngExt;
 use rdkafka::ClientConfig;
 use rdkafka::producer::{FutureProducer, FutureRecord};
 use rdkafka::util::Timeout;

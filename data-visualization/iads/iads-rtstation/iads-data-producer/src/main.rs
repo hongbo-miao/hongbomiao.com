@@ -4,7 +4,7 @@
 #![forbid(unused_must_use)]
 
 use chrono::{Datelike, TimeZone, Utc};
-use rand::Rng;
+use rand::RngExt;
 use tokio::io::AsyncWriteExt;
 use tokio::net::TcpListener;
 use tokio::time::{Duration, sleep};
