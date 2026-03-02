@@ -28,7 +28,7 @@ require (
 	github.com/stretchr/testify v1.11.1
 	github.com/valkey-io/valkey-go v1.0.72
 	github.com/valkey-io/valkey-go/mock v1.0.72
-	go.elastic.co/apm/module/apmgin/v2 v2.7.3
+	go.elastic.co/apm/module/apmgin/v2 v2.7.4
 	go.elastic.co/apm/module/apmgrpc/v2 v2.7.4
 	go.opencensus.io v0.24.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.65.0
