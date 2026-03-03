@@ -1,0 +1,88 @@
+# https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-postgres-exporter/values.yaml
+---
+replicaCount: 1
+image:
+  registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+  repository: prometheuscommunity/postgres-exporter
+config:
+  extraArgs:
+    - "--no-collector.wal"
+  existingSecret:
+    enabled: true
+    name: hm-prometheus-postgres-exporter-secret
+serviceMonitor:
+  enabled: true
+  multipleTarget:
+    enabled: true
+    sharedAuthModule:
+      enabled: false
+    targets:
+      - endpoint: private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
+        name: production-gatus
+        port: 5432
+        databaseName: bootstrap_db
+        metricRelabelings:
+          - sourceLabels: [target]
+            targetLabel: instance
+      - endpoint: private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
+        name: production-grafana
+        port: 5432
+        databaseName: bootstrap_db
+        metricRelabelings:
+          - sourceLabels: [target]
+            targetLabel: instance
+      - endpoint: private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
+        name: production-harbor
+        port: 5432
+        databaseName: bootstrap_db
+        metricRelabelings:
+          - sourceLabels: [target]
+            targetLabel: instance
+      - endpoint: private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
+        name: production-mlflow
+        port: 5432
+        databaseName: bootstrap_db
+        metricRelabelings:
+          - sourceLabels: [target]
+            targetLabel: instance
+      - endpoint: private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
+        name: production-polaris
+        port: 5432
+        databaseName: bootstrap_db
+        metricRelabelings:
+          - sourceLabels: [target]
+            targetLabel: instance
+      - endpoint: private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
+        name: production-prefect-server
+        port: 5432
+        databaseName: bootstrap_db
+        metricRelabelings:
+          - sourceLabels: [target]
+            targetLabel: instance
+      - endpoint: private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
+        name: production-skypilot
+        port: 5432
+        databaseName: bootstrap_db
+        metricRelabelings:
+          - sourceLabels: [target]
+            targetLabel: instance
+      - endpoint: private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
+        name: production-trino-gateway
+        port: 5432
+        databaseName: bootstrap_db
+        metricRelabelings:
+          - sourceLabels: [target]
+            targetLabel: instance
+resources:
+  requests:
+    cpu: 10m
+    memory: 100Mi
+  limits:
+    memory: 200Mi
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule

@@ -252,10 +252,10 @@ querier:
       effect: NoSchedule
   resources:
     requests:
-      cpu: 30m
-      memory: 200Mi
+      cpu: 170m
+      memory: 300Mi
     limits:
-      memory: 200Mi
+      memory: 400Mi
 query_frontend:
   enabled: true
   kedaAutoscaling:
@@ -454,10 +454,10 @@ store_gateway:
     storageClass: production-hm-mimir-storage-class
   resources:
     requests:
-      cpu: 2200m
+      cpu: 2600m
       memory: 500Mi
     limits:
-      memory: 1500Mi
+      memory: 1900Mi
 gateway:
   enabled: true
   replicas: 3

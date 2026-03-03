@@ -1,11 +1,14 @@
 # Organization
-# Organization - hongbomiao
-module "grafana_organization_hongbomiao" {
+# Organization - hm
+module "grafana_organization_hm" {
   source = "../../../modules/grafana/grafana_organization"
-  name   = "hongbomiao"
+  name   = "hm"
 }
 locals {
-  org_ids = ["1", tostring(module.grafana_organization_hongbomiao.org_id)]
+  org_ids = [
+    "1",
+    tostring(module.grafana_organization_hm.org_id),
+  ]
 }
 
 # Data Source
@@ -125,6 +128,12 @@ module "grafana_data_source_hm_pyroscope" {
 
 # Dashboard
 # Dashboard - Cilium
+module "grafana_folder_cilium" {
+  source   = "../../../modules/grafana/grafana_folder"
+  for_each = toset(local.org_ids)
+  org_id   = each.value
+  title    = "Cilium"
+}
 locals {
   cilium_dashboard_urls = {
     "cilium-dashboard"                   = "https://raw.githubusercontent.com/cilium/cilium/main/install/kubernetes/cilium/files/cilium-agent/dashboards/cilium-dashboard.json"
@@ -146,12 +155,6 @@ data "http" "cilium_dashboards" {
   for_each = local.cilium_dashboard_urls
   url      = each.value
 }
-module "grafana_folder_cilium" {
-  source   = "../../../modules/grafana/grafana_folder"
-  for_each = toset(local.org_ids)
-  org_id   = each.value
-  title    = "Cilium"
-}
 module "grafana_dashboard_cilium" {
   source      = "../../../modules/grafana/grafana_dashboard"
   for_each    = { for combination in local.cilium_org_dashboard_combinations : combination.key => combination }
@@ -163,6 +166,13 @@ module "grafana_dashboard_cilium" {
 }
 
 # Dashboard - Kubernetes
+# Dashboard - Kubernetes - Kubernetes
+module "grafana_folder_kubernetes" {
+  source   = "../../../modules/grafana/grafana_folder"
+  for_each = toset(local.org_ids)
+  org_id   = each.value
+  title    = "Kubernetes"
+}
 locals {
   kubernetes_dashboard_urls = {
     "k8s-system-api-server" = "https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json"
@@ -186,12 +196,6 @@ data "http" "kubernetes_dashboards" {
   for_each = local.kubernetes_dashboard_urls
   url      = each.value
 }
-module "grafana_folder_kubernetes" {
-  source   = "../../../modules/grafana/grafana_folder"
-  for_each = toset(local.org_ids)
-  org_id   = each.value
-  title    = "Kubernetes"
-}
 module "grafana_dashboard_kubernetes" {
   source      = "../../../modules/grafana/grafana_dashboard"
   for_each    = { for combination in local.kubernetes_org_dashboard_combinations : combination.key => combination }
@@ -201,8 +205,7 @@ module "grafana_dashboard_kubernetes" {
   uid_prefix  = var.grafana_dashboard_uid_prefix
   tags        = [var.managed_tag]
 }
-
-# Dashboard - Node Exporter
+# Dashboard - Kubernetes - Node Exporter
 # https://grafana.com/grafana/dashboards/1860-node-exporter-full/
 locals {
   node_exporter_dashboard_urls = {
@@ -222,24 +225,24 @@ data "http" "node_exporter_dashboards" {
   for_each = local.node_exporter_dashboard_urls
   url      = each.value
 }
-module "grafana_folder_node_exporter" {
-  source   = "../../../modules/grafana/grafana_folder"
-  for_each = toset(local.org_ids)
-  org_id   = each.value
-  title    = "Node Exporter"
-}
 module "grafana_dashboard_node_exporter" {
   source      = "../../../modules/grafana/grafana_dashboard"
   for_each    = { for combination in local.node_exporter_org_dashboard_combinations : combination.key => combination }
   org_id      = each.value.org_id
-  folder_uid  = module.grafana_folder_node_exporter[each.value.org_id].uid
+  folder_uid  = module.grafana_folder_kubernetes[each.value.org_id].uid
   config_json = data.http.node_exporter_dashboards[each.value.dashboard_name].response_body
   uid_prefix  = var.grafana_dashboard_uid_prefix
   tags        = [var.managed_tag]
 }
 
-# Dashboard - NVIDIA DCGM Exporter
+# Dashboard - NVIDIA DCGM
 # https://grafana.com/grafana/dashboards/12239-nvidia-dcgm-exporter-dashboard/
+module "grafana_folder_nvidia_dcgm" {
+  source   = "../../../modules/grafana/grafana_folder"
+  for_each = toset(local.org_ids)
+  org_id   = each.value
+  title    = "NVIDIA DCGM"
+}
 locals {
   nvidia_dcgm_exporter_dashboard_urls = {
     "nvidia-dcgm-exporter" = "https://grafana.com/api/dashboards/12239/revisions/latest/download"
@@ -257,12 +260,6 @@ locals {
 data "http" "nvidia_dcgm_exporter_dashboards" {
   for_each = local.nvidia_dcgm_exporter_dashboard_urls
   url      = each.value
-}
-module "grafana_folder_nvidia_dcgm_exporter" {
-  source   = "../../../modules/grafana/grafana_folder"
-  for_each = toset(local.org_ids)
-  org_id   = each.value
-  title    = "NVIDIA DCGM Exporter"
 }
 # https://github.com/NVIDIA/dcgm-exporter/pull/634
 locals {
@@ -286,7 +283,7 @@ module "grafana_dashboard_nvidia_dcgm_exporter" {
   source     = "../../../modules/grafana/grafana_dashboard"
   for_each   = { for combination in local.nvidia_dcgm_exporter_org_dashboard_combinations : combination.key => combination }
   org_id     = each.value.org_id
-  folder_uid = module.grafana_folder_nvidia_dcgm_exporter[each.value.org_id].uid
+  folder_uid = module.grafana_folder_nvidia_dcgm[each.value.org_id].uid
   config_json = replace(
     local.nvidia_dcgm_exporter_dashboard_processed[each.value.dashboard_name],
     "$${DS_PROMETHEUS}",
@@ -297,12 +294,20 @@ module "grafana_dashboard_nvidia_dcgm_exporter" {
 }
 
 # Dashboard - NATS
-# Dashboard - NATS Server
 # https://github.com/nats-io/prometheus-nats-exporter/blob/main/walkthrough/README.md
 # Using non-helm dashboard version because the exporter uses the default "gnatsd_" metrics prefix.
 # The "-helm" version expects "nats_" prefix which requires the "-prefix nats" flag on the exporter.
 locals {
-  nats_org_id = tostring(module.grafana_organization_hongbomiao.org_id)
+  nats_org_id = tostring(module.grafana_organization_hm.org_id)
+}
+module "grafana_folder_nats" {
+  source = "../../../modules/grafana/grafana_folder"
+  org_id = local.nats_org_id
+  title  = "NATS"
+}
+
+# Dashboard - NATS - NATS Server
+locals {
   # https://github.com/nats-io/prometheus-nats-exporter/pull/393
   nats_server_variable = {
     current     = {}
@@ -358,11 +363,6 @@ locals {
     "\"expr\":\"$1{server_id=~\\\"$$server\\\"}\""
   )
 }
-module "grafana_folder_nats" {
-  source = "../../../modules/grafana/grafana_folder"
-  org_id = local.nats_org_id
-  title  = "NATS"
-}
 module "grafana_dashboard_nats_server" {
   source     = "../../../modules/grafana/grafana_dashboard"
   org_id     = local.nats_org_id
@@ -375,9 +375,10 @@ module "grafana_dashboard_nats_server" {
   uid_prefix = var.grafana_dashboard_uid_prefix
   tags       = [var.managed_tag]
 }
-# Dashboard - NATS JetStream
+
+# Dashboard - NATS - NATS JetStream
 # https://github.com/nats-io/prometheus-nats-exporter/blob/main/walkthrough/README.md
-# Using non-helm dashboard version because the exporter uses the default "gnatsd_" metrics prefix.
+# Using non-helm dashboard version because the exporter uses the default "gnatsd_" metrics prefix
 data "http" "nats_jetstream_dashboard" {
   url = "https://raw.githubusercontent.com/nats-io/prometheus-nats-exporter/main/walkthrough/grafana-jetstream-dash.json"
 }
@@ -416,4 +417,74 @@ module "grafana_dashboard_nats_jetstream" {
   config_json = local.nats_jetstream_dashboard_processed
   uid_prefix  = var.grafana_dashboard_uid_prefix
   tags        = [var.managed_tag]
+}
+
+# Dashboard - Postgres
+module "grafana_folder_postgres" {
+  source   = "../../../modules/grafana/grafana_folder"
+  for_each = toset(local.org_ids)
+  org_id   = each.value
+  title    = "Postgres"
+}
+# Dashboard - Postgres - Postgres Overview
+# https://github.com/prometheus-community/postgres_exporter/blob/master/postgres_mixin/dashboards/postgres-overview.json
+locals {
+  postgres_exporter_overview_dashboard_urls = {
+    "postgres-overview" = "https://raw.githubusercontent.com/prometheus-community/postgres_exporter/master/postgres_mixin/dashboards/postgres-overview.json"
+  }
+  postgres_exporter_overview_org_dashboard_combinations = flatten([
+    for org_id in local.org_ids : [
+      for dashboard_name in keys(local.postgres_exporter_overview_dashboard_urls) : {
+        key            = "${org_id}-${dashboard_name}"
+        org_id         = org_id
+        dashboard_name = dashboard_name
+      }
+    ]
+  ])
+}
+data "http" "postgres_exporter_overview_dashboards" {
+  for_each = local.postgres_exporter_overview_dashboard_urls
+  url      = each.value
+}
+module "grafana_dashboard_postgres_exporter_overview" {
+  source      = "../../../modules/grafana/grafana_dashboard"
+  for_each    = { for combination in local.postgres_exporter_overview_org_dashboard_combinations : combination.key => combination }
+  org_id      = each.value.org_id
+  folder_uid  = module.grafana_folder_postgres[each.value.org_id].uid
+  config_json = data.http.postgres_exporter_overview_dashboards[each.value.dashboard_name].response_body
+  uid_prefix  = var.grafana_dashboard_uid_prefix
+  tags        = [var.managed_tag]
+}
+# Dashboard - Postgres - PostgreSQL Database
+# https://grafana.com/grafana/dashboards/9628-postgresql-database/
+locals {
+  postgres_exporter_database_dashboard_urls = {
+    "postgres-database" = "https://grafana.com/api/dashboards/9628/revisions/latest/download"
+  }
+  postgres_exporter_database_org_dashboard_combinations = flatten([
+    for org_id in local.org_ids : [
+      for dashboard_name in keys(local.postgres_exporter_database_dashboard_urls) : {
+        key            = "${org_id}-${dashboard_name}"
+        org_id         = org_id
+        dashboard_name = dashboard_name
+      }
+    ]
+  ])
+}
+data "http" "postgres_exporter_database_dashboards" {
+  for_each = local.postgres_exporter_database_dashboard_urls
+  url      = each.value
+}
+module "grafana_dashboard_postgres_exporter_database" {
+  source     = "../../../modules/grafana/grafana_dashboard"
+  for_each   = { for combination in local.postgres_exporter_database_org_dashboard_combinations : combination.key => combination }
+  org_id     = each.value.org_id
+  folder_uid = module.grafana_folder_postgres[each.value.org_id].uid
+  config_json = replace(
+    data.http.postgres_exporter_database_dashboards[each.value.dashboard_name].response_body,
+    "$${DS_PROMETHEUS}",
+    module.grafana_data_source_hm_prometheus[each.value.org_id].uid
+  )
+  uid_prefix = var.grafana_dashboard_uid_prefix
+  tags       = [var.managed_tag]
 }
