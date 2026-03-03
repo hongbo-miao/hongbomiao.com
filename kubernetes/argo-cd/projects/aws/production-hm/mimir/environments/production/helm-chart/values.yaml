@@ -199,10 +199,10 @@ querier:
           app.kubernetes.io/component: querier
   resources:
     requests:
-      cpu: 30m
-      memory: 200Mi
+      cpu: 170m
+      memory: 300Mi
     limits:
-      memory: 200Mi
+      memory: 400Mi
 query_frontend:
   enabled: true
   kedaAutoscaling:
@@ -229,7 +229,7 @@ query_frontend:
       cpu: 20m
       memory: 200Mi
     limits:
-      memory: 200Mi
+      memory: 600Mi
 query_scheduler:
   enabled: true
   replicas: 3
@@ -346,10 +346,10 @@ store_gateway:
     storageClass: production-hm-mimir-storage-class
   resources:
     requests:
-      cpu: 2100m
+      cpu: 2600m
       memory: 500Mi
     limits:
-      memory: 1200Mi
+      memory: 1900Mi
 gateway:
   enabled: true
   replicas: 3
