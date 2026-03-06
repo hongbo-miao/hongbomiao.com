@@ -65,20 +65,6 @@ plugins:
   - victoriametrics-metrics-datasource
 persistence:
   enabled: false
-  type: pvc
-sidecar:
-  dashboards:
-    enabled: true
-    searchNamespace: ALL
-    folderAnnotation: grafana_folder
-    provider:
-      foldersFromFilesStructure: true
-  resources:
-    requests:
-      cpu: 10m
-      memory: 100Mi
-    limits:
-      memory: 200Mi
 datasources:
   datasources.yaml:
     apiVersion: 1
@@ -136,6 +122,6 @@ topologySpreadConstraints:
 resources:
   requests:
     cpu: 100m
-    memory: 400Mi
+    memory: 1Gi
   limits:
-    memory: 800Mi
+    memory: 1Gi

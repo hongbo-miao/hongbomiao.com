@@ -69,6 +69,10 @@ alloy:
       // It watches cluster state and ensures targets are continually synced with what is currently running in your cluster.
       discovery.kubernetes "pod" {
         role = "pod"
+        selectors {
+          role = "pod"
+          field = "spec.nodeName=" + env("HOSTNAME")
+        }
       }
 
       // discovery.relabel rewrites the label set of the input targets by applying one or more relabeling rules.

@@ -7,5 +7,26 @@ plan:
 apply:
     tofu apply
 
+apply-grafana-organization:
+    tofu apply -target=module.grafana_organization_xxx
+
 static-type-check-opentofu:
     tofu validate
+
+update-volcano-dashboards:
+    #!/usr/bin/env bash
+    # The Volcano repo embeds dashboard JSONs inline in a Helm Go template (not available as standalone files).
+    gh api repos/volcano-sh/volcano/contents/installer/helm/chart/volcano/templates/grafana.yaml \
+        --jq '.content' | base64 -d | \
+        python3 -c "
+    import sys, json, re, os
+    content = sys.stdin.read()
+    output_directory = 'files/volcano'
+    os.makedirs(output_directory, exist_ok=True)
+    for match in re.finditer(r'  (volcano-[\w-]+\.json): \|-\n    (.+)', content):
+        filename, json_string = match.groups()
+        with open(os.path.join(output_directory, filename), 'w') as f:
+            json.dump(json.loads(json_string), f, indent=2)
+            f.write('\n')
+        print(f'Wrote {filename}')
+    "

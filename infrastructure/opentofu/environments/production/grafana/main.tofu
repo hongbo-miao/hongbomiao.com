@@ -488,3 +488,38 @@ module "grafana_dashboard_postgres_exporter_database" {
   uid_prefix = var.grafana_dashboard_uid_prefix
   tags       = [var.managed_tag]
 }
+
+# Dashboard - Volcano
+module "grafana_folder_volcano" {
+  source   = "../../../modules/grafana/grafana_folder"
+  for_each = toset(local.org_ids)
+  org_id   = each.value
+  title    = "Volcano"
+}
+locals {
+  volcano_dashboard_files = {
+    "volcano-global-overview-dashboard"    = "${path.module}/files/volcano/volcano-global-overview-dashboard.json"
+    "volcano-queue-overview-dashboard"     = "${path.module}/files/volcano/volcano-queue-overview-dashboard.json"
+    "volcano-namespace-overview-dashboard" = "${path.module}/files/volcano/volcano-namespace-overview-dashboard.json"
+    "volcano-scheduler-internal-dashboard" = "${path.module}/files/volcano/volcano-scheduler-internal-dashboard.json"
+    "volcano-scheduler-queue-dashboard"    = "${path.module}/files/volcano/volcano-scheduler-queue-dashboard.json"
+  }
+  volcano_org_dashboard_combinations = flatten([
+    for org_id in local.org_ids : [
+      for dashboard_name in keys(local.volcano_dashboard_files) : {
+        key            = "${org_id}-${dashboard_name}"
+        org_id         = org_id
+        dashboard_name = dashboard_name
+      }
+    ]
+  ])
+}
+module "grafana_dashboard_volcano" {
+  source      = "../../../modules/grafana/grafana_dashboard"
+  for_each    = { for combination in local.volcano_org_dashboard_combinations : combination.key => combination }
+  org_id      = each.value.org_id
+  folder_uid  = module.grafana_folder_volcano[each.value.org_id].uid
+  config_json = file(local.volcano_dashboard_files[each.value.dashboard_name])
+  uid_prefix  = var.grafana_dashboard_uid_prefix
+  tags        = [var.managed_tag]
+}
