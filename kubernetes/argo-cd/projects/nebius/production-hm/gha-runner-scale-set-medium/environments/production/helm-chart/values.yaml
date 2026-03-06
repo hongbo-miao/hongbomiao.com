@@ -25,6 +25,15 @@ template:
         volumeMounts:
           - name: dind-externals
             mountPath: /home/runner/tmpDir
+      - name: init-docker-compose
+        image: harbor.hongbomiao.com/docker-hub-proxy-cache/library/docker:dind
+        command:
+          - cp
+          - /usr/local/libexec/docker/cli-plugins/docker-compose
+          - /docker-cli-plugins/docker-compose
+        volumeMounts:
+          - name: docker-cli-plugins
+            mountPath: /docker-cli-plugins
     containers:
       - name: runner
         image: ghcr.io/actions/actions-runner:2.332.0
@@ -48,6 +57,8 @@ template:
             mountPath: /var/run
           - name: hostedtoolcache
             mountPath: /opt/hostedtoolcache
+          - name: docker-cli-plugins
+            mountPath: /usr/local/libexec/docker/cli-plugins
       - name: dind
         image: harbor.hongbomiao.com/docker-hub-proxy-cache/library/docker:dind
         args:
@@ -80,6 +91,8 @@ template:
       - name: dind-externals
         emptyDir: {}
       - name: hostedtoolcache
+        emptyDir: {}
+      - name: docker-cli-plugins
         emptyDir: {}
 controllerServiceAccount:
   namespace: production-hm-gha-runner-scale-set-controller
