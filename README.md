@@ -43,10 +43,12 @@
 
 # 👩‍🚀 Introduction
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://next.ossinsight.io/widgets/official/compose-last-28-days-stats/thumbnail.png?repo_id=172822195&image_size=auto&color_scheme=dark">
-  <img align="right" width="50%" src="https://next.ossinsight.io/widgets/official/compose-last-28-days-stats/thumbnail.png?repo_id=172822195&image_size=auto&color_scheme=light" alt="OSS Insight repository performance statistics">
-</picture>
+<a href="https://ossinsight.io/analyze/hongbo-miao/hongbomiao.com">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://next.ossinsight.io/widgets/official/compose-last-28-days-stats/thumbnail.png?repo_id=172822195&image_size=auto&color_scheme=dark">
+    <img align="right" width="50%" src="https://next.ossinsight.io/widgets/official/compose-last-28-days-stats/thumbnail.png?repo_id=172822195&image_size=auto&color_scheme=light" alt="OSS Insight repository performance statistics">
+  </picture>
+</a>
 
 A personal research and development (R&D) lab that facilitates the sharing of knowledge.
 
