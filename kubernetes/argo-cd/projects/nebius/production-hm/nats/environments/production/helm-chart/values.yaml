@@ -6,12 +6,12 @@ global:
 config:
   cluster:
     enabled: true
-    replicas: 3
+    replicas: 5
   jetstream:
     enabled: true
     fileStore:
       pvc:
-        size: 100Gi
+        size: 5Ti
         storageClassName: production-hm-nats-storage-class
   merge:
     jetstream:
@@ -25,13 +25,51 @@ container:
         secretKeyRef:
           name: hm-nats-secret
           key: NATS_AUTH_TOKEN
+  patch:
+    - op: replace
+      path: /startupProbe
+      value:
+        httpGet:
+          path: /healthz
+          port: monitor
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        timeoutSeconds: 5
+        successThreshold: 1
+        failureThreshold: 360  # 360 * 10 = 3600 seconds (60 min) to start
+    - op: replace
+      path: /livenessProbe
+      value:
+        httpGet:
+          path: /healthz?js-server-only=true
+          port: monitor
+        initialDelaySeconds: 10
+        periodSeconds: 30
+        timeoutSeconds: 5
+        successThreshold: 1
+        failureThreshold: 20  # 20 * 30 = 600 seconds (10 min) before killing
   resources:
     requests:
       cpu: 1
-      memory: 600Mi
+      memory: 1Gi
     limits:
-      memory: 900Mi
+      memory: 15Gi
+promExporter:
+  enabled: true
+  image:
+    registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 200Mi
+  podMonitor:
+    enabled: true
 service:
+  # ports:
+  #   leafnodes:
+  #     enabled: true
   merge:
     spec:
       type: LoadBalancer

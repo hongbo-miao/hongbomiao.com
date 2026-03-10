@@ -7,7 +7,8 @@ module "stream_emergency_transcriptions" {
   retention         = "limits"
   max_message_count = -1
   max_age           = 0
-  max_bytes         = 10737418240 # 10 GiB
+  max_bytes         = 500000000000 # 500 GB
   discard           = "old"
+  ack               = true
   replica_count     = 3
 }

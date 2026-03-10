@@ -13,6 +13,8 @@ operatorDeployment:
         value: production
         effect: NoSchedule
     operatorContainer:
+      livenessProbe:
+        failureThreshold: 5
       resources:
         requests:
           cpu: 70m

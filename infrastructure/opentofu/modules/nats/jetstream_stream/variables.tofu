@@ -22,6 +22,9 @@ variable "max_bytes" {
 variable "discard" {
   type = string
 }
+variable "ack" {
+  type = bool
+}
 variable "replica_count" {
   type = number
 }
