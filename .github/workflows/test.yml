@@ -543,6 +543,8 @@ jobs:
               - 'data-orchestration/hm-prefect/workflows/print-platform/**'
             hm-protobuf:
               - 'data-storage/hm-protobuf/**'
+            hm-vortex:
+              - 'data-storage/hm-vortex/**'
             hm-prowler:
               - 'security/hm-prowler/**'
             hm-pulumi:
@@ -980,6 +982,7 @@ jobs:
       hm-transformers: ${{ steps.filter.outputs.hm-transformers }}
       hm-triton: ${{ steps.filter.outputs.hm-triton }}
       hm-unsloth: ${{ steps.filter.outputs.hm-unsloth }}
+      hm-vortex: ${{ steps.filter.outputs.hm-vortex }}
       hm-whisperx: ${{ steps.filter.outputs.hm-whisperx }}
       hm-xgboost: ${{ steps.filter.outputs.hm-xgboost }}
       hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
@@ -1274,6 +1277,7 @@ jobs:
       hm-hdf5: ${{ needs.detect-changes.outputs.hm-hdf5 == 'true' }}
       hm-lancedb: ${{ needs.detect-changes.outputs.hm-lancedb == 'true' }}
       hm-protobuf: ${{ needs.detect-changes.outputs.hm-protobuf == 'true' }}
+      hm-vortex: ${{ needs.detect-changes.outputs.hm-vortex == 'true' }}
       lance: ${{ needs.detect-changes.outputs.lance == 'true' }}
       prometheus: ${{ needs.detect-changes.outputs.prometheus == 'true' }}
       turso: ${{ needs.detect-changes.outputs.turso == 'true' }}
