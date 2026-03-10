@@ -1,7 +1,7 @@
 # https://artifacthub.io/packages/helm/skypilot/skypilot?modal=values
 ---
 apiService:
-  image: harbor.hongbomiao.com/docker-hub-proxy-cache/berkeleyskypilot/skypilot:0.11.2rc3
+  image: harbor.hongbomiao.com/docker-hub-proxy-cache/berkeleyskypilot/skypilot:0.11.2
   imagePullPolicy: IfNotPresent
   dbConnectionSecretName: hm-skypilot-secret
   resources:
@@ -9,7 +9,7 @@ apiService:
       cpu: 4
       memory: 10Gi
     limits:
-      memory: 12Gi
+      memory: 15Gi
   metrics:
     enabled: true
   nodeSelector:

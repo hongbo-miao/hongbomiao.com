@@ -117,6 +117,15 @@ node-feature-discovery:
         memory: 30Mi
       limits:
         memory: 100Mi
+  gc:
+    enable: true
+    replicaCount: 3
+    resources:
+      requests:
+        cpu: 10m
+        memory: 150Mi
+      limits:
+        memory: 150Mi
 # Validator to check GPU stack health
 validator:
   enabled: true

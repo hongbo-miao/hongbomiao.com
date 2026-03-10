@@ -16,5 +16,6 @@ resource "jetstream_stream" "main" {
   max_age   = var.max_age
   max_bytes = var.max_bytes
   discard   = var.discard
+  ack       = var.ack
   replicas  = var.replica_count
 }
