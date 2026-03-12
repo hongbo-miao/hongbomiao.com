@@ -39,6 +39,9 @@ name: . Test Data Processing
       hm-spark-recommend-movies:
         required: true
         type: boolean
+      hm-spark-spark-connect:
+        required: true
+        type: boolean
       ingest-flac-to-parquet:
         required: true
         type: boolean
@@ -379,6 +382,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: data-processing/hm-spark/applications/recommend-movies
+
+  spark-spark-connect-test:
+    name: Spark (spark-connect) | Test
+    if: ${{ inputs.workflow || inputs.hm-spark-spark-connect }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.3.1
+        with:
+          version: 0.10.8
+          enable-cache: true
+          cache-dependency-glob: data-processing/hm-spark/applications/spark-connect/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.2.0
+        with:
+          python-version-file: data-processing/hm-spark/applications/spark-connect/.python-version
+      - name: Install dependencies
+        working-directory: data-processing/hm-spark/applications/spark-connect
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-processing/hm-spark/applications/spark-connect
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: data-processing/hm-spark/applications/spark-connect
 
   flink-stream-tweets-test:
     name: Flink (stream-tweets) | Test

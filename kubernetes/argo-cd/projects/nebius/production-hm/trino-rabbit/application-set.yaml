@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: production-trino
+  name: production-trino-rabbit
   namespace: production-hm-argo-cd
 spec:
   goTemplate: true
@@ -11,10 +11,10 @@ spec:
         repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
         revision: main
         files:
-          - path: kubernetes/argo-cd/projects/nebius/production-hm/trino/environments/*/config.yaml
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/trino-rabbit/environments/*/config.yaml
   template:
     metadata:
-      name: '{{.environment}}-trino'
+      name: '{{.environment}}-trino-rabbit'
     spec:
       project: production-hm
       sources:
@@ -32,7 +32,7 @@ spec:
           targetRevision: main
           path: '{{.path.path}}/kubernetes-manifests'
       destination:
-        namespace: '{{.environment}}-hm-trino'
+        namespace: '{{.environment}}-hm-trino-rabbit'
         server: https://kubernetes.default.svc
       syncPolicy:
         syncOptions:

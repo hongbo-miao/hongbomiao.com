@@ -1,0 +1,100 @@
+# https://github.com/nimtable/nimtable/blob/main/docker/docker-compose.yml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hm-nimtable-deployment
+  namespace: production-hm-nimtable
+  labels:
+    app.kubernetes.io/name: nimtable
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: production-hm-nimtable
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: nimtable
+      app.kubernetes.io/component: backend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: nimtable
+        app.kubernetes.io/component: backend
+    spec:
+      initContainers:
+        - name: render-config
+          image: harbor.hongbomiao.com/docker-hub-proxy-cache/library/alpine:3.23.3
+          command: ["sh", "-c", "apk add --no-cache gettext && envsubst < /config-template/config.yaml > /config/config.yaml"]
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hm-nimtable-secret
+                  key: POSTGRES_PASSWORD
+            - name: POLARIS_CREDENTIAL
+              valueFrom:
+                secretKeyRef:
+                  name: hm-nimtable-secret
+                  key: POLARIS_CREDENTIAL
+          volumeMounts:
+            - name: config-template
+              mountPath: /config-template
+            - name: config
+              mountPath: /config
+      containers:
+        - name: nimtable
+          image: ghcr.io/nimtable/nimtable:nightly
+          ports:
+            - containerPort: 8182
+          env:
+            - name: JAVA_OPTS
+              value: "-Xmx2g -Xms512m"
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: hm-nimtable-secret
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: hm-nimtable-secret
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: AWS_REGION
+              value: us-central1
+            - name: AWS_ENDPOINT_URL_S3
+              value: https://storage.us-central1.nebius.cloud
+          volumeMounts:
+            - name: config
+              mountPath: /nimtable/config.yaml
+              subPath: config.yaml
+          resources:
+            requests:
+              cpu: 10m
+              memory: 600Mi
+            limits:
+              memory: 2500Mi
+          livenessProbe:
+            httpGet:
+              path: /api/catalogs
+              port: 8182
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/catalogs
+              port: 8182
+            initialDelaySeconds: 15
+            periodSeconds: 5
+      volumes:
+        - name: config-template
+          configMap:
+            name: hm-nimtable-configmap
+        - name: config
+          emptyDir: {}
+      nodeSelector:
+        environment: production
+      tolerations:
+        - key: environment
+          operator: Equal
+          value: production
+          effect: NoSchedule

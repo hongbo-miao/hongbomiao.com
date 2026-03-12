@@ -1,0 +1,38 @@
+# https://github.com/nimtable/nimtable/blob/main/backend/config.yaml
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hm-nimtable-configmap
+  namespace: production-hm-nimtable
+  labels:
+    app.kubernetes.io/name: nimtable
+    app.kubernetes.io/part-of: production-hm-nimtable
+data:
+  config.yaml: |
+    server:
+      port: 8182
+      host: 0.0.0.0
+    database:
+      url: jdbc:postgresql://private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432/nimtable_db
+      username: nimtable_user
+      password: ${POSTGRES_PASSWORD}
+    catalogs:
+      - name: development
+        type: rest
+        uri: https://polaris.hongbomiao.com/api/catalog
+        credential: ${POLARIS_CREDENTIAL}
+        scope: PRINCIPAL_ROLE:ALL
+        warehouse: development
+      - name: staging
+        type: rest
+        uri: https://polaris.hongbomiao.com/api/catalog
+        credential: ${POLARIS_CREDENTIAL}
+        scope: PRINCIPAL_ROLE:ALL
+        warehouse: staging
+      - name: production
+        type: rest
+        uri: https://polaris.hongbomiao.com/api/catalog
+        credential: ${POLARIS_CREDENTIAL}
+        scope: PRINCIPAL_ROLE:ALL
+        warehouse: production

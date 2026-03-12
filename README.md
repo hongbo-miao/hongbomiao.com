@@ -426,6 +426,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Nessie** - Apache Iceberg transactional data catalog
 - **Lakekeeper** - Apache Iceberg REST catalog
 - **Apache Polaris** - Apache Iceberg REST catalog
+- **Nimtable** - Apache Iceberg observability and control plane (table inspection, compaction, and optimization)
 
 ### Data Visualization
 

@@ -1,0 +1,23 @@
+[project]
+name = "spark-connect"
+version = "1.0.0"
+requires-python = "==3.14.3"
+dependencies = [
+  "pyspark[connect]==4.1.1",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.42.1",
+  "pytest-cov==7.0.0",
+  "pytest==9.0.2",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.10.0"
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"

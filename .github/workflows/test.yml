@@ -587,6 +587,8 @@ jobs:
               - 'data-processing/hm-spark/applications/ingest-from-s3-to-kafka/**'
             hm-spark-recommend-movies:
               - 'data-processing/hm-spark/applications/recommend-movies/**'
+            hm-spark-spark-connect:
+              - 'data-processing/hm-spark/applications/spark-connect/**'
             hm-speaches:
               - 'audio/automatic-speech-recognition-inference/hm-speaches/**'
             hm-streamlit-live-line-chart:
@@ -969,6 +971,7 @@ jobs:
       hm-spark-find-taxi-top-routes: ${{ steps.filter.outputs.hm-spark-find-taxi-top-routes }}
       hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
       hm-spark-recommend-movies: ${{ steps.filter.outputs.hm-spark-recommend-movies }}
+      hm-spark-spark-connect: ${{ steps.filter.outputs.hm-spark-spark-connect }}
       hm-speaches: ${{ steps.filter.outputs.hm-speaches }}
       hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
       hm-streamlit-map: ${{ steps.filter.outputs.hm-streamlit-map }}
@@ -1232,6 +1235,7 @@ jobs:
       hm-spark-find-taxi-top-routes: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes == 'true' }}
       hm-spark-ingest-from-s3-to-kafka: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
       hm-spark-recommend-movies: ${{ needs.detect-changes.outputs.hm-spark-recommend-movies == 'true' }}
+      hm-spark-spark-connect: ${{ needs.detect-changes.outputs.hm-spark-spark-connect == 'true' }}
       ingest-flac-to-parquet: ${{ needs.detect-changes.outputs.ingest-flac-to-parquet == 'true' }}
       kafka-rust-proto-consumer: ${{ needs.detect-changes.outputs.kafka-rust-proto-consumer == 'true' }}
       kafka-rust-proto-producer: ${{ needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}

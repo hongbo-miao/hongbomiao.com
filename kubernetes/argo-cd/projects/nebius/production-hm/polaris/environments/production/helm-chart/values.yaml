@@ -19,6 +19,16 @@ storage:
     awsAccessKeyId: AWS_ACCESS_KEY_ID
     awsSecretAccessKey: AWS_SECRET_ACCESS_KEY
 extraEnv:
+  - name: AWS_ACCESS_KEY_ID
+    valueFrom:
+      secretKeyRef:
+        name: hm-polaris-secret
+        key: AWS_ACCESS_KEY_ID
+  - name: AWS_SECRET_ACCESS_KEY
+    valueFrom:
+      secretKeyRef:
+        name: hm-polaris-secret
+        key: AWS_SECRET_ACCESS_KEY
   - name: AWS_ENDPOINT_URL_S3
     value: https://storage.us-central1.nebius.cloud
   - name: AWS_REGION
@@ -31,6 +41,8 @@ authentication:
       rsaKeyPair:
         publicKey: public.pem
         privateKey: private.pem
+features:
+  SKIP_CREDENTIAL_SUBSCOPING_INDIRECTION: true
 nodeSelector:
   environment: production
 tolerations:

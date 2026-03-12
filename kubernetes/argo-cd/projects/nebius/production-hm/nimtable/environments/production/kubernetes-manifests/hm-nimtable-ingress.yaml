@@ -2,31 +2,31 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: hm-trino-ingress
-  namespace: production-hm-trino
+  name: hm-nimtable-ingress
+  namespace: production-hm-nimtable
   annotations:
     kubernetes.io/ingress.class: traefik
     # https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/ingress/#on-ingress
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
     # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
-    external-dns.alpha.kubernetes.io/hostname: trino.hongbomiao.com
+    external-dns.alpha.kubernetes.io/hostname: nimtable.hongbomiao.com
   labels:
-    app.kubernetes.io/name: trino
-    app.kubernetes.io/part-of: production-hm-trino
+    app.kubernetes.io/name: nimtable
+    app.kubernetes.io/part-of: production-hm-nimtable
 spec:
   rules:
-    - host: trino.hongbomiao.com
+    - host: nimtable.hongbomiao.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: trino
+                name: hm-nimtable-web-service
                 port:
-                  number: 8080
+                  number: 3000
   tls:
     - hosts:
-        - trino.hongbomiao.com
-      secretName: hm-trino-certificate
+        - nimtable.hongbomiao.com
+      secretName: hm-nimtable-certificate

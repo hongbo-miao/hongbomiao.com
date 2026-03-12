@@ -52,7 +52,7 @@ server:
     pollingInterval: 30  # How often KEDA checks metrics (seconds)
     cooldownPeriod: 600  # Wait time after last trigger before scaling to 0 (seconds)
     minReplicaCount: 3
-    maxReplicaCount: 30
+    maxReplicaCount: 10
     # Fallback replicas if metrics are unavailable
     fallback:
       failureThreshold: 3  # Number of failures before fallback
@@ -83,7 +83,7 @@ server:
           serverAddress: http://prometheus-kube-prometheus-prometheus.production-hm-prometheus.svc:9090
           threshold: "1"
           metricName: required_workers
-          query: max(trino_execution_clustersizemonitor_requiredworkers{namespace="production-hm-trino"})
+          query: max(trino_execution_clustersizemonitor_requiredworkers{namespace="production-hm-trino-rabbit"})
   coordinatorExtraConfig: |
     http-server.authentication.oauth2.client-id=xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com
     http-server.authentication.oauth2.client-secret=${ENV:GOOGLE_CLIENT_SECRET}
@@ -139,7 +139,44 @@ jmx:
         # Source: https://github.com/trinodb/trino/blob/master/core/trino-main/src/main/java/io/trino/execution/ClusterSizeMonitor.java
         #
         # Name: Prometheus metric name (lowercase due to lowercaseOutputName: true)
-        # Discover metrics: kubectl run --namespace=production-hm-trino curl-tmp --rm --stdin --restart=Never --image=curlimages/curl -- curl --silent http://trino:5556/metrics | grep trino
+        # Discover metrics: kubectl run --namespace=production-hm-trino-rabbit curl-tmp --rm --stdin --restart=Never --image=curlimages/curl -- curl --silent http://trino:5556/metrics | grep trino
         - pattern: trino.execution<name=ClusterSizeMonitor><>RequiredWorkers
           name: trino_execution_clustersizemonitor_requiredworkers
           type: GAUGE
+catalogs:
+  development_iceberg: |
+    connector.name=iceberg
+    iceberg.catalog.type=rest
+    iceberg.rest-catalog.uri=http://polaris.production-hm-polaris.svc.cluster.local:8181/api/catalog
+    iceberg.rest-catalog.warehouse=development
+    iceberg.rest-catalog.security=OAUTH2
+    iceberg.rest-catalog.oauth2.credential=${ENV:POLARIS_CREDENTIAL}
+    iceberg.rest-catalog.oauth2.scope=PRINCIPAL_ROLE:service_admin
+    fs.native-s3.enabled=true
+    s3.endpoint=https://storage.us-central1.nebius.cloud
+    s3.path-style-access=true
+    s3.region=us-central1
+  staging_iceberg: |
+    connector.name=iceberg
+    iceberg.catalog.type=rest
+    iceberg.rest-catalog.uri=http://polaris.production-hm-polaris.svc.cluster.local:8181/api/catalog
+    iceberg.rest-catalog.warehouse=staging
+    iceberg.rest-catalog.security=OAUTH2
+    iceberg.rest-catalog.oauth2.credential=${ENV:POLARIS_CREDENTIAL}
+    iceberg.rest-catalog.oauth2.scope=PRINCIPAL_ROLE:service_admin
+    fs.native-s3.enabled=true
+    s3.endpoint=https://storage.us-central1.nebius.cloud
+    s3.path-style-access=true
+    s3.region=us-central1
+  production_iceberg: |
+    connector.name=iceberg
+    iceberg.catalog.type=rest
+    iceberg.rest-catalog.uri=http://polaris.production-hm-polaris.svc.cluster.local:8181/api/catalog
+    iceberg.rest-catalog.warehouse=production
+    iceberg.rest-catalog.security=OAUTH2
+    iceberg.rest-catalog.oauth2.credential=${ENV:POLARIS_CREDENTIAL}
+    iceberg.rest-catalog.oauth2.scope=PRINCIPAL_ROLE:service_admin
+    fs.native-s3.enabled=true
+    s3.endpoint=https://storage.us-central1.nebius.cloud
+    s3.path-style-access=true
+    s3.region=us-central1
