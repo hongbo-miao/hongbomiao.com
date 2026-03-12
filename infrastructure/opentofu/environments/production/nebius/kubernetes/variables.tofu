@@ -32,6 +32,10 @@ variable "mlflow_postgres_bootstrap_user_password" {
   type      = string
   sensitive = true
 }
+variable "nimtable_postgres_bootstrap_user_password" {
+  type      = string
+  sensitive = true
+}
 variable "polaris_postgres_bootstrap_user_password" {
   type      = string
   sensitive = true

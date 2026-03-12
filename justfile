@@ -538,6 +538,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=data-processing.hm-spark.applications.find-taxi-top-routes
     uv run poe static-type-check-python --package=data-processing.hm-spark.applications.find-taxi-top-routes-sql
     uv run poe static-type-check-python --package=data-processing.hm-spark.applications.recommend-movies
+    uv run poe static-type-check-python --package=data-processing.hm-spark.applications.spark-connect
     uv run poe static-type-check-python --package=data-processing.ingest-flac-to-parquet
     uv run poe static-type-check-python --package=data-processing.nats.telemetry-stream.telemetry-stream-publisher
     uv run poe static-type-check-python --package=data-processing.nats.telemetry-stream.telemetry-stream-subscriber

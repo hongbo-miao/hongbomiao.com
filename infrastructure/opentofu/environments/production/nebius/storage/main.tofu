@@ -1,15 +1,23 @@
-module "data_raw_object_storage" {
+module "hm_data_raw_object_storage" {
   source                = "../../../../modules/nebius/object_storage"
   project_id            = var.project_id
-  object_storage_name   = "${var.environment}-data-raw"
+  object_storage_name   = "${var.environment}-hm-data-raw"
   default_storage_class = "STANDARD"
   versioning_policy     = "ENABLED"
   labels                = var.common_labels
 }
-module "data_processed_object_storage" {
+module "hm_data_intermediate_object_storage" {
   source                = "../../../../modules/nebius/object_storage"
   project_id            = var.project_id
-  object_storage_name   = "${var.environment}-data-processed"
+  object_storage_name   = "${var.environment}-hm-data-intermediate"
+  default_storage_class = "STANDARD"
+  versioning_policy     = "DISABLED"
+  labels                = var.common_labels
+}
+module "hm_data_processed_object_storage" {
+  source                = "../../../../modules/nebius/object_storage"
+  project_id            = var.project_id
+  object_storage_name   = "${var.environment}-hm-data-processed"
   default_storage_class = "STANDARD"
   versioning_policy     = "ENABLED"
   labels                = var.common_labels

@@ -35,3 +35,51 @@ list-principals:
         | jq --raw-output '.access_token')
     curl --silent --fail --show-error --location --header "Authorization: Bearer $TOKEN" \
         "https://polaris.hongbomiao.com/api/management/v1/principals" | jq .
+
+list-catalogs:
+    #!/usr/bin/env bash
+    TOKEN=$(curl --silent --fail --show-error --location "https://polaris.hongbomiao.com/api/catalog/v1/oauth/tokens" \
+        --data "grant_type=client_credentials&client_id=polaris_admin_oryx&client_secret={{ POLARIS_CLIENT_SECRET }}&scope=PRINCIPAL_ROLE:service_admin" \
+        | jq --raw-output '.access_token')
+    curl --silent --fail --show-error --location --header "Authorization: Bearer $TOKEN" \
+        "https://polaris.hongbomiao.com/api/management/v1/catalogs" | jq .
+
+# just create-catalog development development-hm-iceberg
+# just create-catalog staging staging-hm-iceberg
+
+# just create-catalog production production-hm-iceberg
+create-catalog catalog_name s3_bucket:
+    #!/usr/bin/env bash
+    TOKEN=$(curl --silent --fail --show-error --location "https://polaris.hongbomiao.com/api/catalog/v1/oauth/tokens" \
+        --data "grant_type=client_credentials&client_id=polaris_admin_oryx&client_secret={{ POLARIS_CLIENT_SECRET }}&scope=PRINCIPAL_ROLE:service_admin" \
+        | jq --raw-output '.access_token')
+    curl --silent --fail --show-error --location \
+        --header "Authorization: Bearer $TOKEN" \
+        --header "Content-Type: application/json" \
+        "https://polaris.hongbomiao.com/api/management/v1/catalogs" \
+        --data '{
+            "catalog": {
+                "name": "{{ catalog_name }}",
+                "type": "INTERNAL",
+                "properties": {
+                "default-base-location": "s3://{{ s3_bucket }}/"
+                },
+                "storageConfigInfo": {
+                "storageType": "S3",
+                "allowedLocations": ["s3://{{ s3_bucket }}/"]
+                }
+            }
+        }' | jq .
+
+# just delete-catalog development
+# just delete-catalog staging
+
+# just delete-catalog production
+delete-catalog catalog_name:
+    #!/usr/bin/env bash
+    TOKEN=$(curl --silent --fail --show-error --location "https://polaris.hongbomiao.com/api/catalog/v1/oauth/tokens" \
+        --data "grant_type=client_credentials&client_id=polaris_admin_oryx&client_secret={{ POLARIS_CLIENT_SECRET }}&scope=PRINCIPAL_ROLE:service_admin" \
+        | jq --raw-output '.access_token')
+    curl --silent --fail --show-error --location --request DELETE \
+        --header "Authorization: Bearer $TOKEN" \
+        "https://polaris.hongbomiao.com/api/management/v1/catalogs/{{ catalog_name }}" | jq .

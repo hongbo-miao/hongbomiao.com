@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hm-nimtable-service
+  namespace: production-hm-nimtable
+  labels:
+    app.kubernetes.io/name: nimtable
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: production-hm-nimtable
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: nimtable
+    app.kubernetes.io/component: backend
+  ports:
+    - port: 8182
+      targetPort: 8182
+      protocol: TCP

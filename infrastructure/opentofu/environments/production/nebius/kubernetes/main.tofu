@@ -320,122 +320,6 @@ module "hm_mimir_object_storage" {
   labels                = var.common_labels
 }
 
-# Loki
-# Loki - service account
-module "hm_loki_service_account" {
-  source               = "../../../../modules/nebius/service_account"
-  project_id           = var.project_id
-  service_account_name = "${var.environment}-loki-service-account"
-  labels               = var.common_labels
-}
-module "hm_loki_iam_group" {
-  source     = "../../../../modules/nebius/iam_group"
-  parent_id  = var.tenant_id
-  group_name = "${var.environment}-loki-group"
-  labels     = var.common_labels
-}
-module "hm_loki_iam_group_membership" {
-  source    = "../../../../modules/nebius/iam_group_membership"
-  parent_id = module.hm_loki_iam_group.id
-  member_id = module.hm_loki_service_account.id
-  labels    = var.common_labels
-}
-locals {
-  loki_buckets = toset(["chunk", "ruler"])
-}
-module "hm_loki_access_permit" {
-  for_each    = local.loki_buckets
-  source      = "../../../../modules/nebius/access_permit"
-  parent_id   = module.hm_loki_iam_group.id
-  resource_id = module.hm_loki_object_storage[each.key].id
-  role        = "storage.object-editor"
-  labels      = var.common_labels
-}
-# Loki - object storage
-module "hm_loki_object_storage" {
-  for_each              = local.loki_buckets
-  source                = "../../../../modules/nebius/object_storage"
-  project_id            = var.project_id
-  object_storage_name   = "${var.environment}-hm-loki-${each.key}"
-  default_storage_class = "STANDARD"
-  versioning_policy     = "DISABLED"
-  labels                = var.common_labels
-}
-
-# Tempo
-# Tempo - service account
-module "hm_tempo_service_account" {
-  source               = "../../../../modules/nebius/service_account"
-  project_id           = var.project_id
-  service_account_name = "${var.environment}-tempo-service-account"
-  labels               = var.common_labels
-}
-module "hm_tempo_iam_group" {
-  source     = "../../../../modules/nebius/iam_group"
-  parent_id  = var.tenant_id
-  group_name = "${var.environment}-tempo-group"
-  labels     = var.common_labels
-}
-module "hm_tempo_iam_group_membership" {
-  source    = "../../../../modules/nebius/iam_group_membership"
-  parent_id = module.hm_tempo_iam_group.id
-  member_id = module.hm_tempo_service_account.id
-  labels    = var.common_labels
-}
-module "hm_tempo_access_permit" {
-  source      = "../../../../modules/nebius/access_permit"
-  parent_id   = module.hm_tempo_iam_group.id
-  resource_id = module.hm_tempo_object_storage.id
-  role        = "storage.object-editor"
-  labels      = var.common_labels
-}
-# Tempo - object storage
-module "hm_tempo_object_storage" {
-  source                = "../../../../modules/nebius/object_storage"
-  project_id            = var.project_id
-  object_storage_name   = "${var.environment}-hm-tempo-trace"
-  default_storage_class = "STANDARD"
-  versioning_policy     = "DISABLED"
-  labels                = var.common_labels
-}
-
-# Pyroscope
-# Pyroscope - service account
-module "hm_pyroscope_service_account" {
-  source               = "../../../../modules/nebius/service_account"
-  project_id           = var.project_id
-  service_account_name = "${var.environment}-pyroscope-service-account"
-  labels               = var.common_labels
-}
-module "hm_pyroscope_iam_group" {
-  source     = "../../../../modules/nebius/iam_group"
-  parent_id  = var.tenant_id
-  group_name = "${var.environment}-pyroscope-group"
-  labels     = var.common_labels
-}
-module "hm_pyroscope_iam_group_membership" {
-  source    = "../../../../modules/nebius/iam_group_membership"
-  parent_id = module.hm_pyroscope_iam_group.id
-  member_id = module.hm_pyroscope_service_account.id
-  labels    = var.common_labels
-}
-module "hm_pyroscope_access_permit" {
-  source      = "../../../../modules/nebius/access_permit"
-  parent_id   = module.hm_pyroscope_iam_group.id
-  resource_id = module.hm_pyroscope_object_storage.id
-  role        = "storage.object-editor"
-  labels      = var.common_labels
-}
-# Pyroscope - object storage
-module "hm_pyroscope_object_storage" {
-  source                = "../../../../modules/nebius/object_storage"
-  project_id            = var.project_id
-  object_storage_name   = "${var.environment}-hm-pyroscope"
-  default_storage_class = "STANDARD"
-  versioning_policy     = "DISABLED"
-  labels                = var.common_labels
-}
-
 # MLflow
 # MLflow - service account
 module "hm_mlflow_service_account" {
@@ -493,7 +377,155 @@ module "mlflow_postgres_cluster" {
   backup_retention_policy      = "14d"
 }
 
+# Loki
+# Loki - service account
+module "hm_loki_service_account" {
+  source               = "../../../../modules/nebius/service_account"
+  project_id           = var.project_id
+  service_account_name = "${var.environment}-loki-service-account"
+  labels               = var.common_labels
+}
+module "hm_loki_iam_group" {
+  source     = "../../../../modules/nebius/iam_group"
+  parent_id  = var.tenant_id
+  group_name = "${var.environment}-loki-group"
+  labels     = var.common_labels
+}
+module "hm_loki_iam_group_membership" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = module.hm_loki_iam_group.id
+  member_id = module.hm_loki_service_account.id
+  labels    = var.common_labels
+}
+locals {
+  loki_buckets = toset(["chunk", "ruler"])
+}
+module "hm_loki_access_permit" {
+  for_each    = local.loki_buckets
+  source      = "../../../../modules/nebius/access_permit"
+  parent_id   = module.hm_loki_iam_group.id
+  resource_id = module.hm_loki_object_storage[each.key].id
+  role        = "storage.object-editor"
+  labels      = var.common_labels
+}
+# Loki - object storage
+module "hm_loki_object_storage" {
+  for_each              = local.loki_buckets
+  source                = "../../../../modules/nebius/object_storage"
+  project_id            = var.project_id
+  object_storage_name   = "${var.environment}-hm-loki-${each.key}"
+  default_storage_class = "STANDARD"
+  versioning_policy     = "DISABLED"
+  labels                = var.common_labels
+}
+
+# Nimtable
+# Nimtable - service account
+module "hm_nimtable_service_account" {
+  source               = "../../../../modules/nebius/service_account"
+  project_id           = var.project_id
+  service_account_name = "${var.environment}-nimtable-service-account"
+  labels               = var.common_labels
+}
+module "hm_nimtable_iam_group" {
+  source     = "../../../../modules/nebius/iam_group"
+  parent_id  = var.tenant_id
+  group_name = "${var.environment}-nimtable-group"
+  labels     = var.common_labels
+}
+module "hm_nimtable_iam_group_membership" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = module.hm_nimtable_iam_group.id
+  member_id = module.hm_nimtable_service_account.id
+  labels    = var.common_labels
+}
+locals {
+  nimtable_bucket_access = {
+    "development-hm-iceberg" = "storage.viewer"
+    "staging-hm-iceberg"     = "storage.viewer"
+    "production-hm-iceberg"  = "storage.viewer"
+  }
+}
+data "nebius_storage_v1_bucket" "nimtable_buckets" {
+  for_each  = local.nimtable_bucket_access
+  name      = each.key
+  parent_id = var.project_id
+}
+module "hm_nimtable_access_permit" {
+  for_each    = local.nimtable_bucket_access
+  source      = "../../../../modules/nebius/access_permit"
+  parent_id   = module.hm_nimtable_iam_group.id
+  resource_id = data.nebius_storage_v1_bucket.nimtable_buckets[each.key].id
+  role        = each.value
+  labels      = var.common_labels
+}
+# Nimtable - Postgres
+module "nimtable_postgres_cluster" {
+  source                       = "../../../../modules/nebius/postgres_cluster"
+  project_id                   = var.project_id
+  network_id                   = var.vpc_network_id
+  postgres_version             = "16"
+  pooling_mode                 = "SESSION"
+  postgres_cluster_name        = "${var.environment}-nimtable-postgres-cluster"
+  bootstrap_database_name      = "bootstrap_db"
+  bootstrap_user_name          = "bootstrap_user"
+  bootstrap_user_password      = var.nimtable_postgres_bootstrap_user_password
+  public_access                = false
+  disk_size_gib                = 128
+  host_count                   = 3
+  platform                     = "cpu-d3"
+  preset                       = "4vcpu-16gb"
+  labels                       = var.common_labels
+  backup_window_start_time_utc = "9:00:00"
+  backup_retention_policy      = "14d"
+}
+
+# Object Storage Browser
+# Object Storage Browser - service account
+module "hm_object_storage_browser_service_account" {
+  source               = "../../../../modules/nebius/service_account"
+  project_id           = var.project_id
+  service_account_name = "${var.environment}-object-storage-browser-service-account"
+  labels               = var.common_labels
+}
+module "hm_object_storage_browser_iam_group" {
+  source     = "../../../../modules/nebius/iam_group"
+  parent_id  = var.tenant_id
+  group_name = "${var.environment}-object-storage-browser-group"
+  labels     = var.common_labels
+}
+module "hm_object_storage_browser_iam_group_membership" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = module.hm_object_storage_browser_iam_group.id
+  member_id = module.hm_object_storage_browser_service_account.id
+  labels    = var.common_labels
+}
+locals {
+  object_storage_browser_bucket_access = {
+    "development-hm-data-raw"       = "storage.viewer"
+    "development-hm-data-processed" = "storage.viewer"
+    "staging-hm-data-raw"           = "storage.viewer"
+    "staging-hm-data-processed"     = "storage.viewer"
+    "production-hm-data-raw"        = "storage.viewer"
+    "production-hm-data-processed"  = "storage.viewer"
+  }
+}
+data "nebius_storage_v1_bucket" "object_storage_browser_buckets" {
+  for_each  = local.object_storage_browser_bucket_access
+  name      = each.key
+  parent_id = var.project_id
+}
+module "hm_object_storage_browser_access_permit" {
+  for_each    = local.object_storage_browser_bucket_access
+  source      = "../../../../modules/nebius/access_permit"
+  parent_id   = module.hm_object_storage_browser_iam_group.id
+  resource_id = data.nebius_storage_v1_bucket.object_storage_browser_buckets[each.key].id
+  role        = each.value
+  labels      = var.common_labels
+}
+
 # Polaris
+# Polaris - service account
 module "hm_polaris_service_account" {
   source               = "../../../../modules/nebius/service_account"
   project_id           = var.project_id
@@ -512,17 +544,27 @@ module "hm_polaris_iam_group_membership" {
   member_id = module.hm_polaris_service_account.id
   labels    = var.common_labels
 }
-data "nebius_storage_v1_bucket" "hm_iceberg_object_storage" {
-  name      = "${var.environment}-hm-iceberg"
+locals {
+  polaris_bucket_access = {
+    "development-hm-iceberg" = "storage.object-editor"
+    "staging-hm-iceberg"     = "storage.object-editor"
+    "production-hm-iceberg"  = "storage.object-editor"
+  }
+}
+data "nebius_storage_v1_bucket" "polaris_buckets" {
+  for_each  = local.polaris_bucket_access
+  name      = each.key
   parent_id = var.project_id
 }
 module "hm_polaris_access_permit" {
+  for_each    = local.polaris_bucket_access
   source      = "../../../../modules/nebius/access_permit"
   parent_id   = module.hm_polaris_iam_group.id
-  resource_id = data.nebius_storage_v1_bucket.hm_iceberg_object_storage.id
-  role        = "storage.object-editor"
+  resource_id = data.nebius_storage_v1_bucket.polaris_buckets[each.key].id
+  role        = each.value
   labels      = var.common_labels
 }
+# Polaris - Postgres
 module "polaris_postgres_cluster" {
   source                       = "../../../../modules/nebius/postgres_cluster"
   project_id                   = var.project_id
@@ -541,6 +583,43 @@ module "polaris_postgres_cluster" {
   labels                       = var.common_labels
   backup_window_start_time_utc = "9:00:00"
   backup_retention_policy      = "14d"
+}
+
+# Pyroscope
+# Pyroscope - service account
+module "hm_pyroscope_service_account" {
+  source               = "../../../../modules/nebius/service_account"
+  project_id           = var.project_id
+  service_account_name = "${var.environment}-pyroscope-service-account"
+  labels               = var.common_labels
+}
+module "hm_pyroscope_iam_group" {
+  source     = "../../../../modules/nebius/iam_group"
+  parent_id  = var.tenant_id
+  group_name = "${var.environment}-pyroscope-group"
+  labels     = var.common_labels
+}
+module "hm_pyroscope_iam_group_membership" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = module.hm_pyroscope_iam_group.id
+  member_id = module.hm_pyroscope_service_account.id
+  labels    = var.common_labels
+}
+module "hm_pyroscope_access_permit" {
+  source      = "../../../../modules/nebius/access_permit"
+  parent_id   = module.hm_pyroscope_iam_group.id
+  resource_id = module.hm_pyroscope_object_storage.id
+  role        = "storage.object-editor"
+  labels      = var.common_labels
+}
+# Pyroscope - object storage
+module "hm_pyroscope_object_storage" {
+  source                = "../../../../modules/nebius/object_storage"
+  project_id            = var.project_id
+  object_storage_name   = "${var.environment}-hm-pyroscope"
+  default_storage_class = "STANDARD"
+  versioning_policy     = "DISABLED"
+  labels                = var.common_labels
 }
 
 # SkyPilot
@@ -563,6 +642,49 @@ module "skypilot_postgres_cluster" {
   labels                       = var.common_labels
   backup_window_start_time_utc = "9:00:00"
   backup_retention_policy      = "14d"
+}
+
+# Spark Connect Server
+# Spark Connect Server - service account
+module "hm_spark_connect_server_service_account" {
+  source               = "../../../../modules/nebius/service_account"
+  project_id           = var.project_id
+  service_account_name = "${var.environment}-spark-connect-server-service-account"
+  labels               = var.common_labels
+}
+module "hm_spark_connect_server_iam_group" {
+  source     = "../../../../modules/nebius/iam_group"
+  parent_id  = var.tenant_id
+  group_name = "${var.environment}-spark-connect-server-group"
+  labels     = var.common_labels
+}
+module "hm_spark_connect_server_iam_group_membership" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = module.hm_spark_connect_server_iam_group.id
+  member_id = module.hm_spark_connect_server_service_account.id
+  labels    = var.common_labels
+}
+locals {
+  spark_connect_server_bucket_access = {
+    "development-hm-iceberg"       = "storage.object-editor"
+    "staging-hm-iceberg"           = "storage.object-editor"
+    "production-hm-iceberg"        = "storage.object-editor"
+    "production-hm-data-raw"       = "storage.viewer"
+    "production-hm-data-processed" = "storage.object-editor"
+  }
+}
+data "nebius_storage_v1_bucket" "spark_connect_server_buckets" {
+  for_each  = local.spark_connect_server_bucket_access
+  name      = each.key
+  parent_id = var.project_id
+}
+module "hm_spark_connect_server_access_permit" {
+  for_each    = local.spark_connect_server_bucket_access
+  source      = "../../../../modules/nebius/access_permit"
+  parent_id   = module.hm_spark_connect_server_iam_group.id
+  resource_id = data.nebius_storage_v1_bucket.spark_connect_server_buckets[each.key].id
+  role        = each.value
+  labels      = var.common_labels
 }
 
 # Spark History Server
@@ -600,6 +722,84 @@ module "hm_spark_history_server_object_storage" {
   default_storage_class = "STANDARD"
   versioning_policy     = "DISABLED"
   labels                = var.common_labels
+}
+
+# Tempo
+# Tempo - service account
+module "hm_tempo_service_account" {
+  source               = "../../../../modules/nebius/service_account"
+  project_id           = var.project_id
+  service_account_name = "${var.environment}-tempo-service-account"
+  labels               = var.common_labels
+}
+module "hm_tempo_iam_group" {
+  source     = "../../../../modules/nebius/iam_group"
+  parent_id  = var.tenant_id
+  group_name = "${var.environment}-tempo-group"
+  labels     = var.common_labels
+}
+module "hm_tempo_iam_group_membership" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = module.hm_tempo_iam_group.id
+  member_id = module.hm_tempo_service_account.id
+  labels    = var.common_labels
+}
+module "hm_tempo_access_permit" {
+  source      = "../../../../modules/nebius/access_permit"
+  parent_id   = module.hm_tempo_iam_group.id
+  resource_id = module.hm_tempo_object_storage.id
+  role        = "storage.object-editor"
+  labels      = var.common_labels
+}
+# Tempo - object storage
+module "hm_tempo_object_storage" {
+  source                = "../../../../modules/nebius/object_storage"
+  project_id            = var.project_id
+  object_storage_name   = "${var.environment}-hm-tempo-trace"
+  default_storage_class = "STANDARD"
+  versioning_policy     = "DISABLED"
+  labels                = var.common_labels
+}
+
+# Trino
+# Trino - service account
+module "hm_trino_service_account" {
+  source               = "../../../../modules/nebius/service_account"
+  project_id           = var.project_id
+  service_account_name = "${var.environment}-trino-service-account"
+  labels               = var.common_labels
+}
+module "hm_trino_iam_group" {
+  source     = "../../../../modules/nebius/iam_group"
+  parent_id  = var.tenant_id
+  group_name = "${var.environment}-trino-group"
+  labels     = var.common_labels
+}
+module "hm_trino_iam_group_membership" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = module.hm_trino_iam_group.id
+  member_id = module.hm_trino_service_account.id
+  labels    = var.common_labels
+}
+locals {
+  trino_bucket_access = {
+    "development-hm-iceberg" = "storage.viewer"
+    "staging-hm-iceberg"     = "storage.viewer"
+    "production-hm-iceberg"  = "storage.viewer"
+  }
+}
+data "nebius_storage_v1_bucket" "trino_buckets" {
+  for_each  = local.trino_bucket_access
+  name      = each.key
+  parent_id = var.project_id
+}
+module "hm_trino_access_permit" {
+  for_each    = local.trino_bucket_access
+  source      = "../../../../modules/nebius/access_permit"
+  parent_id   = module.hm_trino_iam_group.id
+  resource_id = data.nebius_storage_v1_bucket.trino_buckets[each.key].id
+  role        = each.value
+  labels      = var.common_labels
 }
 
 # Trino Gateway
