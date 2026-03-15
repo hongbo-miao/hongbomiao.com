@@ -13,9 +13,10 @@ resource "airbyte_source_file" "main" {
   configuration = {
     dataset_name = var.dataset_name
     format       = "csv"
+    url          = var.url
     provider = {
       https_public_web = {}
     }
-    url = var.url
+    additional_properties = "{}"
   }
 }

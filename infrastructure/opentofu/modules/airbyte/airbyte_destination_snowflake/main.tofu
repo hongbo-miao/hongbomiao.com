@@ -23,6 +23,7 @@ resource "airbyte_destination_snowflake" "main" {
         private_key_password = var.snowflake_user_private_key_passphrase
       }
     }
-    disable_type_dedupe = false
+    disable_type_dedupe   = false
+    additional_properties = "{}"
   }
 }
