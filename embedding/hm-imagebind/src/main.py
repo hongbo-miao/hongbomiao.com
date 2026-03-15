@@ -136,7 +136,7 @@ class ImageBindSearch:
     ) -> gr.TabbedInterface:
         image_to_text_audio = gr.Interface(
             fn=self.search_by_image,
-            inputs=gr.Image(type="filepath", value=image_paths[0]),
+            inputs=gr.Image(type="filepath", value=str(image_paths[0])),
             outputs=[gr.Text(label="Output Text"), gr.Audio(label="Output Audio")],
             examples=image_paths,
             flagging_mode="never",
