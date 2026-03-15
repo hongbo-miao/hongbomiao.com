@@ -1,0 +1,8 @@
+list-users:
+    docker run --rm --entrypoint=cat docker.io/curlimages/curl:8.18.0 /etc/passwd
+
+check-default-user:
+    docker run --rm --entrypoint=id docker.io/curlimages/curl:8.18.0
+
+check-user:
+    docker run --rm --user=101 docker.io/curlimages/curl:8.18.0 id

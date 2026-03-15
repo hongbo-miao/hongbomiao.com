@@ -17,9 +17,17 @@ spec:
       labels:
         app.kubernetes.io/name: object-storage-browser
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: caddy
           image: harbor.hongbomiao.com/docker-hub-proxy-cache/caddy:2.10.2-alpine
+          securityContext:
+            # runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           ports:
             - name: http
               protocol: TCP
