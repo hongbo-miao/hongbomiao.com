@@ -95,6 +95,20 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
+    - name: Nimtable
+      group: production
+      url: https://nimtable.hongbomiao.com
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Object Storage Browser
+      group: production
+      url: https://object-storage-browser.hongbomiao.com
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
     - name: Ingress NGINX
       group: production
       url: http://ingress-nginx-controller-metrics.production-hm-ingress-nginx.svc:10254/healthz
@@ -137,9 +151,23 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
+    - name: SkyPilot Valkey
+      group: production
+      url: tcp://skypilot-valkey.production-hm-skypilot-valkey.svc:6379
+      interval: 60s
+      conditions:
+        - "[CONNECTED] == true"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Spark Connect Server | Large
+      group: production
+      url: tcp://spark-connect-large.hongbomiao.com:443
+      interval: 60s
+      conditions:
+        - "[CONNECTED] == true"
+        - "[RESPONSE_TIME] < 5000"
     - name: Spark History Server
       group: production
-      url: https://spark.hongbomiao.com
+      url: https://spark-history.hongbomiao.com
       interval: 60s
       conditions:
         - "[STATUS] == 200"
@@ -158,16 +186,16 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
-    - name: Trino
+    - name: Trino Gateway
       group: production
-      url: https://trino.hongbomiao.com
+      url: https://trino-gateway.hongbomiao.com
       interval: 60s
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
-    - name: Trino Gateway
+    - name: Trino | Rabbit
       group: production
-      url: https://trino-gateway.hongbomiao.com
+      url: https://trino-rabbit.hongbomiao.com
       interval: 60s
       conditions:
         - "[STATUS] == 200"

@@ -319,6 +319,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **CocoIndex** - AI-native data transformation framework
 - **Pathway** - Real-time data processing framework
 - **Apache Spark** - Data processing framework
+  - **Spark Connect** - Decoupled client-server architecture for remote Spark connectivity
   - **Spark ML** - Spark machine learning
   - **pyspark** - Spark API library
   - **Delight** - Spark UI and history server

@@ -1,0 +1,16 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: hm-spark-connect-server-large-role
+  namespace: production-hm-spark-connect-server-large
+  labels:
+    app.kubernetes.io/name: spark-connect-server-large
+    app.kubernetes.io/part-of: production-hm-spark-connect-server-large
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "configmaps", "persistentvolumeclaims"]
+    verbs: ["get", "list", "watch", "create", "delete", "patch"]
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get", "list"]

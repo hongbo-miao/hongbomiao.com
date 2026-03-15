@@ -1,0 +1,169 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hm-spark-connect-server-large-deployment
+  namespace: production-hm-spark-connect-server-large
+  labels:
+    app.kubernetes.io/name: spark-connect-server-large
+    app.kubernetes.io/part-of: production-hm-spark-connect-server-large
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: spark-connect-server-large
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: spark-connect-server-large
+    spec:
+      serviceAccountName: hm-spark-connect-server-large-service-account
+      initContainers:
+        - name: download-jars
+          image: harbor.hongbomiao.com/docker-hub-proxy-cache/curlimages/curl:8.18.0
+          command:
+            - /bin/sh
+            - -c
+            - |
+              # https://mvnrepository.com/artifact/org.apache.iceberg/iceberg-spark-runtime-4.0_2.13
+              curl --silent --fail --show-error --location --output /jars/iceberg-spark-runtime-4.0_2.13-1.10.1.jar https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-spark-runtime-4.0_2.13/1.10.1/iceberg-spark-runtime-4.0_2.13-1.10.1.jar
+              # https://mvnrepository.com/artifact/org.apache.iceberg/iceberg-aws-bundle
+              curl --silent --fail --show-error --location --output /jars/iceberg-aws-bundle-1.10.1.jar https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-aws-bundle/1.10.1/iceberg-aws-bundle-1.10.1.jar
+              # https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-aws
+              curl --silent --fail --show-error --location --output /jars/hadoop-aws-3.4.2.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.4.2/hadoop-aws-3.4.2.jar
+              # https://mvnrepository.com/artifact/software.amazon.awssdk/bundle
+              curl --silent --fail --show-error --location --output /jars/bundle-2.41.14.jar https://repo1.maven.org/maven2/software/amazon/awssdk/bundle/2.41.14/bundle-2.41.14.jar
+          volumeMounts:
+            - name: extra-jars
+              mountPath: /jars
+      containers:
+        - name: spark-connect-server-large
+          image: harbor.hongbomiao.com/docker-hub-proxy-cache/apache/spark:4.1.1-scala2.13-java21-python3-r-ubuntu
+          command:
+            - /bin/sh
+            - -c
+            - |
+              # https://mvnrepository.com/artifact/org.apache.iceberg/iceberg-spark-runtime-4.0_2.13
+              # https://mvnrepository.com/artifact/org.apache.iceberg/iceberg-aws-bundle
+              # https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-aws
+              # https://mvnrepository.com/artifact/software.amazon.awssdk/bundle
+              /opt/spark/bin/spark-submit \
+                --class org.apache.spark.sql.connect.service.SparkConnectServer \
+                --master k8s://https://kubernetes.default.svc \
+                --conf spark.driver.host=${POD_IP} \
+                --jars /opt/spark/extra-jars/iceberg-spark-runtime-4.0_2.13-1.10.1.jar,/opt/spark/extra-jars/iceberg-aws-bundle-1.10.1.jar,/opt/spark/extra-jars/hadoop-aws-3.4.2.jar,/opt/spark/extra-jars/bundle-2.41.14.jar \
+                --conf spark.driver.extraClassPath=/opt/spark/extra-jars/* \
+                --conf spark.kubernetes.namespace=production-hm-spark-connect-server-large \
+                --conf spark.kubernetes.container.image=harbor.hongbomiao.com/docker-hub-proxy-cache/apache/spark:4.1.1-scala2.13-java21-python3-r-ubuntu \
+                --conf spark.kubernetes.authenticate.driver.serviceAccountName=hm-spark-connect-server-large-service-account \
+                --conf spark.kubernetes.executor.podNamePrefix=spark-connect-large-executor \
+                --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions \
+                --conf spark.sql.catalog.development=org.apache.iceberg.spark.SparkCatalog \
+                --conf spark.sql.catalog.development.type=rest \
+                --conf spark.sql.catalog.development.uri=http://polaris.production-hm-polaris.svc.cluster.local:8181/api/catalog \
+                --conf spark.sql.catalog.development.warehouse=development \
+                --conf spark.sql.catalog.development.credential=${POLARIS_CREDENTIAL} \
+                --conf spark.sql.catalog.development.scope=PRINCIPAL_ROLE:service_admin \
+                --conf spark.sql.catalog.development.io-impl=org.apache.iceberg.aws.s3.S3FileIO \
+                --conf spark.sql.catalog.development.s3.endpoint=https://storage.us-central1.nebius.cloud \
+                --conf spark.sql.catalog.development.s3.path-style-access=true \
+                --conf spark.sql.catalog.development.s3.region=us-central1 \
+                --conf spark.sql.catalog.staging=org.apache.iceberg.spark.SparkCatalog \
+                --conf spark.sql.catalog.staging.type=rest \
+                --conf spark.sql.catalog.staging.uri=http://polaris.production-hm-polaris.svc.cluster.local:8181/api/catalog \
+                --conf spark.sql.catalog.staging.warehouse=staging \
+                --conf spark.sql.catalog.staging.credential=${POLARIS_CREDENTIAL} \
+                --conf spark.sql.catalog.staging.scope=PRINCIPAL_ROLE:service_admin \
+                --conf spark.sql.catalog.staging.io-impl=org.apache.iceberg.aws.s3.S3FileIO \
+                --conf spark.sql.catalog.staging.s3.endpoint=https://storage.us-central1.nebius.cloud \
+                --conf spark.sql.catalog.staging.s3.path-style-access=true \
+                --conf spark.sql.catalog.staging.s3.region=us-central1 \
+                --conf spark.sql.catalog.production=org.apache.iceberg.spark.SparkCatalog \
+                --conf spark.sql.catalog.production.type=rest \
+                --conf spark.sql.catalog.production.uri=http://polaris.production-hm-polaris.svc.cluster.local:8181/api/catalog \
+                --conf spark.sql.catalog.production.warehouse=production \
+                --conf spark.sql.catalog.production.credential=${POLARIS_CREDENTIAL} \
+                --conf spark.sql.catalog.production.scope=PRINCIPAL_ROLE:service_admin \
+                --conf spark.sql.catalog.production.io-impl=org.apache.iceberg.aws.s3.S3FileIO \
+                --conf spark.sql.catalog.production.s3.endpoint=https://storage.us-central1.nebius.cloud \
+                --conf spark.sql.catalog.production.s3.path-style-access=true \
+                --conf spark.sql.catalog.production.s3.region=us-central1 \
+                --conf spark.hadoop.fs.s3a.endpoint=https://storage.us-central1.nebius.cloud \
+                --conf spark.hadoop.fs.s3a.path.style.access=true \
+                --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem \
+                --conf spark.executorEnv.AWS_REGION=us-central1 \
+                --conf spark.executorEnv.AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+                --conf spark.executorEnv.AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+                --conf spark.executorEnv.AWS_ENDPOINT_URL_S3=https://storage.us-central1.nebius.cloud \
+                --conf spark.eventLog.enabled=true \
+                --conf spark.eventLog.dir=s3a://production-hm-spark-history-server/ \
+                --conf spark.eventLog.rolling.enabled=true \
+                --conf spark.eventLog.rolling.maxFileSize=2m \
+                --conf spark.executor.memory=8g \
+                --conf spark.dynamicAllocation.enabled=true \
+                --conf spark.dynamicAllocation.shuffleTracking.enabled=true \
+                --conf spark.dynamicAllocation.minExecutors=1 \
+                --conf spark.dynamicAllocation.maxExecutors=500 \
+                --conf spark.dynamicAllocation.executorIdleTimeout=60s \
+                --conf spark.dynamicAllocation.schedulerBacklogTimeout=1s \
+                --conf spark.kubernetes.executor.deleteOnTermination=true
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: hm-spark-connect-server-large-secret
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: hm-spark-connect-server-large-secret
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: AWS_REGION
+              value: us-central1
+            - name: AWS_ENDPOINT_URL_S3
+              value: https://storage.us-central1.nebius.cloud
+            - name: POLARIS_CREDENTIAL
+              valueFrom:
+                secretKeyRef:
+                  name: hm-spark-connect-server-large-secret
+                  key: POLARIS_CREDENTIAL
+          ports:
+            - name: grpc
+              containerPort: 15002
+              protocol: TCP
+            - name: spark-ui
+              containerPort: 4040
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 1Gi
+            limits:
+              memory: 2Gi
+          livenessProbe:
+            tcpSocket:
+              port: grpc
+            initialDelaySeconds: 120
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: grpc
+            initialDelaySeconds: 60
+            periodSeconds: 5
+          volumeMounts:
+            - name: extra-jars
+              mountPath: /opt/spark/extra-jars
+      nodeSelector:
+        environment: production
+      tolerations:
+        - key: environment
+          operator: Equal
+          value: production
+          effect: NoSchedule
+      volumes:
+        - name: extra-jars
+          emptyDir: {}
