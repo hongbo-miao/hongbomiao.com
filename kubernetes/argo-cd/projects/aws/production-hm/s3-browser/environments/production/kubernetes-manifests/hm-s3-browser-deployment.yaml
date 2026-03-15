@@ -24,30 +24,21 @@ spec:
         - name: s3-browser
           image: harbor.hongbomiao.com/docker-hub-proxy-cache/caddy:2.9.1-alpine
           securityContext:
-            # runAsNonRoot: true
+            runAsNonRoot: true
+            runAsUser: 65534
             allowPrivilegeEscalation: false
             capabilities:
+              add: ["NET_BIND_SERVICE"]
               drop: ["ALL"]
           ports:
             - name: s3-browser
               protocol: TCP
               containerPort: 8080
-          command: ["/bin/sh", "-c"]
-          args:
-            - |
-              echo "{
-                log {
-                  output stdout
-                }
-                auto_https off
-              }
-              :8080 {
-                encode zstd gzip
-                root * /srv
-                file_server browse
-              }" > /etc/caddy/Caddyfile
-              caddy run --config /etc/caddy/Caddyfile
           volumeMounts:
+            - name: caddyfile-volume
+              mountPath: /etc/caddy/Caddyfile
+              subPath: Caddyfile
+              readOnly: true
             - name: motor-data-volume
               mountPath: /srv/motor_data
             - name: battery-data-volume
@@ -59,6 +50,9 @@ spec:
             limits:
               memory: 256Mi
       volumes:
+        - name: caddyfile-volume
+          configMap:
+            name: hm-s3-browser-caddyfile-config-map
         - name: motor-data-volume
           persistentVolumeClaim:
             claimName: motor-data-persistent-volume-claim
