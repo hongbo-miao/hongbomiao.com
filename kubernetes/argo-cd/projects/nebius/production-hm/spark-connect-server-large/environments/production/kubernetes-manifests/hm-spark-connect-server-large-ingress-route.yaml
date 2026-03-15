@@ -1,0 +1,29 @@
+# https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/ingressroute
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hm-spark-connect-server-large-ingress-route
+  namespace: production-hm-spark-connect-server-large
+  annotations:
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: spark-connect-large.hongbomiao.com
+    # Required for IngressRoute CRDs. Unlike standard Ingress, IngressRoute has no
+    # status.loadBalancer field, so external-dns cannot auto-discover the target.
+    external-dns.alpha.kubernetes.io/target: 10.10.10.10
+  labels:
+    app.kubernetes.io/name: spark-connect-server-large
+    app.kubernetes.io/part-of: production-hm-spark-connect-server-large
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`spark-connect-large.hongbomiao.com`)
+      kind: Rule
+      services:
+        - name: hm-spark-connect-server-large-service
+          port: 15002
+          scheme: h2c
+          nativeLB: true
+  tls:
+    secretName: hm-spark-connect-server-large-certificate

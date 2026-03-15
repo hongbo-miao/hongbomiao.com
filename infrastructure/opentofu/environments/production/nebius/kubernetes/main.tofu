@@ -666,11 +666,19 @@ module "hm_spark_connect_server_iam_group_membership" {
 }
 locals {
   spark_connect_server_bucket_access = {
-    "development-hm-iceberg"       = "storage.object-editor"
-    "staging-hm-iceberg"           = "storage.object-editor"
-    "production-hm-iceberg"        = "storage.object-editor"
-    "production-hm-data-raw"       = "storage.viewer"
-    "production-hm-data-processed" = "storage.object-editor"
+    "development-hm-data-raw" = "storage.viewer"
+    "staging-hm-data-raw"     = "storage.viewer"
+    "production-hm-data-raw"  = "storage.viewer"
+
+    "development-hm-spark-checkpoints" = "storage.object-editor"
+    "staging-hm-spark-checkpoints"     = "storage.object-editor"
+    "production-hm-spark-checkpoints"  = "storage.object-editor"
+
+    "development-hm-iceberg" = "storage.object-editor"
+    "staging-hm-iceberg"     = "storage.object-editor"
+    "production-hm-iceberg"  = "storage.object-editor"
+
+    "production-hm-spark-history-server" = "storage.object-editor"
   }
 }
 data "nebius_storage_v1_bucket" "spark_connect_server_buckets" {
