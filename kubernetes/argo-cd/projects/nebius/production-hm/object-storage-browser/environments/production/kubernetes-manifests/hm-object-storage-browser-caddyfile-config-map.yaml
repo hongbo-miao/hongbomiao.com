@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hm-object-storage-browser-caddyfile-config-map
+  namespace: production-hm-object-storage-browser
+  labels:
+    app.kubernetes.io/name: object-storage-browser
+    app.kubernetes.io/part-of: production-hm-object-storage-browser
+data:
+  Caddyfile: |
+    {
+      log {
+        output stdout
+      }
+      auto_https off
+    }
+    :8080 {
+      encode zstd gzip
+      root * /srv
+      file_server browse
+    }

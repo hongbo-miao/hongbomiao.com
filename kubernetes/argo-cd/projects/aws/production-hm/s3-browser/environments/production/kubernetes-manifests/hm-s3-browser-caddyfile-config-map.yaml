@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hm-s3-browser-caddyfile-config-map
+  namespace: production-hm-s3-browser
+  labels:
+    app.kubernetes.io/name: s3-browser
+    app.kubernetes.io/part-of: production-hm-s3-browser
+data:
+  Caddyfile: |
+    {
+      log {
+        output stdout
+      }
+      auto_https off
+    }
+    :8080 {
+      encode zstd gzip
+      root * /srv
+      file_server browse
+    }

@@ -24,30 +24,21 @@ spec:
         - name: caddy
           image: harbor.hongbomiao.com/docker-hub-proxy-cache/caddy:2.10.2-alpine
           securityContext:
-            # runAsNonRoot: true
+            runAsNonRoot: true
+            runAsUser: 65534
             allowPrivilegeEscalation: false
             capabilities:
+              add: ["NET_BIND_SERVICE"]
               drop: ["ALL"]
           ports:
             - name: http
               protocol: TCP
               containerPort: 8080
-          command: ["/bin/sh", "-c"]
-          args:
-            - |
-              echo "{
-                log {
-                  output stdout
-                }
-                auto_https off
-              }
-              :8080 {
-                encode zstd gzip
-                root * /srv
-                file_server browse
-              }" > /etc/caddy/Caddyfile
-              caddy run --config /etc/caddy/Caddyfile
           volumeMounts:
+            - name: caddyfile-volume
+              mountPath: /etc/caddy/Caddyfile
+              subPath: Caddyfile
+              readOnly: true
             - name: production-data-raw-volume
               mountPath: /srv/production-data-raw
             - name: production-data-processed-volume
@@ -71,6 +62,9 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 5
       volumes:
+        - name: caddyfile-volume
+          configMap:
+            name: hm-object-storage-browser-caddyfile-config-map
         - name: production-data-raw-volume
           persistentVolumeClaim:
             claimName: production-data-raw-persistent-volume-claim
