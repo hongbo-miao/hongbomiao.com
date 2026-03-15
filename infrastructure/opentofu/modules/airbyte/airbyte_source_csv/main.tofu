@@ -12,8 +12,8 @@ resource "airbyte_source_file" "main" {
   workspace_id = var.workspace_id
   configuration = {
     additional_properties = "{}"
-    dataset_name = var.dataset_name
-    format       = "csv"
+    dataset_name          = var.dataset_name
+    format                = "csv"
     provider = {
       https_public_web = {}
     }
