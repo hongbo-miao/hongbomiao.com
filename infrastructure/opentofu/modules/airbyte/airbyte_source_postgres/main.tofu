@@ -32,6 +32,7 @@ resource "airbyte_source_postgres" "main" {
     ssl_mode = {
       require = {}
     }
-    tunnel_method = var.tunnel_method
+    tunnel_method         = var.tunnel_method
+    additional_properties = "{}"
   }
 }

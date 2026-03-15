@@ -8,7 +8,7 @@ terraform {
     # https://search.opentofu.org/provider/airbytehq/airbyte/latest
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "0.13.0"
+      version = "1.0.0"
     }
     # https://search.opentofu.org/provider/hashicorp/aws/latest
     aws = {

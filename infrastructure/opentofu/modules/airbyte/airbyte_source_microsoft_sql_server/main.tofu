@@ -28,5 +28,6 @@ resource "airbyte_source_mssql" "main" {
     ssl_method = {
       encrypted_trust_server_certificate = {}
     }
+    additional_properties = {}
   }
 }
