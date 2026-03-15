@@ -37,7 +37,7 @@ let project = Project(
       ],
       dependencies: [
         .external(name: "FluidAudio"),
-        .external(name: "Hub"),
+        .external(name: "HubClient"),
         .external(name: "KokoroSwift"),
         .external(name: "MLXLLM"),
         .external(name: "MLXLMCommon"),

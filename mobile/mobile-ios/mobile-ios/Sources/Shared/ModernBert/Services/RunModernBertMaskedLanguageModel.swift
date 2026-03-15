@@ -1,6 +1,6 @@
 import CoreML
 import Foundation
-import Hub
+import HubClient
 import Tokenizers
 
 func runModernBertMaskedLanguageModel() throws
