@@ -11,6 +11,7 @@ resource "airbyte_source_postgres" "main" {
   name         = var.name
   workspace_id = var.workspace_id
   configuration = {
+    additional_properties = "{}"
     host     = var.postgres_host
     port     = var.postgres_port
     username = var.postgres_user_name

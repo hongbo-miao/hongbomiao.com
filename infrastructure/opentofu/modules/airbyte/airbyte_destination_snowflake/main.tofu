@@ -11,6 +11,7 @@ resource "airbyte_destination_snowflake" "main" {
   name         = var.name
   workspace_id = var.workspace_id
   configuration = {
+    additional_properties = "{}"
     host      = var.snowflake_host
     warehouse = var.snowflake_warehouse
     database  = var.snowflake_database

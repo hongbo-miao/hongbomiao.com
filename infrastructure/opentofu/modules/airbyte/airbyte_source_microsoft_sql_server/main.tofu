@@ -11,6 +11,7 @@ resource "airbyte_source_mssql" "main" {
   name         = var.name
   workspace_id = var.workspace_id
   configuration = {
+    additional_properties = {}
     host     = var.microsoft_sql_server_host
     port     = var.microsoft_sql_server_port
     database = var.microsoft_sql_server_database

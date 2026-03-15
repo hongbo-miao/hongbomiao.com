@@ -11,6 +11,7 @@ resource "airbyte_source_file" "main" {
   name         = var.name
   workspace_id = var.workspace_id
   configuration = {
+    additional_properties = "{}"
     dataset_name = var.dataset_name
     format       = "csv"
     provider = {
