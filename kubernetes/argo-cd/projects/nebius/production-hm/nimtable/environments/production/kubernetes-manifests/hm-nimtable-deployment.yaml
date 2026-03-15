@@ -21,9 +21,17 @@ spec:
         app.kubernetes.io/name: nimtable
         app.kubernetes.io/component: backend
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       initContainers:
         - name: render-config
           image: harbor.hongbomiao.com/docker-hub-proxy-cache/library/alpine:3.23.3
+          securityContext:
+            # runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           command: ["sh", "-c", "apk add --no-cache gettext && envsubst '${POSTGRES_PASSWORD} ${POLARIS_CREDENTIAL}' < /config-template/config.yaml > /config/config.yaml"]
           env:
             - name: POSTGRES_PASSWORD
@@ -44,6 +52,11 @@ spec:
       containers:
         - name: nimtable
           image: ghcr.io/nimtable/nimtable:nightly
+          securityContext:
+            # runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           ports:
             - containerPort: 8182
           env:

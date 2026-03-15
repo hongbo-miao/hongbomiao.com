@@ -21,9 +21,18 @@ spec:
         app.kubernetes.io/name: nimtable-web
         app.kubernetes.io/component: frontend
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: nimtable-web
           image: ghcr.io/nimtable/nimtable-web:nightly
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1001
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           ports:
             - containerPort: 3000
           env:

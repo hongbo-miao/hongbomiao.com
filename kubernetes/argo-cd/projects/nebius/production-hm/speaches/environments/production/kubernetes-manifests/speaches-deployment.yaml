@@ -21,6 +21,9 @@ spec:
       labels:
         app.kubernetes.io/name: speaches
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: speaches-service-account
       nodeSelector:
         nvidia.com/mig.config: all-2g.35gb
@@ -45,6 +48,12 @@ spec:
       containers:
         - name: speaches
           image: ghcr.io/speaches-ai/speaches:0.9.0-rc.3-cuda
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           ports:
             - containerPort: 8000
           env:

@@ -17,10 +17,19 @@ spec:
       labels:
         app.kubernetes.io/name: spark-history-server
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: hm-spark-history-server-service-account
       initContainers:
         - name: download-aws-jars
           image: harbor.hongbomiao.com/docker-hub-proxy-cache/curlimages/curl:8.18.0
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 101
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           command:
             - /bin/sh
             - -c
@@ -35,6 +44,12 @@ spec:
       containers:
         - name: spark-history-server
           image: harbor.hongbomiao.com/docker-hub-proxy-cache/apache/spark:4.1.1-scala2.13-java21-python3-r-ubuntu
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 185
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           command:
             - /opt/spark/sbin/start-history-server.sh
           env:

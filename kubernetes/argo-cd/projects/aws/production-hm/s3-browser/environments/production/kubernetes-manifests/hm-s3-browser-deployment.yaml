@@ -17,9 +17,17 @@ spec:
       labels:
         app.kubernetes.io/name: s3-browser
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: s3-browser
           image: harbor.hongbomiao.com/docker-hub-proxy-cache/caddy:2.9.1-alpine
+          securityContext:
+            # runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           ports:
             - name: s3-browser
               protocol: TCP

@@ -17,10 +17,19 @@ spec:
       labels:
         app.kubernetes.io/name: confluent-schema-registry
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: hm-confluent-schema-registry-service-account
       containers:
         - name: confluent-schema-registry
           image: ghcr.io/hongbo-miao/hm-confluent-schema-registry:latest
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           resources:
             requests:
               cpu: 50m
