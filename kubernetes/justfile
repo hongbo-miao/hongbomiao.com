@@ -161,13 +161,13 @@ kubectl-get-deployments-yaml:
 kubectl-get-namespaces:
     kubectl get namespaces
 
-kubectl-get-storageclasses:
+kubectl-get-storage-classes:
     kubectl get storageclasses --all-namespaces
 
-kubectl-get-persistentvolumes:
+kubectl-get-persistent-volumes:
     kubectl get persistentvolumes --all-namespaces
 
-kubectl-get-persistentvolumeclaims:
+kubectl-get-persistent-volume-claims:
     kubectl get persistentvolumeclaims --all-namespaces
 
 kubectl-get-endpoints:
@@ -176,35 +176,32 @@ kubectl-get-endpoints:
 kubectl-get-configmaps-all:
     kubectl get configmaps --all-namespaces
 
-kubectl-get-configmaps:
+kubectl-get-config-maps:
     kubectl get configmaps --namespace=hm
 
-kubectl-get-configmaps-yaml:
+kubectl-get-config-maps-yaml:
     kubectl get configmaps ingress-nginx-controller --namespace=ingress-nginx --output=yaml
 
-kubectl-get-serviceaccounts:
+kubectl-get-service-accounts:
     kubectl get serviceaccounts
 
-kubectl-get-apiservices:
+kubectl-get-api-services:
     kubectl get apiservices
 
 kubectl-logs:
-    kubectl logs --follow POD_NAME --namespace=hm
+    kubectl logs --follow xxx --namespace=hm
 
 kubectl-sh:
-    kubectl exec --stdin --tty POD_NAME --namespace=hm -- sh
+    kubectl exec --stdin --tty xxx --namespace=hm -- sh
 
 kubectl-rollout-restart:
     kubectl rollout restart hasura-deployment --namespace=hm-hasura
 
-kubectl-list-prometheus-containers:
-    kubectl get pod prometheus-monitoring-kube-prometheus-prometheus-0 --namespace=hm-monitoring --output=jsonpath='{.spec.containers[*].name}'
+kubectl-list-pod-containers:
+    kubectl get pod xxx --namespace=xxx --output=jsonpath='{.spec.containers[*].name}'
 
-kubectl-list-alertmanager-containers:
-    kubectl get pod alertmanager-monitoring-kube-prometheus-alertmanager-0 --namespace=hm-monitoring --output=jsonpath='{.spec.containers[*].name}'
-
-kubectl-list-grafana-containers:
-    kubectl get pod monitoring-grafana-xxx --namespace=hm-monitoring --output=jsonpath='{.spec.containers[*].name}'
+kubectl-force-delete-pod:
+    kubectl delete pod xxx --namespace=xxx --force --grace-period=0
 
 kubectl-config-view:
     kubectl config view

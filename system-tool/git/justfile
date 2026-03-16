@@ -1,63 +1,63 @@
-git-add:
+add:
     git add .
 
-git-commit:
+commit:
     git commit --message="xxx"
 
 # Branch
-git-branch-show-head:
+branch-show-head:
     cat .git/HEAD
 
-git-branch-switch:
+branch-switch:
     git switch branch-name
 
-git-branch-create-and-switch:
+branch-create-and-switch:
     git switch --create=branch-name
 
-git-branch-create-by-commit-hash:
+branch-create-by-commit-hash:
     git branch branch-name xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-git-branch-list-local:
+branch-list-local:
     git branch
 
-git-branch-list-remote:
+branch-list-remote:
     git branch --remotes
 
 # Reset and switch
-git-reset-and-switch-to-main:
+reset-and-switch-to-main:
     git reset --hard
     git switch main
 
 # Stash and switch
-git-stash-and-to-main:
+stash-and-to-main:
     git stash
     git switch main
     git stash pop
 
-git-fetch-branches:
+fetch-branches:
     git fetch --all
 
-git-pull-rebase:
+rebase:
     git pull --rebase
 
-git-log:
+log:
     git log
 
-git-status:
+status:
     git status
 
 # Recover
-git-recover:
+recover:
     git reflog --no-abbrev
     git branch branch-name xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 # Remove secret
-git-remove-secret:
+remove-secret:
     git log -S xxx
     git log -p -S xxx > git_log.txt
     git filter-repo --replace-text=<(echo 'xxx==>yyy') --refs=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx^..HEAD --force
 
-git-remove-secret-file:
+remove-secret-file:
     git filter-repo --path path/to/secret --invert-paths
     git remote add origin https://github.com/hongbo-miao/hongbomiao.com.git
     git push origin --force --all
@@ -69,29 +69,29 @@ rewrite-git-history-to-move-files-to-git-lfs:
     git lfs migrate import --include="*.onnx" --everything
 
 # Git submodule
-git-submodule-add:
+submodule-add:
     git submodule add https://github.com/hongbo-miao/hongbomiao.com.git
 
-git-submodule-remove:
+submodule-remove:
     git rm hongbomiao.com
 
-git-submodule-move:
+submodule-move:
     git mv hongbomiao.com submodules/hongbomiao.com
 
 # Git LFS
-git-lfs-install:
+lfs-install:
     git lfs install
 
-git-lfs-track:
+lfs-track:
     git lfs track "*.mp4"
 
-git-lfs-untrack:
+lfs-untrack:
     git lfs untrack "*.mp4"
 
-git-lfs-status:
+lfs-status:
     git lfs status
 
-git-lfs-list:
+lfs-list:
     git lfs ls-files
 
 # Gitleaks
