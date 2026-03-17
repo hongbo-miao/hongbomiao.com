@@ -4,7 +4,7 @@ global:
   prefect:
     image:
       repository: harbor.hongbomiao.com/docker-hub-proxy-cache/prefecthq/prefect
-      prefectTag: 3.6.19-python3.14-kubernetes
+      prefectTag: 3.6.22-python3.14-kubernetes
 server:
   uiConfig:
     prefectUiApiUrl: https://prefect.hongbomiao.com/api
@@ -14,10 +14,10 @@ server:
   replicaCount: 3
   resources:
     requests:
-      cpu: 500m
-      memory: 512Mi
+      cpu: 50m
+      memory: 500Mi
     limits:
-      memory: 1Gi
+      memory: 500Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:

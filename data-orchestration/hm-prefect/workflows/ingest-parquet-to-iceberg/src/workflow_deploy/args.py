@@ -7,6 +7,6 @@ def get_args() -> Namespace:
     parser.add_argument(
         "--environment",
         type=str,
-        choices=["development", "production"],
+        choices=["development", "staging", "production"],
     )
     return parser.parse_args()

@@ -3,7 +3,7 @@
 worker:
   image:
     repository: harbor.hongbomiao.com/docker-hub-proxy-cache/prefecthq/prefect
-    prefectTag: 3.6.19-python3.14-kubernetes
+    prefectTag: 3.6.22-python3.14-kubernetes
   replicaCount: 3
   apiConfig: selfHostedServer
   # https://github.com/PrefectHQ/prefect-helm/tree/main/charts/prefect-worker#setting-workerclusteruid
@@ -49,7 +49,7 @@ worker:
                     ],
                     "parallelism": 1,
                     "restartPolicy": "Never",
-                    "serviceAccountName": "hm-prefect-worker"
+                    "serviceAccountName": "prefect-worker"
                   }
                 },
                 "ttlSecondsAfterFinished": "{{ finished_job_ttl }}"
@@ -245,10 +245,10 @@ worker:
       existingSecret: hm-prefect-worker-secret
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 10m
+      memory: 300Mi
     limits:
-      memory: 1Gi
+      memory: 300Mi
   nodeSelector:
     environment: production
   tolerations:

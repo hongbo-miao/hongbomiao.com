@@ -1,3 +1,6 @@
+PREFECT_API_AUTH_STRING := "admin:xxx"
+PREFECT_API_URL := "https://prefect.hongbomiao.com/api"
+
 update-lock-file:
     uv lock
 
@@ -13,22 +16,12 @@ test:
 test-coverage:
     uv run poe test-coverage
 
-publish-development-docker-image:
-    docker build --platform=linux/amd64 --file=Dockerfile --tag=harbor.hongbomiao.com/hm/prefect-print-platform:development . && \
-    docker push harbor.hongbomiao.com/hm/prefect-print-platform:development
+# just deploy production
+deploy environment:
+    PREFECT_API_AUTH_STRING="{{ PREFECT_API_AUTH_STRING }}" && \
+    PREFECT_API_URL="{{ PREFECT_API_URL }}" && \
+    uv run poe deploy --environment={{ environment }}
 
-publish-production-docker-image:
-    docker build --platform=linux/amd64 --file=Dockerfile --tag=harbor.hongbomiao.com/hm/prefect-print-platform:latest . && \
-    docker push harbor.hongbomiao.com/hm/prefect-print-platform:latest
-
-deploy-development:
-    uv run poe deploy --environment=development
-
-deploy-production:
-    uv run poe deploy --environment=production
-
-run-development:
-    uv run poe run -- hm-print-platform/development-hm-print-platform
-
-run-production:
-    uv run poe run -- hm-print-platform/production-hm-print-platform
+# just run production
+run environment:
+    uv run poe run -- hm-print-platform/{{ environment }}-hm-print-platform
