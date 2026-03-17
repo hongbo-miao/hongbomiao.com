@@ -24,22 +24,22 @@ influx-version:
     influx version
 
 influx-org-list:
-    export INFLUX_TOKEN=xxx && \
+    INFLUX_TOKEN=xxx \
     influx org list
 
 influx-bucket-list:
-    export INFLUX_TOKEN=xxx && \
+    INFLUX_TOKEN=xxx \
     influx bucket list \
         --org=primary
 
 influx-bucket-create:
-    export INFLUX_TOKEN=xxx && \
+    INFLUX_TOKEN=xxx \
     influx bucket create \
         --org=primary \
         --name=production-hm-bucket
 
 influx-delete:
-    export INFLUX_TOKEN=xxx && \
+    INFLUX_TOKEN=xxx \
     influx delete \
         --org=primary \
         --bucket=production-hm-bucket \
@@ -48,13 +48,13 @@ influx-delete:
 
 # hm-grinding-wheel-station-bucket
 influx-query-generate-grinding-wheel-station-data:
-    export INFLUX_TOKEN=xxx && \
+    INFLUX_TOKEN=xxx \
     influx query \
         --org=primary \
         --file=queries/hm-grinding-wheel-station-bucket/000001_generate_grinding_wheel_station_data.flux
 
 influx-query-query-machinery:
-    export INFLUX_TOKEN=xxx && \
+    INFLUX_TOKEN=xxx \
     influx query \
         --org=primary \
         --file=queries/hm-grinding-wheel-station-bucket/000002_query_machinery.flux

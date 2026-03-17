@@ -21,7 +21,7 @@ name: . Test Data Orchestration
       hm-prefect-greet:
         required: true
         type: boolean
-      hm-prefect-ingest-to-iceberg:
+      hm-prefect-ingest-parquet-to-iceberg:
         required: true
         type: boolean
       hm-prefect-print-platform:
@@ -161,9 +161,9 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: data-orchestration/hm-prefect/workflows/greet
 
-  prefect-ingest-to-iceberg-test:
-    name: Prefect (ingest-to-iceberg) | Test
-    if: ${{ inputs.workflow || inputs.hm-prefect-ingest-to-iceberg }}
+  prefect-ingest-parquet-to-iceberg-test:
+    name: Prefect (ingest-parquet-to-iceberg) | Test
+    if: ${{ inputs.workflow || inputs.hm-prefect-ingest-parquet-to-iceberg }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -174,17 +174,17 @@ jobs:
         with:
           version: 0.10.10
           enable-cache: true
-          cache-dependency-glob: data-orchestration/hm-prefect/workflows/ingest-to-iceberg/uv.lock
+          cache-dependency-glob: data-orchestration/hm-prefect/workflows/ingest-parquet-to-iceberg/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.2.0
         with:
-          python-version-file: data-orchestration/hm-prefect/workflows/ingest-to-iceberg/.python-version
+          python-version-file: data-orchestration/hm-prefect/workflows/ingest-parquet-to-iceberg/.python-version
       - name: Install dependencies
-        working-directory: data-orchestration/hm-prefect/workflows/ingest-to-iceberg
+        working-directory: data-orchestration/hm-prefect/workflows/ingest-parquet-to-iceberg
         run: |
           uv sync --dev
       - name: Test
-        working-directory: data-orchestration/hm-prefect/workflows/ingest-to-iceberg
+        working-directory: data-orchestration/hm-prefect/workflows/ingest-parquet-to-iceberg
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -192,7 +192,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: data-orchestration/hm-prefect/workflows/ingest-to-iceberg
+          directory: data-orchestration/hm-prefect/workflows/ingest-parquet-to-iceberg
 
   prefect-print-platform-test:
     name: Prefect (print-platform) | Test

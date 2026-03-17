@@ -85,6 +85,10 @@ jobs:
               - '.dockerignore'
               - '.github/workflows/build.yml'
               - 'data-orchestration/hm-prefect/workflows/greet/**'
+            hm-prefect-ingest-parquet-to-iceberg:
+              - '.dockerignore'
+              - '.github/workflows/build.yml'
+              - 'data-orchestration/hm-prefect/workflows/ingest-parquet-to-iceberg/**'
             hm-prefect-print-platform:
               - '.dockerignore'
               - '.github/workflows/build.yml'
@@ -126,6 +130,7 @@ jobs:
       hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
       hm-prefect-daft-analysis: ${{ steps.filter.outputs.hm-prefect-daft-analysis }}
       hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
+      hm-prefect-ingest-parquet-to-iceberg: ${{ steps.filter.outputs.hm-prefect-ingest-parquet-to-iceberg }}
       hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
       hm-spark-find-retired-people-python: ${{ steps.filter.outputs.hm-spark-find-retired-people-python }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
@@ -493,6 +498,39 @@ jobs:
           file: ./data-orchestration/hm-prefect/workflows/greet/Dockerfile
           push: true
           tags: ghcr.io/hongbo-miao/prefect-greet:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  build-hm-prefect-ingest-parquet-to-iceberg:
+    name: Build prefect-ingest-parquet-to-iceberg
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-prefect-ingest-parquet-to-iceberg == 'true' }}
+    runs-on: ubuntu-24.04-arm
+    environment: production
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4.0.0
+        with:
+          image: docker.io/tonistiigi/binfmt:qemu-v10.0.4-59
+          platforms: amd64,arm64
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4.0.0
+      - name: Log in GitHub Container Registry
+        uses: docker/login-action@v4.0.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v7.0.0
+        with:
+          context: ./data-orchestration/hm-prefect/workflows/ingest-parquet-to-iceberg
+          file: ./data-orchestration/hm-prefect/workflows/ingest-parquet-to-iceberg/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/prefect-ingest-parquet-to-iceberg:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

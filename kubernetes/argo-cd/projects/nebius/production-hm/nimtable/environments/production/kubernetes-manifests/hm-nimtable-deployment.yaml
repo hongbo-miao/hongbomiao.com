@@ -84,6 +84,8 @@ spec:
             - name: config
               mountPath: /nimtable/config.yaml
               subPath: config.yaml
+            - name: artifacts
+              mountPath: /nimtable/artifacts
           resources:
             requests:
               cpu: 10m
@@ -107,6 +109,8 @@ spec:
           configMap:
             name: hm-nimtable-configmap
         - name: config
+          emptyDir: {}
+        - name: artifacts
           emptyDir: {}
       nodeSelector:
         environment: production
