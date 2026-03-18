@@ -1,17 +1,14 @@
-FROM docker.io/prefecthq/prefect:3.6.22-python3.14-kubernetes AS base
+FROM ghcr.io/astral-sh/uv:0.10.10-python3.14-trixie-slim AS builder
 WORKDIR /opt/prefect/workflow
-
-FROM base AS builder
-ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
-  PIP_NO_CACHE_DIR=1 \
-  UV_COMPILE_BYTECODE=1 \
+ENV UV_COMPILE_BYTECODE=1 \
   UV_LINK_MODE=copy \
   # Target the system Python environment
   UV_PROJECT_ENVIRONMENT=/usr/local
-COPY --from=ghcr.io/astral-sh/uv:0.10.10-python3.14-alpine /usr/local/bin/uv /bin/
 COPY ["pyproject.toml", "uv.lock", ".python-version", "./"]
-RUN uv sync --frozen
+RUN uv sync --frozen --no-dev
 
-FROM base AS release
+FROM harbor.hongbomiao.com/docker-hub-proxy-cache/python:3.14-slim-trixie AS release
+WORKDIR /opt/prefect/workflow
 COPY --from=builder /usr/local/lib/python3.14/site-packages/ /usr/local/lib/python3.14/site-packages/
+COPY --from=builder /usr/local/bin/prefect /usr/local/bin/prefect
 COPY ["src/", "/opt/prefect/workflow/src/"]

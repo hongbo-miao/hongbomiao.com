@@ -1,5 +1,3 @@
-import os
-
 from prefect import flow, get_run_logger, task
 from pydantic import BaseModel
 from pyspark.sql import SparkSession
@@ -97,16 +95,3 @@ def hm_ingest_parquet_to_iceberg(config: IngestParquetToIcebergConfig) -> None:
         config.table_name,
         config.partition_column,
     )
-
-
-if __name__ == "__main__":
-    ingest_parquet_to_iceberg_config = IngestParquetToIcebergConfig(
-        spark_connect_url=os.environ.get("SPARK_CONNECT_URL"),
-        checkpoint_base_path=os.environ.get("CHECKPOINT_BASE_PATH"),
-        source_path=os.environ.get("SOURCE_PATH"),
-        catalog=os.environ.get("CATALOG"),
-        namespace=os.environ.get("NAMESPACE"),
-        table_name=os.environ.get("TABLE_NAME"),
-        partition_column=os.environ.get("PARTITION_COLUMN"),
-    )
-    hm_ingest_parquet_to_iceberg(ingest_parquet_to_iceberg_config)

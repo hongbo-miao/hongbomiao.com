@@ -1,0 +1,19 @@
+# https://github.com/strimzi/strimzi-kafka-operator/blob/main/helm-charts/helm3/strimzi-kafka-operator/values.yaml
+---
+image:
+  registry: harbor.hongbomiao.com/quay-io-proxy-cache
+replicas: 3
+watchAnyNamespace: true
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule
+resources:
+  requests:
+    cpu: 200m
+    memory: 300Mi
+  limits:
+    memory: 500Mi

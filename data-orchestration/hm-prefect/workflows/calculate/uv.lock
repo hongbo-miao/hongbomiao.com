@@ -930,6 +930,7 @@ name = "prefect-calculate"
 version = "1.0.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "prefect" },
     { name = "prefect-client" },
     { name = "pydantic" },
 ]
@@ -937,13 +938,13 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "poethepoet" },
-    { name = "prefect" },
     { name = "pytest" },
     { name = "pytest-cov" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "prefect", specifier = "==3.6.22" },
     { name = "prefect-client", specifier = "==3.6.22" },
     { name = "pydantic", specifier = "==2.12.5" },
 ]
@@ -951,7 +952,6 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "poethepoet", specifier = "==0.42.1" },
-    { name = "prefect", specifier = "==3.6.22" },
     { name = "pytest", specifier = "==9.0.2" },
     { name = "pytest-cov", specifier = "==7.0.0" },
 ]

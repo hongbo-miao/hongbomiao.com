@@ -29,8 +29,3 @@ def hm_greet(user: User) -> None:
     farewell = create_farewell_subflow(user.age)
     logger = get_run_logger()
     logger.info(f"Final messages: {greeting} {farewell}")
-
-
-if __name__ == "__main__":
-    external_user = User(name="Rose", age=20)
-    hm_greet(external_user)

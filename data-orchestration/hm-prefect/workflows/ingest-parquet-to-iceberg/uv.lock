@@ -1024,7 +1024,7 @@ wheels = [
 
 [[package]]
 name = "prefect"
-version = "3.6.21"
+version = "3.6.22"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiosqlite" },
@@ -1083,9 +1083,9 @@ dependencies = [
     { name = "websockets" },
     { name = "whenever" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c4/05/cbfcbf03c60e9f8c9492f504101ac5bc17aa0829e9d54e7e6a49c073ca42/prefect-3.6.21.tar.gz", hash = "sha256:6e824c150f9488932628c76d5e5e30c34a183a06f98128b5283a59cce12f4fe3", size = 11189231, upload-time = "2026-03-05T21:09:12.98Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d6/88/c8ea27da84d9d9d1e393e1a7aa89743d0184c226c4a5ca8b42448b44f208/prefect-3.6.22.tar.gz", hash = "sha256:d6f8371da789c2f02e827e2c125e1aba64e4639477a3f35fe0118b818f485715", size = 11233800, upload-time = "2026-03-12T21:06:00.973Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c0/c2/c6cf8f4b7386d42ed8825aa9dbd8d65af2ef08c9ce4995d51a7515cd0af6/prefect-3.6.21-py3-none-any.whl", hash = "sha256:0dca86f966b6d94d6dc51d996655c118927a519985928ff4a969c50a96a57dd2", size = 11978155, upload-time = "2026-03-05T21:09:10.513Z" },
+    { url = "https://files.pythonhosted.org/packages/08/62/f8c5a80aa200b56a0881ff7d6a4df92179a3d5ac0e6c1ed1a717a0a09200/prefect-3.6.22-py3-none-any.whl", hash = "sha256:2052a49cdcbfdf96664ff58d894d1cc3c6844a28066e350dec322a96a53877b6", size = 12029721, upload-time = "2026-03-12T21:05:58.338Z" },
 ]
 
 [[package]]
@@ -1144,6 +1144,7 @@ name = "prefect-ingest-parquet-to-iceberg"
 version = "1.0.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "prefect" },
     { name = "prefect-client" },
     { name = "pyspark", extra = ["connect"] },
 ]
@@ -1151,13 +1152,13 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "poethepoet" },
-    { name = "prefect" },
     { name = "pytest" },
     { name = "pytest-cov" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "prefect", specifier = "==3.6.22" },
     { name = "prefect-client", specifier = "==3.6.22" },
     { name = "pyspark", extras = ["connect"], specifier = "==4.1.1" },
 ]
@@ -1165,7 +1166,6 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "poethepoet", specifier = "==0.42.1" },
-    { name = "prefect", specifier = "==3.6.21" },
     { name = "pytest", specifier = "==9.0.2" },
     { name = "pytest-cov", specifier = "==7.0.0" },
 ]

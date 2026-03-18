@@ -353,6 +353,8 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **http-connector-for-apache-kafka** - HTTP sink connector
     - **kafka-connect-avro-converter** - Confluent Avro converter
     - **apicurio-registry-distro-connect-converter** - Apicurio Avro converter
+  - Operator
+    - **Strimzi Kafka Operator** - Kubernetes operator for deploying and managing Kafka clusters
   - Management tool
     - **Redpanda Console** - Kafka management
     - **AKHQ** - Kafka management

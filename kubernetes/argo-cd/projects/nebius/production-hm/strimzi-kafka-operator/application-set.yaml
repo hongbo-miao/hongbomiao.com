@@ -1,0 +1,39 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: production-strimzi-kafka-operator
+  namespace: production-hm-argo-cd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        revision: main
+        files:
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/strimzi-kafka-operator/environments/*/config.yaml
+  template:
+    metadata:
+      name: '{{.environment}}-strimzi-kafka-operator'
+    spec:
+      project: production-hm
+      sources:
+        - repoURL: https://strimzi.io/charts/
+          targetRevision: '{{.helmChartVersion}}'
+          chart: strimzi-kafka-operator
+          helm:
+            releaseName: strimzi-kafka-operator
+            valueFiles:
+              - '$config/{{.path.path}}/helm-chart/values.yaml'
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          ref: config
+      destination:
+        namespace: '{{.environment}}-hm-strimzi-kafka-operator'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true

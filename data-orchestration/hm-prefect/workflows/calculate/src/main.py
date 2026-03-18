@@ -52,8 +52,3 @@ def hm_calculate(model: Model) -> None:
         res += ns
     n = sum_up(res)
     logger.info(n)
-
-
-if __name__ == "__main__":
-    external_model = Model(n=4)
-    hm_calculate(external_model)

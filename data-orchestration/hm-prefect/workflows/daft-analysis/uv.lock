@@ -1231,13 +1231,13 @@ version = "1.0.0"
 source = { virtual = "." }
 dependencies = [
     { name = "daft", extra = ["aws", "deltalake", "ray"] },
+    { name = "prefect" },
     { name = "prefect-client" },
 ]
 
 [package.dev-dependencies]
 dev = [
     { name = "poethepoet" },
-    { name = "prefect" },
     { name = "pytest" },
     { name = "pytest-cov" },
 ]
@@ -1245,13 +1245,13 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "daft", extras = ["aws", "deltalake", "ray"], specifier = "==0.7.4" },
+    { name = "prefect", specifier = "==3.6.22" },
     { name = "prefect-client", specifier = "==3.6.22" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "poethepoet", specifier = "==0.42.1" },
-    { name = "prefect", specifier = "==3.6.22" },
     { name = "pytest", specifier = "==9.0.2" },
     { name = "pytest-cov", specifier = "==7.0.0" },
 ]
