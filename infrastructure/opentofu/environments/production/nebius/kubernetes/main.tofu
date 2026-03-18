@@ -270,7 +270,7 @@ module "harbor_postgres_cluster" {
   bootstrap_user_password      = var.harbor_postgres_bootstrap_user_password
   public_access                = false
   disk_size_gib                = 16
-  host_count                   = 1
+  host_count                   = 3
   platform                     = "cpu-d3"
   preset                       = "4vcpu-16gb"
   labels                       = var.common_labels
@@ -369,7 +369,7 @@ module "mlflow_postgres_cluster" {
   bootstrap_user_password      = var.mlflow_postgres_bootstrap_user_password
   public_access                = false
   disk_size_gib                = 16
-  host_count                   = 1
+  host_count                   = 3
   platform                     = "cpu-d3"
   preset                       = "4vcpu-16gb"
   labels                       = var.common_labels
@@ -577,7 +577,28 @@ module "polaris_postgres_cluster" {
   bootstrap_user_password      = var.polaris_postgres_bootstrap_user_password
   public_access                = false
   disk_size_gib                = 16
-  host_count                   = 1
+  host_count                   = 3
+  platform                     = "cpu-d3"
+  preset                       = "4vcpu-16gb"
+  labels                       = var.common_labels
+  backup_window_start_time_utc = "9:00:00"
+  backup_retention_policy      = "14d"
+}
+
+# Prefect Server
+module "prefect_server_postgres_cluster" {
+  source                       = "../../../../modules/nebius/postgres_cluster"
+  project_id                   = var.project_id
+  network_id                   = var.vpc_network_id
+  postgres_version             = "16"
+  pooling_mode                 = "SESSION"
+  postgres_cluster_name        = "${var.environment}-prefect-server-postgres-cluster"
+  bootstrap_database_name      = "bootstrap_db"
+  bootstrap_user_name          = "bootstrap_user"
+  bootstrap_user_password      = var.prefect_server_postgres_bootstrap_user_password
+  public_access                = false
+  disk_size_gib                = 32
+  host_count                   = 3
   platform                     = "cpu-d3"
   preset                       = "4vcpu-16gb"
   labels                       = var.common_labels
@@ -636,7 +657,7 @@ module "skypilot_postgres_cluster" {
   bootstrap_user_password      = var.skypilot_postgres_bootstrap_user_password
   public_access                = false
   disk_size_gib                = 16
-  host_count                   = 1
+  host_count                   = 3
   platform                     = "cpu-d3"
   preset                       = "4vcpu-16gb"
   labels                       = var.common_labels

@@ -27,7 +27,3 @@ def hm_daft_analysis() -> None:
     df = daft.read_deltalake(table)
     df = df.where(df["_event_id"] == "ad7953cd-6d49-4929-8180-99555bebc255")
     df.show(5)
-
-
-if __name__ == "__main__":
-    hm_daft_analysis()

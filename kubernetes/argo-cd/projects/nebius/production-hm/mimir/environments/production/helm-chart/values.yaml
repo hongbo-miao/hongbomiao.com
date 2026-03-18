@@ -24,13 +24,18 @@ mimir:
       max_global_series_per_user: 10000000000
       ingestion_burst_size: 100000000
       ingestion_rate: 1000000
+    ingest_storage:
+      kafka:
+        address: hm-mimir-kafka-kafka-bootstrap.production-hm-mimir-kafka.svc.cluster.local:9092
     usage_stats:
       enabled: false
+kafka:
+  enabled: false
 # https://grafana.com/docs/mimir/latest/configure/about-runtime-configuration/
 runtimeConfig:
   distributor_limits:
-    # 300 MiB
-    max_inflight_push_requests_bytes: 314572800
+    # 300 MB
+    max_inflight_push_requests_bytes: 300000000
     max_inflight_push_requests: 30000
     max_ingestion_rate: 5000000
   ingester_limits:
@@ -139,24 +144,6 @@ distributor:
       memory: 1Gi
     limits:
       memory: 3Gi
-kafka:
-  enabled: true
-  nodeSelector:
-    environment: production
-  tolerations:
-    - key: environment
-      operator: Equal
-      value: production
-      effect: NoSchedule
-  persistence:
-    size: 1Ti
-    storageClass: production-hm-mimir-storage-class
-  resources:
-    requests:
-      cpu: 200m
-      memory: 4200Mi
-    limits:
-      memory: 4200Mi
 ingester:
   enabled: true
   replicas: 9
