@@ -144,9 +144,6 @@ name: . Test Machine Learning
       hm-mlflow-classify-mnist:
         required: true
         type: boolean
-      hm-mlflow-predict-diabetes:
-        required: true
-        type: boolean
       hm-mlx-lm:
         required: true
         type: boolean
@@ -1863,39 +1860,6 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: machine-learning/hm-mlflow/experiments/classify-mnist
-
-  mlflow-predict-diabetes-test:
-    name: MLflow (predict-diabetes) | Test
-    if: ${{ inputs.workflow || inputs.hm-mlflow-predict-diabetes }}
-    runs-on: ubuntu-24.04-arm
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.6.0
-        with:
-          version: 0.10.12
-          enable-cache: true
-          cache-dependency-glob: machine-learning/hm-mlflow/experiments/predict-diabetes/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.2.0
-        with:
-          python-version-file: machine-learning/hm-mlflow/experiments/predict-diabetes/.python-version
-      - name: Install dependencies
-        working-directory: machine-learning/hm-mlflow/experiments/predict-diabetes
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: machine-learning/hm-mlflow/experiments/predict-diabetes
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: machine-learning/hm-mlflow/experiments/predict-diabetes
 
   neural-forecasting-forecast-air-passenger-number-test:
     name: Neural Forecasting (forecast-air-passenger-number) | Test

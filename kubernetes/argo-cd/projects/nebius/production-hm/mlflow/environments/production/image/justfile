@@ -1,0 +1,10 @@
+version := "3.7.0.1"
+image_name := "mlflow"
+registry := "harbor.hongbomiao.com/hm"
+
+build:
+    docker build --platform=linux/amd64 --tag={{ image_name }}:{{ version }} .
+
+push:
+    docker tag {{ image_name }}:{{ version }} {{ registry }}/{{ image_name }}:{{ version }}
+    docker push {{ registry }}/{{ image_name }}:{{ version }}

@@ -61,6 +61,13 @@ module "harbor_project_microsoft_artifact_registry_proxy_cache" {
   public      = true
   registry_id = module.harbor_registry_microsoft_artifact_registry.id
 }
+# Project - nvcr-io-proxy-cache
+module "harbor_project_nvcr_io_proxy_cache" {
+  source      = "../../../modules/harbor/harbor_project"
+  name        = "nvcr-io-proxy-cache"
+  public      = true
+  registry_id = module.harbor_registry_nvcr_io.id
+}
 # Project - quay-io-proxy-cache
 module "harbor_project_quay_io_proxy_cache" {
   source      = "../../../modules/harbor/harbor_project"

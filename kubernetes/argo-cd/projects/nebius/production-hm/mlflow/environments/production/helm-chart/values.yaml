@@ -1,7 +1,14 @@
 # https://github.com/community-charts/helm-charts/blob/main/charts/mlflow/values.yaml
 ---
 image:
-  repository: harbor.hongbomiao.com/docker-hub-proxy-cache/burakince/mlflow
+  repository: harbor.hongbomiao.com/hm/mlflow
+  tag: 3.7.0.1
+imagePullSecrets:
+  - name: hm-harbor-secret
+initImages:
+  mlflowDbMigration:
+    repository: harbor.hongbomiao.com/hm/mlflow
+    tag: 3.7.0.1
 replicaCount: 3
 serviceAccount:
   create: true
@@ -28,6 +35,15 @@ artifactRoot:
       keyOfSecretAccessKey: AWS_SECRET_ACCESS_KEY
 extraEnvVars:
   MLFLOW_OBJECT_STORAGE_ENDPOINT_URL: https://storage.us-central1.nebius.cloud
+  MLFLOW_SERVER_CORS_ALLOWED_ORIGINS: https://mlflow.hongbomiao.com
+  # https://mlflow.org/docs/latest/self-hosting/security/sso
+  OIDC_REDIRECT_URI: https://mlflow.hongbomiao.com/callback
+  OIDC_SCOPE: openid,email,profile
+  OIDC_DISCOVERY_URL: https://accounts.google.com/.well-known/openid-configuration
+  OIDC_GROUP_DETECTION_PLUGIN: google_oidc_group_detection
+  PYTHONPATH: /app/plugins
+extraSecretNamesForEnvFrom:
+  - hm-mlflow-secret
 # https://github.com/community-charts/helm-charts/issues/310#issuecomment-3702742603
 log:
   enabled: false
@@ -38,6 +54,7 @@ postgresql:
   enabled: false
 auth:
   enabled: true
+  appName: oidc-auth
   defaultPermission: READ
   existingAdminSecret:
     name: hm-mlflow-secret
@@ -63,9 +80,9 @@ affinity:
 resources:
   requests:
     cpu: 10m
-    memory: 1000Mi
+    memory: 1700Mi
   limits:
-    memory: 1200Mi
+    memory: 2200Mi
 nodeSelector:
   environment: production
 tolerations:
@@ -73,3 +90,10 @@ tolerations:
     operator: Equal
     value: production
     effect: NoSchedule
+extraVolumes:
+  - name: oidc-group-detection-plugin
+    configMap:
+      name: hm-mlflow-oidc-group-detection-config-map
+extraVolumeMounts:
+  - name: oidc-group-detection-plugin
+    mountPath: /app/plugins
