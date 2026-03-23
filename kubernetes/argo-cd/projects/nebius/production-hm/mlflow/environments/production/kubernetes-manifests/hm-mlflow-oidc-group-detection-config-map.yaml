@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hm-mlflow-oidc-group-detection-config-map
+  namespace: production-hm-mlflow
+  labels:
+    app.kubernetes.io/name: mlflow
+    app.kubernetes.io/part-of: production-hm-mlflow
+data:
+  # https://mlflow.org/docs/latest/self-hosting/security/sso
+  google_oidc_group_detection.py: |
+    import requests
+
+    def get_user_groups(access_token: str) -> list[str]:
+        response = requests.get(
+            "https://www.googleapis.com/oauth2/v3/userinfo",
+            headers={"Authorization": f"Bearer {access_token}"},
+            timeout=10,
+        )
+        response.raise_for_status()
+        user_info = response.json()
+        email = user_info.get("email")
+        admin_email_list = ["me@hongbomiao.com"]
+        if email in admin_email_list:
+            return ["mlflow-admin"]
+        return ["mlflow"]

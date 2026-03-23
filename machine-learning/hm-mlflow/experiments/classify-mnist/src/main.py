@@ -1,10 +1,12 @@
+import os
+
 import lightning as L  # noqa: N812
 import mlflow
 import torch
 import torch.nn.functional as F  # noqa: N812
 import torchvision
 from args import get_args
-from lightning.pytorch.loggers.wandb import WandbLogger
+from config import config
 from torch import nn
 from torch.utils import data
 
@@ -44,14 +46,11 @@ class LitAutoEncoder(L.LightningModule):
 
 
 def main() -> None:
-    project_name = "classify-mnist"
-
-    # W&B
-    wandb_logger = WandbLogger(project=project_name)
-
-    # MLflow
-    mlflow.set_tracking_uri("https://mlflow.hongbomiao.com")
-    mlflow.set_experiment(experiment_name=project_name)
+    os.environ["MLFLOW_TRACKING_USERNAME"] = config.MLFLOW_TRACKING_USERNAME
+    os.environ["MLFLOW_TRACKING_PASSWORD"] = config.MLFLOW_TRACKING_PASSWORD
+    mlflow.set_tracking_uri(f"https://{config.MLFLOW_TRACKING_SERVER_HOST}")
+    mlflow.set_experiment(experiment_name=config.MLFLOW_EXPERIMENT_NAME)
+    mlflow.enable_system_metrics_logging()
     mlflow.pytorch.autolog()
 
     args = get_args()
@@ -70,11 +69,10 @@ def main() -> None:
 
     autoencoder = LitAutoEncoder()
     trainer = L.Trainer(
-        devices="auto",
         accelerator="auto",
+        devices="auto",
         max_epochs=args.max_epochs,
         check_val_every_n_epoch=1,
-        logger=wandb_logger,
     )
     trainer.fit(
         autoencoder,

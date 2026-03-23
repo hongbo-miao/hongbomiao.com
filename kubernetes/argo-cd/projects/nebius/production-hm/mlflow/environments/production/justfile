@@ -5,3 +5,11 @@ seal-secret:
         --controller-name=sealed-secrets \
         --format=yaml \
         > kubernetes-manifests/hm-mlflow-secret.yaml
+
+seal-harbor-secret:
+    cat secrets/hm-harbor-secret.unsealed.yaml | \
+    kubeseal \
+        --controller-namespace=production-hm-sealed-secrets \
+        --controller-name=sealed-secrets \
+        --format=yaml \
+        > kubernetes-manifests/hm-harbor-secret.yaml

@@ -61,7 +61,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 > [!NOTE]
 > The diagram here may take a moment to load. Please wait patiently.
 
-![Architecture](https://github.com/user-attachments/assets/c20a6b14-1ec6-4e7b-8b61-a3cbf656cdbd)
+![Architecture](https://github.com/user-attachments/assets/27fe5066-d700-4e8e-b2bd-d123de320e50)
 
 # 🧱 Tech Stack
 
@@ -874,7 +874,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 ## Authentication, Authorization, Security
 
 - **Defguard** - Zero-trust virtual private network (VPN) with WireGuard-based multi-factor authentication (MFA) and single sign-on (SSO)
-- **Apache Ranger** - Authorization, auditing
 - **Ory Hydra** - OAuth 2.0 and OpenID Connect server
 - **Open Policy Agent (OPA)** - Policy-based control
 - **OPAL** - Open-policy administration layer

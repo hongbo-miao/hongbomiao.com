@@ -13,7 +13,7 @@ setup(
     install_requires=["setuptools"],
     zip_safe=True,
     maintainer="Hongbo Miao",
-    maintainer_email="hongbo.miao@outlook.com",
+    maintainer_email="me@hongbomiao.com",
     description="HM Python Package",
     license="MIT",
     tests_require=["pytest"],
