@@ -1624,7 +1624,7 @@ wheels = [
 
 [[package]]
 name = "ultralytics"
-version = "8.4.24"
+version = "8.4.25"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "matplotlib" },
@@ -1640,9 +1640,9 @@ dependencies = [
     { name = "torchvision" },
     { name = "ultralytics-thop" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/cf/00/889d268d3eadb94b64aa1c732bda390d6ff5bfc72f6e891a58ecaa1e02ad/ultralytics-8.4.24.tar.gz", hash = "sha256:1a99e7feb43e2e30574c5ae16f93d14dcaea6d7550299601959a8f2f3a4f5256", size = 1023627, upload-time = "2026-03-19T17:05:38.978Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/55/e0/7f77f6e6b51d00d3333ff695c07299b69a552d59a08bb86be0bc72895e4c/ultralytics-8.4.25.tar.gz", hash = "sha256:8c79f393f3d7923700677923bae513259393499eaadecc022635acc01bcc7d57", size = 1023692, upload-time = "2026-03-23T11:09:28.244Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/da/c3/94474f845e50763eece2182acc5a9023d766f7b26f169aa1cea523ac11ba/ultralytics-8.4.24-py3-none-any.whl", hash = "sha256:ec385d4deaa7a0afa97d6ba0fb1719ce1bdabedaf894b30f655d16473347a37d", size = 1209575, upload-time = "2026-03-19T17:05:34.866Z" },
+    { url = "https://files.pythonhosted.org/packages/17/34/bea7567a35968687bb67d084db1767687ffa5d5825ebd68283e8c0982af1/ultralytics-8.4.25-py3-none-any.whl", hash = "sha256:0b9d1f65f80c64b7802d21dff2d5d64dc4bb2e08f64311a8572e0b8fe317bc2b", size = 1209667, upload-time = "2026-03-23T11:09:23.752Z" },
 ]
 
 [package.optional-dependencies]
@@ -1661,6 +1661,7 @@ export = [
     { name = "tensorflowjs", version = "3.15.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'darwin' and sys_platform != 'win32'" },
     { name = "tensorflowjs", version = "4.22.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'darwin' or sys_platform == 'win32'" },
     { name = "tensorstore", marker = "platform_machine == 'aarch64'" },
+    { name = "ydf", marker = "platform_machine != 'aarch64'" },
 ]
 
 [[package]]
@@ -1738,15 +1739,16 @@ wheels = [
 
 [[package]]
 name = "ydf"
-version = "0.13.0"
+version = "0.12.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "absl-py", marker = "sys_platform == 'darwin' or sys_platform == 'win32'" },
-    { name = "numpy", marker = "sys_platform == 'darwin' or sys_platform == 'win32'" },
-    { name = "protobuf", marker = "sys_platform == 'darwin' or sys_platform == 'win32'" },
+    { name = "absl-py", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "numpy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "protobuf", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e1/6b/77a7850c22fe56c1294a043534712d0c7338f67a9828408ae6d630c66daa/ydf-0.13.0-cp312-cp312-macosx_12_0_arm64.whl", hash = "sha256:20108f07edac014cbf6bd38c14fdb93e547a91ebf71ed36246df4d5c85943960", size = 9035280, upload-time = "2025-07-15T15:53:05.353Z" },
+    { url = "https://files.pythonhosted.org/packages/d8/01/4a92e12d4e53d48eb292dee580cc5fd4bacd502138e622fcd38584260c8c/ydf-0.12.0-cp312-cp312-macosx_12_0_arm64.whl", hash = "sha256:5dda457e724ff8319053a73c921757852338e0707daab16f6a831aefaac231c8", size = 8951683, upload-time = "2025-05-20T14:19:38.598Z" },
+    { url = "https://files.pythonhosted.org/packages/01/51/de3f5bd3958ae3fb7806a67e137d254ba71994a66aac1ca8da44d87e134b/ydf-0.12.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:f673d47e285f830f591d085ad73f66611c09b14681b2aaf4ac86ac841da7bc73", size = 12035241, upload-time = "2025-05-20T14:19:41.426Z" },
 ]
 
 [[package]]
@@ -1765,7 +1767,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "ultralytics", extras = ["export"], specifier = "==8.4.24" }]
+requires-dist = [{ name = "ultralytics", extras = ["export"], specifier = "==8.4.25" }]
 
 [package.metadata.requires-dev]
 dev = [
