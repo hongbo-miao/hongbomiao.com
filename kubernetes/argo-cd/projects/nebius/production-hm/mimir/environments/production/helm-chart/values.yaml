@@ -26,7 +26,7 @@ mimir:
       ingestion_rate: 1000000
     ingest_storage:
       kafka:
-        address: hm-mimir-kafka-kafka-bootstrap.production-hm-mimir-kafka.svc.cluster.local:9092
+        address: hm-mimir-kafka-kafka-bootstrap.production-hm-mimir-kafka.svc:9092
     usage_stats:
       enabled: false
 kafka:
@@ -351,7 +351,7 @@ ruler:
       cpu: 20m
       memory: 100Mi
     limits:
-      memory: 100Mi
+      memory: 150Mi
 ruler_querier:
   enabled: true
   kedaAutoscaling:

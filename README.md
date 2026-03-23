@@ -292,8 +292,9 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Prometheus** - Time-series database
   - **Thanos** - Long-term storage for Prometheus
   - **Grafana Mimir** - Long-term storage for Prometheus
-  - **Prometheus Postgres Exporter** - PostgreSQL metrics exporter
   - **Prometheus NATS Exporter** - NATS metrics exporter
+  - **Prometheus Postgres Exporter** - PostgreSQL metrics exporter
+  - **Prometheus Prefect Exporter** - Prefect metrics exporter
 - **OpenTelemetry** - Observability framework
 - **Jaeger** - Distributed tracing system
 - **Pixie** - Kubernetes application observability tool

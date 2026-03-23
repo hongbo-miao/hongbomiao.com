@@ -1,0 +1,23 @@
+# https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prometheus-prefect-exporter/values.yaml
+---
+image:
+  repository: harbor.hongbomiao.com/docker-hub-proxy-cache/prefecthq/prometheus-prefect-exporter
+prefectApiUrl: http://prefect-server.production-hm-prefect-server.svc:4200/api
+basicAuth:
+  enabled: true
+  existingSecret: hm-prometheus-prefect-exporter-secret
+serviceMonitor:
+  enabled: true
+resources:
+  requests:
+    cpu: 10m
+    memory: 100Mi
+  limits:
+    memory: 200Mi
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule

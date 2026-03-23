@@ -7,3 +7,12 @@ variable "provider_name" {
 variable "endpoint_url" {
   type = string
 }
+variable "access_id" {
+  type    = string
+  default = null
+}
+variable "access_secret" {
+  type      = string
+  sensitive = true
+  default   = null
+}

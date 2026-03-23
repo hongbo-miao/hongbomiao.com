@@ -32,6 +32,13 @@ config:
     path: postgres://${POSTGRES_USER_NAME}:${POSTGRES_PASSWORD}@private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432/gatus_db?sslmode=require
     caching: true
   endpoints:
+    - name: Alloy
+      group: production
+      url: http://alloy.production-hm-alloy.svc:12345/-/ready
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
     - name: Argo CD
       group: production
       url: https://argo-cd.hongbomiao.com
@@ -81,12 +88,33 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
+    - name: Loki
+      group: production
+      url: http://loki-gateway.production-hm-loki.svc:80
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
     - name: MLflow
       group: production
       url: https://mlflow.hongbomiao.com/health
       interval: 60s
       conditions:
         - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Mimir
+      group: production
+      url: http://mimir-gateway.production-hm-mimir.svc:80/ready
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Mimir | Kafka
+      group: production
+      url: tcp://hm-mimir-kafka-kafka-bootstrap.production-hm-mimir-kafka.svc:9092
+      interval: 60s
+      conditions:
+        - "[CONNECTED] == true"
         - "[RESPONSE_TIME] < 5000"
     - name: NATS
       group: production
@@ -144,6 +172,20 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
+    - name: Prometheus
+      group: production
+      url: http://prometheus-kube-prometheus-prometheus.production-hm-prometheus.svc:9090/-/healthy
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Pyroscope
+      group: production
+      url: http://pyroscope.production-hm-pyroscope.svc:4040/ready
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
     - name: SkyPilot
       group: production
       url: https://skypilot.hongbomiao.com
@@ -151,7 +193,7 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
-    - name: SkyPilot Valkey
+    - name: SkyPilot | Valkey
       group: production
       url: tcp://skypilot-valkey.production-hm-skypilot-valkey.svc:6379
       interval: 60s
@@ -168,6 +210,13 @@ config:
     - name: Spark History Server
       group: production
       url: https://spark-history.hongbomiao.com
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Tempo
+      group: production
+      url: http://tempo-gateway.production-hm-tempo.svc:80
       interval: 60s
       conditions:
         - "[STATUS] == 200"

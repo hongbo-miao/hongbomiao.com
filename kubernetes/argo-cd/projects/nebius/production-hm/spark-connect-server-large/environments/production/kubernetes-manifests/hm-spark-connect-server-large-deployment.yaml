@@ -77,7 +77,7 @@ spec:
                 --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions \
                 --conf spark.sql.catalog.development=org.apache.iceberg.spark.SparkCatalog \
                 --conf spark.sql.catalog.development.type=rest \
-                --conf spark.sql.catalog.development.uri=http://polaris.production-hm-polaris.svc.cluster.local:8181/api/catalog \
+                --conf spark.sql.catalog.development.uri=http://polaris.production-hm-polaris.svc:8181/api/catalog \
                 --conf spark.sql.catalog.development.warehouse=development \
                 --conf spark.sql.catalog.development.credential=${POLARIS_CREDENTIAL} \
                 --conf spark.sql.catalog.development.scope=PRINCIPAL_ROLE:service_admin \
@@ -87,7 +87,7 @@ spec:
                 --conf spark.sql.catalog.development.s3.region=us-central1 \
                 --conf spark.sql.catalog.staging=org.apache.iceberg.spark.SparkCatalog \
                 --conf spark.sql.catalog.staging.type=rest \
-                --conf spark.sql.catalog.staging.uri=http://polaris.production-hm-polaris.svc.cluster.local:8181/api/catalog \
+                --conf spark.sql.catalog.staging.uri=http://polaris.production-hm-polaris.svc:8181/api/catalog \
                 --conf spark.sql.catalog.staging.warehouse=staging \
                 --conf spark.sql.catalog.staging.credential=${POLARIS_CREDENTIAL} \
                 --conf spark.sql.catalog.staging.scope=PRINCIPAL_ROLE:service_admin \
@@ -97,7 +97,7 @@ spec:
                 --conf spark.sql.catalog.staging.s3.region=us-central1 \
                 --conf spark.sql.catalog.production=org.apache.iceberg.spark.SparkCatalog \
                 --conf spark.sql.catalog.production.type=rest \
-                --conf spark.sql.catalog.production.uri=http://polaris.production-hm-polaris.svc.cluster.local:8181/api/catalog \
+                --conf spark.sql.catalog.production.uri=http://polaris.production-hm-polaris.svc:8181/api/catalog \
                 --conf spark.sql.catalog.production.warehouse=production \
                 --conf spark.sql.catalog.production.credential=${POLARIS_CREDENTIAL} \
                 --conf spark.sql.catalog.production.scope=PRINCIPAL_ROLE:service_admin \

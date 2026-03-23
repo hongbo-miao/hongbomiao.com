@@ -17,3 +17,7 @@ variable "hm_application_robot_secret" {
   type      = string
   sensitive = true
 }
+variable "nvcr_io_access_secret" {
+  type      = string
+  sensitive = true
+}
