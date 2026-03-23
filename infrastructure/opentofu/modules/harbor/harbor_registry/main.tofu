@@ -11,4 +11,6 @@ resource "harbor_registry" "main" {
   name          = var.name
   provider_name = var.provider_name
   endpoint_url  = var.endpoint_url
+  access_id     = var.access_id
+  access_secret = var.access_secret
 }

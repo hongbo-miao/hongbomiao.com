@@ -33,3 +33,6 @@ sky-show-gpus-price:
     uv run sky show-gpus --infra=runpod L4:2
     # Vast
     uv run sky show-gpus --infra=vast --all
+
+check-skypilot-disk-usage:
+    kubectl exec --namespace=production-hm-skypilot deploy/skypilot-api-server -- df -h /root/.sky

@@ -24,6 +24,14 @@ module "harbor_registry_microsoft_artifact_registry" {
   name          = "microsoft-artifact-registry"
   endpoint_url  = "https://mcr.microsoft.com"
 }
+module "harbor_registry_nvcr_io" {
+  source        = "../../../modules/harbor/harbor_registry"
+  provider_name = "docker-registry"
+  name          = "nvcr-io"
+  endpoint_url  = "https://nvcr.io"
+  access_id     = "$oauthtoken"
+  access_secret = var.nvcr_io_access_secret
+}
 module "harbor_registry_quay_io" {
   source        = "../../../modules/harbor/harbor_registry"
   provider_name = "docker-registry"

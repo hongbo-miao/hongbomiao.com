@@ -419,6 +419,50 @@ module "grafana_dashboard_nats_jetstream" {
   tags        = [var.managed_tag]
 }
 
+# Dashboard - Prefect
+# https://github.com/PrefectHQ/prometheus-prefect-exporter/blob/main/dashboards/prefect-flow-run-overview.json
+module "grafana_folder_prefect" {
+  source   = "../../../modules/grafana/grafana_folder"
+  for_each = toset(local.org_ids)
+  org_id   = each.value
+  title    = "Prefect"
+}
+locals {
+  prefect_dashboard_urls = {
+    "prefect-flow-run-overview" = "https://raw.githubusercontent.com/PrefectHQ/prometheus-prefect-exporter/main/dashboards/prefect-flow-run-overview.json"
+  }
+  prefect_org_dashboard_combinations = flatten([
+    for org_id in local.org_ids : [
+      for dashboard_name in keys(local.prefect_dashboard_urls) : {
+        key            = "${org_id}-${dashboard_name}"
+        org_id         = org_id
+        dashboard_name = dashboard_name
+      }
+    ]
+  ])
+}
+data "http" "prefect_dashboards" {
+  for_each = local.prefect_dashboard_urls
+  url      = each.value
+}
+module "grafana_dashboard_prefect" {
+  source     = "../../../modules/grafana/grafana_dashboard"
+  for_each   = { for combination in local.prefect_org_dashboard_combinations : combination.key => combination }
+  org_id     = each.value.org_id
+  folder_uid = module.grafana_folder_prefect[each.value.org_id].uid
+  config_json = replace(
+    replace(
+      data.http.prefect_dashboards[each.value.dashboard_name].response_body,
+      "$${DS_PROMETHEUS}",
+      module.grafana_data_source_hm_prometheus[each.value.org_id].uid
+    ),
+    "$${DS_LOKI}",
+    module.grafana_data_source_hm_loki[each.value.org_id].uid
+  )
+  uid_prefix = var.grafana_dashboard_uid_prefix
+  tags       = [var.managed_tag]
+}
+
 # Dashboard - Postgres
 module "grafana_folder_postgres" {
   source   = "../../../modules/grafana/grafana_folder"
