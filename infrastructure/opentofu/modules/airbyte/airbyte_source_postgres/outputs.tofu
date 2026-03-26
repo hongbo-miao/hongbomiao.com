@@ -1,6 +1,6 @@
 output "id" {
-  value = airbyte_source_postgres.main.source_id
+  value = airbyte_source.main.source_id
 }
 output "name" {
-  value = airbyte_source_postgres.main.name
+  value = airbyte_source.main.name
 }
