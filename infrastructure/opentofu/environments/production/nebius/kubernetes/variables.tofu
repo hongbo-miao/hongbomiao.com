@@ -16,6 +16,10 @@ variable "vpc_subnet_id" {
 variable "common_labels" {
   type = map(string)
 }
+variable "airbyte_postgres_bootstrap_user_password" {
+  type      = string
+  sensitive = true
+}
 variable "gatus_postgres_bootstrap_user_password" {
   type      = string
   sensitive = true

@@ -46,6 +46,13 @@ serviceMonitor:
           - sourceLabels: [target]
             targetLabel: instance
       - endpoint: private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
+        name: production-nimtable
+        port: 5432
+        databaseName: bootstrap_db
+        metricRelabelings:
+          - sourceLabels: [target]
+            targetLabel: instance
+      - endpoint: private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
         name: production-polaris
         port: 5432
         databaseName: bootstrap_db

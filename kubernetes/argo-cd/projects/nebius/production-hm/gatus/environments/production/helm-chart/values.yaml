@@ -32,6 +32,13 @@ config:
     path: postgres://${POSTGRES_USER_NAME}:${POSTGRES_PASSWORD}@private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432/gatus_db?sslmode=require
     caching: true
   endpoints:
+    - name: Airbyte
+      group: production
+      url: https://airbyte.hongbomiao.com
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
     - name: Alloy
       group: production
       url: http://alloy.production-hm-alloy.svc:12345/-/ready
@@ -67,6 +74,13 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
+    - name: Gatus | Postgres
+      group: production
+      url: tcp://private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432
+      interval: 60s
+      conditions:
+        - "[CONNECTED] == true"
+        - "[RESPONSE_TIME] < 5000"
     - name: Goldilocks
       group: production
       url: https://goldilocks.hongbomiao.com/health
@@ -81,12 +95,33 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
+    - name: Grafana | Postgres
+      group: production
+      url: tcp://private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432
+      interval: 60s
+      conditions:
+        - "[CONNECTED] == true"
+        - "[RESPONSE_TIME] < 5000"
     - name: Harbor
       group: production
       url: https://harbor.hongbomiao.com
       interval: 60s
       conditions:
         - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Harbor | Postgres
+      group: production
+      url: tcp://private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432
+      interval: 60s
+      conditions:
+        - "[CONNECTED] == true"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Harbor | Valkey
+      group: production
+      url: tcp://harbor-valkey.production-hm-harbor-valkey.svc:6379
+      interval: 60s
+      conditions:
+        - "[CONNECTED] == true"
         - "[RESPONSE_TIME] < 5000"
     - name: Loki
       group: production
@@ -101,6 +136,13 @@ config:
       interval: 60s
       conditions:
         - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: MLflow | Postgres
+      group: production
+      url: tcp://private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432
+      interval: 60s
+      conditions:
+        - "[CONNECTED] == true"
         - "[RESPONSE_TIME] < 5000"
     - name: Mimir
       group: production
@@ -130,6 +172,13 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
+    - name: Nimtable | Postgres
+      group: production
+      url: tcp://private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432
+      interval: 60s
+      conditions:
+        - "[CONNECTED] == true"
+        - "[RESPONSE_TIME] < 5000"
     - name: Object Storage Browser
       group: production
       url: https://object-storage-browser.hongbomiao.com
@@ -158,6 +207,27 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
+    - name: Prometheus | NATS Exporter
+      group: production
+      url: http://prometheus-nats-exporter.production-hm-prometheus-nats-exporter.svc:80/metrics
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Prometheus | Postgres Exporter
+      group: production
+      url: http://prometheus-postgres-exporter.production-hm-prometheus-postgres-exporter.svc:80/metrics
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Prometheus | Prefect Exporter
+      group: production
+      url: http://prometheus-prefect-exporter.production-hm-prometheus-prefect-exporter.svc:80/metrics
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
     - name: Prefect
       group: production
       url: https://prefect.hongbomiao.com
@@ -165,12 +235,26 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
+    - name: Prefect Server | Postgres
+      group: production
+      url: tcp://private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432
+      interval: 60s
+      conditions:
+        - "[CONNECTED] == true"
+        - "[RESPONSE_TIME] < 5000"
     - name: Polaris
       group: production
       url: http://polaris-mgmt.production-hm-polaris.svc:8182/q/health
       interval: 60s
       conditions:
         - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Polaris | Postgres
+      group: production
+      url: tcp://private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432
+      interval: 60s
+      conditions:
+        - "[CONNECTED] == true"
         - "[RESPONSE_TIME] < 5000"
     - name: Prometheus
       group: production
@@ -192,6 +276,13 @@ config:
       interval: 60s
       conditions:
         - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: SkyPilot | Postgres
+      group: production
+      url: tcp://private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432
+      interval: 60s
+      conditions:
+        - "[CONNECTED] == true"
         - "[RESPONSE_TIME] < 5000"
     - name: SkyPilot | Valkey
       group: production
@@ -241,6 +332,13 @@ config:
       interval: 60s
       conditions:
         - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Trino Gateway | Postgres
+      group: production
+      url: tcp://private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432
+      interval: 60s
+      conditions:
+        - "[CONNECTED] == true"
         - "[RESPONSE_TIME] < 5000"
     - name: Trino | Rabbit
       group: production

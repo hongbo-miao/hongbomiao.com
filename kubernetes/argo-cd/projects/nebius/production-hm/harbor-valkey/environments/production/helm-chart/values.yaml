@@ -1,0 +1,39 @@
+# https://github.com/valkey-io/valkey-helm/blob/main/valkey/values.yaml
+---
+# global:
+#   imageRegistry: harbor.hongbomiao.com/docker-hub-proxy-cache
+auth:
+  enabled: true
+  usersExistingSecret: hm-harbor-valkey-secret
+  aclUsers:
+    default:
+      permissions: "~* &* +@all"
+      passwordKey: VALKEY_PASSWORD
+replica:
+  enabled: true
+  replicas: 2
+  persistence:
+    size: 1Gi
+    storageClass: production-hm-harbor-valkey-storage-class
+    accessModes:
+      - ReadWriteOnce
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: DoNotSchedule
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: valkey
+resources:
+  requests:
+    cpu: 10m
+    memory: 100Mi
+  limits:
+    memory: 200Mi
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule

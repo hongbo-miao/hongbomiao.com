@@ -23,13 +23,13 @@ module "hm_data_processed_object_storage" {
   labels                = var.common_labels
 }
 
-module "hm_postgres_cluster" {
+module "hm_postgres" {
   source                       = "../../../../modules/nebius/postgres_cluster"
   project_id                   = var.project_id
   network_id                   = var.vpc_network_id
   postgres_version             = "16"
   pooling_mode                 = "TRANSACTION"
-  postgres_cluster_name        = "${var.environment}-hm-postgres-cluster"
+  postgres_cluster_name        = "${var.environment}-hm-postgres"
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
   bootstrap_user_password      = var.hm_postgres_bootstrap_user_password

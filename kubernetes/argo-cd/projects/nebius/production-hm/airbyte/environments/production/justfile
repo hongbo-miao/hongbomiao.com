@@ -1,0 +1,16 @@
+seal-secret:
+    cat secrets/hm-airbyte-secret.unsealed.yaml | \
+    kubeseal \
+        --controller-namespace=production-hm-sealed-secrets \
+        --controller-name=sealed-secrets \
+        --format=yaml \
+        > kubernetes-manifests/hm-airbyte-secret.yaml
+
+# The airbyte helm chart defines bootloader as a pre-install hook, which Argo CD runs in the PreSync phase.
+# The bootloader requires the secret, so the sealed secret must be applied before the first Argo CD sync.
+# Adding argocd.argoproj.io/hook: PreSync to the sealed secret does not help because the sync operation gets stuck on the bootloader hook before processing other PreSync resources.
+# The airbyte server auto-creates airbyte-auth-secrets with random credentials if it does not exist.
+
+# Pre-creating it as a sealed secret ensures the admin password matches what we configure.
+bootstrap-secret:
+    kubectl apply --filename=kubernetes-manifests/hm-airbyte-secret.yaml

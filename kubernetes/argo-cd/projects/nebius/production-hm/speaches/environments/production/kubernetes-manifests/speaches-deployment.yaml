@@ -39,11 +39,8 @@ spec:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
-                matchExpressions:
-                  - key: app.kubernetes.io/name
-                    operator: In
-                    values:
-                      - speaches
+                matchLabels:
+                  app.kubernetes.io/name: speaches
               topologyKey: kubernetes.io/hostname
       containers:
         - name: speaches
