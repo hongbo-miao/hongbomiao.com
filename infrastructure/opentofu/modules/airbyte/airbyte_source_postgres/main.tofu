@@ -6,15 +6,12 @@ terraform {
   }
 }
 
-# https://search.opentofu.org/provider/airbytehq/airbyte/latest/docs/resources/source_postgres
-resource "airbyte_source_postgres" "main" {
-  name         = var.name
-  workspace_id = var.workspace_id
+# https://search.opentofu.org/provider/airbytehq/airbyte/latest/docs/data-sources/connector_configuration
+data "airbyte_connector_configuration" "main" {
+  connector_name = "source-postgres"
   configuration = {
     host     = var.postgres_host
     port     = var.postgres_port
-    username = var.postgres_user_name
-    password = var.postgres_password
     database = var.postgres_database
     schemas  = [var.postgres_schema]
     replication_method = {
@@ -32,7 +29,18 @@ resource "airbyte_source_postgres" "main" {
     ssl_mode = {
       require = {}
     }
-    tunnel_method         = var.tunnel_method
-    additional_properties = "{}"
+    tunnel_method = var.tunnel_method
   }
+  configuration_secrets = {
+    username = var.postgres_user_name
+    password = var.postgres_password
+  }
+}
+
+# https://search.opentofu.org/provider/airbytehq/airbyte/latest/docs/resources/source
+resource "airbyte_source" "main" {
+  name          = var.name
+  workspace_id  = var.workspace_id
+  definition_id = data.airbyte_connector_configuration.main.definition_id
+  configuration = data.airbyte_connector_configuration.main.configuration_json
 }

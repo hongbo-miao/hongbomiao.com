@@ -1,6 +1,6 @@
 output "id" {
-  value = airbyte_source_mssql.main.source_id
+  value = airbyte_source.main.source_id
 }
 output "name" {
-  value = airbyte_source_mssql.main.name
+  value = airbyte_source.main.name
 }

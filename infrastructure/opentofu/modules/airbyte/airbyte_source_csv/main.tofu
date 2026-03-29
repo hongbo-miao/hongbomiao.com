@@ -6,10 +6,9 @@ terraform {
   }
 }
 
-# https://search.opentofu.org/provider/airbytehq/airbyte/latest/docs/resources/source_file
-resource "airbyte_source_file" "main" {
-  name         = var.name
-  workspace_id = var.workspace_id
+# https://search.opentofu.org/provider/airbytehq/airbyte/latest/docs/data-sources/connector_configuration
+data "airbyte_connector_configuration" "main" {
+  connector_name = "source-file"
   configuration = {
     dataset_name = var.dataset_name
     format       = "csv"
@@ -17,6 +16,13 @@ resource "airbyte_source_file" "main" {
     provider = {
       https_public_web = {}
     }
-    additional_properties = "{}"
   }
+}
+
+# https://search.opentofu.org/provider/airbytehq/airbyte/latest/docs/resources/source
+resource "airbyte_source" "main" {
+  name          = var.name
+  workspace_id  = var.workspace_id
+  definition_id = data.airbyte_connector_configuration.main.definition_id
+  configuration = data.airbyte_connector_configuration.main.configuration_json
 }
