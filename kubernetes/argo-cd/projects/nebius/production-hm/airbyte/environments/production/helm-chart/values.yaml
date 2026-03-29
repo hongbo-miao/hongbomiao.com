@@ -1,0 +1,235 @@
+# https://github.com/airbytehq/airbyte-platform/blob/main/charts/v2/airbyte/values.yaml
+---
+global:
+  image:
+    registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+  airbyteUrl: https://airbyte.hongbomiao.com
+  edition: community
+  auth:
+    enabled: true
+  storage:
+    type: S3
+    s3:
+      authenticationType: credentials
+      region: us-central1
+      endpoint: https://storage.us-central1.nebius.cloud
+      accessKey:
+        existingSecret: hm-airbyte-secret
+        existingSecretKey: s3-access-key-id
+      secretKey:
+        existingSecret: hm-airbyte-secret
+        existingSecretKey: s3-secret-access-key
+    storageSecretName: hm-airbyte-secret
+    bucket:
+      log: production-hm-airbyte
+      state: production-hm-airbyte
+      workloadOutput: production-hm-airbyte
+  database:
+    type: external
+    host: private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
+    port: 5432
+    database: airbyte_db
+    secretName: hm-airbyte-secret
+    userSecretKey: POSTGRES_USER_NAME
+    passwordSecretKey: POSTGRES_PASSWORD
+  jobs:
+    resources:
+      requests:
+        cpu: 3
+        memory: 4Gi
+      limits:
+        memory: 8Gi
+postgresql:
+  enabled: false
+server:
+  enabled: true
+  replicaCount: 3
+  extraEnv:
+    - name: STATE_STORAGE_S3_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: hm-airbyte-secret
+          key: s3-access-key-id
+    - name: STATE_STORAGE_S3_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: hm-airbyte-secret
+          key: s3-secret-access-key
+    - name: STATE_STORAGE_S3_BUCKET_NAME
+      value: production-hm-airbyte
+    - name: STATE_STORAGE_S3_REGION
+      value: us-central1
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+    limits:
+      memory: 4Gi
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: server
+          topologyKey: kubernetes.io/hostname
+worker:
+  enabled: true
+  replicaCount: 3
+  extraEnv:
+    - name: STATE_STORAGE_S3_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: hm-airbyte-secret
+          key: s3-access-key-id
+    - name: STATE_STORAGE_S3_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: hm-airbyte-secret
+          key: s3-secret-access-key
+    - name: STATE_STORAGE_S3_BUCKET_NAME
+      value: production-hm-airbyte
+    - name: STATE_STORAGE_S3_REGION
+      value: us-central1
+  resources:
+    requests:
+      cpu: 1
+      memory: 1Gi
+    limits:
+      memory: 2Gi
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: worker
+          topologyKey: kubernetes.io/hostname
+airbyte-bootloader:
+  enabled: true
+  resources:
+    requests:
+      cpu: 1
+      memory: 500Mi
+    limits:
+      memory: 1Gi
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+connector-builder-server:
+  enabled: true
+  replicaCount: 3
+  resources:
+    requests:
+      cpu: 200m
+      memory: 500Mi
+    limits:
+      memory: 1Gi
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: connector-builder-server
+          topologyKey: kubernetes.io/hostname
+cron:
+  enabled: true
+  replicaCount: 3
+  resources:
+    requests:
+      cpu: 100m
+      memory: 500Mi
+    limits:
+      memory: 1Gi
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: cron
+          topologyKey: kubernetes.io/hostname
+temporal:
+  enabled: true
+  replicaCount: 3
+  extraEnv:
+    # https://github.com/temporalio/docker-builds/blob/main/docker/auto-setup.sh
+    # Ensure that the boolean values below are in string format
+    - name: SKIP_DB_CREATE
+      value: "true"
+    - name: DBNAME
+      value: temporal_db
+    - name: VISIBILITY_DBNAME
+      value: temporal_visibility_db
+  resources:
+    requests:
+      cpu: 100m
+      memory: 300Mi
+    limits:
+      memory: 500Mi
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: temporal
+          topologyKey: kubernetes.io/hostname
+workload-api-server:
+  enabled: true
+  replicaCount: 3
+  resources:
+    requests:
+      cpu: 200m
+      memory: 500Mi
+    limits:
+      memory: 1Gi
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: workload-api-server
+          topologyKey: kubernetes.io/hostname

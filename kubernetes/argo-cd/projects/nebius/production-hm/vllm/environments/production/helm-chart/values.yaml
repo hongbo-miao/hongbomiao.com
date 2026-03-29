@@ -43,11 +43,8 @@ servingEngineSpec:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
-                matchExpressions:
-                  - key: model
-                    operator: In
-                    values:
-                      - qwen3-0-6b
+                matchLabels:
+                  model: qwen3-0-6b
               topologyKey: kubernetes.io/hostname
       vllmConfig:
         enablePrefixCaching: true
@@ -82,11 +79,8 @@ servingEngineSpec:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
-                matchExpressions:
-                  - key: model
-                    operator: In
-                    values:
-                      - qwen3-0-6b-20260101
+                matchLabels:
+                  model: qwen3-0-6b-20260101
               topologyKey: kubernetes.io/hostname
       vllmConfig:
         enablePrefixCaching: true
@@ -135,11 +129,8 @@ routerSpec:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         - labelSelector:
-            matchExpressions:
-              - key: app.kubernetes.io/component
-                operator: In
-                values:
-                  - router
+            matchLabels:
+              app.kubernetes.io/component: router
           topologyKey: kubernetes.io/hostname
   strategy:
     rollingUpdate:

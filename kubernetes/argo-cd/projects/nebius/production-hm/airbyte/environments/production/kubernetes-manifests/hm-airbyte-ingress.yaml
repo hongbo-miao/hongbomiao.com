@@ -1,0 +1,32 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-airbyte-ingress
+  namespace: production-hm-airbyte
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: airbyte.hongbomiao.com
+  labels:
+    app.kubernetes.io/name: airbyte
+    app.kubernetes.io/part-of: production-hm-airbyte
+spec:
+  rules:
+    - host: airbyte.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: airbyte-airbyte-server-svc
+                port:
+                  number: 8001
+  tls:
+    - hosts:
+        - airbyte.hongbomiao.com
+      secretName: hm-airbyte-certificate

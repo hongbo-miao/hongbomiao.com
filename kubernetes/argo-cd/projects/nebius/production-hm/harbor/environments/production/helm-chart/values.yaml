@@ -21,7 +21,7 @@ externalURL: https://harbor.hongbomiao.com
 existingSecretAdminPassword: hm-harbor-secret
 existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
 core:
-  replicas: 3
+  replicas: 5
   nodeSelector:
     environment: production
   tolerations:
@@ -29,6 +29,14 @@ core:
       operator: Equal
       value: production
       effect: NoSchedule
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app: harbor
+              component: core
+          topologyKey: kubernetes.io/hostname
   resources:
     requests:
       cpu: 20m
@@ -36,7 +44,7 @@ core:
     limits:
       memory: 200Mi
 jobservice:
-  replicas: 3
+  replicas: 5
   nodeSelector:
     environment: production
   tolerations:
@@ -44,6 +52,14 @@ jobservice:
       operator: Equal
       value: production
       effect: NoSchedule
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app: harbor
+              component: jobservice
+          topologyKey: kubernetes.io/hostname
   jobLoggers:
     - stdout
   resources:
@@ -61,6 +77,14 @@ portal:
       operator: Equal
       value: production
       effect: NoSchedule
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app: harbor
+              component: portal
+          topologyKey: kubernetes.io/hostname
   resources:
     requests:
       cpu: 10m
@@ -68,7 +92,7 @@ portal:
     limits:
       memory: 200Mi
 registry:
-  replicas: 3
+  replicas: 5
   nodeSelector:
     environment: production
   tolerations:
@@ -76,6 +100,14 @@ registry:
       operator: Equal
       value: production
       effect: NoSchedule
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app: harbor
+              component: registry
+          topologyKey: kubernetes.io/hostname
   registry:
     resources:
       requests:
@@ -106,21 +138,20 @@ trivy:
     limits:
       memory: 600Mi
 redis:
-  type: internal
-  internal:
-    nodeSelector:
-      environment: production
-    tolerations:
-      - key: environment
-        operator: Equal
-        value: production
-        effect: NoSchedule
-    resources:
-      requests:
-        cpu: 10m
-        memory: 100Mi
-      limits:
-        memory: 200Mi
+  type: external
+  external:
+    addr: harbor-valkey.production-hm-harbor-valkey.svc:6379
+    # https://github.com/goharbor/harbor-helm/issues/2148
+    password: xxx
+database:
+  type: external
+  external:
+    host: private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
+    port: 5432
+    username: harbor_user
+    coreDatabase: harbor_db
+    existingSecret: hm-harbor-secret
+    sslmode: require
 persistence:
   enabled: true
   resourcePolicy: keep
@@ -128,10 +159,6 @@ persistence:
     trivy:
       accessMode: ReadWriteOnce
       size: 5Gi
-      storageClass: production-hm-harbor-storage-class
-    redis:
-      accessMode: ReadWriteOnce
-      size: 1Gi
       storageClass: production-hm-harbor-storage-class
   imageChartStorage:
     type: s3
@@ -142,12 +169,3 @@ persistence:
       existingSecret: hm-harbor-secret
       # 32 MiB, needs to be a string
       chunksize: "33554432"
-database:
-  type: external
-  external:
-    host: private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
-    port: 5432
-    username: harbor_user
-    coreDatabase: harbor_db
-    existingSecret: hm-harbor-secret
-    sslmode: require

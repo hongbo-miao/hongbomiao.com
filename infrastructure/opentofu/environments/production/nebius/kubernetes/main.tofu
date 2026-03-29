@@ -97,6 +97,23 @@ locals {
       }
       node_taints = [{ key = "environment", value = "production", effect = "NO_SCHEDULE" }]
     }
+    muskrat = {
+      min_node_count = 1
+      max_node_count = 10
+      platform       = "gpu-b200-sxm"
+      preset         = "1gpu-20vcpu-224gb"
+      # Using base image without pre-installed drivers (required for MIG support)
+      drivers_preset           = null
+      boot_disk_type           = "NETWORK_SSD"
+      boot_disk_size_gibibytes = 500
+      kubernetes_version       = "1.32"
+      node_labels = {
+        # MIG profiles: all-disabled, all-1g.24gb, all-2g.48gb, all-4g.96gb, all-7g.192gb (B200)
+        "nvidia.com/mig.config" = "all-1g.24gb"
+        "environment"           = "staging"
+      }
+      node_taints = [{ key = "environment", value = "staging", effect = "NO_SCHEDULE" }]
+    }
   }
 }
 module "hm_kubernetes_gpu_node_group" {
@@ -142,15 +159,72 @@ module "argo_cd_helm_chart" {
   ]
 }
 
-# Gatus
-# Gatus - Postgres
-module "gatus_postgres_cluster" {
+# Airbyte
+# Airbyte - service account
+module "hm_airbyte_service_account" {
+  source               = "../../../../modules/nebius/service_account"
+  project_id           = var.project_id
+  service_account_name = "${var.environment}-airbyte-service-account"
+  labels               = var.common_labels
+}
+module "hm_airbyte_iam_group" {
+  source     = "../../../../modules/nebius/iam_group"
+  parent_id  = var.tenant_id
+  group_name = "${var.environment}-airbyte-group"
+  labels     = var.common_labels
+}
+module "hm_airbyte_iam_group_membership" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = module.hm_airbyte_iam_group.id
+  member_id = module.hm_airbyte_service_account.id
+  labels    = var.common_labels
+}
+module "hm_airbyte_access_permit" {
+  source      = "../../../../modules/nebius/access_permit"
+  parent_id   = module.hm_airbyte_iam_group.id
+  resource_id = module.hm_airbyte_object_storage.id
+  role        = "storage.object-editor"
+  labels      = var.common_labels
+}
+# Airbyte - object storage
+module "hm_airbyte_object_storage" {
+  source                = "../../../../modules/nebius/object_storage"
+  project_id            = var.project_id
+  object_storage_name   = "${var.environment}-hm-airbyte"
+  default_storage_class = "STANDARD"
+  versioning_policy     = "ENABLED"
+  labels                = var.common_labels
+}
+# Airbyte - Postgres
+module "airbyte_postgres" {
   source                       = "../../../../modules/nebius/postgres_cluster"
   project_id                   = var.project_id
   network_id                   = var.vpc_network_id
   postgres_version             = "16"
   pooling_mode                 = "SESSION"
-  postgres_cluster_name        = "${var.environment}-gatus-postgres-cluster"
+  postgres_cluster_name        = "${var.environment}-airbyte-postgres"
+  bootstrap_database_name      = "bootstrap_db"
+  bootstrap_user_name          = "bootstrap_user"
+  bootstrap_user_password      = var.airbyte_postgres_bootstrap_user_password
+  public_access                = false
+  disk_size_gib                = 16
+  host_count                   = 3
+  platform                     = "cpu-d3"
+  preset                       = "4vcpu-16gb"
+  labels                       = var.common_labels
+  backup_window_start_time_utc = "9:00:00"
+  backup_retention_policy      = "14d"
+}
+
+# Gatus
+# Gatus - Postgres
+module "gatus_postgres" {
+  source                       = "../../../../modules/nebius/postgres_cluster"
+  project_id                   = var.project_id
+  network_id                   = var.vpc_network_id
+  postgres_version             = "16"
+  pooling_mode                 = "SESSION"
+  postgres_cluster_name        = "${var.environment}-gatus-postgres"
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
   bootstrap_user_password      = var.gatus_postgres_bootstrap_user_password
@@ -201,13 +275,13 @@ module "hm_grafana_object_storage" {
   labels                = var.common_labels
 }
 # Grafana - Postgres
-module "grafana_postgres_cluster" {
+module "grafana_postgres" {
   source                       = "../../../../modules/nebius/postgres_cluster"
   project_id                   = var.project_id
   network_id                   = var.vpc_network_id
   postgres_version             = "16"
   pooling_mode                 = "SESSION"
-  postgres_cluster_name        = "${var.environment}-grafana-postgres-cluster"
+  postgres_cluster_name        = "${var.environment}-grafana-postgres"
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
   bootstrap_user_password      = var.grafana_postgres_bootstrap_user_password
@@ -258,13 +332,13 @@ module "hm_harbor_object_storage" {
   labels                = var.common_labels
 }
 # Harbor - Postgres
-module "harbor_postgres_cluster" {
+module "harbor_postgres" {
   source                       = "../../../../modules/nebius/postgres_cluster"
   project_id                   = var.project_id
   network_id                   = var.vpc_network_id
   postgres_version             = "16"
   pooling_mode                 = "SESSION"
-  postgres_cluster_name        = "${var.environment}-harbor-postgres-cluster"
+  postgres_cluster_name        = "${var.environment}-harbor-postgres"
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
   bootstrap_user_password      = var.harbor_postgres_bootstrap_user_password
@@ -357,13 +431,13 @@ module "hm_mlflow_object_storage" {
   labels                = var.common_labels
 }
 # MLflow - Postgres
-module "mlflow_postgres_cluster" {
+module "mlflow_postgres" {
   source                       = "../../../../modules/nebius/postgres_cluster"
   project_id                   = var.project_id
   network_id                   = var.vpc_network_id
   postgres_version             = "16"
   pooling_mode                 = "SESSION"
-  postgres_cluster_name        = "${var.environment}-mlflow-postgres-cluster"
+  postgres_cluster_name        = "${var.environment}-mlflow-postgres"
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
   bootstrap_user_password      = var.mlflow_postgres_bootstrap_user_password
@@ -460,13 +534,13 @@ module "hm_nimtable_access_permit" {
   labels      = var.common_labels
 }
 # Nimtable - Postgres
-module "nimtable_postgres_cluster" {
+module "nimtable_postgres" {
   source                       = "../../../../modules/nebius/postgres_cluster"
   project_id                   = var.project_id
   network_id                   = var.vpc_network_id
   postgres_version             = "16"
   pooling_mode                 = "SESSION"
-  postgres_cluster_name        = "${var.environment}-nimtable-postgres-cluster"
+  postgres_cluster_name        = "${var.environment}-nimtable-postgres"
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
   bootstrap_user_password      = var.nimtable_postgres_bootstrap_user_password
@@ -565,13 +639,13 @@ module "hm_polaris_access_permit" {
   labels      = var.common_labels
 }
 # Polaris - Postgres
-module "polaris_postgres_cluster" {
+module "polaris_postgres" {
   source                       = "../../../../modules/nebius/postgres_cluster"
   project_id                   = var.project_id
   network_id                   = var.vpc_network_id
   postgres_version             = "16"
   pooling_mode                 = "SESSION"
-  postgres_cluster_name        = "${var.environment}-polaris-postgres-cluster"
+  postgres_cluster_name        = "${var.environment}-polaris-postgres"
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
   bootstrap_user_password      = var.polaris_postgres_bootstrap_user_password
@@ -586,13 +660,13 @@ module "polaris_postgres_cluster" {
 }
 
 # Prefect Server
-module "prefect_server_postgres_cluster" {
+module "prefect_server_postgres" {
   source                       = "../../../../modules/nebius/postgres_cluster"
   project_id                   = var.project_id
   network_id                   = var.vpc_network_id
   postgres_version             = "16"
   pooling_mode                 = "SESSION"
-  postgres_cluster_name        = "${var.environment}-prefect-server-postgres-cluster"
+  postgres_cluster_name        = "${var.environment}-prefect-server-postgres"
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
   bootstrap_user_password      = var.prefect_server_postgres_bootstrap_user_password
@@ -645,13 +719,13 @@ module "hm_pyroscope_object_storage" {
 
 # SkyPilot
 # SkyPilot - Postgres
-module "skypilot_postgres_cluster" {
+module "skypilot_postgres" {
   source                       = "../../../../modules/nebius/postgres_cluster"
   project_id                   = var.project_id
   network_id                   = var.vpc_network_id
   postgres_version             = "16"
   pooling_mode                 = "SESSION"
-  postgres_cluster_name        = "${var.environment}-skypilot-postgres-cluster"
+  postgres_cluster_name        = "${var.environment}-skypilot-postgres"
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
   bootstrap_user_password      = var.skypilot_postgres_bootstrap_user_password
@@ -833,13 +907,13 @@ module "hm_trino_access_permit" {
 
 # Trino Gateway
 # Trino Gateway - Postgres
-module "trino_gateway_postgres_cluster" {
+module "trino_gateway_postgres" {
   source                       = "../../../../modules/nebius/postgres_cluster"
   project_id                   = var.project_id
   network_id                   = var.vpc_network_id
   postgres_version             = "16"
   pooling_mode                 = "SESSION"
-  postgres_cluster_name        = "${var.environment}-trino-gateway-postgres-cluster"
+  postgres_cluster_name        = "${var.environment}-trino-gateway-postgres"
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
   bootstrap_user_password      = var.trino_gateway_postgres_bootstrap_user_password
