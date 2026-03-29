@@ -561,8 +561,6 @@ jobs:
               - 'cloud-computing/hm-ray/applications/process-flight-data/**'
             hm-scikit-learn:
               - 'machine-learning/hm-scikit-learn/**'
-            hm-senko:
-              - 'audio/speaker-diarization/hm-senko/**'
             hm-serial:
               - 'embedded-system/hm-serial/**'
             hm-sglang:
@@ -955,7 +953,6 @@ jobs:
       hm-ray-process-flight-data: ${{ steps.filter.outputs.hm-ray-process-flight-data }}
       hm-ray: ${{ steps.filter.outputs.hm-ray }}
       hm-scikit-learn: ${{ steps.filter.outputs.hm-scikit-learn }}
-      hm-senko: ${{ steps.filter.outputs.hm-senko }}
       hm-serial: ${{ steps.filter.outputs.hm-serial }}
       hm-sglang: ${{ steps.filter.outputs.hm-sglang }}
       hm-silero-vad: ${{ steps.filter.outputs.hm-silero-vad }}
@@ -1431,7 +1428,6 @@ jobs:
       hm-optuna: ${{ needs.detect-changes.outputs.hm-optuna == 'true' }}
       hm-pydantic-ai-chat-pdf: ${{ needs.detect-changes.outputs.hm-pydantic-ai-chat-pdf == 'true' }}
       hm-scikit-learn: ${{ needs.detect-changes.outputs.hm-scikit-learn == 'true' }}
-      hm-senko: ${{ needs.detect-changes.outputs.hm-senko == 'true' }}
       hm-sglang: ${{ needs.detect-changes.outputs.hm-sglang == 'true' }}
       hm-silero-vad: ${{ needs.detect-changes.outputs.hm-silero-vad == 'true' }}
       hm-speaches: ${{ needs.detect-changes.outputs.hm-speaches == 'true' }}
