@@ -130,7 +130,7 @@ services:
     restart: "no"
 
   trino:
-    image: docker.io/trinodb/trino:479
+    image: docker.io/trinodb/trino:480
     container_name: trino
     depends_on:
       lakekeeper-initialize:
@@ -148,7 +148,7 @@ services:
       start_period: 30s
 
   trino-initialize:
-    image: docker.io/trinodb/trino:479
+    image: docker.io/trinodb/trino:480
     container_name: trino-initialize
     depends_on:
       trino:
