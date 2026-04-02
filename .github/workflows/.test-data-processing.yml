@@ -742,17 +742,17 @@ jobs:
         with:
           version: 0.11.2
           enable-cache: true
-          cache-dependency-glob: data-processing/nats/partitioned-telemetry-stream/telemetry-stream-publisher/uv.lock
+          cache-dependency-glob: data-processing/nats/partitioned-telemetry-stream/partitioned-telemetry-stream-publisher/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.2.0
         with:
-          python-version-file: data-processing/nats/partitioned-telemetry-stream/telemetry-stream-publisher/.python-version
+          python-version-file: data-processing/nats/partitioned-telemetry-stream/partitioned-telemetry-stream-publisher/.python-version
       - name: Install dependencies
-        working-directory: data-processing/nats/partitioned-telemetry-stream/telemetry-stream-publisher
+        working-directory: data-processing/nats/partitioned-telemetry-stream/partitioned-telemetry-stream-publisher
         run: |
           uv sync --dev
       - name: Test
-        working-directory: data-processing/nats/partitioned-telemetry-stream/telemetry-stream-publisher
+        working-directory: data-processing/nats/partitioned-telemetry-stream/partitioned-telemetry-stream-publisher
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -760,7 +760,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: data-processing/nats/partitioned-telemetry-stream/telemetry-stream-publisher
+          directory: data-processing/nats/partitioned-telemetry-stream/partitioned-telemetry-stream-publisher
 
   nats-partitioned-telemetry-stream-subscriber-test:
     name: NATS (partitioned-telemetry-stream-subscriber) | Test
@@ -775,17 +775,17 @@ jobs:
         with:
           version: 0.11.2
           enable-cache: true
-          cache-dependency-glob: data-processing/nats/partitioned-telemetry-stream/telemetry-stream-subscriber/uv.lock
+          cache-dependency-glob: data-processing/nats/partitioned-telemetry-stream/partitioned-telemetry-stream-subscriber/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.2.0
         with:
-          python-version-file: data-processing/nats/partitioned-telemetry-stream/telemetry-stream-subscriber/.python-version
+          python-version-file: data-processing/nats/partitioned-telemetry-stream/partitioned-telemetry-stream-subscriber/.python-version
       - name: Install dependencies
-        working-directory: data-processing/nats/partitioned-telemetry-stream/telemetry-stream-subscriber
+        working-directory: data-processing/nats/partitioned-telemetry-stream/partitioned-telemetry-stream-subscriber
         run: |
           uv sync --dev
       - name: Test
-        working-directory: data-processing/nats/partitioned-telemetry-stream/telemetry-stream-subscriber
+        working-directory: data-processing/nats/partitioned-telemetry-stream/partitioned-telemetry-stream-subscriber
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -793,7 +793,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: data-processing/nats/partitioned-telemetry-stream/telemetry-stream-subscriber
+          directory: data-processing/nats/partitioned-telemetry-stream/partitioned-telemetry-stream-subscriber
 
   nats-telemetry-stream-publisher-test:
     name: NATS (telemetry-stream-publisher) | Test
