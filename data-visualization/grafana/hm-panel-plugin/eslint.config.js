@@ -33,6 +33,7 @@ module.exports = [
       '**/.coverage/**/*',
       '**/.deepeval/**/*',
       '**/.env.*.local',
+      '**/.generated/**/*',
       '**/.gitkeep',
       '**/.idea/**/*',
       '**/.pytest_cache/**/*',
