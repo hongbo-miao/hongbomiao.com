@@ -1,3 +1,4 @@
+name: partitioned-telemetry-stream-development
 services:
   nats-server:
     image: docker.io/library/nats:2.12.6-alpine3.22
@@ -28,7 +29,7 @@ services:
   publisher:
     build:
       context: .
-      dockerfile: telemetry-stream-publisher/Dockerfile
+      dockerfile: partitioned-telemetry-stream-publisher/Dockerfile
     depends_on:
       stream-initialize:
         condition: service_completed_successfully
@@ -40,7 +41,7 @@ services:
   subscriber:
     build:
       context: .
-      dockerfile: telemetry-stream-subscriber/Dockerfile
+      dockerfile: partitioned-telemetry-stream-subscriber/Dockerfile
     depends_on:
       stream-initialize:
         condition: service_completed_successfully
