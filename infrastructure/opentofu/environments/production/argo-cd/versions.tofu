@@ -17,7 +17,7 @@ terraform {
     // https://search.opentofu.org/provider/argoproj-labs/argocd/latest
     argocd = {
       source  = "argoproj-labs/argocd"
-      version = "7.15.1"
+      version = "7.15.2"
     }
   }
   required_version = ">= 1.11"
