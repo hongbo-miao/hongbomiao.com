@@ -22,7 +22,7 @@ NATS_URL = "nats://localhost:4222"
 SUBJECT_PREFIX = "SENSOR_TELEMETRY_STREAMS"
 STREAM_SUBJECT = f"{SUBJECT_PREFIX}.random"
 DATA_MISSING_PROBABILITY = 0.35
-PUBLISH_INTERVAL_SECONDS = 1.0
+PUBLISH_INTERVAL_S = 1.0
 
 SENSOR_NAMES: list[str] = [
     "temperature_c",
@@ -88,7 +88,7 @@ async def publish_random_telemetry_stream(
                     f"(latest sequence: {publish_acknowledgement.seq})",
                 )
 
-            await asyncio.sleep(PUBLISH_INTERVAL_SECONDS)
+            await asyncio.sleep(PUBLISH_INTERVAL_S)
             sample_index += 1
 
     except asyncio.CancelledError:

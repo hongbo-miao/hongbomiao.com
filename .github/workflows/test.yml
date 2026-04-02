@@ -665,6 +665,10 @@ jobs:
               - 'data-processing/nats/audio-stream/audio-stream-sinker/**'
             nats-audio-stream-transcriber:
               - 'data-processing/nats/audio-stream/audio-stream-transcriber/**'
+            nats-partitioned-telemetry-stream-publisher:
+              - 'data-processing/nats/partitioned-telemetry-stream/telemetry-stream-publisher/**'
+            nats-partitioned-telemetry-stream-subscriber:
+              - 'data-processing/nats/partitioned-telemetry-stream/telemetry-stream-subscriber/**'
             nats-postgres-bridge:
               - 'data-processing/nats/audio-stream/nats-postgres-bridge/**'
             nats-telemetry-stream-publisher:
@@ -1006,6 +1010,8 @@ jobs:
       nats-audio-stream-publisher: ${{ steps.filter.outputs.nats-audio-stream-publisher }}
       nats-audio-stream-sinker: ${{ steps.filter.outputs.nats-audio-stream-sinker }}
       nats-audio-stream-transcriber: ${{ steps.filter.outputs.nats-audio-stream-transcriber }}
+      nats-partitioned-telemetry-stream-publisher: ${{ steps.filter.outputs.nats-partitioned-telemetry-stream-publisher }}
+      nats-partitioned-telemetry-stream-subscriber: ${{ steps.filter.outputs.nats-partitioned-telemetry-stream-subscriber }}
       nats-postgres-bridge: ${{ steps.filter.outputs.nats-postgres-bridge }}
       nats-telemetry-stream-publisher: ${{ steps.filter.outputs.nats-telemetry-stream-publisher }}
       nats-telemetry-stream-subscriber: ${{ steps.filter.outputs.nats-telemetry-stream-subscriber }}
@@ -1237,6 +1243,8 @@ jobs:
       nats-audio-stream-publisher: ${{ needs.detect-changes.outputs.nats-audio-stream-publisher == 'true' }}
       nats-audio-stream-sinker: ${{ needs.detect-changes.outputs.nats-audio-stream-sinker == 'true' }}
       nats-audio-stream-transcriber: ${{ needs.detect-changes.outputs.nats-audio-stream-transcriber == 'true' }}
+      nats-partitioned-telemetry-stream-publisher: ${{ needs.detect-changes.outputs.nats-partitioned-telemetry-stream-publisher == 'true' }}
+      nats-partitioned-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.nats-partitioned-telemetry-stream-subscriber == 'true' }}
       nats-postgres-bridge: ${{ needs.detect-changes.outputs.nats-postgres-bridge == 'true' }}
       nats-telemetry-stream-publisher: ${{ needs.detect-changes.outputs.nats-telemetry-stream-publisher == 'true' }}
       nats-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.nats-telemetry-stream-subscriber == 'true' }}

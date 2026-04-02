@@ -11,6 +11,9 @@ multitenancyEnabled: true
 streamOverHTTPEnabled: true
 tempo:
   structuredConfig:
+    server:
+      grpc_server_max_recv_msg_size: 67108864
+      grpc_server_max_send_msg_size: 67108864
     storage:
       trace:
         # https://grafana.com/docs/tempo/latest/configuration/compression/

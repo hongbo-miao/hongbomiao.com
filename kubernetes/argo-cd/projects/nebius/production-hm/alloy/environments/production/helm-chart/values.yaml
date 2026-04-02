@@ -291,6 +291,9 @@ alloy:
 
       // hm-beyla - Trace
       otelcol.processor.batch "hm_beyla" {
+        send_batch_size = 2000
+        timeout = "5s"
+        send_batch_max_size = 4000
         output {
           traces = [otelcol.exporter.otlp.hm_tempo_for_hm_beyla.input]
         }
@@ -311,6 +314,12 @@ alloy:
             insecure = true
             insecure_skip_verify = true
           }
+        }
+        sending_queue {
+          queue_size = 10000
+        }
+        retry_on_failure {
+          enabled = true
         }
       }
 

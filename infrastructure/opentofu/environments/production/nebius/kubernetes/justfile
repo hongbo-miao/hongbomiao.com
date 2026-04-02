@@ -9,3 +9,11 @@ apply:
 
 static-type-check-opentofu:
     tofu validate
+
+patch-kube-system:
+    kubectl patch deployment cilium-operator --namespace=kube-system --type=merge --patch='{"spec":{"template":{"spec":{"nodeSelector":{"environment":"production"},"tolerations":[{"key":"CriticalAddonsOnly","operator":"Exists"},{"key":"node.cilium.io/agent-not-ready","operator":"Exists"},{"key":"node.kubernetes.io/not-ready","operator":"Exists"},{"key":"environment","operator":"Equal","value":"production","effect":"NoSchedule"}]}}}}'
+    kubectl patch deployment coredns --namespace=kube-system --type=merge --patch='{"spec":{"template":{"spec":{"nodeSelector":{"environment":"production"},"tolerations":[{"key":"CriticalAddonsOnly","operator":"Exists"},{"key":"environment","operator":"Equal","value":"production","effect":"NoSchedule"}]}}}}'
+    kubectl patch deployment coredns-autoscaler --namespace=kube-system --type=merge --patch='{"spec":{"template":{"spec":{"nodeSelector":{"environment":"production"},"tolerations":[{"key":"environment","operator":"Equal","value":"production","effect":"NoSchedule"}]}}}}'
+    kubectl patch deployment hubble-relay --namespace=kube-system --type=merge --patch='{"spec":{"template":{"spec":{"nodeSelector":{"environment":"production"},"tolerations":[{"key":"CriticalAddonsOnly","operator":"Exists"},{"key":"environment","operator":"Equal","value":"production","effect":"NoSchedule"}]}}}}'
+    kubectl patch deployment hubble-ui --namespace=kube-system --type=merge --patch='{"spec":{"template":{"spec":{"nodeSelector":{"environment":"production"},"tolerations":[{"key":"CriticalAddonsOnly","operator":"Exists"},{"key":"environment","operator":"Equal","value":"production","effect":"NoSchedule"}]}}}}'
+    kubectl patch deployment metrics-server --namespace=kube-system --type=merge --patch='{"spec":{"template":{"spec":{"nodeSelector":{"environment":"production"},"tolerations":[{"key":"CriticalAddonsOnly","operator":"Exists"},{"key":"environment","operator":"Equal","value":"production","effect":"NoSchedule"}]}}}}'
