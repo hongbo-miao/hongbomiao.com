@@ -1,0 +1,52 @@
+name: sticky-telemetry-stream-development
+services:
+  pulsar:
+    image: docker.io/apachepulsar/pulsar:4.0.3
+    ports:
+      - "6650:6650"
+      - "8080:8080"
+    command: bin/pulsar standalone
+    healthcheck:
+      test: [
+        "CMD",
+        "bin/pulsar-admin",
+        "brokers",
+        "healthcheck",
+      ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  topic-initialize:
+    image: docker.io/apachepulsar/pulsar:4.0.3
+    depends_on:
+      pulsar:
+        condition: service_healthy
+    entrypoint: >
+      sh -c "bin/pulsar-admin --admin-url http://pulsar:8080 topics create-partitioned-topic persistent://public/default/sensor-telemetry-streams --partitions 2 || true"
+    restart: "no"
+
+  publisher:
+    build:
+      context: .
+      dockerfile: sticky-telemetry-stream-publisher/Dockerfile
+    depends_on:
+      topic-initialize:
+        condition: service_completed_successfully
+    environment:
+      - PULSAR_SERVICE_URL=pulsar://pulsar:6650
+    deploy:
+      replicas: 3
+
+  subscriber:
+    build:
+      context: .
+      dockerfile: sticky-telemetry-stream-subscriber/Dockerfile
+    depends_on:
+      topic-initialize:
+        condition: service_completed_successfully
+    environment:
+      - PULSAR_SERVICE_URL=pulsar://pulsar:6650
+    deploy:
+      replicas: 2
