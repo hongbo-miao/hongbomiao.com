@@ -1,0 +1,18 @@
+docker-compose-up:
+    docker compose --file=docker-compose.development.yaml up --detach
+
+docker-compose-stop:
+    docker compose --file=docker-compose.development.yaml stop
+
+docker-compose-down:
+    docker compose --file=docker-compose.development.yaml down --volumes
+
+docker-compose-restart:
+    docker compose --file=docker-compose.development.yaml down --volumes
+    docker compose --file=docker-compose.development.yaml up --detach --build
+
+scale-up-publisher:
+    docker compose --file=docker-compose.development.yaml up --detach --scale publisher=4
+
+scale-up-subscriber:
+    docker compose --file=docker-compose.development.yaml up --detach --scale subscriber=3

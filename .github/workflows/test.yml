@@ -631,6 +631,10 @@ jobs:
               - 'data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge/**'
             kafka-rust-zeromq-kafka-bridge:
               - 'data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge/**'
+            kafka-sticky-telemetry-stream-publisher:
+              - 'data-processing/kafka/kafka-client/sticky-telemetry-stream/sticky-telemetry-stream-publisher/**'
+            kafka-sticky-telemetry-stream-subscriber:
+              - 'data-processing/kafka/kafka-client/sticky-telemetry-stream/sticky-telemetry-stream-subscriber/**'
             kv-caching:
               - 'large-language-model-inference/kv-caching/**'
             lance:
@@ -665,10 +669,10 @@ jobs:
               - 'data-processing/nats/audio-stream/audio-stream-sinker/**'
             nats-audio-stream-transcriber:
               - 'data-processing/nats/audio-stream/audio-stream-transcriber/**'
-            nats-partitioned-telemetry-stream-publisher:
-              - 'data-processing/nats/partitioned-telemetry-stream/partitioned-telemetry-stream-publisher/**'
-            nats-partitioned-telemetry-stream-subscriber:
-              - 'data-processing/nats/partitioned-telemetry-stream/partitioned-telemetry-stream-subscriber/**'
+            nats-sticky-telemetry-stream-publisher:
+              - 'data-processing/nats/sticky-telemetry-stream/sticky-telemetry-stream-publisher/**'
+            nats-sticky-telemetry-stream-subscriber:
+              - 'data-processing/nats/sticky-telemetry-stream/sticky-telemetry-stream-subscriber/**'
             nats-postgres-bridge:
               - 'data-processing/nats/audio-stream/nats-postgres-bridge/**'
             nats-telemetry-stream-publisher:
@@ -703,6 +707,10 @@ jobs:
               - 'large-language-model-post-training/fine-tuning/proximal-policy-optimization/low-rank-adaptation/**'
             prometheus:
               - 'data-storage/prometheus/**'
+            pulsar-sticky-telemetry-stream-publisher:
+              - 'data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-publisher/**'
+            pulsar-sticky-telemetry-stream-subscriber:
+              - 'data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-subscriber/**'
             q-learning:
               - 'reinforcement-learning/q-learning/**'
             quantum-computing:
@@ -993,6 +1001,8 @@ jobs:
       kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
       kafka-rust-udp-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-udp-kafka-bridge }}
       kafka-rust-zeromq-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-zeromq-kafka-bridge }}
+      kafka-sticky-telemetry-stream-publisher: ${{ steps.filter.outputs.kafka-sticky-telemetry-stream-publisher }}
+      kafka-sticky-telemetry-stream-subscriber: ${{ steps.filter.outputs.kafka-sticky-telemetry-stream-subscriber }}
       kv-caching: ${{ steps.filter.outputs.kv-caching }}
       lance: ${{ steps.filter.outputs.lance }}
       liquid-neural-network: ${{ steps.filter.outputs.liquid-neural-network }}
@@ -1010,8 +1020,8 @@ jobs:
       nats-audio-stream-publisher: ${{ steps.filter.outputs.nats-audio-stream-publisher }}
       nats-audio-stream-sinker: ${{ steps.filter.outputs.nats-audio-stream-sinker }}
       nats-audio-stream-transcriber: ${{ steps.filter.outputs.nats-audio-stream-transcriber }}
-      nats-partitioned-telemetry-stream-publisher: ${{ steps.filter.outputs.nats-partitioned-telemetry-stream-publisher }}
-      nats-partitioned-telemetry-stream-subscriber: ${{ steps.filter.outputs.nats-partitioned-telemetry-stream-subscriber }}
+      nats-sticky-telemetry-stream-publisher: ${{ steps.filter.outputs.nats-sticky-telemetry-stream-publisher }}
+      nats-sticky-telemetry-stream-subscriber: ${{ steps.filter.outputs.nats-sticky-telemetry-stream-subscriber }}
       nats-postgres-bridge: ${{ steps.filter.outputs.nats-postgres-bridge }}
       nats-telemetry-stream-publisher: ${{ steps.filter.outputs.nats-telemetry-stream-publisher }}
       nats-telemetry-stream-subscriber: ${{ steps.filter.outputs.nats-telemetry-stream-subscriber }}
@@ -1028,6 +1038,8 @@ jobs:
       post-training-quantization: ${{ steps.filter.outputs.post-training-quantization }}
       production-aws-glue-spark-scripts: ${{ steps.filter.outputs.production-aws-glue-spark-scripts }}
       prometheus: ${{ steps.filter.outputs.prometheus }}
+      pulsar-sticky-telemetry-stream-publisher: ${{ steps.filter.outputs.pulsar-sticky-telemetry-stream-publisher }}
+      pulsar-sticky-telemetry-stream-subscriber: ${{ steps.filter.outputs.pulsar-sticky-telemetry-stream-subscriber }}
       proximal-policy-optimization-low-rank-adaptation: ${{ steps.filter.outputs.proximal-policy-optimization-low-rank-adaptation }}
       q-learning: ${{ steps.filter.outputs.q-learning }}
       quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
@@ -1240,14 +1252,18 @@ jobs:
       kafka-rust-proto-producer: ${{ needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}
       kafka-rust-udp-kafka-bridge: ${{ needs.detect-changes.outputs.kafka-rust-udp-kafka-bridge == 'true' }}
       kafka-rust-zeromq-kafka-bridge: ${{ needs.detect-changes.outputs.kafka-rust-zeromq-kafka-bridge == 'true' }}
+      kafka-sticky-telemetry-stream-publisher: ${{ needs.detect-changes.outputs.kafka-sticky-telemetry-stream-publisher == 'true' }}
+      kafka-sticky-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.kafka-sticky-telemetry-stream-subscriber == 'true' }}
       nats-audio-stream-publisher: ${{ needs.detect-changes.outputs.nats-audio-stream-publisher == 'true' }}
       nats-audio-stream-sinker: ${{ needs.detect-changes.outputs.nats-audio-stream-sinker == 'true' }}
       nats-audio-stream-transcriber: ${{ needs.detect-changes.outputs.nats-audio-stream-transcriber == 'true' }}
-      nats-partitioned-telemetry-stream-publisher: ${{ needs.detect-changes.outputs.nats-partitioned-telemetry-stream-publisher == 'true' }}
-      nats-partitioned-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.nats-partitioned-telemetry-stream-subscriber == 'true' }}
+      nats-sticky-telemetry-stream-publisher: ${{ needs.detect-changes.outputs.nats-sticky-telemetry-stream-publisher == 'true' }}
+      nats-sticky-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.nats-sticky-telemetry-stream-subscriber == 'true' }}
       nats-postgres-bridge: ${{ needs.detect-changes.outputs.nats-postgres-bridge == 'true' }}
       nats-telemetry-stream-publisher: ${{ needs.detect-changes.outputs.nats-telemetry-stream-publisher == 'true' }}
       nats-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.nats-telemetry-stream-subscriber == 'true' }}
+      pulsar-sticky-telemetry-stream-publisher: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-publisher == 'true' }}
+      pulsar-sticky-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-subscriber == 'true' }}
 
   test-data-transformation:
     name: Test Data Transformation

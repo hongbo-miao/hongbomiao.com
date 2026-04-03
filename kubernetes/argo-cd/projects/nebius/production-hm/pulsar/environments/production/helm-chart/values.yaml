@@ -1,5 +1,6 @@
 # https://github.com/apache/pulsar-helm-chart/blob/master/charts/pulsar/values.yaml
 ---
+defaultPulsarImageRepository: harbor.hongbomiao.com/docker-hub-proxy-cache/apachepulsar/pulsar-all
 initialize: true
 useReleaseStatus: false
 components:
@@ -8,6 +9,8 @@ components:
   toolset: false
 oxia:
   coordinator:
+    cpuLimit: 100m
+    memoryLimit: 100Mi
     tolerations:
       - key: environment
         operator: Equal
@@ -16,6 +19,8 @@ oxia:
     nodeSelector:
       environment: production
   server:
+    cpuLimit: 1
+    memoryLimit: 1Gi
     tolerations:
       - key: environment
         operator: Equal
@@ -23,19 +28,81 @@ oxia:
         effect: NoSchedule
     nodeSelector:
       environment: production
-    storageClassName: production-pulsar-storage-class
+    storageClassName: production-hm-pulsar-storage-class
 bookkeeper:
+  resources:
+    requests:
+      cpu: 200m
+      memory: 500Mi
+    limits:
+      memory: 1Gi
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  nodeSelector:
+    environment: production
   volumes:
     journal:
-      storageClassName: production-pulsar-storage-class
+      storageClassName: production-hm-pulsar-storage-class
     ledgers:
-      storageClassName: production-pulsar-storage-class
+      storageClassName: production-hm-pulsar-storage-class
+broker:
+  resources:
+    requests:
+      cpu: 200m
+      memory: 500Mi
+    limits:
+      memory: 1Gi
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  nodeSelector:
+    environment: production
+proxy:
+  resources:
+    requests:
+      cpu: 200m
+      memory: 100Mi
+    limits:
+      memory: 250Mi
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  nodeSelector:
+    environment: production
+autorecovery:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 100Mi
+    limits:
+      memory: 300Mi
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  nodeSelector:
+    environment: production
+pulsar_metadata:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 100Mi
+    limits:
+      memory: 250Mi
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+  nodeSelector:
+    environment: production
 victoria-metrics-k8s-stack:
   enabled: false
-nodeSelector:
-  environment: production
-tolerations:
-  - key: environment
-    operator: Equal
-    value: production
-    effect: NoSchedule

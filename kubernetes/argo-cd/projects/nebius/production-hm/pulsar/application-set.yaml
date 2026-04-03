@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: production-pulsar
+  name: production-hm-pulsar
   namespace: production-hm-argo-cd
 spec:
   goTemplate: true
@@ -14,7 +14,7 @@ spec:
           - path: kubernetes/argo-cd/projects/nebius/production-hm/pulsar/environments/*/config.yaml
   template:
     metadata:
-      name: '{{.environment}}-pulsar'
+      name: '{{.environment}}-hm-pulsar'
     spec:
       project: production-hm
       sources:
@@ -32,7 +32,7 @@ spec:
           targetRevision: main
           path: '{{.path.path}}/kubernetes-manifests'
       destination:
-        namespace: '{{.environment}}-pulsar'
+        namespace: '{{.environment}}-hm-pulsar'
         server: https://kubernetes.default.svc
       syncPolicy:
         syncOptions:
