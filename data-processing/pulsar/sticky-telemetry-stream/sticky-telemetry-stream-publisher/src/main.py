@@ -3,9 +3,11 @@ import os
 from uuid import uuid4
 
 import pulsar
+from pulsar.schema import AvroSchema
 from shared.telemetry.services.publish_telemetry_stream import (
     publish_telemetry_stream,
 )
+from sticky_telemetry_stream_schema.telemetry_record import TelemetryRecord
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +24,10 @@ def main() -> None:
             f"Publisher {publisher_id}: connecting to Pulsar at {PULSAR_SERVICE_URL}",
         )
         client = pulsar.Client(PULSAR_SERVICE_URL)
-        producer = client.create_producer(PULSAR_TOPIC)
+        producer = client.create_producer(
+            PULSAR_TOPIC,
+            schema=AvroSchema(TelemetryRecord),
+        )
 
         published_sample_count = publish_telemetry_stream(
             producer=producer,

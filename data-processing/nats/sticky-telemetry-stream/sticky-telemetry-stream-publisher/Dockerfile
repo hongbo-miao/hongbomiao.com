@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 ENV UV_COMPILE_BYTECODE=1 \
   UV_LINK_MODE=copy \
   UV_PROJECT_ENVIRONMENT=/usr/local
-RUN apt-get update && apt-get install -y --no-install-recommends cmake g++ make && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install --yes --no-install-recommends cmake g++ make && rm -rf /var/lib/apt/lists/*
 COPY ["sticky-telemetry-stream-publisher/pyproject.toml", "sticky-telemetry-stream-publisher/uv.lock", "sticky-telemetry-stream-publisher/.python-version", "./"]
 RUN uv sync --frozen --no-dev
 

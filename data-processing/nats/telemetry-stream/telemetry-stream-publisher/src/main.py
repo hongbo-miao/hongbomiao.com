@@ -27,9 +27,6 @@ PUBLISH_INTERVAL_S = 1.0
 SENSOR_NAMES: list[str] = [
     "temperature_c",
     "humidity_pct",
-    "wind_speed_mps",
-    "wind_direction_deg",
-    "pressure_hpa",
 ]
 
 TELEMETRY_SCHEMA = capnp.load(

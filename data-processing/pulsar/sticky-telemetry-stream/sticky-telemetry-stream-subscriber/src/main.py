@@ -3,9 +3,11 @@ import os
 from uuid import uuid4
 
 import pulsar
+from pulsar.schema import AvroSchema
 from shared.telemetry.utils.consume_telemetry_messages import (
     consume_telemetry_messages,
 )
+from sticky_telemetry_stream_schema.telemetry_record import TelemetryRecord
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +30,7 @@ def main() -> None:
             subscription_name=SUBSCRIPTION_NAME,
             consumer_type=pulsar.ConsumerType.KeyShared,
             initial_position=pulsar.InitialPosition.Earliest,
+            schema=AvroSchema(TelemetryRecord),
         )
 
         logger.info(
