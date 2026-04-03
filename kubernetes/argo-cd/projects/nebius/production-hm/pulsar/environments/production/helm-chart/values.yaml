@@ -1,0 +1,41 @@
+# https://github.com/apache/pulsar-helm-chart/blob/master/charts/pulsar/values.yaml
+---
+initialize: true
+useReleaseStatus: false
+components:
+  zookeeper: false
+  oxia: true
+  toolset: false
+oxia:
+  coordinator:
+    tolerations:
+      - key: environment
+        operator: Equal
+        value: production
+        effect: NoSchedule
+    nodeSelector:
+      environment: production
+  server:
+    tolerations:
+      - key: environment
+        operator: Equal
+        value: production
+        effect: NoSchedule
+    nodeSelector:
+      environment: production
+    storageClassName: production-pulsar-storage-class
+bookkeeper:
+  volumes:
+    journal:
+      storageClassName: production-pulsar-storage-class
+    ledgers:
+      storageClassName: production-pulsar-storage-class
+victoria-metrics-k8s-stack:
+  enabled: false
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule
