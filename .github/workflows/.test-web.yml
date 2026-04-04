@@ -12,7 +12,7 @@ name: . Test Web
       api-node:
         required: true
         type: boolean
-      web-cypress:
+      web-playwright:
         required: true
         type: boolean
       web:
@@ -51,7 +51,7 @@ jobs:
 
   web-end-to-end-test:
     name: Web | End-to-End Test
-    if: ${{ inputs.workflow || inputs.api-node || inputs.web || inputs.web-cypress }}
+    if: ${{ inputs.workflow || inputs.api-node || inputs.web || inputs.web-playwright }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -60,32 +60,36 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6.3.0
         with:
-          node-version-file: web-cypress/.node-version
+          node-version-file: web-playwright/.node-version
           cache: npm
-          cache-dependency-path: web-cypress/package-lock.json
+          cache-dependency-path: web-playwright/package-lock.json
       - name: Install dependencies
-        working-directory: web-cypress
+        working-directory: web-playwright
         run: |
           npm ci
       - name: Pull Docker images
         working-directory: api/api-node
         run: |
-          docker compose --file=docker-compose.cypress.yaml pull
+          docker compose --file=docker-compose.playwright.yaml pull
       - name: Cache Docker images
         uses: jpribyl/action-docker-layer-caching@v0.1.1
         continue-on-error: true
       - name: Start Docker Compose
         working-directory: api/api-node
         run: |
-          docker compose --file=docker-compose.cypress.yaml up --detach
-      - name: Cypress
-        working-directory: web-cypress
+          docker compose --file=docker-compose.playwright.yaml up --detach
+      - name: Install Playwright browsers
+        working-directory: web-playwright
         run: |
-          npm run test-cypress-headless-58136
+          npx playwright install --with-deps
+      - name: Playwright
+        working-directory: web-playwright
+        run: |
+          npm run test-playwright-headless-58136
       - name: Stop Docker Compose
         working-directory: api/api-node
         run: |
-          docker compose --file=docker-compose.cypress.yaml down
+          docker compose --file=docker-compose.playwright.yaml down
 
   web-lighthouse:
     name: Web | Lighthouse

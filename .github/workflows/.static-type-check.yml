@@ -82,7 +82,7 @@ name: . Static Type Check
       mobile-react-native:
         required: true
         type: boolean
-      web-cypress:
+      web-playwright:
         required: true
         type: boolean
       web:
@@ -756,9 +756,9 @@ jobs:
         run: |
           npm run static-type-check-typescript
 
-  static-type-check-typescript-web-cypress:
-    name: TypeScript (web-cypress)
-    if: ${{ inputs.workflow || inputs.web-cypress }}
+  static-type-check-typescript-web-playwright:
+    name: TypeScript (web-playwright)
+    if: ${{ inputs.workflow || inputs.web-playwright }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -767,14 +767,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6.3.0
         with:
-          node-version-file: web-cypress/.node-version
+          node-version-file: web-playwright/.node-version
           cache: npm
-          cache-dependency-path: web-cypress/package-lock.json
+          cache-dependency-path: web-playwright/package-lock.json
       - name: Install dependencies
-        working-directory: web-cypress
+        working-directory: web-playwright
         run: |
           npm ci
       - name: Static type check TypeScript
-        working-directory: web-cypress
+        working-directory: web-playwright
         run: |
           npm run static-type-check-typescript

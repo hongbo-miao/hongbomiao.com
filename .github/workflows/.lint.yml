@@ -148,7 +148,7 @@ name: . Lint
       udp-sender:
         required: true
         type: boolean
-      web-cypress:
+      web-playwright:
         required: true
         type: boolean
       web:
@@ -547,9 +547,9 @@ jobs:
         run: |
           npm run lint-javascript
 
-  lint-javascript-web-cypress:
-    name: JavaScript (web-cypress)
-    if: ${{ inputs.workflow || inputs.web-cypress }}
+  lint-javascript-web-playwright:
+    name: JavaScript (web-playwright)
+    if: ${{ inputs.workflow || inputs.web-playwright }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -558,15 +558,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6.3.0
         with:
-          node-version-file: web-cypress/.node-version
+          node-version-file: web-playwright/.node-version
           cache: npm
-          cache-dependency-path: web-cypress/package-lock.json
+          cache-dependency-path: web-playwright/package-lock.json
       - name: Install dependencies
-        working-directory: web-cypress
+        working-directory: web-playwright
         run: |
           npm ci
       - name: Lint JavaScript
-        working-directory: web-cypress
+        working-directory: web-playwright
         run: |
           npm run lint-javascript
 

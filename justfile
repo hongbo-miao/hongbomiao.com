@@ -671,4 +671,4 @@ static-type-check-typescript:
     cd data-visualization/grafana/hm-panel-plugin && just static-type-check-typescript
     cd mobile/mobile-react-native && just static-type-check-typescript
     cd web && just static-type-check-typescript
-    cd web-cypress && just static-type-check-typescript
+    cd web-playwright && just static-type-check-typescript
