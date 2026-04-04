@@ -103,6 +103,52 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: data-visualization/grafana/hm-panel-plugin
 
+  grafana-hm-panel-plugin-end-to-end-test:
+    name: Grafana (hm-panel-plugin) | End-to-End Test
+    if: ${{ inputs.workflow || inputs.grafana-hm-panel-plugin }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      - name: Set up Node.js
+        uses: actions/setup-node@v6.3.0
+        with:
+          node-version-file: data-visualization/grafana/hm-panel-plugin/.node-version
+          cache: npm
+          cache-dependency-path: data-visualization/grafana/hm-panel-plugin/package-lock.json
+      - name: Install dependencies
+        working-directory: data-visualization/grafana/hm-panel-plugin
+        run: |
+          npm ci
+      - name: Install Playwright browsers
+        working-directory: data-visualization/grafana/hm-panel-plugin
+        run: |
+          npx playwright install --with-deps
+      - name: Build plugin
+        working-directory: data-visualization/grafana/hm-panel-plugin
+        run: |
+          npm run build
+      - name: Start Grafana
+        working-directory: data-visualization/grafana/hm-panel-plugin
+        run: |
+          docker compose up --detach
+      - name: End-to-end test
+        working-directory: data-visualization/grafana/hm-panel-plugin
+        run: |
+          npm run end-to-end-test
+      - name: Upload end-to-end test report
+        if: always()
+        uses: actions/upload-artifact@v7.0.0
+        with:
+          name: grafana-hm-panel-plugin-playwright-report
+          path: data-visualization/grafana/hm-panel-plugin/playwright-report/
+          retention-days: 1
+      - name: Stop Grafana
+        working-directory: data-visualization/grafana/hm-panel-plugin
+        run: |
+          docker compose down
+
   pygwalker-test:
     name: PyGWalker | Test
     if: ${{ inputs.workflow || inputs.hm-pygwalker }}

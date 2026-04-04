@@ -7,10 +7,11 @@
     "lint-javascript": "eslint .",
     "lint-javascript-fix": "eslint . --fix",
     "static-type-check-typescript": "tsc",
-    "test-playwright-gui-8080": "playwright test --config=playwright.8080.config.ts --ui",
-    "test-playwright-gui-58136": "playwright test --config=playwright.58136.config.ts --ui",
-    "test-playwright-headless-8080": "wait-on http://localhost:8080 && playwright test --config=playwright.8080.config.ts",
-    "test-playwright-headless-58136": "wait-on http://localhost:58136 && playwright test --config=playwright.58136.config.ts"
+    "end-to-end-test-8080": "wait-on http://localhost:8080 && playwright test --config=playwright.8080.config.ts",
+    "end-to-end-test-58136": "wait-on http://localhost:58136 && playwright test --config=playwright.58136.config.ts",
+    "end-to-end-test-ui-8080": "playwright test --config=playwright.8080.config.ts --ui",
+    "end-to-end-test-ui-58136": "playwright test --config=playwright.58136.config.ts --ui",
+    "end-to-end-test-report": "playwright show-report"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
