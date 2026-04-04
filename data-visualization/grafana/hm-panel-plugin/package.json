@@ -11,20 +11,23 @@
     "test-coverage": "jest --coverage",
     "lint-javascript": "eslint .",
     "lint-javascript-fix": "eslint . --fix",
-    "static-type-check-typescript": "tsc"
+    "static-type-check-typescript": "tsc",
+    "end-to-end-test": "wait-on http://localhost:3000 && playwright test",
+    "end-to-end-test-report": "playwright show-report"
   },
   "dependencies": {
     "@emotion/css": "11.13.5",
     "@grafana/data": "12.4.2",
     "@grafana/runtime": "12.4.2",
     "@grafana/ui": "12.4.2",
-    "cypress": "15.13.0",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@grafana/eslint-config": "9.0.0",
+    "@grafana/plugin-e2e": "3.4.11",
     "@grafana/tsconfig": "2.0.1",
+    "@playwright/test": "1.52.0",
     "@stylistic/eslint-plugin-ts": "4.4.1",
     "@swc/core": "1.15.21",
     "@swc/helpers": "0.5.21",
@@ -64,6 +67,7 @@
     "webpack-cli": "7.0.2",
     "webpack-livereload-plugin": "3.0.2",
     "webpack-subresource-integrity": "5.1.0",
+    "wait-on": "9.0.4",
     "webpack-virtual-modules": "0.6.2"
   }
 }

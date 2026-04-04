@@ -4,6 +4,9 @@ update-lock-file:
 install-dependencies:
     npm install
 
+install-playwright-browsers:
+    npx playwright install --with-deps
+
 dev:
     npm run dev
 
@@ -12,6 +15,12 @@ dev-grafana:
 
 test:
     npm run test
+
+end-to-end-test:
+    npm run end-to-end-test
+
+end-to-end-test-report:
+    npm run end-to-end-test-report
 
 lint-javascript:
     npm run lint-javascript

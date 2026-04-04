@@ -82,10 +82,17 @@ jobs:
         working-directory: web-playwright
         run: |
           npx playwright install --with-deps
-      - name: Playwright
+      - name: End-to-end test
         working-directory: web-playwright
         run: |
-          npm run test-playwright-headless-58136
+          npm run end-to-end-test-58136
+      - name: Upload end-to-end test report
+        if: always()
+        uses: actions/upload-artifact@v7.0.0
+        with:
+          name: web-playwright-report
+          path: web-playwright/playwright-report/
+          retention-days: 1
       - name: Stop Docker Compose
         working-directory: api/api-node
         run: |
