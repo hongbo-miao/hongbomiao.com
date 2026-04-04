@@ -1,5 +1,6 @@
 // https://eslint.org/docs/latest/use/configure/configuration-files
 
+const { fixupConfigRules } = require("@eslint/compat");
 const grafanaConfig = require("@grafana/eslint-config/flat");
 const playwrightPlugin = require("eslint-plugin-playwright");
 
@@ -7,7 +8,7 @@ const playwrightPlugin = require("eslint-plugin-playwright");
  * @type {Array<import('eslint').Linter.Config>}
  */
 module.exports = [
-  ...grafanaConfig,
+  ...fixupConfigRules(grafanaConfig),
   {
     // https://eslint.org/docs/latest/use/configure/ignore#the-eslintignore-file
     ignores: [
