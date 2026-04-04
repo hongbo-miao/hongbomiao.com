@@ -19,9 +19,6 @@ logger = logging.getLogger(__name__)
 SENSOR_NAMES: list[str] = [
     "temperature_c",
     "humidity_pct",
-    "wind_speed_mps",
-    "wind_direction_deg",
-    "pressure_hpa",
 ]
 
 TELEMETRY_SCHEMA = capnp.load(

@@ -32,7 +32,7 @@ RUN if [ "${development}" = "true" ]; then \
     elif grep -i -q ubuntu /etc/issue; then \
       DEBIAN_FRONTEND=noninteractive && \
       apt-get update && \
-      apt-get install -y supervisor inotify-tools git && \
+      apt-get install --yes supervisor inotify-tools git && \
       rm -r -f /var/lib/apt/lists/*; \
     else \
       echo 'ERROR: Unsupported base image' && /bin/false; \

@@ -1,31 +1,28 @@
 import logging
 import time
 from datetime import UTC, datetime
-from pathlib import Path
-from typing import TYPE_CHECKING
+from functools import partial
 
-import capnp
 import pulsar
-
-if TYPE_CHECKING:
-    from capnp_types.telemetry import (
-        EntryBuilder,
-        TelemetryBuilder,
-    )
+from sticky_telemetry_stream_schema.telemetry_record import EntryRecord, TelemetryRecord
 
 logger = logging.getLogger(__name__)
 
 SENSOR_NAMES: list[str] = [
     "temperature_c",
     "humidity_pct",
-    "wind_speed_mps",
-    "wind_direction_deg",
-    "pressure_hpa",
 ]
 
-TELEMETRY_SCHEMA = capnp.load(
-    str(Path(__file__).parents[5] / "schemas" / "telemetry.capnp"),
-)
+
+def handle_send_result(
+    publisher_id: str,
+    result: pulsar.Result,
+    _message_id: pulsar.MessageId,
+) -> None:
+    if result != pulsar.Result.Ok:
+        logger.error(
+            f"Publisher {publisher_id}: failed to send message: {result}",
+        )
 
 
 def publish_telemetry_stream(
@@ -42,34 +39,25 @@ def publish_telemetry_stream(
                 (sensor_name, float(sample_index)) for sensor_name in SENSOR_NAMES
             ]
 
-            telemetry: TelemetryBuilder = TELEMETRY_SCHEMA.Telemetry.new_message()
-            telemetry.timestamp = timestamp
-
-            sensor_entries_builder = telemetry.init(
-                "entries",
-                len(sensor_entries),
+            telemetry = TelemetryRecord(
+                timestamp=timestamp,
+                entries=[
+                    EntryRecord(name=entry_name, value=entry_value)
+                    for entry_name, entry_value in sensor_entries
+                ],
             )
 
-            for index, (entry_name, entry_value) in enumerate(sensor_entries):
-                entry: EntryBuilder = sensor_entries_builder[index]
-                entry.name = entry_name
-                if entry_value is None:
-                    entry.data.missing = None
-                else:
-                    entry.data.value = entry_value
-
-            telemetry_payload_bytes = telemetry.to_bytes()
-
             published_sample_count += 1
-            message_id = producer.send(
-                content=telemetry_payload_bytes,
+
+            producer.send_async(
+                telemetry,
                 partition_key=publisher_id,
+                callback=partial(handle_send_result, publisher_id),
             )
 
             if published_sample_count % 10 == 0:
                 logger.info(
-                    f"Publisher {publisher_id}: published {published_sample_count} telemetry samples "
-                    f"(latest message id: {message_id})",
+                    f"Publisher {publisher_id}: published {published_sample_count} telemetry samples",
                 )
 
             time.sleep(publish_interval_s)

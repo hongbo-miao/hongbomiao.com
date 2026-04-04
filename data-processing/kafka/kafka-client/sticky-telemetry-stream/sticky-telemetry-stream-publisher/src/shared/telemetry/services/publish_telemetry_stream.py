@@ -18,9 +18,6 @@ logger = logging.getLogger(__name__)
 SENSOR_NAMES: list[str] = [
     "temperature_c",
     "humidity_pct",
-    "wind_speed_mps",
-    "wind_direction_deg",
-    "pressure_hpa",
 ]
 
 TELEMETRY_SCHEMA = capnp.load(
@@ -62,11 +59,12 @@ async def publish_telemetry_stream(
             telemetry_payload_bytes = telemetry.to_bytes()
 
             published_sample_count += 1
-            delivered_message = await producer.produce(
+            delivered_message_future = await producer.produce(
                 topic=topic,
                 value=telemetry_payload_bytes,
                 key=publisher_id.encode(),
             )
+            delivered_message = await delivered_message_future
 
             if published_sample_count % 10 == 0:
                 logger.info(
