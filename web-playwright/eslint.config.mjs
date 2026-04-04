@@ -86,7 +86,6 @@ export default [
     plugins: {
       '@typescript-eslint': eslintPlugin,
       import: importPlugin,
-      playwright: playwrightPlugin,
     },
     settings: {
       'import/resolver': {
@@ -101,7 +100,6 @@ export default [
     },
     rules: {
       ...eslintPlugin.configs.recommended.rules,
-      ...playwrightPlugin.configs['flat/recommended'].rules,
       ...airbnbBase.rules,
       'import/extensions': [
         'error',
@@ -137,6 +135,10 @@ export default [
         },
       ],
     },
+  },
+  {
+    ...playwrightPlugin.configs['flat/recommended'],
+    files: ['tests/**/*.{ts,tsx}'],
   },
   prettierPluginRecommended, // Make sure this is last
 ];
