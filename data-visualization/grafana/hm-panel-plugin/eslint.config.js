@@ -1,6 +1,7 @@
 // https://eslint.org/docs/latest/use/configure/configuration-files
 
 const grafanaConfig = require("@grafana/eslint-config/flat");
+const playwrightPlugin = require("eslint-plugin-playwright");
 
 /**
  * @type {Array<import('eslint').Linter.Config>}
@@ -62,6 +63,7 @@ module.exports = [
     ],
   },
   {
-    files: ['**/*.{js,ts,tsx}'],
+    ...playwrightPlugin.configs['flat/recommended'],
+    files: ['tests/**/*.{ts,tsx}'],
   },
 ];
