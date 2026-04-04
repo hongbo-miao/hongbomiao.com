@@ -1,7 +1,7 @@
 name: sticky-telemetry-stream-development
 services:
   pulsar:
-    image: docker.io/apachepulsar/pulsar:4.0.3
+    image: docker.io/apachepulsar/pulsar:4.0.9
     ports:
       - "6650:6650"
       - "8080:8080"
@@ -19,7 +19,7 @@ services:
       start_period: 30s
 
   topic-initialize:
-    image: docker.io/apachepulsar/pulsar:4.0.3
+    image: docker.io/apachepulsar/pulsar:4.0.9
     depends_on:
       pulsar:
         condition: service_healthy
