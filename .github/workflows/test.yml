@@ -753,8 +753,8 @@ jobs:
               - 'multimodal-model/vision-language-action-model/vision-language-action/infer/**'
             vision-language-action-train:
               - 'multimodal-model/vision-language-action-model/vision-language-action/train/**'
-            web-cypress:
-              - 'web-cypress/**'
+            web-playwright:
+              - 'web-playwright/**'
             web:
               - 'web/**'
             webrtc-vad:
@@ -1062,7 +1062,7 @@ jobs:
       variational-autoencoder: ${{ steps.filter.outputs.variational-autoencoder }}
       vision-language-action-infer: ${{ steps.filter.outputs.vision-language-action-infer }}
       vision-language-action-train: ${{ steps.filter.outputs.vision-language-action-train }}
-      web-cypress: ${{ steps.filter.outputs.web-cypress }}
+      web-playwright: ${{ steps.filter.outputs.web-playwright }}
       web: ${{ steps.filter.outputs.web }}
       webrtc-vad: ${{ steps.filter.outputs.webrtc-vad }}
       windows-calculator: ${{ steps.filter.outputs.windows-calculator }}
@@ -1126,7 +1126,7 @@ jobs:
       national-instruments-veristand-zeromq-bridge: ${{ needs.detect-changes.outputs.national-instruments-veristand-zeromq-bridge == 'true' }}
       udp-receiver: ${{ needs.detect-changes.outputs.udp-receiver == 'true' }}
       udp-sender: ${{ needs.detect-changes.outputs.udp-sender == 'true' }}
-      web-cypress: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
+      web-playwright: ${{ needs.detect-changes.outputs.web-playwright == 'true' }}
       web: ${{ needs.detect-changes.outputs.web == 'true' }}
       windows-calculator: ${{ needs.detect-changes.outputs.windows-calculator == 'true' }}
       zeromq-iads-bridge: ${{ needs.detect-changes.outputs.zeromq-iads-bridge == 'true' }}
@@ -1166,7 +1166,7 @@ jobs:
       grafana-hm-panel-plugin: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
       mobile-android: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
       mobile-react-native: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
-      web-cypress: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
+      web-playwright: ${{ needs.detect-changes.outputs.web-playwright == 'true' }}
       web: ${{ needs.detect-changes.outputs.web == 'true' }}
 
   test-mobile:
@@ -1192,7 +1192,7 @@ jobs:
       workflow: ${{ needs.detect-changes.outputs.workflow-test-web == 'true' }}
       # Applications
       api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}
-      web-cypress: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
+      web-playwright: ${{ needs.detect-changes.outputs.web-playwright == 'true' }}
       web: ${{ needs.detect-changes.outputs.web == 'true' }}
 
   test-api:

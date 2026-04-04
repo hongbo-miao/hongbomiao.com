@@ -4,8 +4,8 @@ import eslint from '@eslint/js';
 import eslintPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import airbnbBase from 'eslint-config-airbnb-base';
-import cypressPlugin from 'eslint-plugin-cypress';
 import importPlugin from 'eslint-plugin-import';
+import playwrightPlugin from 'eslint-plugin-playwright';
 import prettierPluginRecommended from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
 
@@ -64,8 +64,7 @@ export default [
       '**/target/**/*',
 
       // Directories
-      'cypress/fixtures/example.json',
-      'cypress/screenshots/**/*',
+      'test-results/**/*',
     ],
   },
   eslint.configs.recommended,
@@ -81,17 +80,13 @@ export default [
         },
       },
       globals: {
-        ...globals.mocha,
         ...globals.node,
-        Cypress: 'readonly',
-        cy: 'readonly',
-        expect: 'readonly',
       },
     },
     plugins: {
       '@typescript-eslint': eslintPlugin,
-      cypress: cypressPlugin,
       import: importPlugin,
+      playwright: playwrightPlugin,
     },
     settings: {
       'import/resolver': {
@@ -106,7 +101,7 @@ export default [
     },
     rules: {
       ...eslintPlugin.configs.recommended.rules,
-      ...cypressPlugin.configs.recommended.rules,
+      ...playwrightPlugin.configs['flat/recommended'].rules,
       ...airbnbBase.rules,
       'import/extensions': [
         'error',

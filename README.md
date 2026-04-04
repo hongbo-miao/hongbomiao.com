@@ -79,7 +79,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **React Testing Library** - React component testing
 - **Storybook** - Visual testing
   - **[Chromatic](https://www.chromatic.com/builds?appId=5d626a63a601530020759b10)** - Storybook reviewing
-- **Cypress** - End-to-end testing
+- **Playwright** - End-to-end testing
 - **Lighthouse CI** - Performance, accessibility, search engine optimization (SEO), progressive web app (PWA) analysis
 - **Sentry** - Error tracking
 - **Report URI** - Security reporting
