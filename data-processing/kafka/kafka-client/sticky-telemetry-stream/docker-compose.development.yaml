@@ -1,7 +1,7 @@
 name: sticky-telemetry-stream-development
 services:
   kafka:
-    image: docker.io/apache/kafka:4.0.2
+    image: docker.io/apache/kafka:4.2.0
     ports:
       - "9092:9092"
     environment:
@@ -28,7 +28,7 @@ services:
       start_period: 10s
 
   topic-initialize:
-    image: docker.io/apache/kafka:4.0.2
+    image: docker.io/apache/kafka:4.2.0
     depends_on:
       kafka:
         condition: service_healthy
