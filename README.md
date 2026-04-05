@@ -334,6 +334,8 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **nats-py** - NATS Python client
   - **async-nats** - NATS Rust client
 - **Apache Pulsar** - Distributed event streaming and messaging platform
+  - Management tool
+    - **Dekaf** - Pulsar management
 - **Apache Kafka** - Distributed event streaming platform
   - Client
     - **librdkafka** - Kafka C/C++ client
