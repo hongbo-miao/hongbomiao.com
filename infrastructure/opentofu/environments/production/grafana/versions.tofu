@@ -17,7 +17,7 @@ terraform {
     # https://search.opentofu.org/provider/grafana/grafana/latest
     grafana = {
       source  = "grafana/grafana"
-      version = "4.28.2"
+      version = "4.29.0"
     }
   }
   required_version = ">= 1.11"
