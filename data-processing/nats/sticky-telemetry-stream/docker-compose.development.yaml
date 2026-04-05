@@ -2,9 +2,6 @@ name: sticky-telemetry-stream-development
 services:
   nats-server:
     image: docker.io/library/nats:2.12.6-alpine3.22
-    ports:
-      - "4222:4222"
-      - "8222:8222"
     volumes:
       - ./nats-server/nats-server.conf:/etc/nats/nats-server.conf
     command: ["--config", "/etc/nats/nats-server.conf"]

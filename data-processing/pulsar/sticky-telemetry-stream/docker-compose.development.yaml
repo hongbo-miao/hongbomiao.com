@@ -1,10 +1,11 @@
 name: sticky-telemetry-stream-development
 services:
   pulsar:
-    image: docker.io/apachepulsar/pulsar:4.0.9
-    ports:
-      - "6650:6650"
-      - "8080:8080"
+    image: docker.io/apachepulsar/pulsar:4.2.0
+    environment:
+      # Disable GCP resource detection to prevent the main thread from hanging
+      # when trying to reach the GCP metadata server in non-GCP environments
+      - OTEL_JAVA_DISABLED_RESOURCE_PROVIDERS=io.opentelemetry.contrib.gcp.resource.GCPResourceProvider
     command: bin/pulsar standalone
     healthcheck:
       test: [
@@ -19,7 +20,7 @@ services:
       start_period: 30s
 
   topic-initialize:
-    image: docker.io/apachepulsar/pulsar:4.0.9
+    image: docker.io/apachepulsar/pulsar:4.2.0
     depends_on:
       pulsar:
         condition: service_healthy
@@ -50,3 +51,14 @@ services:
       - PULSAR_SERVICE_URL=pulsar://pulsar:6650
     deploy:
       replicas: 2
+
+  dekaf:
+    image: docker.io/visortelle/dekaf:1.1.0
+    depends_on:
+      pulsar:
+        condition: service_healthy
+    environment:
+      - DEKAF_PULSAR_WEB_URL=http://pulsar:8080
+      - DEKAF_PULSAR_BROKER_URL=pulsar://pulsar:6650
+    ports:
+      - "127.0.0.1:8090:8090"
