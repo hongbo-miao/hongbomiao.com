@@ -52,13 +52,7 @@ services:
       # Disable GCP resource detection to prevent the main thread from hanging
       # when trying to reach the GCP metadata server in non-GCP environments
       - OTEL_JAVA_DISABLED_RESOURCE_PROVIDERS=io.opentelemetry.contrib.gcp.resource.GCPResourceProvider
-    # https://github.com/streamnative/pulsar-io-cloud-storage/issues/1246
-    # Switch from process to thread runtime to work around a ClassCastException (TopicMessageIdImpl cannot be cast to MessageIdAdv) in pulsar-io-cloud-storage when consuming from partitioned topics, caused by NAR classloader isolation
-    command: >
-      sh -c "sed -i
-      's/functionRuntimeFactoryClassName: org.apache.pulsar.functions.runtime.process.ProcessRuntimeFactory/functionRuntimeFactoryClassName: org.apache.pulsar.functions.runtime.thread.ThreadRuntimeFactory/'
-      conf/functions_worker.yml &&
-      bin/pulsar standalone"
+    command: bin/pulsar standalone
     healthcheck:
       test: [
         "CMD",
@@ -77,7 +71,7 @@ services:
       pulsar:
         condition: service_healthy
     entrypoint: >
-      sh -c "bin/pulsar-admin --admin-url http://pulsar:8080 topics create-partitioned-topic persistent://public/default/sensor-telemetry-streams --partitions 2 || true"
+      sh -c "bin/pulsar-admin --admin-url http://pulsar:8080 topics create-partitioned-topic persistent://public/default/sensor-telemetry-streams || true"
     restart: "no"
 
   sink-initialize:
