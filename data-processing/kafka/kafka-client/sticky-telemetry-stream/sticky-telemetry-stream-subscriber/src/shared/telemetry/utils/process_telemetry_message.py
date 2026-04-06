@@ -6,10 +6,7 @@ import capnp
 from confluent_kafka import Message
 
 if TYPE_CHECKING:
-    from capnp_types.telemetry import (
-        EntryReader,
-        TelemetryReader,
-    )
+    from capnp_types.telemetry import TelemetryReader
 
 logger = logging.getLogger(__name__)
 
@@ -27,22 +24,12 @@ def process_telemetry_message(
         publisher_id = key_bytes.decode() if key_bytes else "unknown"
         telemetry: TelemetryReader
         with TELEMETRY_SCHEMA.Telemetry.from_bytes(message.value()) as telemetry:
-            timestamp = telemetry.timestamp
-
-            entries: dict[str, float | None] = {}
-            entry: EntryReader
-            for entry in telemetry.entries:
-                data_type = entry.data.which()
-                if data_type == "value":
-                    entries[entry.name] = entry.data.value
-                else:
-                    entries[entry.name] = None
-
             telemetry_log = {
                 "publisher_id": publisher_id,
                 "partition": message.partition(),
-                "timestamp": timestamp,
-                "entries": entries,
+                "timestamp_ns": telemetry.timestampNs,
+                "temperature_c": telemetry.temperatureC,
+                "humidity_pct": telemetry.humidityPct,
             }
             logger.info(
                 f"Subscriber {subscriber_id}: {telemetry_log}",

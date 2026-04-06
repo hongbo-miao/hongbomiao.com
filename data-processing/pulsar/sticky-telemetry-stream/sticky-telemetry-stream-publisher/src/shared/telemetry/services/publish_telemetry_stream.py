@@ -1,17 +1,11 @@
 import logging
 import time
-from datetime import UTC, datetime
 from functools import partial
 
 import pulsar
-from sticky_telemetry_stream_schema.telemetry_record import EntryRecord, TelemetryRecord
+from sticky_telemetry_stream_schema.telemetry_record import TelemetryRecord
 
 logger = logging.getLogger(__name__)
-
-SENSOR_NAMES: list[str] = [
-    "temperature_c",
-    "humidity_pct",
-]
 
 
 def handle_send_result(
@@ -34,17 +28,12 @@ def publish_telemetry_stream(
     try:
         sample_index = 0
         while True:
-            timestamp = datetime.now(UTC).isoformat()
-            sensor_entries: list[tuple[str, float | None]] = [
-                (sensor_name, float(sample_index)) for sensor_name in SENSOR_NAMES
-            ]
+            timestamp_ns = time.time_ns()
 
             telemetry = TelemetryRecord(
-                timestamp=timestamp,
-                entries=[
-                    EntryRecord(name=entry_name, value=entry_value)
-                    for entry_name, entry_value in sensor_entries
-                ],
+                timestamp_ns=timestamp_ns,
+                temperature_c=float(sample_index),
+                humidity_pct=float(sample_index),
             )
 
             published_sample_count += 1
