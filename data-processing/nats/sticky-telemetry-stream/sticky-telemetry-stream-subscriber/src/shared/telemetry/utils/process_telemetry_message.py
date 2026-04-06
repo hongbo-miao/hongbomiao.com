@@ -6,10 +6,7 @@ import capnp
 import nats.aio.msg
 
 if TYPE_CHECKING:
-    from capnp_types.telemetry import (
-        EntryReader,
-        TelemetryReader,
-    )
+    from capnp_types.telemetry import TelemetryReader
 
 logger = logging.getLogger(__name__)
 
@@ -30,21 +27,11 @@ async def process_telemetry_message(
         publisher_id = extract_publisher_id(message.subject)
         telemetry: TelemetryReader
         with TELEMETRY_SCHEMA.Telemetry.from_bytes(message.data) as telemetry:
-            timestamp = telemetry.timestamp
-
-            entries: dict[str, float | None] = {}
-            entry: EntryReader
-            for entry in telemetry.entries:
-                data_type = entry.data.which()
-                if data_type == "value":
-                    entries[entry.name] = entry.data.value
-                else:
-                    entries[entry.name] = None
-
             telemetry_log = {
                 "publisher_id": publisher_id,
-                "timestamp": timestamp,
-                "entries": entries,
+                "timestamp_ns": telemetry.timestampNs,
+                "temperature_c": telemetry.temperatureC,
+                "humidity_pct": telemetry.humidityPct,
             }
             logger.info(
                 f"Subscriber {subscriber_id}: {telemetry_log}",

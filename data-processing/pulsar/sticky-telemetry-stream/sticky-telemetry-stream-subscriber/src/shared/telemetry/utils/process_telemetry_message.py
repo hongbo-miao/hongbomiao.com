@@ -14,16 +14,12 @@ def process_telemetry_message(
         publisher_id = partition_key or "unknown"
 
         telemetry = message.value()
-        timestamp = telemetry.timestamp
-
-        entries: dict[str, float | None] = {}
-        for entry in telemetry.entries:
-            entries[entry.name] = entry.value
 
         telemetry_log = {
             "publisher_id": publisher_id,
-            "timestamp": timestamp,
-            "entries": entries,
+            "timestamp_ns": telemetry.timestamp_ns,
+            "temperature_c": telemetry.temperature_c,
+            "humidity_pct": telemetry.humidity_pct,
             "topic": message.topic_name(),
         }
         logger.info(

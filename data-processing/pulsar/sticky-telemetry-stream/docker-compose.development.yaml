@@ -1,12 +1,64 @@
 name: sticky-telemetry-stream-development
 services:
+  rustfs:
+    image: docker.io/rustfs/rustfs:1.0.0-alpha.76
+    volumes:
+      - rustfs-data:/data
+    environment:
+      RUSTFS_ACCESS_KEY: rustfs_admin
+      RUSTFS_SECRET_KEY: rustfs_passw0rd
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:9000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rustfs-initialize:
+    image: docker.io/amazon/aws-cli:2.34.24
+    depends_on:
+      rustfs:
+        condition: service_healthy
+    environment:
+      AWS_ACCESS_KEY_ID: rustfs_admin
+      AWS_SECRET_ACCESS_KEY: rustfs_passw0rd
+      AWS_DEFAULT_REGION: us-west-2
+    entrypoint: >
+      /bin/sh -c "
+      aws --endpoint-url http://rustfs:9000 s3 mb s3://telemetry-bucket || true;
+      exit 0;
+      "
+    restart: "no"
+
+  connector-download:
+    image: docker.io/library/alpine:3.23.3
+    volumes:
+      - connector-data:/pulsar/connectors
+    entrypoint: >
+      sh -c "apk add --no-cache curl && curl --silent --fail --show-error --location --output /pulsar/connectors/pulsar-io-cloud-storage.nar https://github.com/streamnative/pulsar-io-cloud-storage/releases/download/v4.0.3.1/pulsar-io-cloud-storage-4.0.3.1.nar"
+    restart: "no"
+
   pulsar:
     image: docker.io/apachepulsar/pulsar:4.2.0
+    depends_on:
+      connector-download:
+        condition: service_completed_successfully
+    volumes:
+      - connector-data:/pulsar/connectors
     environment:
       # Disable GCP resource detection to prevent the main thread from hanging
       # when trying to reach the GCP metadata server in non-GCP environments
       - OTEL_JAVA_DISABLED_RESOURCE_PROVIDERS=io.opentelemetry.contrib.gcp.resource.GCPResourceProvider
-    command: bin/pulsar standalone
+    # https://github.com/streamnative/pulsar-io-cloud-storage/issues/1246
+    # Switch from process to thread runtime to work around a ClassCastException (TopicMessageIdImpl cannot be cast to MessageIdAdv) in pulsar-io-cloud-storage when consuming from partitioned topics, caused by NAR classloader isolation
+    command: >
+      sh -c "sed -i
+      's/functionRuntimeFactoryClassName: org.apache.pulsar.functions.runtime.process.ProcessRuntimeFactory/functionRuntimeFactoryClassName: org.apache.pulsar.functions.runtime.thread.ThreadRuntimeFactory/'
+      conf/functions_worker.yml &&
+      bin/pulsar standalone"
     healthcheck:
       test: [
         "CMD",
@@ -26,6 +78,29 @@ services:
         condition: service_healthy
     entrypoint: >
       sh -c "bin/pulsar-admin --admin-url http://pulsar:8080 topics create-partitioned-topic persistent://public/default/sensor-telemetry-streams --partitions 2 || true"
+    restart: "no"
+
+  sink-initialize:
+    image: docker.io/apachepulsar/pulsar:4.2.0
+    depends_on:
+      pulsar:
+        condition: service_healthy
+      topic-initialize:
+        condition: service_completed_successfully
+      rustfs-initialize:
+        condition: service_completed_successfully
+    volumes:
+      - connector-data:/pulsar/connectors
+      - ./pulsar/cloud-storage-sink.yaml:/etc/pulsar/cloud-storage-sink.yaml:ro
+    entrypoint: >
+      sh -c "bin/pulsar-admin --admin-url http://pulsar:8080 sinks create
+      --tenant public
+      --namespace default
+      --name cloud-storage-sink
+      --inputs persistent://public/default/sensor-telemetry-streams
+      --archive /pulsar/connectors/pulsar-io-cloud-storage.nar
+      --sink-config-file /etc/pulsar/cloud-storage-sink.yaml
+      --parallelism 1 || true"
     restart: "no"
 
   publisher:
@@ -62,3 +137,7 @@ services:
       - DEKAF_PULSAR_BROKER_URL=pulsar://pulsar:6650
     ports:
       - "127.0.0.1:8090:8090"
+
+volumes:
+  rustfs-data:
+  connector-data:

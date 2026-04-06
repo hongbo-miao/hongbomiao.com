@@ -1,11 +1,7 @@
-from pulsar.schema import Array, Double, Record, String
-
-
-class EntryRecord(Record):
-    name = String()
-    value = Double(required=False, default=None)
+from pulsar.schema import Double, Long, Record
 
 
 class TelemetryRecord(Record):
-    timestamp = String()
-    entries = Array(EntryRecord())
+    timestamp_ns = Long()
+    temperature_c = Double(required=False, default=None)
+    humidity_pct = Double(required=False, default=None)

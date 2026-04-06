@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from datetime import UTC, datetime
+import time
 from pathlib import Path
 from typing import TYPE_CHECKING, NoReturn
 
@@ -8,17 +8,9 @@ import capnp
 from confluent_kafka.aio import AIOProducer
 
 if TYPE_CHECKING:
-    from capnp_types.telemetry import (
-        EntryBuilder,
-        TelemetryBuilder,
-    )
+    from capnp_types.telemetry import TelemetryBuilder
 
 logger = logging.getLogger(__name__)
-
-SENSOR_NAMES: list[str] = [
-    "temperature_c",
-    "humidity_pct",
-]
 
 TELEMETRY_SCHEMA = capnp.load(
     str(Path(__file__).parents[5] / "schemas" / "telemetry.capnp"),
@@ -35,26 +27,12 @@ async def publish_telemetry_stream(
     try:
         sample_index = 0
         while True:
-            timestamp = datetime.now(UTC).isoformat()
-            sensor_entries: list[tuple[str, float | None]] = [
-                (sensor_name, float(sample_index)) for sensor_name in SENSOR_NAMES
-            ]
+            timestamp_ns = time.time_ns()
 
             telemetry: TelemetryBuilder = TELEMETRY_SCHEMA.Telemetry.new_message()
-            telemetry.timestamp = timestamp
-
-            sensor_entries_builder = telemetry.init(
-                "entries",
-                len(sensor_entries),
-            )
-
-            for index, (entry_name, entry_value) in enumerate(sensor_entries):
-                entry: EntryBuilder = sensor_entries_builder[index]
-                entry.name = entry_name
-                if entry_value is None:
-                    entry.data.missing = None
-                else:
-                    entry.data.value = entry_value
+            telemetry.timestampNs = timestamp_ns
+            telemetry.temperatureC = float(sample_index)
+            telemetry.humidityPct = float(sample_index)
 
             telemetry_payload_bytes = telemetry.to_bytes()
 

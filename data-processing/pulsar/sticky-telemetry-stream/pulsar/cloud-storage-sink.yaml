@@ -1,0 +1,15 @@
+configs:
+  provider: "s3v2"
+  accessKeyId: "rustfs_admin"
+  secretAccessKey: "rustfs_passw0rd"
+  bucket: "telemetry-bucket"
+  region: "us-west-2"
+  endpoint: "http://rustfs:9000"
+  formatType: "parquet"
+  partitionerType: "time"
+  timePartitionPattern: "yyyy-MM-dd"
+  timePartitionDuration: "1h"
+  partitionerUseIndexAsOffset: true
+  useHumanReadableMessageId: true
+  batchSize: 1000000
+  batchTimeMs: 60000
