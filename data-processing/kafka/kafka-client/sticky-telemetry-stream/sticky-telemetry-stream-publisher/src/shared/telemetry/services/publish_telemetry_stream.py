@@ -24,6 +24,7 @@ async def publish_telemetry_stream(
             timestamp_ns = time.time_ns()
 
             telemetry = {
+                "publisher_id": publisher_id,
                 "timestamp_ns": timestamp_ns,
                 "temperature_c": float(sample_index),
                 "humidity_pct": float(sample_index),
