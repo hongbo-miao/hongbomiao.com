@@ -182,6 +182,22 @@ services:
     deploy:
       replicas: 2
 
+  flink-compute:
+    build:
+      context: ./sticky-telemetry-stream-flink-compute
+      dockerfile: Dockerfile
+    depends_on:
+      pulsar:
+        condition: service_healthy
+      topic-initialize:
+        condition: service_completed_successfully
+    environment:
+      - PULSAR_SERVICE_URL=pulsar://pulsar:6650
+      - PULSAR_TOPIC=persistent://public/default/sensor-telemetry-streams
+      - SUBSCRIPTION_NAME=flink-compute-subscription
+      - BATCH_SIZE=10
+      - PARALLELISM=2
+
   dekaf:
     image: docker.io/visortelle/dekaf:1.1.0
     depends_on:
