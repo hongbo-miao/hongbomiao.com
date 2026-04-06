@@ -1,9 +1,12 @@
 import asyncio
 import logging
 import os
+from pathlib import Path
 from uuid import uuid4
 
 from confluent_kafka.aio import AIOConsumer
+from confluent_kafka.schema_registry import SchemaRegistryClient
+from confluent_kafka.schema_registry.avro import AvroDeserializer
 from shared.telemetry.utils.consume_telemetry_messages import (
     consume_telemetry_messages,
 )
@@ -11,9 +14,14 @@ from shared.telemetry.utils.consume_telemetry_messages import (
 logger = logging.getLogger(__name__)
 
 KAFKA_BOOTSTRAP_SERVERS = os.environ.get("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
+SCHEMA_REGISTRY_URL = os.environ.get("SCHEMA_REGISTRY_URL", "http://localhost:8081")
 KAFKA_TOPIC = "sensor-telemetry-streams"
 CONSUMER_GROUP_ID = "telemetry-subscriber-group"
 POLL_TIMEOUT_S = 1.0
+
+TELEMETRY_AVRO_SCHEMA = (
+    Path(__file__).parents[2] / "schemas" / "telemetry.avsc"
+).read_text()
 
 
 async def main() -> None:
@@ -41,7 +49,18 @@ async def main() -> None:
             f"with cooperative-sticky partition assignment",
         )
 
-        await consume_telemetry_messages(consumer, subscriber_id, POLL_TIMEOUT_S)
+        schema_registry_client = SchemaRegistryClient({"url": SCHEMA_REGISTRY_URL})
+        avro_deserializer = AvroDeserializer(
+            schema_registry_client,
+            TELEMETRY_AVRO_SCHEMA,
+        )
+
+        await consume_telemetry_messages(
+            consumer,
+            subscriber_id,
+            POLL_TIMEOUT_S,
+            avro_deserializer,
+        )
 
     except Exception:
         logger.exception("Subscriber error")

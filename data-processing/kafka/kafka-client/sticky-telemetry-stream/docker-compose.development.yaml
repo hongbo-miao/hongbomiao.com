@@ -1,5 +1,53 @@
 name: sticky-telemetry-stream-development
 services:
+  rustfs:
+    image: docker.io/rustfs/rustfs:1.0.0-alpha.76
+    volumes:
+      - rustfs-data:/data
+    environment:
+      RUSTFS_ACCESS_KEY: rustfs_admin
+      RUSTFS_SECRET_KEY: rustfs_passw0rd
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:9000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rustfs-initialize:
+    image: docker.io/amazon/aws-cli:2.34.24
+    depends_on:
+      rustfs:
+        condition: service_healthy
+    environment:
+      AWS_ACCESS_KEY_ID: rustfs_admin
+      AWS_SECRET_ACCESS_KEY: rustfs_passw0rd
+      AWS_DEFAULT_REGION: us-west-2
+    entrypoint: >
+      /bin/sh -c "
+      aws --endpoint-url http://rustfs:9000 s3 mb s3://telemetry-bucket || true;
+      exit 0;
+      "
+    restart: "no"
+
+  schema-registry:
+    image: docker.io/confluentinc/cp-schema-registry:7.9.6
+    depends_on:
+      kafka:
+        condition: service_healthy
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka:9092
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8081/subjects"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
   kafka:
     image: docker.io/apache/kafka:4.2.0
     environment:
@@ -34,6 +82,58 @@ services:
       sh -c "/opt/kafka/bin/kafka-topics.sh --create --if-not-exists --topic sensor-telemetry-streams --partitions 2 --replication-factor 1 --bootstrap-server kafka:9092"
     restart: "no"
 
+  kafka-connect:
+    image: docker.io/confluentinc/cp-kafka-connect:7.9.6
+    depends_on:
+      kafka:
+        condition: service_healthy
+      schema-registry:
+        condition: service_healthy
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: kafka:9092
+      CONNECT_REST_PORT: 8083
+      CONNECT_REST_ADVERTISED_HOST_NAME: kafka-connect
+      CONNECT_GROUP_ID: connect-cluster
+      CONNECT_CONFIG_STORAGE_TOPIC: _connect-configs
+      CONNECT_OFFSET_STORAGE_TOPIC: _connect-offsets
+      CONNECT_STATUS_STORAGE_TOPIC: _connect-status
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      CONNECT_PLUGIN_PATH: /usr/share/java,/usr/share/confluent-hub-components
+      AWS_ACCESS_KEY_ID: rustfs_admin
+      AWS_SECRET_ACCESS_KEY: rustfs_passw0rd
+    command: >
+      bash -c "confluent-hub install --no-prompt confluentinc/kafka-connect-s3:10.5.22 &&
+      /etc/confluent/docker/run"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8083/"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+  s3-sink-initialize:
+    image: docker.io/curlimages/curl:8.14.1
+    depends_on:
+      kafka-connect:
+        condition: service_healthy
+      topic-initialize:
+        condition: service_completed_successfully
+      rustfs-initialize:
+        condition: service_completed_successfully
+    volumes:
+      - ./kafka-connect/s3-sink-connector.json:/etc/kafka-connect/s3-sink-connector.json:ro
+    entrypoint: >
+      curl --silent --fail --show-error -X PUT
+      -H "Content-Type: application/json"
+      -d @/etc/kafka-connect/s3-sink-connector.json
+      http://kafka-connect:8083/connectors/s3-sink-connector/config
+    restart: "no"
+
   publisher:
     build:
       context: .
@@ -41,8 +141,11 @@ services:
     depends_on:
       topic-initialize:
         condition: service_completed_successfully
+      schema-registry:
+        condition: service_healthy
     environment:
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - SCHEMA_REGISTRY_URL=http://schema-registry:8081
     deploy:
       replicas: 3
 
@@ -53,7 +156,13 @@ services:
     depends_on:
       topic-initialize:
         condition: service_completed_successfully
+      schema-registry:
+        condition: service_healthy
     environment:
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - SCHEMA_REGISTRY_URL=http://schema-registry:8081
     deploy:
       replicas: 2
+
+volumes:
+  rustfs-data:
