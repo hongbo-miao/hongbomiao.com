@@ -1,0 +1,22 @@
+{
+  "connector.class": "io.confluent.connect.s3.S3SinkConnector",
+  "tasks.max": "1",
+  "topics": "sensor-telemetry-streams",
+  "storage.class": "io.confluent.connect.s3.storage.S3Storage",
+  "s3.bucket.name": "telemetry-bucket",
+  "s3.region": "us-west-2",
+  "store.url": "http://rustfs:9000",
+  "format.class": "io.confluent.connect.s3.format.parquet.ParquetFormat",
+  "parquet.codec": "snappy",
+  "flush.size": "1000000",
+  "rotate.interval.ms": "60000",
+  "partitioner.class": "io.confluent.connect.storage.partitioner.TimeBasedPartitioner",
+  "partition.duration.ms": "3600000",
+  "path.format": "'year'=YYYY/'month'=MM/'day'=dd",
+  "locale": "en-US",
+  "timezone": "UTC",
+  "timestamp.extractor": "Record",
+  "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+  "value.converter": "io.confluent.connect.avro.AvroConverter",
+  "value.converter.schema.registry.url": "http://schema-registry:8081"
+}

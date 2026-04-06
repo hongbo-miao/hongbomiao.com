@@ -1,20 +1,13 @@
 import asyncio
 import logging
 import time
-from pathlib import Path
-from typing import TYPE_CHECKING, NoReturn
+from typing import NoReturn
 
-import capnp
 from confluent_kafka.aio import AIOProducer
-
-if TYPE_CHECKING:
-    from capnp_types.telemetry import TelemetryBuilder
+from confluent_kafka.schema_registry.avro import AvroSerializer
+from confluent_kafka.serialization import MessageField, SerializationContext
 
 logger = logging.getLogger(__name__)
-
-TELEMETRY_SCHEMA = capnp.load(
-    str(Path(__file__).parents[5] / "schemas" / "telemetry.capnp"),
-)
 
 
 async def publish_telemetry_stream(
@@ -22,6 +15,7 @@ async def publish_telemetry_stream(
     topic: str,
     publisher_id: str,
     publish_interval_s: float,
+    avro_serializer: AvroSerializer,
 ) -> NoReturn:
     published_sample_count = 0
     try:
@@ -29,12 +23,16 @@ async def publish_telemetry_stream(
         while True:
             timestamp_ns = time.time_ns()
 
-            telemetry: TelemetryBuilder = TELEMETRY_SCHEMA.Telemetry.new_message()
-            telemetry.timestampNs = timestamp_ns
-            telemetry.temperatureC = float(sample_index)
-            telemetry.humidityPct = float(sample_index)
+            telemetry = {
+                "timestamp_ns": timestamp_ns,
+                "temperature_c": float(sample_index),
+                "humidity_pct": float(sample_index),
+            }
 
-            telemetry_payload_bytes = telemetry.to_bytes()
+            telemetry_payload_bytes = avro_serializer(
+                telemetry,
+                SerializationContext(topic, MessageField.VALUE),
+            )
 
             published_sample_count += 1
             delivered_message_future = await producer.produce(

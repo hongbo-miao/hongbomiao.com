@@ -1,39 +1,34 @@
 import logging
-from pathlib import Path
-from typing import TYPE_CHECKING
 
-import capnp
 from confluent_kafka import Message
-
-if TYPE_CHECKING:
-    from capnp_types.telemetry import TelemetryReader
+from confluent_kafka.schema_registry.avro import AvroDeserializer
+from confluent_kafka.serialization import MessageField, SerializationContext
 
 logger = logging.getLogger(__name__)
-
-TELEMETRY_SCHEMA = capnp.load(
-    str(Path(__file__).parents[5] / "schemas" / "telemetry.capnp"),
-)
 
 
 def process_telemetry_message(
     message: Message,
     subscriber_id: str,
+    avro_deserializer: AvroDeserializer,
 ) -> None:
     try:
         key_bytes = message.key()
         publisher_id = key_bytes.decode() if key_bytes else "unknown"
-        telemetry: TelemetryReader
-        with TELEMETRY_SCHEMA.Telemetry.from_bytes(message.value()) as telemetry:
-            telemetry_log = {
-                "publisher_id": publisher_id,
-                "partition": message.partition(),
-                "timestamp_ns": telemetry.timestampNs,
-                "temperature_c": telemetry.temperatureC,
-                "humidity_pct": telemetry.humidityPct,
-            }
-            logger.info(
-                f"Subscriber {subscriber_id}: {telemetry_log}",
-            )
+        telemetry = avro_deserializer(
+            message.value(),
+            SerializationContext(message.topic(), MessageField.VALUE),
+        )
+        telemetry_log = {
+            "publisher_id": publisher_id,
+            "partition": message.partition(),
+            "timestamp_ns": telemetry["timestamp_ns"],
+            "temperature_c": telemetry["temperature_c"],
+            "humidity_pct": telemetry["humidity_pct"],
+        }
+        logger.info(
+            f"Subscriber {subscriber_id}: {telemetry_log}",
+        )
 
     except Exception:
         logger.exception(
