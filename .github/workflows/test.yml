@@ -707,6 +707,11 @@ jobs:
               - 'large-language-model-post-training/fine-tuning/proximal-policy-optimization/low-rank-adaptation/**'
             prometheus:
               - 'data-storage/prometheus/**'
+            pulsar-sticky-telemetry-stream-flink-compute:
+              - 'data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-flink-compute/**'
+            pulsar-sticky-telemetry-stream-integration-test:
+              - 'data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-integration-test/**'
+              - 'data-processing/pulsar/sticky-telemetry-stream/docker-compose/**'
             pulsar-sticky-telemetry-stream-publisher:
               - 'data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-publisher/**'
             pulsar-sticky-telemetry-stream-subscriber:
@@ -1038,6 +1043,8 @@ jobs:
       post-training-quantization: ${{ steps.filter.outputs.post-training-quantization }}
       production-aws-glue-spark-scripts: ${{ steps.filter.outputs.production-aws-glue-spark-scripts }}
       prometheus: ${{ steps.filter.outputs.prometheus }}
+      pulsar-sticky-telemetry-stream-flink-compute: ${{ steps.filter.outputs.pulsar-sticky-telemetry-stream-flink-compute }}
+      pulsar-sticky-telemetry-stream-integration-test: ${{ steps.filter.outputs.pulsar-sticky-telemetry-stream-integration-test }}
       pulsar-sticky-telemetry-stream-publisher: ${{ steps.filter.outputs.pulsar-sticky-telemetry-stream-publisher }}
       pulsar-sticky-telemetry-stream-subscriber: ${{ steps.filter.outputs.pulsar-sticky-telemetry-stream-subscriber }}
       proximal-policy-optimization-low-rank-adaptation: ${{ steps.filter.outputs.proximal-policy-optimization-low-rank-adaptation }}
@@ -1262,6 +1269,8 @@ jobs:
       nats-postgres-bridge: ${{ needs.detect-changes.outputs.nats-postgres-bridge == 'true' }}
       nats-telemetry-stream-publisher: ${{ needs.detect-changes.outputs.nats-telemetry-stream-publisher == 'true' }}
       nats-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.nats-telemetry-stream-subscriber == 'true' }}
+      pulsar-sticky-telemetry-stream-flink-compute: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-flink-compute == 'true' }}
+      pulsar-sticky-telemetry-stream-integration-test: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-integration-test == 'true' }}
       pulsar-sticky-telemetry-stream-publisher: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-publisher == 'true' }}
       pulsar-sticky-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-subscriber == 'true' }}
 

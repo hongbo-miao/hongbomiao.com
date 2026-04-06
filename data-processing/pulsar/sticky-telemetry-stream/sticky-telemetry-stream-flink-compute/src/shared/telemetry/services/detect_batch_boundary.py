@@ -1,19 +1,30 @@
 import logging
+from typing import Any
 
-from pyflink.common.typeinfo import Types
+import pulsar
+from pyflink.common import Types
 from pyflink.datastream import KeyedProcessFunction, RuntimeContext
 from pyflink.datastream.state import ValueStateDescriptor
 from shared.telemetry.models.batch_buffer import BatchBuffer
-from shared.telemetry.models.batch_result import BatchResult
+from shared.telemetry.models.batch_result_record import BatchResultRecord
 
 logger = logging.getLogger(__name__)
 
 
 class DetectBatchBoundary(KeyedProcessFunction):
-    def __init__(self, batch_size: int) -> None:
+    def __init__(
+        self,
+        batch_size: int,
+        pulsar_service_url: str,
+        output_topic: str,
+    ) -> None:
         self.batch_size = batch_size
-        self.buffer_state = None
-        self.batch_count_state = None
+        self.pulsar_service_url = pulsar_service_url
+        self.output_topic = output_topic
+        self.buffer_state: Any = None
+        self.batch_count_state: Any = None
+        self.pulsar_client: Any = None
+        self.pulsar_producer: Any = None
 
     def open(self, runtime_context: RuntimeContext) -> None:
         self.buffer_state = runtime_context.get_state(
@@ -22,6 +33,17 @@ class DetectBatchBoundary(KeyedProcessFunction):
         self.batch_count_state = runtime_context.get_state(
             ValueStateDescriptor("batch-count", Types.LONG()),
         )
+        self.pulsar_client = pulsar.Client(self.pulsar_service_url)
+        self.pulsar_producer = self.pulsar_client.create_producer(
+            self.output_topic,
+            schema=pulsar.schema.AvroSchema(BatchResultRecord),
+        )
+
+    def close(self) -> None:
+        if self.pulsar_producer is not None:
+            self.pulsar_producer.close()
+        if self.pulsar_client is not None:
+            self.pulsar_client.close()
 
     def process_element(self, value, context: KeyedProcessFunction.Context):  # noqa: ANN001, ANN201, ARG002
         buffer = self._load_buffer()
@@ -31,19 +53,27 @@ class DetectBatchBoundary(KeyedProcessFunction):
         temperature_c = value[2]
         if temperature_c is None:
             return
+
         buffer.add_sample(temperature_c, timestamp_ns)
 
         if buffer.sample_count >= self.batch_size:
             batch_count = self._load_batch_count()
-            result = self._build_batch_result(
-                buffer,
-                publisher_id,
-                batch_count,
-                is_partial=False,
+            temperature_average = sum(buffer.temperature_values) / buffer.sample_count
+
+            batch_result = BatchResultRecord(
+                publisher_id=publisher_id,
+                batch_index=batch_count,
+                sample_count=buffer.sample_count,
+                temperature_average=temperature_average,
+                first_timestamp_ns=buffer.first_timestamp_ns,
+                last_timestamp_ns=buffer.last_timestamp_ns,
             )
-            yield result.format_result()
+            self.pulsar_producer.send(batch_result)
+
             self.batch_count_state.update(batch_count + 1)
             self.buffer_state.clear()
+
+            yield f"Batch {batch_count} for {publisher_id}: sample_count={buffer.sample_count}, temperature_average={temperature_average:.2f}"
             return
 
         self._save_buffer(buffer)
@@ -60,21 +90,3 @@ class DetectBatchBoundary(KeyedProcessFunction):
     def _load_batch_count(self) -> int:
         count = self.batch_count_state.value()
         return count if count is not None else 0
-
-    def _build_batch_result(
-        self,
-        buffer: BatchBuffer,
-        publisher_id: str,
-        batch_index: int,
-        is_partial: bool,
-    ) -> BatchResult:
-        return BatchResult(
-            publisher_id=publisher_id,
-            batch_index=batch_index,
-            sample_count=buffer.sample_count,
-            temperature_values=list(buffer.temperature_values),
-            temperature_average=sum(buffer.temperature_values) / buffer.sample_count,
-            first_timestamp_ns=buffer.first_timestamp_ns,
-            last_timestamp_ns=buffer.last_timestamp_ns,
-            is_partial=is_partial,
-        )

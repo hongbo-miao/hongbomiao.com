@@ -16,3 +16,7 @@ scale-up-publisher:
 
 scale-up-subscriber:
     docker compose --file=docker-compose.development.yaml up --detach --scale subscriber=3
+
+integration-test:
+    docker compose --file=docker-compose.development.yaml --file=docker-compose.development.overrides.integration-test.yaml --profile=integration-test up --detach --build
+    docker compose --file=docker-compose.development.yaml --file=docker-compose.development.overrides.integration-test.yaml --profile=integration-test wait integration-test-runner

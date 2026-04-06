@@ -3,7 +3,7 @@ services:
   nats-server:
     image: docker.io/library/nats:2.12.6-alpine3.22
     volumes:
-      - ./nats-server/nats-server.conf:/etc/nats/nats-server.conf
+      - ../nats-server/nats-server.conf:/etc/nats/nats-server.conf
     command: ["--config", "/etc/nats/nats-server.conf"]
     healthcheck:
       test: ["CMD", "wget", "--spider", "--quiet", "http://localhost:8222/healthz"]
@@ -18,14 +18,14 @@ services:
       nats-server:
         condition: service_healthy
     volumes:
-      - ./nats-server/SENSOR_TELEMETRY_STREAMS.json:/etc/nats/SENSOR_TELEMETRY_STREAMS.json
+      - ../nats-server/SENSOR_TELEMETRY_STREAMS.json:/etc/nats/SENSOR_TELEMETRY_STREAMS.json
     entrypoint: >
       sh -c "nats stream add --config=/etc/nats/SENSOR_TELEMETRY_STREAMS.json --server=nats://nats-server:4222"
     restart: "no"
 
   publisher:
     build:
-      context: .
+      context: ..
       dockerfile: sticky-telemetry-stream-publisher/Dockerfile
     depends_on:
       stream-initialize:
@@ -37,7 +37,7 @@ services:
 
   subscriber:
     build:
-      context: .
+      context: ..
       dockerfile: sticky-telemetry-stream-subscriber/Dockerfile
     depends_on:
       stream-initialize:

@@ -3,9 +3,8 @@ WORKDIR /usr/src/app
 ENV UV_COMPILE_BYTECODE=1 \
   UV_LINK_MODE=copy \
   UV_PROJECT_ENVIRONMENT=/usr/local
-COPY pyproject.toml uv.lock ./
 COPY sticky-telemetry-stream-schema/ sticky-telemetry-stream-schema/
-COPY ["sticky-telemetry-stream-publisher/pyproject.toml", "sticky-telemetry-stream-publisher/.python-version", "sticky-telemetry-stream-publisher/"]
+COPY ["sticky-telemetry-stream-publisher/pyproject.toml", "sticky-telemetry-stream-publisher/uv.lock", "sticky-telemetry-stream-publisher/.python-version", "sticky-telemetry-stream-publisher/"]
 RUN uv sync --frozen --no-dev --no-editable --directory sticky-telemetry-stream-publisher
 
 FROM docker.io/python:3.14.3-slim-trixie AS release
