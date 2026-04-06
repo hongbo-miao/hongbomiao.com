@@ -41,6 +41,7 @@ def publish_telemetry_stream(
 
             producer.send_async(
                 telemetry,
+                partition_key=publisher_id,
                 callback=partial(handle_send_result, publisher_id),
             )
 
