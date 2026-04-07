@@ -87,6 +87,12 @@ name: . Test Data Processing
       nats-telemetry-stream-subscriber:
         required: true
         type: boolean
+      pulsar-sticky-telemetry-stream-flink-compute:
+        required: true
+        type: boolean
+      pulsar-sticky-telemetry-stream-integration-test:
+        required: true
+        type: boolean
       pulsar-sticky-telemetry-stream-publisher:
         required: true
         type: boolean
@@ -938,6 +944,53 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: data-processing/nats/telemetry-stream/telemetry-stream-subscriber
+
+  pulsar-sticky-telemetry-stream-flink-compute-test:
+    name: Pulsar (sticky-telemetry-stream-flink-compute) | Test
+    if: ${{ inputs.workflow || inputs.pulsar-sticky-telemetry-stream-flink-compute }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.6.0
+        with:
+          version: 0.11.3
+          enable-cache: true
+          cache-dependency-glob: data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-flink-compute/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.2.0
+        with:
+          python-version-file: data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-flink-compute/.python-version
+      - name: Install dependencies
+        working-directory: data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-flink-compute
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-flink-compute
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-flink-compute
+
+  pulsar-sticky-telemetry-stream-integration-test:
+    name: Pulsar (sticky-telemetry-stream) | Integration Test
+    if: ${{ inputs.workflow || inputs.pulsar-sticky-telemetry-stream-integration-test }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      - name: Run integration test
+        working-directory: data-processing/pulsar/sticky-telemetry-stream/docker-compose
+        run: |
+          docker compose --file=docker-compose.development.yaml --file=docker-compose.development.overrides.integration-test.yaml --profile=integration-test up --detach --build
+          docker compose --file=docker-compose.development.yaml --file=docker-compose.development.overrides.integration-test.yaml --profile=integration-test wait integration-test-runner
 
   pulsar-sticky-telemetry-stream-publisher-test:
     name: Pulsar (sticky-telemetry-stream-publisher) | Test

@@ -13,9 +13,13 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 PULSAR_SERVICE_URL = os.environ.get("PULSAR_SERVICE_URL", "pulsar://pulsar:6650")
-PULSAR_TOPIC = os.environ.get(
-    "PULSAR_TOPIC",
+INPUT_TOPIC = os.environ.get(
+    "INPUT_TOPIC",
     "persistent://public/default/sensor-telemetry-streams",
+)
+OUTPUT_TOPIC = os.environ.get(
+    "OUTPUT_TOPIC",
+    "persistent://public/default/sensor-telemetry-batch-results",
 )
 SUBSCRIPTION_NAME = os.environ.get("SUBSCRIPTION_NAME", "flink-compute-subscription")
 BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "10"))
@@ -31,9 +35,9 @@ AVRO_JAR_PATH = os.environ.get(
 
 
 def main() -> None:
-    logger.info("Starting Flink compute simulation")
     logger.info(f"Pulsar service URL: {PULSAR_SERVICE_URL}")
-    logger.info(f"Pulsar topic: {PULSAR_TOPIC}")
+    logger.info(f"Input topic: {INPUT_TOPIC}")
+    logger.info(f"Output topic: {OUTPUT_TOPIC}")
     logger.info(f"Batch size: {BATCH_SIZE}")
     logger.info(f"Parallelism: {PARALLELISM}")
 
@@ -55,7 +59,7 @@ def main() -> None:
             `humidity_pct` double
         ) with (
             'connector' = 'pulsar',
-            'topics' = '{PULSAR_TOPIC}',
+            'topics' = '{INPUT_TOPIC}',
             'service-url' = '{PULSAR_SERVICE_URL}',
             'source.subscription-name' = '{SUBSCRIPTION_NAME}',
             'source.subscription-type' = 'Key_Shared',
@@ -68,13 +72,16 @@ def main() -> None:
     telemetry_stream = table_environment.to_data_stream(telemetry_table)
 
     batch_stream = telemetry_stream.key_by(lambda row: row[0]).process(
-        DetectBatchBoundary(BATCH_SIZE),
+        DetectBatchBoundary(
+            batch_size=BATCH_SIZE,
+            pulsar_service_url=PULSAR_SERVICE_URL,
+            output_topic=OUTPUT_TOPIC,
+        ),
         output_type=Types.STRING(),
     )
 
     batch_stream.print()
-
-    environment.execute("Flink Compute Simulation")
+    environment.execute("Flink Telemetry Batch Compute")
 
 
 if __name__ == "__main__":

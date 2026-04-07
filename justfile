@@ -544,6 +544,8 @@ static-type-check-python:
     uv run poe static-type-check-python --package=data-processing.nats.sticky-telemetry-stream.sticky-telemetry-stream-subscriber
     uv run poe static-type-check-python --package=data-processing.nats.telemetry-stream.telemetry-stream-publisher
     uv run poe static-type-check-python --package=data-processing.nats.telemetry-stream.telemetry-stream-subscriber
+    uv run poe static-type-check-python --package=data-processing.pulsar.sticky-telemetry-stream.sticky-telemetry-stream-flink-compute
+    uv run poe static-type-check-python --package=data-processing.pulsar.sticky-telemetry-stream.sticky-telemetry-stream-integration-test
     uv run poe static-type-check-python --package=data-processing.pulsar.sticky-telemetry-stream.sticky-telemetry-stream-publisher
     uv run poe static-type-check-python --package=data-processing.pulsar.sticky-telemetry-stream.sticky-telemetry-stream-subscriber
     uv run poe static-type-check-python --package=data-storage.delta-lake.read-delta-lake-by-amazon-athena

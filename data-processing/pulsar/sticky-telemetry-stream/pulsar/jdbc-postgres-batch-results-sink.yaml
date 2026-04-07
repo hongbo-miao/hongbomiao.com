@@ -1,0 +1,10 @@
+configs:
+  userName: "telemetry_user"
+  password: "telemetry_passw0rd"
+  jdbcUrl: "jdbc:postgresql://postgres:5432/telemetry_db"
+  tableName: "batch_results"
+  key: "publisher_id,batch_index"
+  nonKey: "sample_count,temperature_average,first_timestamp_ns,last_timestamp_ns"
+  insertMode: "UPSERT"
+  batchSize: 200
+  timeoutMs: 5000

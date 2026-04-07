@@ -1,0 +1,33 @@
+---
+name: sticky-telemetry-stream-development-integration-test
+services:
+  dekaf:
+    profiles: [disabled]
+
+  subscriber:
+    profiles: [disabled]
+
+  integration-test-runner:
+    build:
+      context: ../sticky-telemetry-stream-integration-test
+      dockerfile: Dockerfile
+    container_name: integration-test-runner
+    depends_on:
+      jdbc-sink-initialize:
+        condition: service_completed_successfully
+      jdbc-batch-results-sink-initialize:
+        condition: service_completed_successfully
+      sink-initialize:
+        condition: service_completed_successfully
+      flink-compute:
+        condition: service_started
+      publisher:
+        condition: service_started
+    environment:
+      TEST_POSTGRES_URL: postgresql://telemetry_user:telemetry_passw0rd@postgres:5432/telemetry_db
+      TEST_RUSTFS_ENDPOINT_URL: http://rustfs:9000
+      TEST_RUSTFS_ACCESS_KEY: rustfs_admin
+      TEST_RUSTFS_SECRET_KEY: rustfs_passw0rd
+    command: ["uv", "run", "pytest", "--verbose", "--verbose"]
+    profiles:
+      - integration-test

@@ -126,7 +126,7 @@ services:
       rustfs-initialize:
         condition: service_completed_successfully
     volumes:
-      - ./kafka-connect/s3-sink-connector.json:/etc/kafka-connect/s3-sink-connector.json:ro
+      - ../kafka-connect/s3-sink-connector.json:/etc/kafka-connect/s3-sink-connector.json:ro
     entrypoint: >
       curl --silent --fail --show-error -X PUT
       -H "Content-Type: application/json"
@@ -136,7 +136,7 @@ services:
 
   publisher:
     build:
-      context: .
+      context: ..
       dockerfile: sticky-telemetry-stream-publisher/Dockerfile
     depends_on:
       topic-initialize:
@@ -151,7 +151,7 @@ services:
 
   subscriber:
     build:
-      context: .
+      context: ..
       dockerfile: sticky-telemetry-stream-subscriber/Dockerfile
     depends_on:
       topic-initialize:

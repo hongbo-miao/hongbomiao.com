@@ -66,6 +66,15 @@ services:
           humidity_pct double precision,
           primary key (publisher_id, timestamp_ns)
         );
+        create table if not exists batch_results (
+          publisher_id text not null,
+          batch_index bigint not null,
+          sample_count bigint not null,
+          temperature_average double precision,
+          first_timestamp_ns bigint,
+          last_timestamp_ns bigint,
+          primary key (publisher_id, batch_index)
+        );
       '"
     restart: "no"
 
@@ -90,7 +99,15 @@ services:
       # Disable GCP resource detection to prevent the main thread from hanging
       # when trying to reach the GCP metadata server in non-GCP environments
       - OTEL_JAVA_DISABLED_RESOURCE_PROVIDERS=io.opentelemetry.contrib.gcp.resource.GCPResourceProvider
-    command: bin/pulsar standalone
+    # https://github.com/streamnative/pulsar-io-cloud-storage/issues/1246
+    # Switch from process to thread runtime to work around a ClassCastException (MessageIdImpl cannot be cast to MessageIdAdv) in pulsar-io-cloud-storage, caused by NAR classloader isolation
+    command: >
+      sh -c "sed -i
+      's/functionRuntimeFactoryClassName: org.apache.pulsar.functions.runtime.process.ProcessRuntimeFactory/functionRuntimeFactoryClassName: org.apache.pulsar.functions.runtime.thread.ThreadRuntimeFactory/'
+      conf/functions_worker.yml &&
+      unzip -j -o /pulsar/connectors/pulsar-io-jdbc-postgres.nar 'META-INF/bundled-dependencies/postgresql-*.jar' -d /tmp &&
+      export PULSAR_EXTRA_CLASSPATH=$(ls /tmp/postgresql-*.jar | head -1) &&
+      bin/pulsar standalone"
     healthcheck:
       test: [
         "CMD",
@@ -109,7 +126,8 @@ services:
       pulsar:
         condition: service_healthy
     entrypoint: >
-      sh -c "bin/pulsar-admin --admin-url http://pulsar:8080 topics create persistent://public/default/sensor-telemetry-streams || true"
+      sh -c "bin/pulsar-admin --admin-url http://pulsar:8080 topics create persistent://public/default/sensor-telemetry-streams || true &&
+      bin/pulsar-admin --admin-url http://pulsar:8080 topics create persistent://public/default/sensor-telemetry-batch-results || true"
     restart: "no"
 
   sink-initialize:
@@ -123,7 +141,7 @@ services:
         condition: service_completed_successfully
     volumes:
       - connector-data:/pulsar/connectors
-      - ./pulsar/cloud-storage-sink.yaml:/etc/pulsar/cloud-storage-sink.yaml:ro
+      - ../pulsar/cloud-storage-sink.yaml:/etc/pulsar/cloud-storage-sink.yaml:ro
     entrypoint: >
       sh -c "bin/pulsar-admin --admin-url http://pulsar:8080 sinks create
       --tenant public
@@ -146,7 +164,7 @@ services:
         condition: service_completed_successfully
     volumes:
       - connector-data:/pulsar/connectors
-      - ./pulsar/jdbc-postgres-sink.yaml:/etc/pulsar/jdbc-postgres-sink.yaml:ro
+      - ../pulsar/jdbc-postgres-sink.yaml:/etc/pulsar/jdbc-postgres-sink.yaml:ro
     entrypoint: >
       sh -c "bin/pulsar-admin --admin-url http://pulsar:8080 sinks create
       --tenant public
@@ -158,9 +176,32 @@ services:
       --parallelism 1 || true"
     restart: "no"
 
+  jdbc-batch-results-sink-initialize:
+    image: docker.io/apachepulsar/pulsar:4.2.0
+    depends_on:
+      pulsar:
+        condition: service_healthy
+      topic-initialize:
+        condition: service_completed_successfully
+      postgres-initialize:
+        condition: service_completed_successfully
+    volumes:
+      - connector-data:/pulsar/connectors
+      - ../pulsar/jdbc-postgres-batch-results-sink.yaml:/etc/pulsar/jdbc-postgres-batch-results-sink.yaml:ro
+    entrypoint: >
+      sh -c "bin/pulsar-admin --admin-url http://pulsar:8080 sinks create
+      --tenant public
+      --namespace default
+      --name jdbc-postgres-batch-results-sink
+      --inputs persistent://public/default/sensor-telemetry-batch-results
+      --archive /pulsar/connectors/pulsar-io-jdbc-postgres.nar
+      --sink-config-file /etc/pulsar/jdbc-postgres-batch-results-sink.yaml
+      --parallelism 1 || true"
+    restart: "no"
+
   publisher:
     build:
-      context: .
+      context: ..
       dockerfile: sticky-telemetry-stream-publisher/Dockerfile
     depends_on:
       topic-initialize:
@@ -172,7 +213,7 @@ services:
 
   subscriber:
     build:
-      context: .
+      context: ..
       dockerfile: sticky-telemetry-stream-subscriber/Dockerfile
     depends_on:
       topic-initialize:
@@ -184,7 +225,7 @@ services:
 
   flink-compute:
     build:
-      context: ./sticky-telemetry-stream-flink-compute
+      context: ../sticky-telemetry-stream-flink-compute
       dockerfile: Dockerfile
     depends_on:
       pulsar:
@@ -193,7 +234,8 @@ services:
         condition: service_completed_successfully
     environment:
       - PULSAR_SERVICE_URL=pulsar://pulsar:6650
-      - PULSAR_TOPIC=persistent://public/default/sensor-telemetry-streams
+      - INPUT_TOPIC=persistent://public/default/sensor-telemetry-streams
+      - OUTPUT_TOPIC=persistent://public/default/sensor-telemetry-batch-results
       - SUBSCRIPTION_NAME=flink-compute-subscription
       - BATCH_SIZE=10
       - PARALLELISM=2
