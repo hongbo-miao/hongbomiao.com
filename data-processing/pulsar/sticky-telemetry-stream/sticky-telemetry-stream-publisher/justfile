@@ -1,14 +1,26 @@
-update-lock-file:
-    uv lock
+install-toolchain:
+    rustup install
 
-install-dependencies:
-    uv sync --dev
+update:
+    cargo update
+
+check:
+    cargo check
 
 dev:
-    uv run poe dev
+    cargo run
 
 test:
-    uv run poe test
+    cargo test --all-features
 
-test-coverage:
-    uv run poe test-coverage
+lint-rust-clippy:
+    cargo clippy
+
+lint-rust-clippy-fix:
+    cargo clippy --fix --allow-dirty --allow-staged
+
+lint-rust-rustfmt:
+    cargo fmt --all -- --check
+
+lint-rust-rustfmt-fix:
+    cargo fmt --all

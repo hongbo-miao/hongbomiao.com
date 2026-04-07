@@ -201,8 +201,8 @@ services:
 
   publisher:
     build:
-      context: ..
-      dockerfile: sticky-telemetry-stream-publisher/Dockerfile
+      context: ../sticky-telemetry-stream-publisher
+      dockerfile: Dockerfile
     depends_on:
       topic-initialize:
         condition: service_completed_successfully

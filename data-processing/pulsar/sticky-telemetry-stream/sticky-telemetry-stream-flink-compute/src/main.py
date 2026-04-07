@@ -30,7 +30,7 @@ CONNECTOR_JAR_PATH = os.environ.get(
 )
 AVRO_JAR_PATH = os.environ.get(
     "AVRO_JAR_PATH",
-    "/app/lib/flink-sql-avro-1.20.0.jar",
+    "/app/lib/flink-sql-avro-1.20.3.jar",
 )
 
 
@@ -53,8 +53,8 @@ def main() -> None:
 
     table_environment.execute_sql(f"""
         create table pulsar_telemetry (
-            `publisher_id` string,
-            `timestamp_ns` bigint,
+            `publisher_id` string not null,
+            `timestamp_ns` bigint not null,
             `temperature_c` double,
             `humidity_pct` double
         ) with (

@@ -293,6 +293,7 @@ lint-rust-rustfmt:
     cd data-processing/nats/audio-stream/audio-stream-publisher && just lint-rust-rustfmt
     cd data-processing/nats/audio-stream/audio-stream-transcriber && just lint-rust-rustfmt
     cd data-processing/nats/audio-stream/nats-postgres-bridge && just lint-rust-rustfmt
+    cd data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-publisher && just lint-rust-rustfmt
     cd data-transport/arrow-flight/arrow-flight-server && just lint-rust-rustfmt
     cd data-transport/dust-dds/dust-dds-publisher && just lint-rust-rustfmt
     cd data-transport/dust-dds/dust-dds-subscriber && just lint-rust-rustfmt
@@ -312,6 +313,7 @@ lint-rust-rustfmt-fix:
     cd data-processing/nats/audio-stream/audio-stream-publisher && just lint-rust-rustfmt-fix
     cd data-processing/nats/audio-stream/audio-stream-transcriber && just lint-rust-rustfmt-fix
     cd data-processing/nats/audio-stream/nats-postgres-bridge && just lint-rust-rustfmt-fix
+    cd data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-publisher && just lint-rust-rustfmt-fix
     cd data-transport/arrow-flight/arrow-flight-server && just lint-rust-rustfmt-fix
     cd data-transport/dust-dds/dust-dds-publisher && just lint-rust-rustfmt-fix
     cd data-transport/dust-dds/dust-dds-subscriber && just lint-rust-rustfmt-fix
@@ -331,6 +333,7 @@ lint-rust-clippy:
     cd data-processing/nats/audio-stream/audio-stream-publisher && just lint-rust-clippy
     cd data-processing/nats/audio-stream/audio-stream-transcriber && just lint-rust-clippy
     cd data-processing/nats/audio-stream/nats-postgres-bridge && just lint-rust-clippy
+    cd data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-publisher && just lint-rust-clippy
     cd data-transport/arrow-flight/arrow-flight-server && just lint-rust-clippy
     cd data-transport/dust-dds/dust-dds-publisher && just lint-rust-clippy
     cd data-transport/dust-dds/dust-dds-subscriber && just lint-rust-clippy
@@ -350,6 +353,7 @@ lint-rust-clippy-fix:
     cd data-processing/nats/audio-stream/audio-stream-publisher && just lint-rust-clippy-fix
     cd data-processing/nats/audio-stream/audio-stream-transcriber && just lint-rust-clippy-fix
     cd data-processing/nats/audio-stream/nats-postgres-bridge && just lint-rust-clippy-fix
+    cd data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-publisher && just lint-rust-clippy-fix
     cd data-transport/arrow-flight/arrow-flight-server && just lint-rust-clippy-fix
     cd data-transport/dust-dds/dust-dds-publisher && just lint-rust-clippy-fix
     cd data-transport/dust-dds/dust-dds-subscriber && just lint-rust-clippy-fix
@@ -546,7 +550,6 @@ static-type-check-python:
     uv run poe static-type-check-python --package=data-processing.nats.telemetry-stream.telemetry-stream-subscriber
     uv run poe static-type-check-python --package=data-processing.pulsar.sticky-telemetry-stream.sticky-telemetry-stream-flink-compute
     uv run poe static-type-check-python --package=data-processing.pulsar.sticky-telemetry-stream.sticky-telemetry-stream-integration-test
-    uv run poe static-type-check-python --package=data-processing.pulsar.sticky-telemetry-stream.sticky-telemetry-stream-publisher
     uv run poe static-type-check-python --package=data-processing.pulsar.sticky-telemetry-stream.sticky-telemetry-stream-subscriber
     uv run poe static-type-check-python --package=data-storage.delta-lake.read-delta-lake-by-amazon-athena
     uv run poe static-type-check-python --package=data-storage.delta-lake.read-delta-lake-by-trino
