@@ -20,8 +20,8 @@ RUN mkdir -p /app/lib && \
   --output /app/lib/flink-sql-connector-pulsar-4.1.0-1.18.jar \
   https://repo1.maven.org/maven2/org/apache/flink/flink-sql-connector-pulsar/4.1.0-1.18/flink-sql-connector-pulsar-4.1.0-1.18.jar && \
   curl --silent --fail --show-error --location \
-  --output /app/lib/flink-sql-avro-1.20.0.jar \
-  https://repo1.maven.org/maven2/org/apache/flink/flink-sql-avro/1.20.0/flink-sql-avro-1.20.0.jar
+  --output /app/lib/flink-sql-avro-1.20.3.jar \
+  https://repo1.maven.org/maven2/org/apache/flink/flink-sql-avro/1.20.3/flink-sql-avro-1.20.3.jar
 COPY src/ src/
 ENV JAVA_HOME=/usr/lib/jvm/default-java
 CMD ["python", "src/main.py"]

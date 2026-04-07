@@ -1,14 +1,11 @@
-FROM ghcr.io/astral-sh/uv:0.11.3-python3.14-trixie-slim AS builder
+FROM docker.io/rust:1.94.1-slim-trixie AS builder
 WORKDIR /usr/src/app
-ENV UV_COMPILE_BYTECODE=1 \
-  UV_LINK_MODE=copy \
-  UV_PROJECT_ENVIRONMENT=/usr/local
-COPY sticky-telemetry-stream-schema/ sticky-telemetry-stream-schema/
-COPY ["sticky-telemetry-stream-publisher/pyproject.toml", "sticky-telemetry-stream-publisher/uv.lock", "sticky-telemetry-stream-publisher/.python-version", "sticky-telemetry-stream-publisher/"]
-RUN uv sync --frozen --no-dev --no-editable --directory sticky-telemetry-stream-publisher
+RUN apt-get update && apt-get install --yes --no-install-recommends cmake g++ make pkg-config libssl-dev protobuf-compiler && rm -rf /var/lib/apt/lists/*
+COPY Cargo.toml Cargo.lock ./
+COPY src/ src/
+RUN cargo build --locked --release
 
-FROM docker.io/python:3.14.3-slim-trixie AS release
-WORKDIR /usr/src/app
-COPY --from=builder /usr/local/lib/python3.14/site-packages/ /usr/local/lib/python3.14/site-packages/
-COPY sticky-telemetry-stream-publisher/src/ src/
-CMD ["python", "src/main.py"]
+FROM docker.io/debian:trixie-slim AS release
+RUN apt-get update && apt-get install --yes --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
+COPY --from=builder /usr/src/app/target/release/sticky-telemetry-stream-publisher ./
+CMD ["./sticky-telemetry-stream-publisher"]
