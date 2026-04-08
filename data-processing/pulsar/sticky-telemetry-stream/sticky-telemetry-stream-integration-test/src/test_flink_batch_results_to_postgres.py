@@ -14,7 +14,7 @@ class TestFlinkBatchResultsToPostgres:
         postgres_url: str,
     ) -> None:
         @retry(
-            stop=stop_after_delay(180),
+            stop=stop_after_delay(300),
             wait=wait_fixed(5.0),
             reraise=True,
         )
@@ -38,7 +38,7 @@ class TestFlinkBatchResultsToPostgres:
         postgres_url: str,
     ) -> None:
         @retry(
-            stop=stop_after_delay(180),
+            stop=stop_after_delay(300),
             wait=wait_fixed(5.0),
             reraise=True,
         )

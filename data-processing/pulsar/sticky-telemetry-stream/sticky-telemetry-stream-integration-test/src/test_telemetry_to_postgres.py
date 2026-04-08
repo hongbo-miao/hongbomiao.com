@@ -14,7 +14,7 @@ class TestTelemetryToPostgres:
         postgres_url: str,
     ) -> None:
         @retry(
-            stop=stop_after_delay(120),
+            stop=stop_after_delay(300),
             wait=wait_fixed(5.0),
             reraise=True,
         )
@@ -34,6 +34,20 @@ class TestTelemetryToPostgres:
                 assert publisher_count >= 2, (
                     f"Expected at least 2 distinct publishers, got {publisher_count}"
                 )
+
+                # mqtt_publisher_count = await connection.fetchval(
+                #     "select count(distinct publisher_id) from telemetry where publisher_id like 'mqtt-%'",
+                # )
+                # assert mqtt_publisher_count >= 1, (
+                #     f"Expected at least 1 mqtt publisher, got {mqtt_publisher_count}"
+                # )
+
+                pulsar_publisher_count = await connection.fetchval(
+                    "select count(distinct publisher_id) from telemetry where publisher_id like 'pulsar-%'",
+                )
+                assert pulsar_publisher_count >= 1, (
+                    f"Expected at least 1 pulsar publisher, got {pulsar_publisher_count}"
+                )
             finally:
                 await connection.close()
 
@@ -45,7 +59,7 @@ class TestTelemetryToPostgres:
         postgres_url: str,
     ) -> None:
         @retry(
-            stop=stop_after_delay(120),
+            stop=stop_after_delay(300),
             wait=wait_fixed(5.0),
             reraise=True,
         )

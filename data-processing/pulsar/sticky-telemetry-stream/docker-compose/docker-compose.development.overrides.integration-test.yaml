@@ -21,7 +21,11 @@ services:
         condition: service_completed_successfully
       flink-compute:
         condition: service_started
-      publisher:
+      validate-function:
+        condition: service_started
+      mqtt-publisher:
+        condition: service_started
+      pulsar-publisher:
         condition: service_started
     environment:
       TEST_POSTGRES_URL: postgresql://telemetry_user:telemetry_passw0rd@postgres:5432/telemetry_db

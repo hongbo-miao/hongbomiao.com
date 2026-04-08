@@ -710,12 +710,15 @@ jobs:
             pulsar-sticky-telemetry-stream-flink-compute:
               - 'data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-flink-compute/**'
             pulsar-sticky-telemetry-stream-integration-test:
-              - 'data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-integration-test/**'
-              - 'data-processing/pulsar/sticky-telemetry-stream/docker-compose/**'
-            pulsar-sticky-telemetry-stream-publisher:
-              - 'data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-publisher/**'
+              - 'data-processing/pulsar/sticky-telemetry-stream/**'
+            pulsar-sticky-telemetry-stream-mqtt-publisher:
+              - 'data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-mqtt-publisher/**'
+            pulsar-sticky-telemetry-stream-pulsar-publisher:
+              - 'data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-pulsar-publisher/**'
             pulsar-sticky-telemetry-stream-subscriber:
               - 'data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-subscriber/**'
+            pulsar-sticky-telemetry-stream-validate-function:
+              - 'data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-validate-function/**'
             q-learning:
               - 'reinforcement-learning/q-learning/**'
             quantum-computing:
@@ -1045,8 +1048,10 @@ jobs:
       prometheus: ${{ steps.filter.outputs.prometheus }}
       pulsar-sticky-telemetry-stream-flink-compute: ${{ steps.filter.outputs.pulsar-sticky-telemetry-stream-flink-compute }}
       pulsar-sticky-telemetry-stream-integration-test: ${{ steps.filter.outputs.pulsar-sticky-telemetry-stream-integration-test }}
-      pulsar-sticky-telemetry-stream-publisher: ${{ steps.filter.outputs.pulsar-sticky-telemetry-stream-publisher }}
+      pulsar-sticky-telemetry-stream-mqtt-publisher: ${{ steps.filter.outputs.pulsar-sticky-telemetry-stream-mqtt-publisher }}
+      pulsar-sticky-telemetry-stream-pulsar-publisher: ${{ steps.filter.outputs.pulsar-sticky-telemetry-stream-pulsar-publisher }}
       pulsar-sticky-telemetry-stream-subscriber: ${{ steps.filter.outputs.pulsar-sticky-telemetry-stream-subscriber }}
+      pulsar-sticky-telemetry-stream-validate-function: ${{ steps.filter.outputs.pulsar-sticky-telemetry-stream-validate-function }}
       proximal-policy-optimization-low-rank-adaptation: ${{ steps.filter.outputs.proximal-policy-optimization-low-rank-adaptation }}
       q-learning: ${{ steps.filter.outputs.q-learning }}
       quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
@@ -1271,8 +1276,10 @@ jobs:
       nats-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.nats-telemetry-stream-subscriber == 'true' }}
       pulsar-sticky-telemetry-stream-flink-compute: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-flink-compute == 'true' }}
       pulsar-sticky-telemetry-stream-integration-test: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-integration-test == 'true' }}
-      pulsar-sticky-telemetry-stream-publisher: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-publisher == 'true' }}
+      pulsar-sticky-telemetry-stream-mqtt-publisher: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-mqtt-publisher == 'true' }}
+      pulsar-sticky-telemetry-stream-pulsar-publisher: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-pulsar-publisher == 'true' }}
       pulsar-sticky-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-subscriber == 'true' }}
+      pulsar-sticky-telemetry-stream-validate-function: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-validate-function == 'true' }}
 
   test-data-transformation:
     name: Test Data Transformation

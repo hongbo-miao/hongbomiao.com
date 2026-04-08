@@ -4,8 +4,8 @@ from uuid import uuid4
 
 import pulsar
 from pulsar.schema import AvroSchema
-from shared.telemetry.utils.consume_telemetry_messages import (
-    consume_telemetry_messages,
+from shared.telemetry.services.publish_telemetry_stream import (
+    publish_telemetry_stream,
 )
 from sticky_telemetry_stream_schema.telemetry_record import TelemetryRecord
 
@@ -13,37 +13,39 @@ logger = logging.getLogger(__name__)
 
 PULSAR_SERVICE_URL = os.environ.get("PULSAR_SERVICE_URL", "pulsar://localhost:6650")
 PULSAR_TOPIC = "persistent://public/default/sensor-telemetry"
-SUBSCRIPTION_NAME = "telemetry-subscriber-group"
-RECEIVE_TIMEOUT_MS = 1000
+PUBLISH_INTERVAL_S = 1.0
 
 
 def main() -> None:
     client = None
+    producer = None
     try:
-        subscriber_id = str(uuid4())[:8]
+        publisher_id = f"pulsar-{str(uuid4())[:8]}"
         logger.info(
-            f"Subscriber {subscriber_id}: connecting to Pulsar at {PULSAR_SERVICE_URL}",
+            f"Publisher {publisher_id}: connecting to Pulsar at {PULSAR_SERVICE_URL}",
         )
         client = pulsar.Client(PULSAR_SERVICE_URL)
-        consumer = client.subscribe(
-            topic=PULSAR_TOPIC,
-            subscription_name=SUBSCRIPTION_NAME,
-            consumer_type=pulsar.ConsumerType.KeyShared,
-            initial_position=pulsar.InitialPosition.Earliest,
+        producer = client.create_producer(
+            PULSAR_TOPIC,
             schema=AvroSchema(TelemetryRecord),
         )
 
-        logger.info(
-            f"Subscriber {subscriber_id}: joined subscription '{SUBSCRIPTION_NAME}' "
-            f"with KeyShared consumer type",
+        attempted_sample_count = publish_telemetry_stream(
+            producer=producer,
+            publisher_id=publisher_id,
+            publish_interval_s=PUBLISH_INTERVAL_S,
         )
 
-        consume_telemetry_messages(consumer, subscriber_id, RECEIVE_TIMEOUT_MS)
+        logger.info(
+            f"Publisher {publisher_id}: telemetry streaming completed with {attempted_sample_count} samples published",
+        )
 
     except Exception:
-        logger.exception("Subscriber error")
+        logger.exception("Publisher error")
         raise
     finally:
+        if producer:
+            producer.flush()
         if client:
             client.close()
             logger.info("Pulsar client closed")

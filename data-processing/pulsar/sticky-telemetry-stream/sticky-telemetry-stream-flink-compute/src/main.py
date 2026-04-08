@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 PULSAR_SERVICE_URL = os.environ.get("PULSAR_SERVICE_URL", "pulsar://pulsar:6650")
 INPUT_TOPIC = os.environ.get(
     "INPUT_TOPIC",
-    "persistent://public/default/sensor-telemetry-streams",
+    "persistent://public/default/sensor-telemetry",
 )
 OUTPUT_TOPIC = os.environ.get(
     "OUTPUT_TOPIC",
