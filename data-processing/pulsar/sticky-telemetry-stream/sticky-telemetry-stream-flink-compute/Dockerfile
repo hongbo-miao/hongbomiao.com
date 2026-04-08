@@ -9,7 +9,7 @@ ENV JAVA_HOME=/usr/lib/jvm/default-java
 COPY ["pyproject.toml", "uv.lock", ".python-version", "./"]
 RUN uv sync --frozen --no-dev --no-editable
 
-FROM docker.io/python:3.11.15-slim-trixie AS release
+FROM docker.io/python:3.14.3-slim-trixie AS release
 RUN apt-get update && \
   apt-get install --yes --no-install-recommends default-jdk-headless curl && \
   rm -rf /var/lib/apt/lists/*
