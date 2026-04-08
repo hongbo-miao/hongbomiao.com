@@ -1,5 +1,6 @@
 // https://eslint.org/docs/latest/use/configure/configuration-files
 
+import { fixupPluginRules } from '@eslint/compat';
 import eslint from '@eslint/js';
 import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
@@ -89,7 +90,7 @@ export default [
     plugins: {
       '@typescript-eslint': typescriptEslintPlugin,
       import: importPlugin,
-      react: reactPlugin,
+      react: fixupPluginRules(reactPlugin),
     },
     settings: {
       'import/resolver': {
