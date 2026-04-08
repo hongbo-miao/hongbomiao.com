@@ -1,20 +1,19 @@
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use anyhow::Result;
-use pulsar::producer::SendFuture;
-use pulsar::{Executor, Producer};
+use rumqttc::{AsyncClient, QoS};
 use tracing::info;
 
 use crate::shared::telemetry::models::telemetry_record::TelemetryRecord;
 
-pub async fn publish_telemetry_stream<E: Executor>(
-    producer: &mut Producer<E>,
+pub async fn publish_telemetry_stream(
+    mqtt_client: &AsyncClient,
+    mqtt_topic: &str,
     publisher_id: &str,
     publish_interval: Duration,
 ) -> Result<()> {
     let mut published_sample_count: u64 = 0;
     let mut sample_index: u64 = 0;
-    let mut pending_send_future_list: Vec<SendFuture> = Vec::new();
 
     loop {
         let timestamp_ns: i64 = SystemTime::now()
@@ -31,21 +30,20 @@ pub async fn publish_telemetry_stream<E: Executor>(
             humidity_pct: Some(sample_index as f64),
         };
 
-        let send_future = producer
-            .send_non_blocking(telemetry)
-            .await
-            .map_err(|error| anyhow::anyhow!("Failed to send message: {error}"))?;
+        let json_payload = serde_json::to_vec(&telemetry)
+            .map_err(|error| anyhow::anyhow!("Failed to serialize telemetry to JSON: {error}"))?;
 
-        pending_send_future_list.push(send_future);
+        mqtt_client
+            .publish(mqtt_topic, QoS::AtLeastOnce, false, json_payload)
+            .await
+            .map_err(|error| anyhow::anyhow!("Failed to publish MQTT message: {error}"))?;
+
         published_sample_count += 1;
 
         if published_sample_count.is_multiple_of(10) {
-            for send_future in pending_send_future_list.drain(..) {
-                send_future.await.map_err(|error| {
-                    anyhow::anyhow!("Failed to confirm message delivery: {error}")
-                })?;
-            }
-            info!("Publisher {publisher_id}: published {published_sample_count} telemetry samples");
+            info!(
+                "Publisher {publisher_id}: published {published_sample_count} telemetry samples via MQTT"
+            );
         }
 
         sample_index += 1;

@@ -11,8 +11,11 @@ docker-compose-restart:
     docker compose --file=docker-compose.development.yaml down --volumes
     docker compose --file=docker-compose.development.yaml up --detach --build
 
-scale-up-publisher:
-    docker compose --file=docker-compose.development.yaml up --detach --scale publisher=4
+scale-up-mqtt-publisher:
+    docker compose --file=docker-compose.development.yaml up --detach --scale mqtt-publisher=3
+
+scale-up-pulsar-publisher:
+    docker compose --file=docker-compose.development.yaml up --detach --scale pulsar-publisher=3
 
 scale-up-subscriber:
     docker compose --file=docker-compose.development.yaml up --detach --scale subscriber=3

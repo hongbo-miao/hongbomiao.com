@@ -1,15 +1,11 @@
 [package]
-name = "sticky-telemetry-stream-publisher"
+name = "sticky-telemetry-stream-mqtt-publisher"
 version = "1.0.0"
 edition = "2024"
 
 [dependencies]
 anyhow = "=1.0.102"
-apache-avro = { version = "=0.21.0", features = ["derive"] }
-pulsar = { version = "=6.7.2", default-features = false, features = [
-  "tokio-runtime",
-  "compression",
-] }
+rumqttc = "=0.24.0"
 serde = { version = "=1.0.228", features = ["derive"] }
 serde_json = "=1.0.149"
 tokio = { version = "=1.51.0", features = ["full"] }

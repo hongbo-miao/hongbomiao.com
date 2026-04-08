@@ -1,11 +1,11 @@
 [project]
-name = "sticky-telemetry-stream-flink-compute"
+name = "sticky-telemetry-stream-validate-function"
 version = "1.0.0"
-requires-python = "==3.11.15"
+requires-python = "==3.14.3"
 dependencies = [
-  "apache-flink==1.20.3",
-  "pulsar-client==3.10.0",
-  "pydantic==2.12.5",
+  "pulsar-client[avro]==3.10.0",
+  "sticky-telemetry-stream-schema",
+  "typing-extensions==4.15.0",
 ]
 
 [dependency-groups]
@@ -18,6 +18,9 @@ dev = [
 [tool.uv]
 package = false
 required-version = ">=0.10.0"
+
+[tool.uv.sources]
+sticky-telemetry-stream-schema = { path = "../sticky-telemetry-stream-schema" }
 
 [tool.poe.tasks]
 dev = "python src/main.py"
