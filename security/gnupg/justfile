@@ -1,0 +1,9 @@
+install:
+    brew install gnupg
+
+generate-key:
+    # ECC (sign and encrypt), Curve 25519
+    gpg --full-generate-key
+
+show-public-key:
+    gpg --armor --export 3375461+hongbo-miao@users.noreply.github.com
