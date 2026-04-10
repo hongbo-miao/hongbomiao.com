@@ -32,6 +32,7 @@ export default [
       '**/*.swc/**/*',
       '**/*.tfstate',
       '**/*.unsealed.yaml',
+      '**/*_pb2.py',
       '**/.DS_Store',
       '**/.ansible/**/*',
       '**/.claude/**/*',

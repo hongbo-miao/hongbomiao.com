@@ -1,6 +1,7 @@
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use anyhow::Result;
+use prost::Message;
 use rumqttc::{AsyncClient, QoS};
 use tracing::info;
 
@@ -30,11 +31,10 @@ pub async fn publish_telemetry_stream(
             humidity_pct: Some(sample_index as f64),
         };
 
-        let json_payload = serde_json::to_vec(&telemetry)
-            .map_err(|error| anyhow::anyhow!("Failed to serialize telemetry to JSON: {error}"))?;
+        let protobuf_payload = telemetry.encode_to_vec();
 
         mqtt_client
-            .publish(mqtt_topic, QoS::AtLeastOnce, false, json_payload)
+            .publish(mqtt_topic, QoS::AtLeastOnce, false, protobuf_payload)
             .await
             .map_err(|error| anyhow::anyhow!("Failed to publish MQTT message: {error}"))?;
 
