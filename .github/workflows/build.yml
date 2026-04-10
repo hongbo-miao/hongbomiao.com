@@ -949,7 +949,7 @@ jobs:
           docker create --name=hm-pgbackrest ghcr.io/hongbo-miao/hm-pgbackrest:latest
           docker cp hm-pgbackrest:/usr/src/app/build/pgbackrest-release-2.43/src/pgbackrest pgbackrest
       - name: Upload pgbackrest
-        uses: actions/upload-artifact@v7.0.0
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: pgbackrest
           path: pgbackrest
