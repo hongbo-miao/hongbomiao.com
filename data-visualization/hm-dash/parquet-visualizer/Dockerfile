@@ -1,5 +1,5 @@
 FROM docker.io/python:3.13.13-slim-trixie AS builder
-COPY --from=ghcr.io/astral-sh/uv:0.11.5 /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.11.6 /uv /uvx /bin/
 WORKDIR /app
 ENV UV_COMPILE_BYTECODE=1 \
   UV_LINK_MODE=copy \

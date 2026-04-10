@@ -1,5 +1,5 @@
 FROM docker.io/python:3.14.4-slim-trixie AS base
-COPY --from=ghcr.io/astral-sh/uv:0.11.5 /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.11.6 /uv /uvx /bin/
 WORKDIR /usr/src/app
 ENV PYTHONFAULTHANDLER=1 \
   PYTHONUNBUFFERED=1 \
