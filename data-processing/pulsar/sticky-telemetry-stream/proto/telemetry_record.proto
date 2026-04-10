@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package telemetry;
+
+message TelemetryRecord {
+  string publisher_id = 1;
+  int64 timestamp_ns = 2;
+  optional double temperature_c = 3;
+  optional double humidity_pct = 4;
+}

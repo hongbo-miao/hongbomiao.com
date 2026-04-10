@@ -237,8 +237,8 @@ services:
 
   mqtt-publisher:
     build:
-      context: ../sticky-telemetry-stream-mqtt-publisher
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: sticky-telemetry-stream-mqtt-publisher/Dockerfile
     depends_on:
       mqtt-on-pulsar-ready:
         condition: service_completed_successfully

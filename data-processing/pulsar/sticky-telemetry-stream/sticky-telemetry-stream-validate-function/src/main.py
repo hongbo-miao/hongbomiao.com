@@ -4,7 +4,9 @@ import os
 import pulsar
 from pulsar.schema import AvroSchema
 from shared.telemetry.utils.handle_send_result import handle_send_result
-from shared.telemetry.utils.validate_telemetry_json import validate_telemetry_json
+from shared.telemetry.utils.validate_telemetry_protobuf import (
+    validate_telemetry_protobuf,
+)
 from sticky_telemetry_stream_schema.telemetry_record import TelemetryRecord
 
 logger = logging.getLogger(__name__)
@@ -51,7 +53,7 @@ def main() -> None:
 
             try:
                 raw_payload = message.data()
-                telemetry_record = validate_telemetry_json(raw_payload)
+                telemetry_record = validate_telemetry_protobuf(raw_payload)
                 if telemetry_record is None:
                     logger.warning(
                         f"Dropping invalid message {message.message_id()}",
