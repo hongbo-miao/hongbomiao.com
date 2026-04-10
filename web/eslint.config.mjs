@@ -1,5 +1,6 @@
 // https://eslint.org/docs/latest/use/configure/configuration-files
 
+import { fixupPluginRules } from '@eslint/compat';
 import eslint from '@eslint/js';
 import tanstackQueryPlugin from '@tanstack/eslint-plugin-query';
 import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
@@ -105,7 +106,7 @@ export default [
       jest: jestPlugin,
       'jest-dom': jestDomPlugin,
       'jsx-a11y': jsxA11yPlugin,
-      react: reactPlugin,
+      react: fixupPluginRules(reactPlugin),
       'react-hooks': reactHooksPlugin,
       'react-refresh': reactRefreshPlugin,
       security: securityPlugin,
