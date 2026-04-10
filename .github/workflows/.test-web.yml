@@ -78,10 +78,10 @@ jobs:
         working-directory: api/api-node
         run: |
           docker compose --file=docker-compose.playwright.yaml up --detach
-      - name: Install Playwright browsers
+      - name: Install Playwright browser
         working-directory: web-playwright
         run: |
-          npx playwright install --with-deps
+          npx playwright install chromium --with-deps
       - name: End-to-end test
         working-directory: web-playwright
         run: |
