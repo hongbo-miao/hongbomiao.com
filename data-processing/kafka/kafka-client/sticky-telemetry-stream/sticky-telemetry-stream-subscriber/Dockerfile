@@ -1,4 +1,5 @@
-FROM ghcr.io/astral-sh/uv:0.11.5-python3.14-trixie-slim AS builder
+FROM docker.io/python:3.14.4-slim-trixie AS builder
+COPY --from=ghcr.io/astral-sh/uv:0.11.5 /uv /uvx /bin/
 WORKDIR /usr/src/app
 ENV UV_COMPILE_BYTECODE=1 \
   UV_LINK_MODE=copy \
