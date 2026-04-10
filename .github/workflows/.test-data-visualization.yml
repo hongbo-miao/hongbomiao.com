@@ -121,10 +121,10 @@ jobs:
         working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
           npm ci
-      - name: Install Playwright browsers
+      - name: Install Playwright browser
         working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
-          npx playwright install --with-deps
+          npx playwright install chromium --with-deps
       - name: Build plugin
         working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
