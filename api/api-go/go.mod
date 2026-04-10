@@ -22,7 +22,7 @@ require (
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.3.3
 	github.com/jackc/pgx/v5 v5.9.1
 	github.com/joho/godotenv v1.5.1
-	github.com/open-policy-agent/opa v1.15.1
+	github.com/open-policy-agent/opa v1.15.2
 	github.com/prometheus/client_golang v1.23.2
 	github.com/rs/zerolog v1.35.0
 	github.com/stretchr/testify v1.11.1
