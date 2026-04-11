@@ -244,10 +244,10 @@
         'pulumi-aws',
       ],
     },
-    // Group Python development packages
-    // 1) Group Python development packages for major updates per project
+    // Group Python-related development packages
+    // 1) Group Python-related development packages for major updates per project
     {
-      groupName: 'python development packages',
+      groupName: 'python-related development packages',
       matchPackageNames: [
         'poethepoet',
         'pytest',
@@ -255,9 +255,9 @@
       ],
       matchUpdateTypes: ['major'],
     },
-    // 2) Group Python development packages for digest, minor, patch, pin updates across all projects
+    // 2) Group Python-related development packages for digest, minor, patch, pin updates across all projects
     {
-      groupName: 'python development packages - digest, minor, patch, pin updates',
+      groupName: 'python-related development packages - digest, minor, patch, pin updates',
       matchPackageNames: [
         'poethepoet',
         'pytest',
@@ -278,6 +278,8 @@
       ],
       matchUpdateTypes: ['major', 'minor'],
       minimumReleaseAge: null,
+      separateMultipleMajor: true,
+      separateMultipleMinor: true,
     },
     // 2) Group Python-related packages for digest, patch, pin updates across all projects
     {
