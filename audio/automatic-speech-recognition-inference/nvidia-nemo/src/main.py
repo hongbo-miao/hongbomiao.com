@@ -14,7 +14,7 @@ def main() -> None:
     logger.info(f"Using device: {device}")
 
     logger.info("Loading pretrained ASR model...")
-    asr_model = nemo_asr.models.EncDecRNNTBPEModel.from_pretrained(
+    asr_model = nemo_asr.models.ASRModel.from_pretrained(
         model_name="nvidia/parakeet-tdt-0.6b-v3",
     )
     asr_model.to(device)
