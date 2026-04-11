@@ -2,6 +2,7 @@
 ---
 servingEngineSpec:
   enableEngine: true
+  servicePort: 8000
   runtimeClassName: nebius-nvidia
   tolerations:
     - key: environment
@@ -117,6 +118,7 @@ routerSpec:
   tag: v0.1.10
   replicaCount: 3
   serviceDiscovery: k8s
+  k8sServiceDiscoveryType: service-name
   routingLogic: roundrobin
   nodeSelector:
     environment: production
