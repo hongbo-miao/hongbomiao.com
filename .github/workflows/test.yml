@@ -733,8 +733,6 @@ jobs:
               - 'audio/voice-activity-detection/rnnoise-vad/**'
             robot-operating-system:
               - 'robotics/robot-operating-system/**'
-            rti-connext-dds:
-              - 'data-transport/rti-connext-dds/**'
             speculative-decoding:
               - 'large-language-model-inference/speculative-decoding/**'
             stable-diffusion:
@@ -1062,7 +1060,6 @@ jobs:
       qwen3: ${{ steps.filter.outputs.qwen3 }}
       rnnoise-vad: ${{ steps.filter.outputs.rnnoise-vad }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
-      rti-connext-dds: ${{ steps.filter.outputs.rti-connext-dds }}
       speculative-decoding: ${{ steps.filter.outputs.speculative-decoding }}
       stable-diffusion: ${{ steps.filter.outputs.stable-diffusion }}
       streaming-sortformer-diarizer: ${{ steps.filter.outputs.streaming-sortformer-diarizer }}
@@ -1543,7 +1540,6 @@ jobs:
       arrow-flight-server: ${{ needs.detect-changes.outputs.arrow-flight-server == 'true' }}
       dust-dds-publisher: ${{ needs.detect-changes.outputs.dust-dds-publisher == 'true' }}
       dust-dds-subscriber: ${{ needs.detect-changes.outputs.dust-dds-subscriber == 'true' }}
-      rti-connext-dds: ${{ needs.detect-changes.outputs.rti-connext-dds == 'true' }}
       udp-receiver: ${{ needs.detect-changes.outputs.udp-receiver == 'true' }}
       udp-sender: ${{ needs.detect-changes.outputs.udp-sender == 'true' }}
 
