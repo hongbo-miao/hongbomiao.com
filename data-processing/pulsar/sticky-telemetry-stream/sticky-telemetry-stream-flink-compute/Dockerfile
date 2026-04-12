@@ -1,4 +1,4 @@
-FROM docker.io/python:3.11.15-slim-trixie AS builder
+FROM docker.io/python:3.13.13-slim-trixie AS builder
 COPY --from=ghcr.io/astral-sh/uv:0.11.6 /uv /uvx /bin/
 WORKDIR /usr/src/app
 ENV UV_COMPILE_BYTECODE=1 \
@@ -10,7 +10,7 @@ ENV JAVA_HOME=/usr/lib/jvm/default-java
 COPY ["pyproject.toml", "uv.lock", ".python-version", "./"]
 RUN uv sync --frozen --no-dev --no-editable
 
-FROM docker.io/python:3.11.15-slim-trixie AS release
+FROM docker.io/python:3.13.13-slim-trixie AS release
 RUN apt-get update && \
   apt-get install --yes --no-install-recommends default-jdk-headless curl && \
   rm -rf /var/lib/apt/lists/*
