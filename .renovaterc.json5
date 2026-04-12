@@ -400,5 +400,11 @@
         'dotnet-sdk',
       ],
     },
+    // Disable updates for Docker images from Harbor registry
+    {
+      matchDatasources: ['docker'],
+      matchPackagePrefixes: ['harbor.hongbomiao.com/'],
+      enabled: false,
+    },
   ],
 }
