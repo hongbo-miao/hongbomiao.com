@@ -691,6 +691,8 @@ jobs:
               - 'machine-learning/nvidia-dali/**'
             nvidia-nemo:
               - 'audio/automatic-speech-recognition-inference/nvidia-nemo/**'
+            qwen3-asr:
+              - 'audio/automatic-speech-recognition-inference/qwen3-asr/**'
             open-clip:
               - 'embedding/open-clip/**'
             openvla:
@@ -1039,6 +1041,7 @@ jobs:
       nvidia-cosmos: ${{ steps.filter.outputs.nvidia-cosmos }}
       nvidia-dali: ${{ steps.filter.outputs.nvidia-dali }}
       nvidia-nemo: ${{ steps.filter.outputs.nvidia-nemo }}
+      qwen3-asr: ${{ steps.filter.outputs.qwen3-asr }}
       open-clip: ${{ steps.filter.outputs.open-clip }}
       openvla: ${{ steps.filter.outputs.openvla }}
       pack-unpack-data: ${{ steps.filter.outputs.pack-unpack-data }}
@@ -1492,6 +1495,7 @@ jobs:
       nvidia-cosmos: ${{ needs.detect-changes.outputs.nvidia-cosmos == 'true' }}
       nvidia-dali: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
       nvidia-nemo: ${{ needs.detect-changes.outputs.nvidia-nemo == 'true' }}
+      qwen3-asr: ${{ needs.detect-changes.outputs.qwen3-asr == 'true' }}
       open-clip: ${{ needs.detect-changes.outputs.open-clip == 'true' }}
       openvla: ${{ needs.detect-changes.outputs.openvla == 'true' }}
       post-training-quantization: ${{ needs.detect-changes.outputs.post-training-quantization == 'true' }}

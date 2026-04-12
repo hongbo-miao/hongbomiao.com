@@ -496,6 +496,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=audio.automatic-speech-recognition-inference.hm-speaches
     uv run poe static-type-check-python --package=audio.automatic-speech-recognition-inference.hm-whisperx
     uv run poe static-type-check-python --package=audio.automatic-speech-recognition-inference.nvidia-nemo
+    uv run poe static-type-check-python --package=audio.automatic-speech-recognition-inference.qwen3-asr
     uv run poe static-type-check-python --package=audio.speaker-diarization.hm-diart
     uv run poe static-type-check-python --package=audio.speaker-diarization.streaming-sortformer-diarizer
     uv run poe static-type-check-python --package=audio.voice-activity-detection.hm-silero-vad
