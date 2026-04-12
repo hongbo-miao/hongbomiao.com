@@ -1,4 +1,4 @@
-FROM docker.io/python:3.13.13-slim-trixie AS builder
+FROM docker.io/python:3.14.4-slim-trixie AS builder
 COPY --from=ghcr.io/astral-sh/uv:0.11.6 /uv /uvx /bin/
 WORKDIR /app
 ENV UV_COMPILE_BYTECODE=1 \
@@ -7,7 +7,7 @@ ENV UV_COMPILE_BYTECODE=1 \
 COPY ["pyproject.toml", "uv.lock", ".python-version", "./"]
 RUN uv sync --frozen --no-dev
 
-FROM docker.io/python:3.13.13-slim-trixie AS release
+FROM docker.io/python:3.14.4-slim-trixie AS release
 WORKDIR /app
 COPY --from=builder /usr/local/lib/python3.13/site-packages/ /usr/local/lib/python3.13/site-packages/
 COPY src/ ./src/
