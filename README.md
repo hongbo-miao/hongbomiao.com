@@ -61,7 +61,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 > [!NOTE]
 > The diagram here may take a moment to load. Please wait patiently.
 
-![Architecture](https://github.com/user-attachments/assets/27fe5066-d700-4e8e-b2bd-d123de320e50)
+![Architecture](https://github.com/user-attachments/assets/9d557c5a-cf45-4392-b2d5-ac76f98baecf)
 
 # 🧱 Tech Stack
 
@@ -822,7 +822,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Amazon S3** - Object storage
     - **Mountpoint for Amazon S3** - High-performance file client for mounting Amazon S3 as a local file system
   - **Amazon Redshift** - Data warehouse
-  - **Amazon SageMaker** - Machine learning platform
+  - **Amazon SageMaker AI** - Machine learning platform
   - **Amazon SQS** - Queue
   - **Amazon VPC** - Virtual private cloud
   - **AWS Batch** - Batch computing
