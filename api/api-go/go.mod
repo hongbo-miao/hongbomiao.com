@@ -26,7 +26,7 @@ require (
 	github.com/prometheus/client_golang v1.23.2
 	github.com/rs/zerolog v1.35.0
 	github.com/stretchr/testify v1.11.1
-	github.com/valkey-io/valkey-go v1.0.73
+	github.com/valkey-io/valkey-go v1.0.74
 	github.com/valkey-io/valkey-go/mock v1.0.73
 	go.elastic.co/apm/module/apmgin/v2 v2.7.6
 	go.elastic.co/apm/module/apmgrpc/v2 v2.7.6
