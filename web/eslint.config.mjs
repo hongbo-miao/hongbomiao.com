@@ -67,6 +67,7 @@ export default [
       '**/coverage.xml',
       '**/coverage/**/*',
       '**/data/**/*',
+      '**/dist/**/*',
       '**/node_modules/**/*',
       '**/output/**/*',
       '**/secrets.auto.tfvars',

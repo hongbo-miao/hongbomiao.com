@@ -1,0 +1,44 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: livekit
+  namespace: audio-stream
+spec:
+  selector:
+    app: livekit
+  ports:
+    - name: http
+      port: 7880
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: livekit
+  namespace: audio-stream
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: livekit
+  template:
+    metadata:
+      labels:
+        app: livekit
+    spec:
+      enableServiceLinks: false
+      containers:
+        - name: livekit
+          image: docker.io/livekit/livekit-server:v1.10.1
+          args: ["--config", "/etc/livekit/livekit.yaml"]
+          ports:
+            - containerPort: 7880
+          volumeMounts:
+            - name: livekit-config
+              mountPath: /etc/livekit/livekit.yaml
+              subPath: livekit.yaml
+              readOnly: true
+      volumes:
+        - name: livekit-config
+          configMap:
+            name: livekit-config

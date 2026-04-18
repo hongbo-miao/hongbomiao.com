@@ -87,6 +87,15 @@ name: . Test Data Processing
       nats-telemetry-stream-subscriber:
         required: true
         type: boolean
+      pulsar-audio-stream-grpc-pulsar-bridge:
+        required: true
+        type: boolean
+      pulsar-audio-stream-publisher:
+        required: true
+        type: boolean
+      pulsar-audio-stream-pulsar-livekit-bridge:
+        required: true
+        type: boolean
       pulsar-sticky-telemetry-stream-flink-compute:
         required: true
         type: boolean
@@ -1129,3 +1138,93 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-validate-function
+
+  pulsar-audio-stream-grpc-pulsar-bridge-test:
+    name: Pulsar (audio-stream-grpc-pulsar-bridge) | Test
+    if: ${{ inputs.workflow || inputs.pulsar-audio-stream-grpc-pulsar-bridge }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 34.1
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        with:
+          cache: true
+          rust-src-dir: data-processing/pulsar/audio-stream/grpc-pulsar-bridge
+      - name: Install dependencies
+        working-directory: data-processing/pulsar/audio-stream/grpc-pulsar-bridge
+        run: |
+          cargo build --locked
+      - name: Test
+        working-directory: data-processing/pulsar/audio-stream/grpc-pulsar-bridge
+        run: |
+          cargo test --all-features
+
+  pulsar-audio-stream-publisher-test:
+    name: Pulsar (audio-stream-publisher) | Test
+    if: ${{ inputs.workflow || inputs.pulsar-audio-stream-publisher }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 34.1
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        with:
+          cache: true
+          rust-src-dir: data-processing/pulsar/audio-stream/audio-stream-publisher
+      - name: Install dependencies
+        working-directory: data-processing/pulsar/audio-stream/audio-stream-publisher
+        run: |
+          cargo build --locked
+      - name: Test
+        working-directory: data-processing/pulsar/audio-stream/audio-stream-publisher
+        run: |
+          cargo test --all-features
+
+  pulsar-audio-stream-pulsar-livekit-bridge-test:
+    name: Pulsar (audio-stream-pulsar-livekit-bridge) | Test
+    if: ${{ inputs.workflow || inputs.pulsar-audio-stream-pulsar-livekit-bridge }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      - name: Install system dependencies
+        uses: awalsh128/cache-apt-pkgs-action@v1.6.0
+        with:
+          # libglib2.0-dev is for livekit
+          packages: libglib2.0-dev
+          version: 1.0
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 34.1
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        with:
+          cache: true
+          rust-src-dir: data-processing/pulsar/audio-stream/pulsar-livekit-bridge
+      - name: Install dependencies
+        working-directory: data-processing/pulsar/audio-stream/pulsar-livekit-bridge
+        run: |
+          cargo build --locked
+      - name: Test
+        working-directory: data-processing/pulsar/audio-stream/pulsar-livekit-bridge
+        run: |
+          cargo test --all-features

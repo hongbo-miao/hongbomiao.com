@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: livekit-config
+  namespace: audio-stream
+data:
+  livekit.yaml: |
+    port: 7880
+    rtc:
+      port_range_start: 50000
+      port_range_end: 60000
+      use_external_ip: false
+    redis:
+      address: livekit-valkey:6379
+    keys:
+      livekit_api_key: livekit_api_s3cr3t
+    logging:
+      level: info

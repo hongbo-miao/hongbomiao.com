@@ -1,0 +1,25 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pulsar-topic-initialize
+  namespace: audio-stream
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+        - name: wait-for-pulsar
+          image: docker.io/apachepulsar/pulsar:4.2.0
+          command:
+            - sh
+            - -c
+            - "until bin/pulsar-admin --admin-url http://pulsar-broker:8080 brokers healthcheck; do sleep 2; done"
+      containers:
+        - name: pulsar-topic-initialize
+          image: docker.io/apachepulsar/pulsar:4.2.0
+          command:
+            - sh
+            - -c
+            - "bin/pulsar-admin --admin-url http://pulsar-broker:8080 topics create persistent://public/default/audio-chunk || true"

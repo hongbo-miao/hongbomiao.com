@@ -1,0 +1,44 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pulsar-livekit-bridge
+  namespace: audio-stream
+spec:
+  selector:
+    app: pulsar-livekit-bridge
+  ports:
+    - name: http
+      port: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pulsar-livekit-bridge
+  namespace: audio-stream
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pulsar-livekit-bridge
+  template:
+    metadata:
+      labels:
+        app: pulsar-livekit-bridge
+    spec:
+      containers:
+        - name: pulsar-livekit-bridge
+          image: pulsar-livekit-bridge
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ENVIRONMENT
+              value: development
+            - name: LIVEKIT_API_KEY
+              value: livekit_api_key
+            - name: LIVEKIT_API_SECRET
+              value: livekit_api_s3cr3t
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name

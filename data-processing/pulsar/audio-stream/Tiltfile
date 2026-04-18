@@ -1,0 +1,69 @@
+load("ext://namespace", "namespace_create")
+load("ext://helm_resource", "helm_resource", "helm_repo")
+
+namespace_create("audio-stream")
+
+# --- K8s manifests ---
+k8s_yaml([
+    "kubernetes/pulsar/topic-initialize.yaml",
+    "kubernetes/livekit-config.yaml",
+    "kubernetes/livekit.yaml",
+    "kubernetes/audio-stream-publisher.yaml",
+    "kubernetes/grpc-pulsar-bridge.yaml",
+    "kubernetes/pulsar-livekit-bridge.yaml",
+    "kubernetes/audio-stream-web.yaml",
+])
+
+# --- Helm charts ---
+helm_repo("pulsar-repo", "https://pulsar.apache.org/charts")
+helm_resource(
+    "pulsar",
+    "pulsar-repo/pulsar",
+    namespace="audio-stream",
+    flags=["--values=kubernetes/pulsar/helm-chart/values.yaml"],
+    labels=["pulsar"],
+    resource_deps=["pulsar-repo"],
+)
+
+helm_repo("valkey-repo", "https://valkey.io/valkey-helm/")
+helm_resource(
+    "livekit-valkey",
+    "valkey-repo/valkey",
+    namespace="audio-stream",
+    flags=["--values=kubernetes/livekit-valkey/helm-chart/values.yaml"],
+    labels=["livekit"],
+    resource_deps=["valkey-repo"],
+)
+
+# --- Docker builds ---
+docker_build(
+    "audio-stream-publisher",
+    context=".",
+    dockerfile="audio-stream-publisher/Dockerfile",
+)
+
+docker_build(
+    "grpc-pulsar-bridge",
+    context=".",
+    dockerfile="grpc-pulsar-bridge/Dockerfile",
+)
+
+docker_build(
+    "pulsar-livekit-bridge",
+    context=".",
+    dockerfile="pulsar-livekit-bridge/Dockerfile",
+)
+
+docker_build(
+    "audio-stream-web",
+    context=".",
+    dockerfile="audio-stream-web/Dockerfile",
+)
+
+# --- Resource grouping ---
+k8s_resource("pulsar-topic-initialize", labels=["pulsar"], resource_deps=["pulsar"])
+k8s_resource("livekit", labels=["livekit"], resource_deps=["livekit-valkey"], port_forwards=["7880:7880"])
+k8s_resource("grpc-pulsar-bridge", labels=["audio-stream"], resource_deps=["pulsar-topic-initialize"])
+k8s_resource("audio-stream-publisher", labels=["audio-stream"], resource_deps=["grpc-pulsar-bridge"])
+k8s_resource("pulsar-livekit-bridge", labels=["audio-stream"], resource_deps=["livekit", "pulsar-topic-initialize"], port_forwards=["8080:8080"])
+k8s_resource("audio-stream-web", labels=["audio-stream"], resource_deps=["pulsar-livekit-bridge"], port_forwards=["8081:80"])

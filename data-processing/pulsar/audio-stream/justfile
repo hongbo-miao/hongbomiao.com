@@ -1,0 +1,23 @@
+tilt-up:
+    tilt up
+
+tilt-down:
+    tilt down --delete-namespaces
+
+scale-up-grpc-pulsar-bridge:
+    kubectl scale deployment grpc-pulsar-bridge --namespace=audio-stream --replicas=3
+
+scale-down-grpc-pulsar-bridge:
+    kubectl scale deployment grpc-pulsar-bridge --namespace=audio-stream --replicas=2
+
+scale-up-audio-stream-publisher:
+    kubectl scale deployment audio-stream-publisher --namespace=audio-stream --replicas=4
+
+scale-down-audio-stream-publisher:
+    kubectl scale deployment audio-stream-publisher --namespace=audio-stream --replicas=3
+
+logs-grpc-pulsar-bridge:
+    kubectl logs --namespace=audio-stream deploy/grpc-pulsar-bridge --follow
+
+logs-pulsar-livekit-bridge:
+    kubectl logs --namespace=audio-stream deploy/pulsar-livekit-bridge --follow
