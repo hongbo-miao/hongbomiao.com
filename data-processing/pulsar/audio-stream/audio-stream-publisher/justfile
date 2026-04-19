@@ -1,0 +1,26 @@
+install-toolchain:
+    rustup install
+
+update:
+    cargo update
+
+check:
+    cargo check
+
+dev:
+    cargo run
+
+test:
+    cargo test --all-features
+
+lint-rust-clippy:
+    cargo clippy
+
+lint-rust-clippy-fix:
+    cargo clippy --fix --allow-dirty --allow-staged
+
+lint-rust-rustfmt:
+    cargo fmt --all -- --check
+
+lint-rust-rustfmt-fix:
+    cargo fmt --all

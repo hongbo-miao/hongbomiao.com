@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package audio_ingest;
+
+service AudioIngestService {
+  rpc StreamAudio(stream AudioFrame) returns (StreamAck);
+}
+
+message AudioFrame {
+  string device_id = 1;
+  bytes pcm_data = 2;
+  int64 timestamp_ns = 3;
+  uint32 sample_rate_hz = 4;
+  uint32 channel_count = 5;
+}
+
+message StreamAck {
+  uint64 frames_received = 1;
+}

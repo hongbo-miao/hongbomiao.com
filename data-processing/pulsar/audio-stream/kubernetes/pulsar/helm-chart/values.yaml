@@ -1,0 +1,44 @@
+# https://github.com/apache/pulsar-helm-chart/blob/master/charts/pulsar/values.yaml
+---
+initialize: true
+useReleaseStatus: false
+affinity:
+  anti_affinity: false
+volumes:
+  persistence: false
+components:
+  zookeeper: false
+  oxia: true
+  bookkeeper: true
+  broker: true
+  proxy: false
+  autorecovery: false
+  toolset: false
+  functions: false
+oxia:
+  coordinator:
+    podMonitor:
+      enabled: false
+  server:
+    podMonitor:
+      enabled: false
+bookkeeper:
+  replicaCount: 3
+  podMonitor:
+    enabled: false
+broker:
+  replicaCount: 3
+  podMonitor:
+    enabled: false
+  configData:
+    managedLedgerDefaultEnsembleSize: "3"
+    managedLedgerDefaultWriteQuorum: "2"
+    managedLedgerDefaultAckQuorum: "2"
+autorecovery:
+  podMonitor:
+    enabled: false
+proxy:
+  podMonitor:
+    enabled: false
+victoria-metrics-k8s-stack:
+  enabled: false

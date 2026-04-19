@@ -1,0 +1,11 @@
+:80 {
+	handle /token* {
+		reverse_proxy {$TOKEN_SERVER_URL}
+	}
+
+	handle {
+		root * /usr/share/caddy
+		try_files {path} /index.html
+		file_server
+	}
+}

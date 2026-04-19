@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: audio-stream-publisher
+  namespace: audio-stream
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: audio-stream-publisher
+  template:
+    metadata:
+      labels:
+        app: audio-stream-publisher
+    spec:
+      containers:
+        - name: audio-stream-publisher
+          image: audio-stream-publisher
+          env:
+            - name: ENVIRONMENT
+              value: development

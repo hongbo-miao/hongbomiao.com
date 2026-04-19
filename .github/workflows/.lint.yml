@@ -142,6 +142,15 @@ name: . Lint
       national-instruments-veristand-zeromq-bridge:
         required: true
         type: boolean
+      pulsar-audio-stream-grpc-pulsar-bridge:
+        required: true
+        type: boolean
+      pulsar-audio-stream-publisher:
+        required: true
+        type: boolean
+      pulsar-audio-stream-pulsar-livekit-bridge:
+        required: true
+        type: boolean
       udp-receiver:
         required: true
         type: boolean
@@ -1128,6 +1137,108 @@ jobs:
           cargo fmt --all  -- --check
       - name: Lint Rust (Clippy)
         working-directory: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
+        run: |
+          cargo clippy
+
+  lint-rust-pulsar-audio-stream-grpc-pulsar-bridge:
+    name: Rust (pulsar-audio-stream-grpc-pulsar-bridge)
+    if: ${{ inputs.workflow || inputs.pulsar-audio-stream-grpc-pulsar-bridge }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 34.1
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        with:
+          cache: true
+          rust-src-dir: data-processing/pulsar/audio-stream/grpc-pulsar-bridge
+      - name: Install dependencies
+        working-directory: data-processing/pulsar/audio-stream/grpc-pulsar-bridge
+        run: |
+          cargo build --locked
+      - name: Lint Rust (rustfmt)
+        working-directory: data-processing/pulsar/audio-stream/grpc-pulsar-bridge
+        run: |
+          cargo fmt --all -- --check
+      - name: Lint Rust (Clippy)
+        working-directory: data-processing/pulsar/audio-stream/grpc-pulsar-bridge
+        run: |
+          cargo clippy
+
+  lint-rust-pulsar-audio-stream-publisher:
+    name: Rust (pulsar-audio-stream-publisher)
+    if: ${{ inputs.workflow || inputs.pulsar-audio-stream-publisher }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 34.1
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        with:
+          cache: true
+          rust-src-dir: data-processing/pulsar/audio-stream/audio-stream-publisher
+      - name: Install dependencies
+        working-directory: data-processing/pulsar/audio-stream/audio-stream-publisher
+        run: |
+          cargo build --locked
+      - name: Lint Rust (rustfmt)
+        working-directory: data-processing/pulsar/audio-stream/audio-stream-publisher
+        run: |
+          cargo fmt --all -- --check
+      - name: Lint Rust (Clippy)
+        working-directory: data-processing/pulsar/audio-stream/audio-stream-publisher
+        run: |
+          cargo clippy
+
+  lint-rust-pulsar-audio-stream-pulsar-livekit-bridge:
+    name: Rust (pulsar-audio-stream-pulsar-livekit-bridge)
+    if: ${{ inputs.workflow || inputs.pulsar-audio-stream-pulsar-livekit-bridge }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      - name: Install system dependencies
+        uses: awalsh128/cache-apt-pkgs-action@v1.6.0
+        with:
+          # libglib2.0-dev is for livekit
+          packages: libglib2.0-dev
+          version: 1.0
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 34.1
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        with:
+          cache: true
+          rust-src-dir: data-processing/pulsar/audio-stream/pulsar-livekit-bridge
+      - name: Install dependencies
+        working-directory: data-processing/pulsar/audio-stream/pulsar-livekit-bridge
+        run: |
+          cargo build --locked
+      - name: Lint Rust (rustfmt)
+        working-directory: data-processing/pulsar/audio-stream/pulsar-livekit-bridge
+        run: |
+          cargo fmt --all -- --check
+      - name: Lint Rust (Clippy)
+        working-directory: data-processing/pulsar/audio-stream/pulsar-livekit-bridge
         run: |
           cargo clippy
 

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package audio;
+
+message AudioChunk {
+  string device_id = 1;
+  int64 timestamp_ns = 2;
+  repeated bytes opus_packets = 3;
+  int32 duration_ms = 4;
+  int32 sample_rate_hz = 5;
+  int32 channel_count = 6;
+  uint64 sequence_number = 7;
+}
