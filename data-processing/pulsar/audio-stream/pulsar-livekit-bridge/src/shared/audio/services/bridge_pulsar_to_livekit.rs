@@ -23,7 +23,7 @@ const PCM_SAMPLE_RATE_HZ: u32 = 16_000;
 const STALE_CHUNK_THRESHOLD_MS: u128 = 2_000;
 const OPUS_FRAME_SAMPLE_COUNT: usize = 320; // 20ms @ 16kHz
 const DEVICE_CHANNEL_BUFFER: usize = 16;
-const DEVICE_STALE_TIMEOUT_SECS: u64 = 5;
+const DEVICE_STALE_TIMEOUT_S: u64 = 5;
 
 struct RawPayload;
 
@@ -213,7 +213,7 @@ async fn run_device_audio_task(
 
     loop {
         let audio_chunk = match tokio::time::timeout(
-            Duration::from_secs(DEVICE_STALE_TIMEOUT_SECS),
+            Duration::from_secs(DEVICE_STALE_TIMEOUT_S),
             chunk_receiver.recv(),
         )
         .await
@@ -222,7 +222,7 @@ async fn run_device_audio_task(
             Ok(None) => break,
             Err(_) => {
                 info!(
-                    "Device {device_id}: no audio for {DEVICE_STALE_TIMEOUT_SECS}s, unpublishing track"
+                    "Device {device_id}: no audio for {DEVICE_STALE_TIMEOUT_S}s, unpublishing track"
                 );
                 break;
             }

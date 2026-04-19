@@ -713,6 +713,8 @@ jobs:
               - 'data-processing/pulsar/audio-stream/grpc-pulsar-bridge/**'
             pulsar-audio-stream-publisher:
               - 'data-processing/pulsar/audio-stream/audio-stream-publisher/**'
+            pulsar-audio-stream-transcriber:
+              - 'data-processing/pulsar/audio-stream/audio-stream-transcriber/**'
             pulsar-audio-stream-pulsar-livekit-bridge:
               - 'data-processing/pulsar/audio-stream/pulsar-livekit-bridge/**'
             pulsar-sticky-telemetry-stream-flink-compute:
@@ -1055,6 +1057,7 @@ jobs:
       prometheus: ${{ steps.filter.outputs.prometheus }}
       pulsar-audio-stream-grpc-pulsar-bridge: ${{ steps.filter.outputs.pulsar-audio-stream-grpc-pulsar-bridge }}
       pulsar-audio-stream-publisher: ${{ steps.filter.outputs.pulsar-audio-stream-publisher }}
+      pulsar-audio-stream-transcriber: ${{ steps.filter.outputs.pulsar-audio-stream-transcriber }}
       pulsar-audio-stream-pulsar-livekit-bridge: ${{ steps.filter.outputs.pulsar-audio-stream-pulsar-livekit-bridge }}
       pulsar-sticky-telemetry-stream-flink-compute: ${{ steps.filter.outputs.pulsar-sticky-telemetry-stream-flink-compute }}
       pulsar-sticky-telemetry-stream-integration-test: ${{ steps.filter.outputs.pulsar-sticky-telemetry-stream-integration-test }}
@@ -1147,6 +1150,7 @@ jobs:
       national-instruments-veristand-zeromq-bridge: ${{ needs.detect-changes.outputs.national-instruments-veristand-zeromq-bridge == 'true' }}
       pulsar-audio-stream-grpc-pulsar-bridge: ${{ needs.detect-changes.outputs.pulsar-audio-stream-grpc-pulsar-bridge == 'true' }}
       pulsar-audio-stream-publisher: ${{ needs.detect-changes.outputs.pulsar-audio-stream-publisher == 'true' }}
+      pulsar-audio-stream-transcriber: ${{ needs.detect-changes.outputs.pulsar-audio-stream-transcriber == 'true' }}
       pulsar-audio-stream-pulsar-livekit-bridge: ${{ needs.detect-changes.outputs.pulsar-audio-stream-pulsar-livekit-bridge == 'true' }}
       udp-receiver: ${{ needs.detect-changes.outputs.udp-receiver == 'true' }}
       udp-sender: ${{ needs.detect-changes.outputs.udp-sender == 'true' }}
@@ -1288,6 +1292,7 @@ jobs:
       nats-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.nats-telemetry-stream-subscriber == 'true' }}
       pulsar-audio-stream-grpc-pulsar-bridge: ${{ needs.detect-changes.outputs.pulsar-audio-stream-grpc-pulsar-bridge == 'true' }}
       pulsar-audio-stream-publisher: ${{ needs.detect-changes.outputs.pulsar-audio-stream-publisher == 'true' }}
+      pulsar-audio-stream-transcriber: ${{ needs.detect-changes.outputs.pulsar-audio-stream-transcriber == 'true' }}
       pulsar-audio-stream-pulsar-livekit-bridge: ${{ needs.detect-changes.outputs.pulsar-audio-stream-pulsar-livekit-bridge == 'true' }}
       pulsar-sticky-telemetry-stream-flink-compute: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-flink-compute == 'true' }}
       pulsar-sticky-telemetry-stream-integration-test: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-integration-test == 'true' }}

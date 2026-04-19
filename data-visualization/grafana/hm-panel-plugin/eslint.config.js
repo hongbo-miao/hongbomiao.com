@@ -55,6 +55,7 @@ module.exports = [
       '**/coverage/**/*',
       '**/data/**/*',
       '**/dist/**/*',
+      '**/models/**/*',
       '**/node_modules/**/*',
       '**/output/**/*',
       '**/secrets.auto.tfvars',

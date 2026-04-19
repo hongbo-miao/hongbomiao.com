@@ -156,7 +156,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **async-openai** - OpenAI API library
 - **Hound** - WAV file encoding and decoding
 - **flacenc-rs** - FLAC encoding
-- **webrtc-vad** - WebRTC Voice Activity Detector (VAD)
+- **webrtc-vad** - WebRTC voice activity detector (VAD)
 - **FFmpeg Sidecar** - Iterator-based FFmpeg wrapper
 - **Anyhow** - Error handling
 - **Tracing** - Tracing
@@ -752,6 +752,7 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **WhisperKit** - On-device Whisper for Apple
     - **whisper.cpp** - High-performance Whisper inference in C/C++
     - **NVIDIA NeMo** - Conversational AI toolkit for building, training, and fine-tuning speech AI models (automatic speech recognition (ASR), text-to-speech (TTS)) and large language models (LLMs)
+    - **sherpa-onnx** - Real-time, on-device voice activity detector (VAD), speaker diarization, speech recognition (ASR), and text-to-speech (TTS) using ONNX models
   - Automatic Speech Recognition (ASR) Evaluation
     - **JiWER** - Automatic speech recognition evaluation, including word error rate (WER), match error rate (MER), word information lost (WIL), word information preserved (WIP), and character error rate (CER)
 

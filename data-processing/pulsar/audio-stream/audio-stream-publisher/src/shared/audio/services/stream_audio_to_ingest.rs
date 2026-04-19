@@ -52,18 +52,18 @@ pub async fn stream_audio_to_ingest(
                 .expect("System clock error")
                 .as_nanos() as i64;
 
-            let end = sample_offset + FRAME_SAMPLE_COUNT;
-            let frame_samples: Vec<i16> = if end <= samples.len() {
-                samples[sample_offset..end].to_vec()
-            } else {
-                let mut buf = samples[sample_offset..].to_vec();
-                let remaining = FRAME_SAMPLE_COUNT - buf.len();
-                buf.extend_from_slice(&samples[..remaining]);
-                buf
-            };
+            let mut frame_sample_buffer: Vec<i16> = Vec::with_capacity(FRAME_SAMPLE_COUNT);
+            let mut fill_sample_offset = sample_offset;
+            while frame_sample_buffer.len() < FRAME_SAMPLE_COUNT {
+                let needed_sample_count = FRAME_SAMPLE_COUNT - frame_sample_buffer.len();
+                let available_sample_count = samples.len() - fill_sample_offset;
+                let take_sample_count = needed_sample_count.min(available_sample_count);
+                frame_sample_buffer.extend_from_slice(&samples[fill_sample_offset..fill_sample_offset + take_sample_count]);
+                fill_sample_offset = (fill_sample_offset + take_sample_count) % samples.len();
+            }
             sample_offset = (sample_offset + FRAME_SAMPLE_COUNT) % samples.len();
 
-            let pcm_data = pcm_samples_to_bytes(&frame_samples);
+            let pcm_data = pcm_samples_to_bytes(&frame_sample_buffer);
 
             yield AudioFrame {
                 device_id: device_id_owned.clone(),

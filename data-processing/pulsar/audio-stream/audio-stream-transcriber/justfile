@@ -1,0 +1,37 @@
+install-toolchain:
+    rustup install
+
+update:
+    cargo update
+
+check:
+    cargo check
+
+dev:
+    cargo run
+
+test:
+    cargo test --all-features
+
+lint-rust-clippy:
+    cargo clippy
+
+lint-rust-clippy-fix:
+    cargo clippy --fix --allow-dirty --allow-staged
+
+lint-rust-rustfmt:
+    cargo fmt --all -- --check
+
+lint-rust-rustfmt-fix:
+    cargo fmt --all
+
+download-models:
+    mkdir -p models/parakeet-tdt
+    curl --silent --fail --show-error --location --output models/parakeet-tdt/encoder.int8.onnx https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8/resolve/main/encoder.int8.onnx
+    curl --silent --fail --show-error --location --output models/parakeet-tdt/decoder.int8.onnx https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8/resolve/main/decoder.int8.onnx
+    curl --silent --fail --show-error --location --output models/parakeet-tdt/joiner.int8.onnx https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8/resolve/main/joiner.int8.onnx
+    curl --silent --fail --show-error --location --output models/parakeet-tdt/tokens.txt https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8/resolve/main/tokens.txt
+
+    mkdir -p models/silero-vad
+    curl --silent --fail --show-error --location --output models/silero-vad/silero_vad.onnx \
+        https://github.com/snakers4/silero-vad/raw/v6.2.1/src/silero_vad/data/silero_vad.onnx

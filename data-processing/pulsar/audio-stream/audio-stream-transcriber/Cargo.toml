@@ -1,0 +1,22 @@
+[package]
+name = "audio-stream-transcriber"
+version = "1.0.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "=1.0.102"
+dotenvy = "=0.15.7"
+futures = "=0.3.31"
+livekit = "=0.7.36"
+livekit-api = "=0.4.18"
+opus = "=0.3.1"
+sherpa-onnx = "=1.12.39"
+prost = "=0.14.3"
+pulsar = "=6.7.2"
+serde_json = "=1.0.140"
+tokio = { version = "=1.51.1", features = ["full"] }
+tracing = "=0.1.44"
+tracing-subscriber = { version = "=0.3.23", features = ["env-filter"] }
+
+[build-dependencies]
+prost-build = "=0.14.3"
