@@ -264,7 +264,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Metrics Server** - Kubernetes metrics
 - **Telegraf** - Plugin-driven server agent
 - **Docker** - Container
-- **Skaffold** - Continuous development for Kubernetes applications
 - **Tilt** - Local Kubernetes development and live-reload tool
 - **Kustomize** - Template-free customization of Kubernetes manifests
 - **Multipass** - Virtual machine management
