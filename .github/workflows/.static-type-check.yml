@@ -97,9 +97,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Java
-        uses: actions/setup-java@v5.2.0
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
         with:
           distribution: corretto
           cache: gradle
@@ -116,15 +116,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: .python-version
       - name: Install dependencies
@@ -328,9 +328,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/airbyte
         run: |
@@ -347,9 +347,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/argo-cd
         run: |
@@ -366,9 +366,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/aws/general
         run: |
@@ -385,9 +385,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/aws/kubernetes
         run: |
@@ -404,9 +404,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/aws/network
         run: |
@@ -423,9 +423,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/aws/storage
         run: |
@@ -442,9 +442,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/harbor
         run: |
@@ -461,9 +461,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/grafana
         run: |
@@ -480,9 +480,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/nebius/applications
         run: |
@@ -499,9 +499,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/nebius/general
         run: |
@@ -518,9 +518,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/nebius/kubernetes
         run: |
@@ -537,9 +537,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/nebius/network
         run: |
@@ -556,9 +556,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/nebius/storage
         run: |
@@ -575,9 +575,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/snowflake/account
         run: |
@@ -594,9 +594,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/snowflake/general
         run: |
@@ -613,9 +613,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/snowflake/storage
         run: |
@@ -632,9 +632,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v2.0.0
+        uses: opentofu/setup-opentofu@fc711fa910b93cba0f3fbecaafc9f42fd0c411cb # v2.0.0
       - name: Initialize OpenTofu
         working-directory: infrastructure/opentofu/environments/production/trino-gateway
         run: |
@@ -651,9 +651,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Node.js
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: api/api-node/.node-version
           cache: npm
@@ -674,9 +674,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Node.js
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: ethereum/.node-version
           cache: npm
@@ -697,9 +697,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Node.js
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: data-visualization/grafana/hm-panel-plugin/.node-version
           cache: npm
@@ -720,9 +720,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Node.js
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: mobile/mobile-react-native/.node-version
           cache: npm
@@ -743,9 +743,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Node.js
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: web/.node-version
           cache: npm
@@ -766,9 +766,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Node.js
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: web-playwright/.node-version
           cache: npm

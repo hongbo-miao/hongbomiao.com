@@ -123,15 +123,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/ingest-flac-to-parquet/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/ingest-flac-to-parquet/.python-version
       - name: Install dependencies
@@ -143,7 +143,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -156,15 +156,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/hm-cocoindex/flows/embed-markdown-to-postgres/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/hm-cocoindex/flows/embed-markdown-to-postgres/.python-version
       - name: Install dependencies
@@ -176,7 +176,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -189,15 +189,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/hm-pathway/pipelines/aggregate-hourly-events/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/hm-pathway/pipelines/aggregate-hourly-events/.python-version
       - name: Install dependencies
@@ -209,7 +209,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -222,15 +222,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/analyze-coffee-customers/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/hm-spark/applications/analyze-coffee-customers/.python-version
       - name: Install dependencies
@@ -242,7 +242,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -255,15 +255,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/find-retired-people-python/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/hm-spark/applications/find-retired-people-python/.python-version
       - name: Install dependencies
@@ -275,7 +275,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -288,15 +288,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Java
-        uses: actions/setup-java@v5.2.0
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
         with:
           distribution: corretto
           cache: sbt
           java-version-file: data-processing/hm-spark/applications/find-retired-people-scala/.java-version
       - name: Set up sbt
-        uses: sbt/setup-sbt@v1.1.22
+        uses: sbt/setup-sbt@508b753e53cb6095967669e0911487d2b9bc9f41 # v1.1.22
       - name: Test
         working-directory: data-processing/hm-spark/applications/find-retired-people-scala
         run: |
@@ -309,15 +309,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/find-taxi-top-routes/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/hm-spark/applications/find-taxi-top-routes/.python-version
       - name: Install dependencies
@@ -329,7 +329,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -342,15 +342,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/find-taxi-top-routes-sql/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/hm-spark/applications/find-taxi-top-routes-sql/.python-version
       - name: Install dependencies
@@ -362,7 +362,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -375,15 +375,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Java
-        uses: actions/setup-java@v5.2.0
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
         with:
           distribution: corretto
           cache: sbt
           java-version-file: data-processing/hm-spark/applications/ingest-from-s3-to-kafka/.java-version
       - name: Set up sbt
-        uses: sbt/setup-sbt@v1.1.22
+        uses: sbt/setup-sbt@508b753e53cb6095967669e0911487d2b9bc9f41 # v1.1.22
       - name: Test
         working-directory: data-processing/hm-spark/applications/ingest-from-s3-to-kafka
         run: |
@@ -396,15 +396,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/recommend-movies/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/hm-spark/applications/recommend-movies/.python-version
       - name: Install dependencies
@@ -416,7 +416,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -429,15 +429,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/spark-connect/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/hm-spark/applications/spark-connect/.python-version
       - name: Install dependencies
@@ -449,7 +449,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -462,9 +462,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Java
-        uses: actions/setup-java@v5.2.0
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
         with:
           distribution: corretto
           cache: maven
@@ -481,15 +481,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/kafka/kafka-client/sticky-telemetry-stream/sticky-telemetry-stream-publisher/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/kafka/kafka-client/sticky-telemetry-stream/sticky-telemetry-stream-publisher/.python-version
       - name: Install dependencies
@@ -501,7 +501,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -514,15 +514,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/kafka/kafka-client/sticky-telemetry-stream/sticky-telemetry-stream-subscriber/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/kafka/kafka-client/sticky-telemetry-stream/sticky-telemetry-stream-subscriber/.python-version
       - name: Install dependencies
@@ -534,7 +534,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -547,7 +547,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       # librdkafka is for rdkafka
       - name: Install librdkafka
         env:
@@ -566,12 +566,12 @@ jobs:
           rm -r -f "librdkafka-${LIBRDKAFKA_VERSION}/"
       # protoc is for prost
       - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
+        uses: arduino/setup-protoc@c65c819552d16ad3c9b72d9dfd5ba5237b9c906b # v3.0.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 34.1
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        uses: actions-rust-lang/setup-rust-toolchain@150fca883cd4034361b621bd4e6a9d34e5143606 # v1.15.4
         with:
           cache: true
           rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/proto-consumer
@@ -591,7 +591,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       # librdkafka is for rdkafka
       - name: Install librdkafka
         env:
@@ -610,12 +610,12 @@ jobs:
           rm -r -f "librdkafka-${LIBRDKAFKA_VERSION}/"
       # protoc is for prost
       - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
+        uses: arduino/setup-protoc@c65c819552d16ad3c9b72d9dfd5ba5237b9c906b # v3.0.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 34.1
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        uses: actions-rust-lang/setup-rust-toolchain@150fca883cd4034361b621bd4e6a9d34e5143606 # v1.15.4
         with:
           cache: true
           rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/proto-producer
@@ -635,7 +635,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       # librdkafka is for rdkafka
       - name: Install librdkafka
         env:
@@ -654,12 +654,12 @@ jobs:
           rm -r -f "librdkafka-${LIBRDKAFKA_VERSION}/"
       # protoc is for prost
       - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
+        uses: arduino/setup-protoc@c65c819552d16ad3c9b72d9dfd5ba5237b9c906b # v3.0.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 34.1
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        uses: actions-rust-lang/setup-rust-toolchain@150fca883cd4034361b621bd4e6a9d34e5143606 # v1.15.4
         with:
           cache: true
           rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge
@@ -679,7 +679,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       # librdkafka is for rdkafka
       - name: Install librdkafka
         env:
@@ -698,12 +698,12 @@ jobs:
           rm -r -f "librdkafka-${LIBRDKAFKA_VERSION}/"
       # protoc is for prost
       - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
+        uses: arduino/setup-protoc@c65c819552d16ad3c9b72d9dfd5ba5237b9c906b # v3.0.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 34.1
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        uses: actions-rust-lang/setup-rust-toolchain@150fca883cd4034361b621bd4e6a9d34e5143606 # v1.15.4
         with:
           cache: true
           rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
@@ -723,14 +723,14 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        uses: actions-rust-lang/setup-rust-toolchain@150fca883cd4034361b621bd4e6a9d34e5143606 # v1.15.4
         with:
           cache: true
           rust-src-dir: data-processing/nats/audio-stream/audio-stream-publisher
       - name: Install system dependencies
-        uses: awalsh128/cache-apt-pkgs-action@v1.6.0
+        uses: awalsh128/cache-apt-pkgs-action@acb598e5ddbc6f68a970c5da0688d2f3a9f04d05 # v1.6.0
         with:
           # capnproto is for capnp
           packages: capnproto
@@ -751,14 +751,14 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        uses: actions-rust-lang/setup-rust-toolchain@150fca883cd4034361b621bd4e6a9d34e5143606 # v1.15.4
         with:
           cache: true
           rust-src-dir: data-processing/nats/audio-stream/audio-stream-sinker
       - name: Install system dependencies
-        uses: awalsh128/cache-apt-pkgs-action@v1.6.0
+        uses: awalsh128/cache-apt-pkgs-action@acb598e5ddbc6f68a970c5da0688d2f3a9f04d05 # v1.6.0
         with:
           # capnproto is for capnp
           packages: capnproto
@@ -779,14 +779,14 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        uses: actions-rust-lang/setup-rust-toolchain@150fca883cd4034361b621bd4e6a9d34e5143606 # v1.15.4
         with:
           cache: true
           rust-src-dir: data-processing/nats/audio-stream/audio-stream-transcriber
       - name: Install system dependencies
-        uses: awalsh128/cache-apt-pkgs-action@v1.6.0
+        uses: awalsh128/cache-apt-pkgs-action@acb598e5ddbc6f68a970c5da0688d2f3a9f04d05 # v1.6.0
         with:
           # capnproto is for capnp
           packages: capnproto
@@ -807,14 +807,14 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        uses: actions-rust-lang/setup-rust-toolchain@150fca883cd4034361b621bd4e6a9d34e5143606 # v1.15.4
         with:
           cache: true
           rust-src-dir: data-processing/nats/audio-stream/nats-postgres-bridge
       - name: Install system dependencies
-        uses: awalsh128/cache-apt-pkgs-action@v1.6.0
+        uses: awalsh128/cache-apt-pkgs-action@acb598e5ddbc6f68a970c5da0688d2f3a9f04d05 # v1.6.0
         with:
           # capnproto is for capnp
           packages: capnproto
@@ -835,15 +835,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/nats/sticky-telemetry-stream/sticky-telemetry-stream-publisher/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/nats/sticky-telemetry-stream/sticky-telemetry-stream-publisher/.python-version
       - name: Install dependencies
@@ -855,7 +855,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -868,15 +868,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/nats/sticky-telemetry-stream/sticky-telemetry-stream-subscriber/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/nats/sticky-telemetry-stream/sticky-telemetry-stream-subscriber/.python-version
       - name: Install dependencies
@@ -888,7 +888,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -901,15 +901,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/nats/telemetry-stream/telemetry-stream-publisher/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/nats/telemetry-stream/telemetry-stream-publisher/.python-version
       - name: Install dependencies
@@ -921,7 +921,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -934,15 +934,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/nats/telemetry-stream/telemetry-stream-subscriber/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/nats/telemetry-stream/telemetry-stream-subscriber/.python-version
       - name: Install dependencies
@@ -954,7 +954,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -967,15 +967,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-flink-compute/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-flink-compute/.python-version
       - name: Install dependencies
@@ -987,7 +987,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -1000,7 +1000,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Run integration test
         working-directory: data-processing/pulsar/sticky-telemetry-stream/docker-compose
         run: |
@@ -1019,15 +1019,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       # protoc is for prost
       - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
+        uses: arduino/setup-protoc@c65c819552d16ad3c9b72d9dfd5ba5237b9c906b # v3.0.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 34.1
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        uses: actions-rust-lang/setup-rust-toolchain@150fca883cd4034361b621bd4e6a9d34e5143606 # v1.15.4
         with:
           cache: true
           rust-src-dir: data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-mqtt-publisher
@@ -1047,15 +1047,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-pulsar-publisher/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-pulsar-publisher/.python-version
       - name: Install dependencies
@@ -1067,7 +1067,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -1080,15 +1080,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-subscriber/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-subscriber/.python-version
       - name: Install dependencies
@@ -1100,7 +1100,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -1113,15 +1113,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-validate-function/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-validate-function/.python-version
       - name: Install dependencies
@@ -1133,7 +1133,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -1146,15 +1146,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       # protoc is for prost
       - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
+        uses: arduino/setup-protoc@c65c819552d16ad3c9b72d9dfd5ba5237b9c906b # v3.0.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 34.1
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        uses: actions-rust-lang/setup-rust-toolchain@150fca883cd4034361b621bd4e6a9d34e5143606 # v1.15.4
         with:
           cache: true
           rust-src-dir: data-processing/pulsar/audio-stream/grpc-pulsar-bridge
@@ -1174,15 +1174,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       # protoc is for prost
       - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
+        uses: arduino/setup-protoc@c65c819552d16ad3c9b72d9dfd5ba5237b9c906b # v3.0.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 34.1
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        uses: actions-rust-lang/setup-rust-toolchain@150fca883cd4034361b621bd4e6a9d34e5143606 # v1.15.4
         with:
           cache: true
           rust-src-dir: data-processing/pulsar/audio-stream/audio-stream-publisher
@@ -1202,21 +1202,21 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install system dependencies
-        uses: awalsh128/cache-apt-pkgs-action@v1.6.0
+        uses: awalsh128/cache-apt-pkgs-action@acb598e5ddbc6f68a970c5da0688d2f3a9f04d05 # v1.6.0
         with:
           # libglib2.0-dev is for livekit
           packages: libglib2.0-dev
           version: 1.0
       # protoc is for prost
       - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
+        uses: arduino/setup-protoc@c65c819552d16ad3c9b72d9dfd5ba5237b9c906b # v3.0.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 34.1
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        uses: actions-rust-lang/setup-rust-toolchain@150fca883cd4034361b621bd4e6a9d34e5143606 # v1.15.4
         with:
           cache: true
           rust-src-dir: data-processing/pulsar/audio-stream/pulsar-livekit-bridge

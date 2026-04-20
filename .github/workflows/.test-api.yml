@@ -39,9 +39,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Go
-        uses: actions/setup-go@v6.4.0
+        uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
         with:
           go-version-file: api/api-go/go.mod
           cache-dependency-path: api/api-go/go.sum
@@ -50,7 +50,7 @@ jobs:
         run: |
           go test ./... -race -coverprofile=coverage.txt -covermode=atomic
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -63,9 +63,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Node.js
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: api/api-node/.node-version
           cache: npm
@@ -79,7 +79,7 @@ jobs:
         run: |
           npm run test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -92,9 +92,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Node.js
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: api/api-node/.node-version
           cache: npm
@@ -117,7 +117,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       # librdkafka is for confluent-kafka
       - name: Install librdkafka
         env:
@@ -135,13 +135,13 @@ jobs:
           cd ..
           rm -r -f "librdkafka-${LIBRDKAFKA_VERSION}/"
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: api/api-python/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: api/api-python/.python-version
       - name: Install dependencies
@@ -153,7 +153,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -166,9 +166,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.4
+        uses: actions-rust-lang/setup-rust-toolchain@150fca883cd4034361b621bd4e6a9d34e5143606 # v1.15.4
         with:
           cache: true
           rust-src-dir: api/api-rust
@@ -192,15 +192,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: api/api-rust/scripts/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: api/api-rust/scripts/.python-version
       - name: Install dependencies
@@ -212,7 +212,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
@@ -225,11 +225,11 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up k6
-        uses: grafana/setup-k6-action@v1.1.0
+        uses: grafana/setup-k6-action@ffe7d7290dfa715e48c2ccc924d068444c94bde2 # v1.1.0
       - name: Load Test
-        uses: grafana/run-k6-action@v1.3.1
+        uses: grafana/run-k6-action@a15e2072ede004e8d46141e33d7f7dad8ad08d9d # v1.3.1
         with:
           disable-analytics: true
           parallel: false
@@ -243,15 +243,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
           version: 0.11.6
           enable-cache: true
           cache-dependency-glob: load-testing/hm-locust/uv.lock
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version-file: load-testing/hm-locust/.python-version
       - name: Install dependencies
@@ -263,7 +263,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.0
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
