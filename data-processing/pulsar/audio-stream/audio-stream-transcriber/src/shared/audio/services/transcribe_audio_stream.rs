@@ -226,6 +226,7 @@ pub async fn transcribe_audio_stream(
             match sender.try_send(f32_samples) {
                 Ok(()) => {}
                 Err(mpsc::TrySendError::Full(_)) => {
+                    consumer.ack(&pulsar_message).await.ok();
                     continue;
                 }
                 Err(mpsc::TrySendError::Disconnected(_)) => {
