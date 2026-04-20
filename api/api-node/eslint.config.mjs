@@ -60,6 +60,7 @@ export default [
       '**/coverage/**/*',
       '**/data/**/*',
       '**/dist/**/*',
+      '**/models/**/*',
       '**/node_modules/**/*',
       '**/output/**/*',
       '**/secrets.auto.tfvars',

@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: audio-stream-transcriber
+  namespace: audio-stream
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: audio-stream-transcriber
+  template:
+    metadata:
+      labels:
+        app: audio-stream-transcriber
+    spec:
+      containers:
+        - name: audio-stream-transcriber
+          image: audio-stream-transcriber
+          env:
+            - name: ENVIRONMENT
+              value: production
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          volumeMounts:
+            - name: models
+              mountPath: /models
+      volumes:
+        - name: models
+          hostPath:
+            path: MODELS_PATH_PLACEHOLDER

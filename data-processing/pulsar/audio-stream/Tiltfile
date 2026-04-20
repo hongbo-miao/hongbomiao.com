@@ -14,6 +14,13 @@ k8s_yaml([
     "kubernetes/audio-stream-web.yaml",
 ])
 
+# Dynamically inject absolute path for hostPath
+transcriber_yaml = str(read_file("kubernetes/audio-stream-transcriber.yaml")).replace(
+    "MODELS_PATH_PLACEHOLDER",
+    str(local("pwd")).strip() + "/audio-stream-transcriber/models",
+)
+k8s_yaml(blob(transcriber_yaml))
+
 # --- Helm charts ---
 helm_repo("pulsar-repo", "https://pulsar.apache.org/charts")
 helm_resource(
@@ -55,6 +62,12 @@ docker_build(
 )
 
 docker_build(
+    "audio-stream-transcriber",
+    context=".",
+    dockerfile="audio-stream-transcriber/Dockerfile",
+)
+
+docker_build(
     "audio-stream-web",
     context=".",
     dockerfile="audio-stream-web/Dockerfile",
@@ -66,4 +79,5 @@ k8s_resource("livekit", labels=["livekit"], resource_deps=["livekit-valkey"], po
 k8s_resource("grpc-pulsar-bridge", labels=["audio-stream"], resource_deps=["pulsar-topic-initialize"])
 k8s_resource("audio-stream-publisher", labels=["audio-stream"], resource_deps=["grpc-pulsar-bridge"])
 k8s_resource("pulsar-livekit-bridge", labels=["audio-stream"], resource_deps=["livekit", "pulsar-topic-initialize"], port_forwards=["8080:8080"])
+k8s_resource("audio-stream-transcriber", labels=["audio-stream"], resource_deps=["livekit", "pulsar-topic-initialize"])
 k8s_resource("audio-stream-web", labels=["audio-stream"], resource_deps=["pulsar-livekit-bridge"], port_forwards=["8081:80"])

@@ -27,6 +27,17 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [latencyMs, setLatencyMs] = useState<number | null>(null);
   const minRawLatencyRef = useRef<number>(Infinity);
+  const [transcriptLines, setTranscriptLines] = useState<string[]>([]);
+
+  useDataChannel('transcript', (msg) => {
+    const data = JSON.parse(new TextDecoder().decode(msg.payload)) as {
+      device_id: string;
+      text: string;
+    };
+    if (data.device_id === deviceId) {
+      setTranscriptLines((prev) => [...prev.slice(-49), data.text]);
+    }
+  });
 
   useDataChannel('audio-seq', (msg) => {
     const text = new TextDecoder().decode(msg.payload);
@@ -112,12 +123,19 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
         {isActive && <span style={{ color: '#888' }}>{latencyMs !== null ? `${latencyMs}ms` : '—'}</span>}
       </div>
       {isActive && (
-        <canvas
-          ref={canvasRef}
-          width={CANVAS_WIDTH}
-          height={CANVAS_HEIGHT}
-          style={{ background: '#000', display: 'block' }}
-        />
+        <>
+          <canvas
+            ref={canvasRef}
+            width={CANVAS_WIDTH}
+            height={CANVAS_HEIGHT}
+            style={{ background: '#000', display: 'block' }}
+          />
+          <div style={{ maxHeight: '500px', overflowY: 'auto', fontSize: '11px', color: '#aaa', marginTop: '4px' }}>
+            {transcriptLines.map((line, index) => (
+              <div key={index} style={{ marginBottom: '8px' }}>{line}</div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

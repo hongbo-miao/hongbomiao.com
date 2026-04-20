@@ -294,6 +294,7 @@ lint-rust-rustfmt:
     cd data-processing/nats/audio-stream/audio-stream-transcriber && just lint-rust-rustfmt
     cd data-processing/nats/audio-stream/nats-postgres-bridge && just lint-rust-rustfmt
     cd data-processing/pulsar/audio-stream/audio-stream-publisher && just lint-rust-rustfmt
+    cd data-processing/pulsar/audio-stream/audio-stream-transcriber && just lint-rust-rustfmt
     cd data-processing/pulsar/audio-stream/grpc-pulsar-bridge && just lint-rust-rustfmt
     cd data-processing/pulsar/audio-stream/pulsar-livekit-bridge && just lint-rust-rustfmt
     cd data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-mqtt-publisher && just lint-rust-rustfmt
@@ -317,6 +318,7 @@ lint-rust-rustfmt-fix:
     cd data-processing/nats/audio-stream/audio-stream-transcriber && just lint-rust-rustfmt-fix
     cd data-processing/nats/audio-stream/nats-postgres-bridge && just lint-rust-rustfmt-fix
     cd data-processing/pulsar/audio-stream/audio-stream-publisher && just lint-rust-rustfmt-fix
+    cd data-processing/pulsar/audio-stream/audio-stream-transcriber && just lint-rust-rustfmt-fix
     cd data-processing/pulsar/audio-stream/grpc-pulsar-bridge && just lint-rust-rustfmt-fix
     cd data-processing/pulsar/audio-stream/pulsar-livekit-bridge && just lint-rust-rustfmt-fix
     cd data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-mqtt-publisher && just lint-rust-rustfmt-fix
@@ -340,6 +342,7 @@ lint-rust-clippy:
     cd data-processing/nats/audio-stream/audio-stream-transcriber && just lint-rust-clippy
     cd data-processing/nats/audio-stream/nats-postgres-bridge && just lint-rust-clippy
     cd data-processing/pulsar/audio-stream/audio-stream-publisher && just lint-rust-clippy
+    cd data-processing/pulsar/audio-stream/audio-stream-transcriber && just lint-rust-clippy
     cd data-processing/pulsar/audio-stream/grpc-pulsar-bridge && just lint-rust-clippy
     cd data-processing/pulsar/audio-stream/pulsar-livekit-bridge && just lint-rust-clippy
     cd data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-mqtt-publisher && just lint-rust-clippy
@@ -363,6 +366,7 @@ lint-rust-clippy-fix:
     cd data-processing/nats/audio-stream/audio-stream-transcriber && just lint-rust-clippy-fix
     cd data-processing/nats/audio-stream/nats-postgres-bridge && just lint-rust-clippy-fix
     cd data-processing/pulsar/audio-stream/audio-stream-publisher && just lint-rust-clippy-fix
+    cd data-processing/pulsar/audio-stream/audio-stream-transcriber && just lint-rust-clippy-fix
     cd data-processing/pulsar/audio-stream/grpc-pulsar-bridge && just lint-rust-clippy-fix
     cd data-processing/pulsar/audio-stream/pulsar-livekit-bridge && just lint-rust-clippy-fix
     cd data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-mqtt-publisher && just lint-rust-clippy-fix
