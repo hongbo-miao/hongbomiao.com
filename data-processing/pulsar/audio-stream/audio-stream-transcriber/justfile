@@ -26,11 +26,8 @@ lint-rust-rustfmt-fix:
     cargo fmt --all
 
 download-models:
-    mkdir -p models/parakeet-tdt
-    curl --silent --fail --show-error --location --output models/parakeet-tdt/encoder.int8.onnx https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v2-int8/resolve/main/encoder.int8.onnx
-    curl --silent --fail --show-error --location --output models/parakeet-tdt/decoder.int8.onnx https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v2-int8/resolve/main/decoder.int8.onnx
-    curl --silent --fail --show-error --location --output models/parakeet-tdt/joiner.int8.onnx https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v2-int8/resolve/main/joiner.int8.onnx
-    curl --silent --fail --show-error --location --output models/parakeet-tdt/tokens.txt https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v2-int8/resolve/main/tokens.txt
+    mkdir -p models/cohere-transcribe
+    curl --silent --fail --show-error --location https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-cohere-transcribe-14-lang-int8-2026-04-01.tar.bz2 | tar --extract --bzip2 --strip-components=1 --directory models/cohere-transcribe
 
     mkdir -p models/silero-vad
     curl --silent --fail --show-error --location --output models/silero-vad/silero_vad.onnx \

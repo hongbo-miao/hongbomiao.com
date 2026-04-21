@@ -737,14 +737,15 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Silero VAD** - Voice activity detection
 - Speaker Diarization
   - **Diart** - Real-time speaker diarization
-  - **Streaming Sortformer Diarizer 4spk v2.1** - Real-time speaker diarization model for up to 4 speakers using a streaming Transformer-based architecture
+  - **Streaming Sortformer Diarizer 4spk** - Real-time speaker diarization model for up to 4 speakers using a streaming Transformer-based architecture
 - Audio Signal Analysis
   - **Librosa** - Audio signal analysis
 - Automatic Speech Recognition (ASR)
   - Automatic Speech Recognition (ASR) Models
     - **Whisper** - Transformer-based automatic speech recognition (ASR) model
-    - **parakeet-tdt-0.6b-v3** - Fast Conformer-based Token-and-Duration Transducer (TDT) automatic speech recognition (ASR) model
     - **Qwen3-ASR** - Large language model (LLM)-based automatic speech recognition (ASR) model
+    - **Parakeet TDT** - Fast Conformer-based Token-and-Duration Transducer (TDT) automatic speech recognition (ASR) model
+    - **Cohere Transcribe** - Conformer encoder + Transformer decoder automatic speech recognition (ASR) model
   - Automatic Speech Recognition (ASR) Inference
     - **Faster Whisper** - Fast Whisper inference using CTranslate2
     - **WhisperX** - Whisper-based transcription with word-level timestamps and speaker diarization
