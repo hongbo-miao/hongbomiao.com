@@ -14,7 +14,8 @@ use pulsar::{
 };
 use serde_json::json;
 use sherpa_onnx::{
-    OfflineRecognizer, OfflineRecognizerConfig, VadModelConfig, VoiceActivityDetector,
+    OfflineCohereTranscribeModelConfig, OfflineRecognizer, OfflineRecognizerConfig, VadModelConfig,
+    VoiceActivityDetector,
 };
 use tracing::{error, info};
 
@@ -29,8 +30,8 @@ const ASR_NUM_THREADS: i32 = 2;
 const VAD_WINDOW_SIZE: usize = 512;
 const VAD_BUFFER_DURATION_S: f32 = 60.0;
 const VAD_BUFFER_TRIM_WINDOW_COUNT: usize = 10;
-const VAD_SPEECH_PAD_HEAD_SAMPLES: usize = PCM_SAMPLE_RATE_HZ as usize * 100 / 1000; // 0.1s head padding
-const VAD_SPEECH_PAD_TAIL_S: f32 = 0.1;
+const VAD_SPEECH_PAD_HEAD_SAMPLES: usize = PCM_SAMPLE_RATE_HZ as usize * 300 / 1000; // 0.3s head padding
+const VAD_MIN_SILENCE_DURATION_S: f32 = 0.3;
 // Keep the last 500ms of chunks unacked so the broker redelivers them as acoustic pre-roll
 // if this pod crashes mid-word, preventing the ASR model from receiving a truncated utterance.
 const ACK_DELAY_MS: u64 = 500;
@@ -263,11 +264,14 @@ pub async fn transcribe_audio_stream(
 
 fn build_offline_recognizer_config(asr_model_dir: &str) -> OfflineRecognizerConfig {
     let mut config = OfflineRecognizerConfig::default();
-    config.model_config.transducer.encoder = Some(format!("{asr_model_dir}/encoder.int8.onnx"));
-    config.model_config.transducer.decoder = Some(format!("{asr_model_dir}/decoder.int8.onnx"));
-    config.model_config.transducer.joiner = Some(format!("{asr_model_dir}/joiner.int8.onnx"));
+    config.model_config.cohere_transcribe = OfflineCohereTranscribeModelConfig {
+        encoder: Some(format!("{asr_model_dir}/encoder.int8.onnx")),
+        decoder: Some(format!("{asr_model_dir}/decoder.int8.onnx")),
+        use_punct: true,
+        use_itn: true,
+        ..Default::default()
+    };
     config.model_config.tokens = Some(format!("{asr_model_dir}/tokens.txt"));
-    config.model_config.model_type = Some("nemo_transducer".to_string());
     config.model_config.num_threads = ASR_NUM_THREADS;
     config
 }
@@ -275,10 +279,10 @@ fn build_offline_recognizer_config(asr_model_dir: &str) -> OfflineRecognizerConf
 fn build_vad_config(silero_vad_model_dir: &str) -> VadModelConfig {
     let mut config = VadModelConfig::default();
     config.silero_vad.model = Some(format!("{silero_vad_model_dir}/silero_vad.onnx"));
-    config.silero_vad.threshold = 0.5;
-    config.silero_vad.min_silence_duration = VAD_SPEECH_PAD_TAIL_S;
-    config.silero_vad.min_speech_duration = 0.25;
-    config.silero_vad.max_speech_duration = 5.0;
+    config.silero_vad.threshold = 0.45;
+    config.silero_vad.min_silence_duration = VAD_MIN_SILENCE_DURATION_S;
+    config.silero_vad.min_speech_duration = 0.1;
+    config.silero_vad.max_speech_duration = 15.0;
     config.silero_vad.window_size = VAD_WINDOW_SIZE as i32;
     config.sample_rate = PCM_SAMPLE_RATE_HZ as i32;
     config
@@ -292,6 +296,7 @@ fn run_asr_thread(
 ) {
     for samples in asr_receiver {
         let stream = recognizer.create_stream();
+        stream.set_option("language", "en");
         stream.accept_waveform(PCM_SAMPLE_RATE_HZ as i32, &samples);
         recognizer.decode(&stream);
         if let Some(result) = stream.get_result() {
@@ -343,7 +348,8 @@ fn run_vad_thread(
         }
     };
 
-    let (asr_sender, asr_receiver) = mpsc::channel::<Vec<f32>>();
+    // Blocks VAD (rather than dropping) when ASR falls behind; sized to 15 segments × 15s max each.
+    let (asr_sender, asr_receiver) = mpsc::sync_channel::<Vec<f32>>(15);
 
     let device_id_for_asr = device_id.clone();
     std::thread::spawn(move || {
