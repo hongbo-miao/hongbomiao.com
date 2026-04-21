@@ -1,6 +1,6 @@
 use std::collections::{HashMap, VecDeque};
 use std::sync::{Arc, mpsc};
-use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
 use anyhow::{Result, anyhow};
 use futures::StreamExt;
@@ -24,13 +24,16 @@ const PCM_SAMPLE_RATE_HZ: u32 = 16_000;
 const STALE_CHUNK_THRESHOLD_MS: u128 = 2_000;
 const OPUS_FRAME_SAMPLE_COUNT: usize = 320;
 const DEVICE_STALE_TIMEOUT_S: u64 = 5;
-const AUDIO_CHANNEL_BUFFER: usize = 32;
+const AUDIO_CHANNEL_BUFFER: usize = 512;
 const ASR_NUM_THREADS: i32 = 2;
 const VAD_WINDOW_SIZE: usize = 512;
 const VAD_BUFFER_DURATION_S: f32 = 60.0;
 const VAD_BUFFER_TRIM_WINDOW_COUNT: usize = 10;
 const VAD_SPEECH_PAD_HEAD_SAMPLES: usize = PCM_SAMPLE_RATE_HZ as usize * 100 / 1000; // 0.1s head padding
 const VAD_SPEECH_PAD_TAIL_S: f32 = 0.1;
+// Keep the last 500ms of chunks unacked so the broker redelivers them as acoustic pre-roll
+// if this pod crashes mid-word, preventing the ASR model from receiving a truncated utterance.
+const ACK_DELAY_MS: u64 = 500;
 
 struct RawPayload;
 
@@ -129,8 +132,19 @@ pub async fn transcribe_audio_stream(
 
     let mut device_audio_senders: HashMap<String, mpsc::SyncSender<Vec<f32>>> = HashMap::new();
     let mut device_opus_decoders: HashMap<String, opus::Decoder> = HashMap::new();
+    let mut ack_delay_queue = VecDeque::new();
 
     while let Some(message_result) = consumer.next().await {
+        let ack_cutoff = Instant::now() - Duration::from_millis(ACK_DELAY_MS);
+        while let Some((received_at, _)) = ack_delay_queue.front() {
+            if *received_at <= ack_cutoff {
+                let (_, queued_message) = ack_delay_queue.pop_front().expect("front exists");
+                consumer.ack(&queued_message).await.ok();
+            } else {
+                break;
+            }
+        }
+
         let pulsar_message = match message_result {
             Ok(message) => message,
             Err(error) => {
@@ -170,7 +184,7 @@ pub async fn transcribe_audio_stream(
             let silero_vad_model_dir_clone = silero_vad_model_dir.to_string();
 
             std::thread::spawn(move || {
-                run_device_transcription_thread(
+                run_vad_thread(
                     device_id_clone,
                     audio_receiver,
                     transcript_sender_clone,
@@ -226,6 +240,7 @@ pub async fn transcribe_audio_stream(
             match sender.try_send(f32_samples) {
                 Ok(()) => {}
                 Err(mpsc::TrySendError::Full(_)) => {
+                    error!("Audio channel full for {device_id}, dropping audio chunk");
                     consumer.ack(&pulsar_message).await.ok();
                     continue;
                 }
@@ -236,10 +251,11 @@ pub async fn transcribe_audio_stream(
             }
         }
 
-        consumer
-            .ack(&pulsar_message)
-            .await
-            .map_err(|error| anyhow!("Failed to acknowledge Pulsar message: {error}"))?;
+        ack_delay_queue.push_back((Instant::now(), pulsar_message));
+    }
+
+    for (_, queued_message) in ack_delay_queue {
+        consumer.ack(&queued_message).await.ok();
     }
 
     Ok(())
@@ -268,7 +284,40 @@ fn build_vad_config(silero_vad_model_dir: &str) -> VadModelConfig {
     config
 }
 
-fn run_device_transcription_thread(
+fn run_asr_thread(
+    device_id: String,
+    asr_receiver: mpsc::Receiver<Vec<f32>>,
+    recognizer: OfflineRecognizer,
+    transcript_sender: tokio::sync::mpsc::UnboundedSender<TranscriptSegment>,
+) {
+    for samples in asr_receiver {
+        let stream = recognizer.create_stream();
+        stream.accept_waveform(PCM_SAMPLE_RATE_HZ as i32, &samples);
+        recognizer.decode(&stream);
+        if let Some(result) = stream.get_result() {
+            let text = result.text.trim().to_string();
+            if !text.is_empty() {
+                info!("Transcript: device={device_id} text={text}");
+                let timestamp_ns = SystemTime::now()
+                    .duration_since(UNIX_EPOCH)
+                    .unwrap_or_default()
+                    .as_nanos() as i64;
+                if transcript_sender
+                    .send(TranscriptSegment {
+                        device_id: device_id.clone(),
+                        text,
+                        timestamp_ns,
+                    })
+                    .is_err()
+                {
+                    return;
+                }
+            }
+        }
+    }
+}
+
+fn run_vad_thread(
     device_id: String,
     audio_receiver: mpsc::Receiver<Vec<f32>>,
     transcript_sender: tokio::sync::mpsc::UnboundedSender<TranscriptSegment>,
@@ -294,29 +343,17 @@ fn run_device_transcription_thread(
         }
     };
 
-    let send_segment = |text: String| -> bool {
-        info!("Transcript: device={device_id} text={text}");
-        let timestamp_ns = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .unwrap_or_default()
-            .as_nanos() as i64;
-        transcript_sender
-            .send(TranscriptSegment {
-                device_id: device_id.clone(),
-                text,
-                timestamp_ns,
-            })
-            .is_ok()
-    };
+    let (asr_sender, asr_receiver) = mpsc::channel::<Vec<f32>>();
 
-    let recognize_segment = |samples: &[f32]| -> Option<String> {
-        let stream = recognizer.create_stream();
-        stream.accept_waveform(PCM_SAMPLE_RATE_HZ as i32, samples);
-        recognizer.decode(&stream);
-        stream
-            .get_result()
-            .map(|result| result.text.trim().to_string())
-    };
+    let device_id_for_asr = device_id.clone();
+    std::thread::spawn(move || {
+        run_asr_thread(
+            device_id_for_asr,
+            asr_receiver,
+            recognizer,
+            transcript_sender,
+        );
+    });
 
     let mut buffer: Vec<f32> = Vec::new();
     let mut vad_offset: usize = 0;
@@ -355,10 +392,7 @@ fn run_device_transcription_thread(
                                 .copied()
                                 .chain(segment.samples().iter().copied())
                                 .collect();
-                            if let Some(text) = recognize_segment(&padded)
-                                && !text.is_empty()
-                                && !send_segment(text)
-                            {
+                            if asr_sender.send(padded).is_err() {
                                 return;
                             }
                         }
@@ -378,11 +412,7 @@ fn run_device_transcription_thread(
                             .copied()
                             .chain(segment.samples().iter().copied())
                             .collect();
-                        if let Some(text) = recognize_segment(&padded)
-                            && !text.is_empty()
-                        {
-                            send_segment(text);
-                        }
+                        asr_sender.send(padded).ok();
                     }
                     vad.pop();
                     pre_speech_ring.clear();
