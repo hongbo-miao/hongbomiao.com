@@ -22,4 +22,11 @@ spec:
           command:
             - sh
             - -c
-            - "bin/pulsar-admin --admin-url http://pulsar-broker:8080 topics create persistent://public/default/audio-chunk || true"
+            - |
+              set -e
+              bin/pulsar-admin --admin-url http://pulsar-broker:8080 topics get-partitioned-topic-metadata persistent://public/default/audio-chunk > /dev/null 2>&1 || \
+                bin/pulsar-admin --admin-url http://pulsar-broker:8080 topics create-partitioned-topic persistent://public/default/audio-chunk --partitions 2
+              bin/pulsar-admin --admin-url http://pulsar-broker:8080 topics get-partitioned-topic-metadata persistent://public/default/audio-transcript > /dev/null 2>&1 || \
+                bin/pulsar-admin --admin-url http://pulsar-broker:8080 topics create-partitioned-topic persistent://public/default/audio-transcript --partitions 2
+              bin/pulsar-admin --admin-url http://pulsar-broker:8080 topics get-partitioned-topic-metadata persistent://public/default/audio-transcript-metrics > /dev/null 2>&1 || \
+                bin/pulsar-admin --admin-url http://pulsar-broker:8080 topics create-partitioned-topic persistent://public/default/audio-transcript-metrics --partitions 2

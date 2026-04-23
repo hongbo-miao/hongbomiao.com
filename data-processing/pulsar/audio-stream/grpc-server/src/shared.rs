@@ -1,5 +1,5 @@
 pub mod audio {
-    pub mod models {
+    pub mod types {
         pub mod audio_chunk;
     }
     pub mod services {

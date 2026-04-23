@@ -46,7 +46,7 @@ async fn main() -> Result<()> {
     let service = AudioIngestServiceImpl { pulsar_producer };
     let addr = SocketAddr::from(([0, 0, 0, 0], config.grpc_port));
 
-    info!("gRPC ingest server listening on {addr}");
+    info!("gRPC server listening on {addr}");
 
     Server::builder()
         .add_service(AudioIngestServiceServer::new(service))

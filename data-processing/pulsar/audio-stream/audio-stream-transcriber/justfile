@@ -30,5 +30,7 @@ download-models:
     curl --silent --fail --show-error --location https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-cohere-transcribe-14-lang-int8-2026-04-01.tar.bz2 | tar --extract --bzip2 --strip-components=1 --directory models/cohere-transcribe
 
     mkdir -p models/silero-vad
-    curl --silent --fail --show-error --location --output models/silero-vad/silero_vad.onnx \
-        https://github.com/snakers4/silero-vad/raw/v6.2.1/src/silero_vad/data/silero_vad.onnx
+    curl --silent --fail --show-error --location --output models/silero-vad/silero_vad.onnx https://github.com/snakers4/silero-vad/raw/v6.2.1/src/silero_vad/data/silero_vad.onnx
+
+    mkdir -p models/zipformer
+    curl --silent --fail --show-error --location https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-streaming-zipformer-en-2023-06-21.tar.bz2 | tar --extract --bzip2 --strip-components=1 --directory models/zipformer

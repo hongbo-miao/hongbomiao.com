@@ -40,6 +40,7 @@ async fn main() -> Result<()> {
         &app_config.instance_id,
         &app_config.asr_model_dir,
         &app_config.silero_vad_model_dir,
+        &app_config.zipformer_model_dir,
     )
     .await
     .map_err(|error| anyhow!("audio-stream-transcriber failed: {error}"))

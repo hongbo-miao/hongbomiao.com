@@ -5,16 +5,22 @@ namespace_create("audio-stream")
 
 # --- K8s manifests ---
 k8s_yaml([
-    "kubernetes/pulsar/topic-initialize.yaml",
+    "kubernetes/audio-stream-flink-compute.yaml",
+    "kubernetes/audio-stream-web.yaml",
+    "kubernetes/grpc-server.yaml",
     "kubernetes/livekit-config.yaml",
     "kubernetes/livekit.yaml",
-    "kubernetes/audio-stream-publisher.yaml",
-    "kubernetes/grpc-pulsar-bridge.yaml",
     "kubernetes/pulsar-livekit-bridge.yaml",
-    "kubernetes/audio-stream-web.yaml",
+    "kubernetes/pulsar/topic-initialize.yaml",
 ])
 
 # Dynamically inject absolute path for hostPath
+publisher_yaml = str(read_file("kubernetes/audio-stream-publisher.yaml")).replace(
+    "DATA_PATH_PLACEHOLDER",
+    str(local("pwd")).strip() + "/audio-stream-publisher/data",
+)
+k8s_yaml(blob(publisher_yaml))
+
 transcriber_yaml = str(read_file("kubernetes/audio-stream-transcriber.yaml")).replace(
     "MODELS_PATH_PLACEHOLDER",
     str(local("pwd")).strip() + "/audio-stream-transcriber/models",
@@ -22,6 +28,14 @@ transcriber_yaml = str(read_file("kubernetes/audio-stream-transcriber.yaml")).re
 k8s_yaml(blob(transcriber_yaml))
 
 # --- Helm charts ---
+helm_resource(
+    "flink-kubernetes-operator",
+    "../../../../flink-kubernetes-operator/helm/flink-kubernetes-operator",
+    namespace="audio-stream",
+    flags=["--values=kubernetes/flink-kubernetes-operator/helm-chart/values.yaml"],
+    labels=["flink"],
+)
+
 helm_repo("pulsar-repo", "https://pulsar.apache.org/charts")
 helm_resource(
     "pulsar",
@@ -50,9 +64,9 @@ docker_build(
 )
 
 docker_build(
-    "grpc-pulsar-bridge",
+    "grpc-server",
     context=".",
-    dockerfile="grpc-pulsar-bridge/Dockerfile",
+    dockerfile="grpc-server/Dockerfile",
 )
 
 docker_build(
@@ -68,6 +82,13 @@ docker_build(
 )
 
 docker_build(
+    "audio-stream-flink-compute",
+    context="audio-stream-flink-compute",
+    dockerfile="audio-stream-flink-compute/Dockerfile",
+)
+k8s_image_json_path("{.spec.image}", kind="FlinkDeployment", name="audio-stream-flink-compute", namespace="audio-stream")
+
+docker_build(
     "audio-stream-web",
     context=".",
     dockerfile="audio-stream-web/Dockerfile",
@@ -76,8 +97,9 @@ docker_build(
 # --- Resource grouping ---
 k8s_resource("pulsar-topic-initialize", labels=["pulsar"], resource_deps=["pulsar"])
 k8s_resource("livekit", labels=["livekit"], resource_deps=["livekit-valkey"], port_forwards=["7880:7880"])
-k8s_resource("grpc-pulsar-bridge", labels=["audio-stream"], resource_deps=["pulsar-topic-initialize"])
-k8s_resource("audio-stream-publisher", labels=["audio-stream"], resource_deps=["grpc-pulsar-bridge"])
+k8s_resource("grpc-server", labels=["audio-stream"], resource_deps=["pulsar-topic-initialize"])
+k8s_resource("audio-stream-publisher", labels=["audio-stream"], resource_deps=["grpc-server"])
 k8s_resource("pulsar-livekit-bridge", labels=["audio-stream"], resource_deps=["livekit", "pulsar-topic-initialize"], port_forwards=["8080:8080"])
 k8s_resource("audio-stream-transcriber", labels=["audio-stream"], resource_deps=["livekit", "pulsar-topic-initialize"])
 k8s_resource("audio-stream-web", labels=["audio-stream"], resource_deps=["pulsar-livekit-bridge"], port_forwards=["8081:80"])
+k8s_resource("audio-stream-flink-compute", labels=["flink"], resource_deps=["pulsar-topic-initialize", "flink-kubernetes-operator"])

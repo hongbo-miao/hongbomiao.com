@@ -533,6 +533,38 @@ module "grafana_dashboard_postgres_exporter_database" {
   tags       = [var.managed_tag]
 }
 
+# Dashboard - vLLM
+module "grafana_folder_vllm" {
+  source   = "../../../modules/grafana/grafana_folder"
+  for_each = toset(local.org_ids)
+  org_id   = each.value
+  title    = "vLLM"
+}
+data "http" "vllm_dashboard" {
+  url = "https://raw.githubusercontent.com/vllm-project/vllm/main/examples/observability/prometheus_grafana/grafana.json"
+}
+locals {
+  vllm_dashboard_processed = {
+    for org_id in local.org_ids : org_id => jsonencode(merge(
+      jsondecode(data.http.vllm_dashboard.response_body),
+      { uid = "vllm-${org_id}" }
+    ))
+  }
+}
+module "grafana_dashboard_vllm" {
+  source     = "../../../modules/grafana/grafana_dashboard"
+  for_each   = toset(local.org_ids)
+  org_id     = each.value
+  folder_uid = module.grafana_folder_vllm[each.value].uid
+  config_json = replace(
+    local.vllm_dashboard_processed[each.value],
+    "$${DS_PROMETHEUS}",
+    module.grafana_data_source_hm_prometheus[each.value].uid
+  )
+  uid_prefix = var.grafana_dashboard_uid_prefix
+  tags       = [var.managed_tag]
+}
+
 # Dashboard - Volcano
 module "grafana_folder_volcano" {
   source   = "../../../modules/grafana/grafana_folder"

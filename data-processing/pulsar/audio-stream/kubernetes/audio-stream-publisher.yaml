@@ -5,7 +5,7 @@ metadata:
   name: audio-stream-publisher
   namespace: audio-stream
 spec:
-  replicas: 5
+  replicas: 3
   selector:
     matchLabels:
       app: audio-stream-publisher
@@ -20,3 +20,10 @@ spec:
           env:
             - name: ENVIRONMENT
               value: development
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+      volumes:
+        - name: data
+          hostPath:
+            path: DATA_PATH_PLACEHOLDER

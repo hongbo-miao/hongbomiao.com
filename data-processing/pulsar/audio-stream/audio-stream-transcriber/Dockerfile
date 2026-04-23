@@ -4,9 +4,9 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
     cmake g++ libglib2.0-dev libopus-dev libssl-dev pkg-config protobuf-compiler \
     && rm -rf /var/lib/apt/lists/*
 COPY schemas/ schemas/
-COPY audio-stream-transcriber/Cargo.toml audio-stream-transcriber/build.rs audio-stream-transcriber/
+COPY audio-stream-transcriber/Cargo.toml audio-stream-transcriber/Cargo.lock audio-stream-transcriber/build.rs audio-stream-transcriber/
 COPY audio-stream-transcriber/src/ audio-stream-transcriber/src/
-RUN cargo build --release --manifest-path audio-stream-transcriber/Cargo.toml
+RUN cargo build --locked --release --manifest-path audio-stream-transcriber/Cargo.toml
 
 FROM docker.io/debian:trixie-slim AS release
 WORKDIR /app

@@ -3,7 +3,7 @@ use prost::Message;
 use pulsar::{Producer, SerializeMessage, TokioExecutor, producer};
 use tracing::info;
 
-use crate::shared::audio::models::audio_chunk::AudioChunk;
+use crate::shared::audio::types::audio_chunk::AudioChunk;
 
 struct AudioChunkMessage {
     payload: Vec<u8>,
