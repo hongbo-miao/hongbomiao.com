@@ -10,8 +10,10 @@ pub struct AppConfig {
     pub livekit_api_secret: String,
     pub livekit_room: String,
     pub instance_id: String,
-    pub asr_model_dir: String,
-    pub silero_vad_model_dir: String,
+    pub asr_model_type: String,
+    pub cohere_transcribe_model_dir: String,
+    pub parakeet_tdt_model_dir: String,
+    pub ten_vad_model_dir: String,
     pub zipformer_model_dir: String,
 }
 
@@ -53,9 +55,14 @@ impl AppConfig {
                 .context("LIVEKIT_API_SECRET must be set")?,
             livekit_room: std::env::var("LIVEKIT_ROOM").context("LIVEKIT_ROOM must be set")?,
             instance_id: std::env::var("HOSTNAME").context("HOSTNAME must be set")?,
-            asr_model_dir: std::env::var("ASR_MODEL_DIR").context("ASR_MODEL_DIR must be set")?,
-            silero_vad_model_dir: std::env::var("SILERO_VAD_MODEL_DIR")
-                .context("SILERO_VAD_MODEL_DIR must be set")?,
+            asr_model_type: std::env::var("ASR_MODEL_TYPE")
+                .context("ASR_MODEL_TYPE must be set")?,
+            cohere_transcribe_model_dir: std::env::var("COHERE_TRANSCRIBE_MODEL_DIR")
+                .context("COHERE_TRANSCRIBE_MODEL_DIR must be set")?,
+            parakeet_tdt_model_dir: std::env::var("PARAKEET_TDT_MODEL_DIR")
+                .context("PARAKEET_TDT_MODEL_DIR must be set")?,
+            ten_vad_model_dir: std::env::var("TEN_VAD_MODEL_DIR")
+                .context("TEN_VAD_MODEL_DIR must be set")?,
             zipformer_model_dir: std::env::var("ZIPFORMER_MODEL_DIR")
                 .context("ZIPFORMER_MODEL_DIR must be set")?,
         };

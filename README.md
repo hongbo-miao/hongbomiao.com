@@ -156,7 +156,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **async-openai** - OpenAI API library
 - **Hound** - WAV file encoding and decoding
 - **flacenc-rs** - FLAC encoding
-- **webrtc-vad** - WebRTC voice activity detector (VAD)
 - **FFmpeg Sidecar** - Iterator-based FFmpeg wrapper
 - **Anyhow** - Error handling
 - **Tracing** - Tracing
@@ -731,10 +730,13 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - Live Coding
   - **Strudel** - JavaScript port of Tidal Cycles for live coding dynamic music patterns
+- Noise Suppression / Noise Cancellation
+  - **RNNoise** - Lightweight recurrent neural network (RNN)-based real-time noise suppression system
 - Voice Activity Detection (VAD)
-  - **WebRTC VAD** - Voice activity detection
-  - **RNNoise VAD** - Voice activity detection
-  - **Silero VAD** - Voice activity detection
+  - **WebRTC VAD** - Lightweight Gaussian Mixture Model (GMM)-based voice activity detector optimized for ultra-low-latency real-time communication
+  - **RNNoise VAD** - Recurrent Neural Network (RNN)-based noise suppression system with implicit voice activity detection
+  - **Silero VAD** - Pre-trained LSTM-based deep neural network voice activity detector providing high accuracy and robustness across noisy conditions
+  - **TEN VAD** - Lightweight streaming neural VAD optimized for high precision and extremely low latency in real-time conversational systems
 - Speaker Diarization
   - **Diart** - Real-time speaker diarization
   - **Streaming Sortformer Diarizer 4spk** - Real-time speaker diarization model for up to 4 speakers using a streaming Transformer-based architecture

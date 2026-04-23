@@ -2,6 +2,8 @@ import { useDataChannel, useRoomContext } from '@livekit/components-react';
 import type { TrackReferenceOrPlaceholder } from '@livekit/components-react';
 import type { RemoteAudioTrack } from 'livekit-client';
 import { useEffect, useRef, useState } from 'react';
+import { createDenoiseNode } from '@/App/utils/createDenoiseNode';
+import { getRnnoiseInstance, loadRnnoise } from '@/App/utils/loadRnnoise';
 
 interface DeviceCardProps {
   deviceId: string;
@@ -18,7 +20,7 @@ let sharedAudioContext: AudioContext | null = null;
 
 function getAudioContext(): AudioContext {
   if (!sharedAudioContext || sharedAudioContext.state === 'closed') {
-    sharedAudioContext = new AudioContext();
+    sharedAudioContext = new AudioContext({ sampleRate: 48000 });
   }
   return sharedAudioContext;
 }
@@ -30,6 +32,8 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
   const minRawLatencyRef = useRef<number>(Infinity);
   const [transcriptLines, setTranscriptLines] = useState<string[]>([]);
   const [interimText, setInterimText] = useState<string | null>(null);
+  const [isNoiseCancellationEnabled, setIsNoiseCancellationEnabled] = useState(false);
+  const [isRnnoiseReady, setIsRnnoiseReady] = useState(() => getRnnoiseInstance() !== null);
 
   useDataChannel('transcript', (msg) => {
     const data = JSON.parse(new TextDecoder().decode(msg.payload)) as {
@@ -54,9 +58,16 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
       const raw = Date.now() - data.timestamp_ns / 1_000_000;
       if (raw < minRawLatencyRef.current) minRawLatencyRef.current = raw;
       const sample = raw - minRawLatencyRef.current;
-      setLatencyMs((prev) => Math.round(prev === null ? sample : prev * 0.95 + sample * 0.05));
+      setLatencyMs((prev) => Math.round(prev == null ? sample : prev * 0.95 + sample * 0.05));
     }
   });
+
+  useEffect(() => {
+    if (!isActive) return;
+    loadRnnoise()
+      .then(() => setIsRnnoiseReady(true))
+      .catch(() => undefined);
+  }, [isActive]);
 
   useEffect(() => {
     if (!isActive) return;
@@ -66,17 +77,17 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
     // Minimize WebRTC jitter buffer
     if (track.mediaStreamTrack) {
       try {
-        const engine = (room as any).engine;
+        const engine = (room as unknown as { engine: { pcManager?: { publisher?: { pc: RTCPeerConnection } } } }).engine;
         const peerConnection: RTCPeerConnection | undefined = engine?.pcManager?.publisher?.pc;
         if (peerConnection) {
           const receiver = peerConnection.getReceivers().find((r) => r.track.id === track.mediaStreamTrack.id);
           if (receiver) {
-            const r = receiver as any;
+            const r = receiver as unknown as Record<string, number>;
             // jitterBufferTarget is the current standard; playoutDelayHint is the older alias
             if ('jitterBufferTarget' in r) {
-              r.jitterBufferTarget = 0;
+              r['jitterBufferTarget'] = 0;
             } else if ('playoutDelayHint' in r) {
-              r.playoutDelayHint = 0;
+              r['playoutDelayHint'] = 0;
             }
           }
         }
@@ -90,7 +101,15 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
     analyser.fftSize = FFT_SIZE;
 
     track.setAudioContext(audioContext);
-    track.setWebAudioPlugins([analyser]);
+
+    const rnnoise = getRnnoiseInstance();
+    let denoiseNode: ScriptProcessorNode | null = null;
+    if (isNoiseCancellationEnabled && rnnoise) {
+      denoiseNode = createDenoiseNode(audioContext, rnnoise);
+      track.setWebAudioPlugins([denoiseNode, analyser]);
+    } else {
+      track.setWebAudioPlugins([analyser]);
+    }
 
     const audioElement = document.createElement('audio');
     track.attach(audioElement);
@@ -131,9 +150,12 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
       cancelAnimationFrame(animationId);
       audioContext.removeEventListener('statechange', handleStateChange);
       track.detach(audioElement);
+      if (denoiseNode) {
+        (denoiseNode as unknown as { _destroyDenoiseState: () => void })._destroyDenoiseState();
+      }
       track.setWebAudioPlugins([]);
     };
-  }, [trackRef.publication?.track, isActive, room]);
+  }, [trackRef.publication?.track, isActive, room, isNoiseCancellationEnabled, isRnnoiseReady]);
 
   const cardStyle: React.CSSProperties = {
     border: isActive ? '2px solid #00aa00' : '1px solid #555',
@@ -160,6 +182,27 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
             height={CANVAS_HEIGHT}
             style={{ background: '#000', display: 'block' }}
           />
+          <div style={{ marginTop: '4px' }}>
+            <button
+              onClick={() => setIsNoiseCancellationEnabled((prev) => !prev)}
+              disabled={!isRnnoiseReady}
+              style={{
+                fontSize: '11px',
+                padding: '2px 8px',
+                background: isNoiseCancellationEnabled ? '#004400' : '#222',
+                color: isNoiseCancellationEnabled ? '#00aa00' : '#aaa',
+                border: `1px solid ${isNoiseCancellationEnabled ? '#00aa00' : '#555'}`,
+                borderRadius: '3px',
+                cursor: isRnnoiseReady ? 'pointer' : 'wait',
+              }}
+            >
+              {isRnnoiseReady
+                ? isNoiseCancellationEnabled
+                  ? 'Noise cancellation: on'
+                  : 'Noise cancellation: off'
+                : 'Noise cancellation: loading…'}
+            </button>
+          </div>
           <div style={{ maxHeight: '1000px', overflowY: 'auto', fontSize: '11px', color: '#aaa', marginTop: '4px' }}>
             {transcriptLines.map((line, index) => (
               <div key={index} style={{ marginBottom: '8px' }}>{line}</div>

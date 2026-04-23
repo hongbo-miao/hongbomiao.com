@@ -4,6 +4,9 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [viteReact()],
+  optimizeDeps: {
+    exclude: ['@shiguredo/rnnoise-wasm'],
+  },
   server: {
     port: 5173,
     proxy: {
