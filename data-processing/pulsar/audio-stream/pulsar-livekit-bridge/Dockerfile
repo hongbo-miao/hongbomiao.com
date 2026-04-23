@@ -9,9 +9,9 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
     protobuf-compiler \
     && rm -rf /var/lib/apt/lists/*
 COPY schemas/ schemas/
-COPY pulsar-livekit-bridge/Cargo.toml pulsar-livekit-bridge/build.rs pulsar-livekit-bridge/
+COPY pulsar-livekit-bridge/Cargo.toml pulsar-livekit-bridge/Cargo.lock pulsar-livekit-bridge/build.rs pulsar-livekit-bridge/
 COPY pulsar-livekit-bridge/src/ pulsar-livekit-bridge/src/
-RUN cargo build --release --manifest-path pulsar-livekit-bridge/Cargo.toml
+RUN cargo build --locked --release --manifest-path pulsar-livekit-bridge/Cargo.toml
 
 FROM docker.io/debian:trixie-slim AS release
 WORKDIR /app

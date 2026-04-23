@@ -12,6 +12,7 @@ pub struct AppConfig {
     pub instance_id: String,
     pub asr_model_dir: String,
     pub silero_vad_model_dir: String,
+    pub zipformer_model_dir: String,
 }
 
 impl AppConfig {
@@ -55,6 +56,8 @@ impl AppConfig {
             asr_model_dir: std::env::var("ASR_MODEL_DIR").context("ASR_MODEL_DIR must be set")?,
             silero_vad_model_dir: std::env::var("SILERO_VAD_MODEL_DIR")
                 .context("SILERO_VAD_MODEL_DIR must be set")?,
+            zipformer_model_dir: std::env::var("ZIPFORMER_MODEL_DIR")
+                .context("ZIPFORMER_MODEL_DIR must be set")?,
         };
         Ok(app_config)
     }

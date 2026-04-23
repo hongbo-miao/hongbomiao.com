@@ -2,4 +2,5 @@ tilt-up:
     tilt up
 
 tilt-down:
+    kubectl get flinkdeployments.flink.apache.org --namespace=audio-stream --output=name | xargs -I {} kubectl patch {} --namespace=audio-stream --patch='{"metadata":{"finalizers":[]}}' --type=merge
     tilt down --delete-namespaces

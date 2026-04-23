@@ -1,5 +1,5 @@
 use std::collections::{HashMap, VecDeque};
-use std::sync::{Arc, mpsc};
+use std::sync::{Arc, LazyLock, mpsc};
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
 use anyhow::{Result, anyhow};
@@ -19,7 +19,13 @@ use sherpa_onnx::{
 };
 use tracing::{error, info};
 
+use crate::shared::audio::services::create_online_recognizer::create_online_recognizer;
 use crate::shared::audio::types::audio_chunk::AudioChunk;
+
+static TRANSCRIPT_AVRO_SCHEMA: LazyLock<apache_avro::Schema> = LazyLock::new(|| {
+    apache_avro::Schema::parse_str(include_str!("../../../../../schemas/audio_transcript.avsc"))
+        .expect("Failed to parse audio transcript Avro schema")
+});
 
 const PCM_SAMPLE_RATE_HZ: u32 = 16_000;
 const STALE_CHUNK_THRESHOLD_MS: u128 = 2_000;
@@ -30,8 +36,8 @@ const ASR_NUM_THREADS: i32 = 2;
 const VAD_WINDOW_SIZE: usize = 512;
 const VAD_BUFFER_DURATION_S: f32 = 60.0;
 const VAD_BUFFER_TRIM_WINDOW_COUNT: usize = 10;
-const VAD_SPEECH_PAD_HEAD_SAMPLES: usize = PCM_SAMPLE_RATE_HZ as usize * 300 / 1000; // 0.3s head padding
-const VAD_MIN_SILENCE_DURATION_S: f32 = 0.3;
+const VAD_SPEECH_PAD_HEAD_SAMPLES: usize = PCM_SAMPLE_RATE_HZ as usize * 200 / 1000; // 0.2s head padding
+const VAD_MIN_SILENCE_DURATION_S: f32 = 0.2;
 // Keep the last 500ms of chunks unacked so the broker redelivers them as acoustic pre-roll
 // if this pod crashes mid-word, preventing the ASR model from receiving a truncated utterance.
 const ACK_DELAY_MS: u64 = 500;
@@ -65,6 +71,7 @@ struct TranscriptSegment {
     device_id: String,
     text: String,
     timestamp_ns: i64,
+    is_final: bool,
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -79,6 +86,7 @@ pub async fn transcribe_audio_stream(
     instance_id: &str,
     asr_model_dir: &str,
     silero_vad_model_dir: &str,
+    zipformer_model_dir: &str,
 ) -> Result<()> {
     let pulsar_client: Pulsar<TokioExecutor> =
         Pulsar::builder(pulsar_url, TokioExecutor).build().await?;
@@ -183,6 +191,7 @@ pub async fn transcribe_audio_stream(
             let device_id_clone = device_id.clone();
             let asr_model_dir_clone = asr_model_dir.to_string();
             let silero_vad_model_dir_clone = silero_vad_model_dir.to_string();
+            let zipformer_model_dir_clone = zipformer_model_dir.to_string();
 
             std::thread::spawn(move || {
                 run_vad_thread(
@@ -191,6 +200,7 @@ pub async fn transcribe_audio_stream(
                     transcript_sender_clone,
                     asr_model_dir_clone,
                     silero_vad_model_dir_clone,
+                    zipformer_model_dir_clone,
                 );
             });
 
@@ -312,10 +322,62 @@ fn run_asr_thread(
                         device_id: device_id.clone(),
                         text,
                         timestamp_ns,
+                        is_final: true,
                     })
                     .is_err()
                 {
                     return;
+                }
+            }
+        }
+    }
+}
+
+enum ZipformerMessage {
+    Samples(u64, Vec<f32>),
+}
+
+fn run_zipformer_thread(
+    device_id: String,
+    zipformer_receiver: mpsc::Receiver<ZipformerMessage>,
+    transcript_sender: tokio::sync::mpsc::UnboundedSender<TranscriptSegment>,
+    zipformer_model_dir: String,
+) {
+    let recognizer = create_online_recognizer(&zipformer_model_dir);
+    let stream = recognizer.create_stream();
+    let mut last_interim_text = String::new();
+    let mut current_segment_id: u64 = 0;
+
+    for message in zipformer_receiver {
+        match message {
+            ZipformerMessage::Samples(segment_id, samples) => {
+                if segment_id != current_segment_id {
+                    recognizer.reset(&stream);
+                    last_interim_text.clear();
+                    current_segment_id = segment_id;
+                }
+                stream.accept_waveform(PCM_SAMPLE_RATE_HZ as i32, &samples);
+                while recognizer.is_ready(&stream) {
+                    recognizer.decode(&stream);
+                }
+                if let Some(result) = recognizer.get_result(&stream) {
+                    // Zipformer outputs all-uppercase; lowercase for readability as interim text.
+                    let partial_text = result.text.trim().to_lowercase();
+                    if !partial_text.is_empty() && partial_text != last_interim_text {
+                        last_interim_text = partial_text.clone();
+                        let timestamp_ns = SystemTime::now()
+                            .duration_since(UNIX_EPOCH)
+                            .unwrap_or_default()
+                            .as_nanos() as i64;
+                        transcript_sender
+                            .send(TranscriptSegment {
+                                device_id: device_id.clone(),
+                                text: partial_text,
+                                timestamp_ns,
+                                is_final: false,
+                            })
+                            .ok();
+                    }
                 }
             }
         }
@@ -328,6 +390,7 @@ fn run_vad_thread(
     transcript_sender: tokio::sync::mpsc::UnboundedSender<TranscriptSegment>,
     asr_model_dir: String,
     silero_vad_model_dir: String,
+    zipformer_model_dir: String,
 ) {
     let recognizer =
         match OfflineRecognizer::create(&build_offline_recognizer_config(&asr_model_dir)) {
@@ -350,20 +413,36 @@ fn run_vad_thread(
 
     // Blocks VAD (rather than dropping) when ASR falls behind; sized to 15 segments × 15s max each.
     let (asr_sender, asr_receiver) = mpsc::sync_channel::<Vec<f32>>(15);
+    // Drop interim-text samples rather than blocking the VAD thread if Zipformer falls behind.
+    let (zipformer_sender, zipformer_receiver) =
+        mpsc::sync_channel::<ZipformerMessage>(AUDIO_CHANNEL_BUFFER);
 
     let device_id_for_asr = device_id.clone();
+    let transcript_sender_for_asr = transcript_sender.clone();
     std::thread::spawn(move || {
         run_asr_thread(
             device_id_for_asr,
             asr_receiver,
             recognizer,
-            transcript_sender,
+            transcript_sender_for_asr,
+        );
+    });
+
+    let device_id_for_zipformer = device_id.clone();
+    let transcript_sender_for_zipformer = transcript_sender.clone();
+    std::thread::spawn(move || {
+        run_zipformer_thread(
+            device_id_for_zipformer,
+            zipformer_receiver,
+            transcript_sender_for_zipformer,
+            zipformer_model_dir,
         );
     });
 
     let mut buffer: Vec<f32> = Vec::new();
     let mut vad_offset: usize = 0;
     let mut pre_speech_ring: VecDeque<f32> = VecDeque::with_capacity(VAD_SPEECH_PAD_HEAD_SAMPLES);
+    let mut zipformer_segment_id: u64 = 0;
 
     loop {
         match audio_receiver.recv_timeout(Duration::from_secs(DEVICE_STALE_TIMEOUT_S)) {
@@ -375,6 +454,13 @@ fn run_vad_thread(
                         pre_speech_ring.drain(..drain_count);
                     }
                 }
+
+                zipformer_sender
+                    .try_send(ZipformerMessage::Samples(
+                        zipformer_segment_id,
+                        samples.clone(),
+                    ))
+                    .ok();
 
                 buffer.extend_from_slice(&samples);
 
@@ -398,6 +484,7 @@ fn run_vad_thread(
                                 .copied()
                                 .chain(segment.samples().iter().copied())
                                 .collect();
+                            zipformer_segment_id += 1;
                             if asr_sender.send(padded).is_err() {
                                 return;
                             }
@@ -435,17 +522,18 @@ async fn publish_transcript_segment(
     transcript_producer: &mut Producer<TokioExecutor>,
     segment: TranscriptSegment,
 ) -> Result<()> {
-    let payload_json = json!({
+    let livekit_bytes = json!({
         "device_id": segment.device_id,
         "text": segment.text,
         "timestamp_ns": segment.timestamp_ns,
+        "is_final": segment.is_final,
     })
-    .to_string();
-    let payload_bytes = payload_json.into_bytes();
+    .to_string()
+    .into_bytes();
 
     room.local_participant()
         .publish_data(DataPacket {
-            payload: payload_bytes.clone(),
+            payload: livekit_bytes,
             topic: Some("transcript".to_string()),
             reliable: true,
             destination_identities: vec![],
@@ -453,15 +541,24 @@ async fn publish_transcript_segment(
         .await
         .map_err(|error| anyhow!("Failed to publish transcript to LiveKit: {error}"))?;
 
-    transcript_producer
-        .send_non_blocking(TranscriptMessage {
-            payload: payload_bytes,
-            partition_key: segment.device_id,
-        })
-        .await
-        .map_err(|error| anyhow!("Failed to send transcript to Pulsar: {error}"))?
-        .await
-        .map_err(|error| anyhow!("Failed to receive Pulsar send acknowledgement: {error}"))?;
+    if segment.is_final {
+        let mut avro_record = apache_avro::types::Record::new(&TRANSCRIPT_AVRO_SCHEMA)
+            .expect("Failed to create Avro record");
+        avro_record.put("device_id", segment.device_id.clone());
+        avro_record.put("text", segment.text.clone());
+        avro_record.put("timestamp_ns", segment.timestamp_ns);
+        let pulsar_bytes = apache_avro::to_avro_datum(&TRANSCRIPT_AVRO_SCHEMA, avro_record)?;
+
+        transcript_producer
+            .send_non_blocking(TranscriptMessage {
+                payload: pulsar_bytes,
+                partition_key: segment.device_id,
+            })
+            .await
+            .map_err(|error| anyhow!("Failed to send transcript to Pulsar: {error}"))?
+            .await
+            .map_err(|error| anyhow!("Failed to receive Pulsar send acknowledgement: {error}"))?;
+    }
 
     Ok(())
 }

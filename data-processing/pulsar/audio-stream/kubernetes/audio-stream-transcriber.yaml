@@ -19,7 +19,9 @@ spec:
           image: audio-stream-transcriber
           env:
             - name: ENVIRONMENT
-              value: production
+              value: development
+            - name: LIVEKIT_API_SECRET
+              value: livekit_api_s3cr3t
             - name: HOSTNAME
               valueFrom:
                 fieldRef:

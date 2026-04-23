@@ -1,0 +1,16 @@
+{
+  "type": "record",
+  "name": "AudioTranscriptMetrics",
+  "namespace": "audio_stream",
+  "fields": [
+    {"name": "device_id", "type": "string"},
+    {"name": "window_start_ms", "type": "long"},
+    {"name": "window_end_ms", "type": "long"},
+    {"name": "message_rate_per_sec", "type": "double"},
+    {"name": "message_count", "type": "int"},
+    {"name": "avg_length_chars", "type": "double"},
+    {"name": "avg_gap_ms", "type": ["null", "double"], "default": null},
+    {"name": "min_gap_ms", "type": ["null", "double"], "default": null},
+    {"name": "max_gap_ms", "type": ["null", "double"], "default": null}
+  ]
+}

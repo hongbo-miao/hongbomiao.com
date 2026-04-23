@@ -709,8 +709,10 @@ jobs:
               - 'large-language-model-post-training/fine-tuning/proximal-policy-optimization/low-rank-adaptation/**'
             prometheus:
               - 'data-storage/prometheus/**'
-            pulsar-audio-stream-grpc-pulsar-bridge:
-              - 'data-processing/pulsar/audio-stream/grpc-pulsar-bridge/**'
+            pulsar-audio-stream-flink-compute:
+              - 'data-processing/pulsar/audio-stream/audio-stream-flink-compute/**'
+            pulsar-audio-stream-grpc-server:
+              - 'data-processing/pulsar/audio-stream/grpc-server/**'
             pulsar-audio-stream-publisher:
               - 'data-processing/pulsar/audio-stream/audio-stream-publisher/**'
             pulsar-audio-stream-transcriber:
@@ -1055,7 +1057,8 @@ jobs:
       post-training-quantization: ${{ steps.filter.outputs.post-training-quantization }}
       production-aws-glue-spark-scripts: ${{ steps.filter.outputs.production-aws-glue-spark-scripts }}
       prometheus: ${{ steps.filter.outputs.prometheus }}
-      pulsar-audio-stream-grpc-pulsar-bridge: ${{ steps.filter.outputs.pulsar-audio-stream-grpc-pulsar-bridge }}
+      pulsar-audio-stream-flink-compute: ${{ steps.filter.outputs.pulsar-audio-stream-flink-compute }}
+      pulsar-audio-stream-grpc-server: ${{ steps.filter.outputs.pulsar-audio-stream-grpc-server }}
       pulsar-audio-stream-publisher: ${{ steps.filter.outputs.pulsar-audio-stream-publisher }}
       pulsar-audio-stream-transcriber: ${{ steps.filter.outputs.pulsar-audio-stream-transcriber }}
       pulsar-audio-stream-pulsar-livekit-bridge: ${{ steps.filter.outputs.pulsar-audio-stream-pulsar-livekit-bridge }}
@@ -1148,7 +1151,7 @@ jobs:
       mobile-ios: ${{ needs.detect-changes.outputs.mobile-ios == 'true' }}
       mobile-react-native: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
       national-instruments-veristand-zeromq-bridge: ${{ needs.detect-changes.outputs.national-instruments-veristand-zeromq-bridge == 'true' }}
-      pulsar-audio-stream-grpc-pulsar-bridge: ${{ needs.detect-changes.outputs.pulsar-audio-stream-grpc-pulsar-bridge == 'true' }}
+      pulsar-audio-stream-grpc-server: ${{ needs.detect-changes.outputs.pulsar-audio-stream-grpc-server == 'true' }}
       pulsar-audio-stream-publisher: ${{ needs.detect-changes.outputs.pulsar-audio-stream-publisher == 'true' }}
       pulsar-audio-stream-transcriber: ${{ needs.detect-changes.outputs.pulsar-audio-stream-transcriber == 'true' }}
       pulsar-audio-stream-pulsar-livekit-bridge: ${{ needs.detect-changes.outputs.pulsar-audio-stream-pulsar-livekit-bridge == 'true' }}
@@ -1290,7 +1293,8 @@ jobs:
       nats-postgres-bridge: ${{ needs.detect-changes.outputs.nats-postgres-bridge == 'true' }}
       nats-telemetry-stream-publisher: ${{ needs.detect-changes.outputs.nats-telemetry-stream-publisher == 'true' }}
       nats-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.nats-telemetry-stream-subscriber == 'true' }}
-      pulsar-audio-stream-grpc-pulsar-bridge: ${{ needs.detect-changes.outputs.pulsar-audio-stream-grpc-pulsar-bridge == 'true' }}
+      pulsar-audio-stream-flink-compute: ${{ needs.detect-changes.outputs.pulsar-audio-stream-flink-compute == 'true' }}
+      pulsar-audio-stream-grpc-server: ${{ needs.detect-changes.outputs.pulsar-audio-stream-grpc-server == 'true' }}
       pulsar-audio-stream-publisher: ${{ needs.detect-changes.outputs.pulsar-audio-stream-publisher == 'true' }}
       pulsar-audio-stream-transcriber: ${{ needs.detect-changes.outputs.pulsar-audio-stream-transcriber == 'true' }}
       pulsar-audio-stream-pulsar-livekit-bridge: ${{ needs.detect-changes.outputs.pulsar-audio-stream-pulsar-livekit-bridge == 'true' }}

@@ -142,7 +142,7 @@ name: . Lint
       national-instruments-veristand-zeromq-bridge:
         required: true
         type: boolean
-      pulsar-audio-stream-grpc-pulsar-bridge:
+      pulsar-audio-stream-grpc-server:
         required: true
         type: boolean
       pulsar-audio-stream-publisher:
@@ -1143,9 +1143,9 @@ jobs:
         run: |
           cargo clippy
 
-  lint-rust-pulsar-audio-stream-grpc-pulsar-bridge:
-    name: Rust (pulsar-audio-stream-grpc-pulsar-bridge)
-    if: ${{ inputs.workflow || inputs.pulsar-audio-stream-grpc-pulsar-bridge }}
+  lint-rust-pulsar-audio-stream-grpc-server:
+    name: Rust (pulsar-audio-stream-grpc-server)
+    if: ${{ inputs.workflow || inputs.pulsar-audio-stream-grpc-server }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -1161,17 +1161,17 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@2b1f5e9b395427c92ee4e3331786ca3c37afe2d7 # v1.16.0
         with:
           cache: true
-          rust-src-dir: data-processing/pulsar/audio-stream/grpc-pulsar-bridge
+          rust-src-dir: data-processing/pulsar/audio-stream/grpc-server
       - name: Install dependencies
-        working-directory: data-processing/pulsar/audio-stream/grpc-pulsar-bridge
+        working-directory: data-processing/pulsar/audio-stream/grpc-server
         run: |
           cargo build --locked
       - name: Lint Rust (rustfmt)
-        working-directory: data-processing/pulsar/audio-stream/grpc-pulsar-bridge
+        working-directory: data-processing/pulsar/audio-stream/grpc-server
         run: |
           cargo fmt --all -- --check
       - name: Lint Rust (Clippy)
-        working-directory: data-processing/pulsar/audio-stream/grpc-pulsar-bridge
+        working-directory: data-processing/pulsar/audio-stream/grpc-server
         run: |
           cargo clippy
 

@@ -1,0 +1,46 @@
+---
+apiVersion: flink.apache.org/v1beta1
+kind: FlinkDeployment
+metadata:
+  name: audio-stream-flink-compute
+  namespace: audio-stream
+spec:
+  image: audio-stream-flink-compute
+  flinkVersion: v1_20
+  flinkConfiguration:
+    taskmanager.numberOfTaskSlots: 1
+    python.executable: python3
+    python.pythonpath: /usr/local/lib/python3.11/site-packages:/app/src
+  serviceAccount: flink
+  podTemplate:
+    spec:
+      containers:
+        - name: flink-main-container
+          env:
+            - name: PULSAR_SERVICE_URL
+              value: pulsar://pulsar-broker:6650
+            - name: INPUT_TOPIC
+              value: persistent://public/default/audio-transcript
+            - name: OUTPUT_TOPIC
+              value: persistent://public/default/audio-transcript-metrics
+            - name: SUBSCRIPTION_NAME
+              value: flink-compute-subscription
+  jobManager:
+    resource:
+      memory: 1000Mi
+      cpu: 0.5
+  taskManager:
+    replicas: 2
+    resource:
+      memory: 1000Mi
+      cpu: 0.5
+  job:
+    jarURI: local:///opt/flink/opt/flink-python-1.20.3.jar
+    entryClass: org.apache.flink.client.python.PythonDriver
+    args:
+      - -pyclientexec
+      - python3
+      - -py
+      - /app/src/main.py
+    parallelism: 2
+    upgradeMode: stateless

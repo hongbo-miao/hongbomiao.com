@@ -1,4 +1,4 @@
-import { useDataChannel } from '@livekit/components-react';
+import { useDataChannel, useRoomContext } from '@livekit/components-react';
 import type { TrackReferenceOrPlaceholder } from '@livekit/components-react';
 import type { RemoteAudioTrack } from 'livekit-client';
 import { useEffect, useRef, useState } from 'react';
@@ -24,18 +24,26 @@ function getAudioContext(): AudioContext {
 }
 
 export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: DeviceCardProps) {
+  const room = useRoomContext();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [latencyMs, setLatencyMs] = useState<number | null>(null);
   const minRawLatencyRef = useRef<number>(Infinity);
   const [transcriptLines, setTranscriptLines] = useState<string[]>([]);
+  const [interimText, setInterimText] = useState<string | null>(null);
 
   useDataChannel('transcript', (msg) => {
     const data = JSON.parse(new TextDecoder().decode(msg.payload)) as {
       device_id: string;
       text: string;
+      is_final?: boolean;
     };
     if (data.device_id === deviceId) {
-      setTranscriptLines((prev) => [...prev.slice(-49), data.text]);
+      if (data.is_final === false) {
+        setInterimText(data.text);
+      } else {
+        setInterimText(null);
+        setTranscriptLines((prev) => [...prev.slice(-49), data.text]);
+      }
     }
   });
 
@@ -54,6 +62,28 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
     if (!isActive) return;
     const track = trackRef.publication?.track as RemoteAudioTrack | undefined;
     if (!track || !canvasRef.current) return;
+
+    // Minimize WebRTC jitter buffer
+    if (track.mediaStreamTrack) {
+      try {
+        const engine = (room as any).engine;
+        const peerConnection: RTCPeerConnection | undefined = engine?.pcManager?.publisher?.pc;
+        if (peerConnection) {
+          const receiver = peerConnection.getReceivers().find((r) => r.track.id === track.mediaStreamTrack.id);
+          if (receiver) {
+            const r = receiver as any;
+            // jitterBufferTarget is the current standard; playoutDelayHint is the older alias
+            if ('jitterBufferTarget' in r) {
+              r.jitterBufferTarget = 0;
+            } else if ('playoutDelayHint' in r) {
+              r.playoutDelayHint = 0;
+            }
+          }
+        }
+      } catch (error) {
+        console.warn('[playoutDelayHint] failed:', error);
+      }
+    }
 
     const audioContext = getAudioContext();
     const analyser = audioContext.createAnalyser();
@@ -103,7 +133,7 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
       track.detach(audioElement);
       track.setWebAudioPlugins([]);
     };
-  }, [trackRef.publication?.track, isActive]);
+  }, [trackRef.publication?.track, isActive, room]);
 
   const cardStyle: React.CSSProperties = {
     border: isActive ? '2px solid #00aa00' : '1px solid #555',
@@ -130,10 +160,13 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
             height={CANVAS_HEIGHT}
             style={{ background: '#000', display: 'block' }}
           />
-          <div style={{ maxHeight: '500px', overflowY: 'auto', fontSize: '11px', color: '#aaa', marginTop: '4px' }}>
+          <div style={{ maxHeight: '1000px', overflowY: 'auto', fontSize: '11px', color: '#aaa', marginTop: '4px' }}>
             {transcriptLines.map((line, index) => (
               <div key={index} style={{ marginBottom: '8px' }}>{line}</div>
             ))}
+            {interimText && (
+              <div style={{ color: '#555', fontStyle: 'italic', marginBottom: '8px' }}>{interimText}</div>
+            )}
           </div>
         </>
       )}

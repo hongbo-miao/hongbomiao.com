@@ -2,11 +2,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: grpc-pulsar-bridge
+  name: grpc-server
   namespace: audio-stream
 spec:
   selector:
-    app: grpc-pulsar-bridge
+    app: grpc-server
   ports:
     - name: grpc
       port: 50051
@@ -14,21 +14,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: grpc-pulsar-bridge
+  name: grpc-server
   namespace: audio-stream
 spec:
-  replicas: 4
+  replicas: 3
   selector:
     matchLabels:
-      app: grpc-pulsar-bridge
+      app: grpc-server
   template:
     metadata:
       labels:
-        app: grpc-pulsar-bridge
+        app: grpc-server
     spec:
       containers:
-        - name: grpc-pulsar-bridge
-          image: grpc-pulsar-bridge
+        - name: grpc-server
+          image: grpc-server
           ports:
             - containerPort: 50051
           env:

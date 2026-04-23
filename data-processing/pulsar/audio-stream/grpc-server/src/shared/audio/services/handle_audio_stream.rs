@@ -5,8 +5,8 @@ use tokio::sync::Mutex;
 use tonic::{Request, Response, Status, Streaming};
 use tracing::{error, info};
 
-use crate::shared::audio::models::audio_chunk::AudioChunk;
 use crate::shared::audio::services::publish_audio_chunk::publish_audio_chunk;
+use crate::shared::audio::types::audio_chunk::AudioChunk;
 
 pub mod audio_ingest {
     tonic::include_proto!("audio_ingest");

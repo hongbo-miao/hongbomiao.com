@@ -743,6 +743,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - Automatic Speech Recognition (ASR)
   - Automatic Speech Recognition (ASR) Models
     - **Whisper** - Transformer-based automatic speech recognition (ASR) model
+    - **Zipformer** - Multi-scale U-Net-like Transformer-based automatic speech recognition (ASR) model
     - **Qwen3-ASR** - Large language model (LLM)-based automatic speech recognition (ASR) model
     - **Parakeet TDT** - Fast Conformer-based Token-and-Duration Transducer (TDT) automatic speech recognition (ASR) model
     - **Cohere Transcribe** - Conformer encoder + Transformer decoder automatic speech recognition (ASR) model
