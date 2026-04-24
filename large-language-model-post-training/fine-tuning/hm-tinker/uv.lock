@@ -202,7 +202,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "tinker", specifier = "==0.18.0" },
+    { name = "tinker", specifier = "==0.18.1" },
     { name = "transformers", specifier = ">=4.40.0" },
 ]
 
@@ -390,6 +390,21 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/a1/a4/e487662f12a5ecd2ac4d77f7697e4bda481953bb80032b158e5ab55173d4/poethepoet-0.44.0.tar.gz", hash = "sha256:c2667b513621788fb46482e371cdf81c0b04344e0e0bcb7aa8af45f84c2fce7b", size = 96040, upload-time = "2026-04-06T19:40:58.908Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/80/b7/503b7d3a51b0de9a329f1323048d166e309a97bb31bdc60e6acd11d2c71f/poethepoet-0.44.0-py3-none-any.whl", hash = "sha256:36d3d834708ed069ac1e4f8ed77915c55265b7b6e01aeb2fe617c9fe9cfd524a", size = 122873, upload-time = "2026-04-06T19:40:57.369Z" },
+]
+
+[[package]]
+name = "protobuf"
+version = "7.34.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/6b/6b/a0e95cad1ad7cc3f2c6821fcab91671bd5b78bd42afb357bb4765f29bc41/protobuf-7.34.1.tar.gz", hash = "sha256:9ce42245e704cc5027be797c1db1eb93184d44d1cdd71811fb2d9b25ad541280", size = 454708, upload-time = "2026-03-20T17:34:47.036Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ec/11/3325d41e6ee15bf1125654301211247b042563bcc898784351252549a8ad/protobuf-7.34.1-cp310-abi3-macosx_10_9_universal2.whl", hash = "sha256:d8b2cc79c4d8f62b293ad9b11ec3aebce9af481fa73e64556969f7345ebf9fc7", size = 429247, upload-time = "2026-03-20T17:34:37.024Z" },
+    { url = "https://files.pythonhosted.org/packages/eb/9d/aa69df2724ff63efa6f72307b483ce0827f4347cc6d6df24b59e26659fef/protobuf-7.34.1-cp310-abi3-manylinux2014_aarch64.whl", hash = "sha256:5185e0e948d07abe94bb76ec9b8416b604cfe5da6f871d67aad30cbf24c3110b", size = 325753, upload-time = "2026-03-20T17:34:38.751Z" },
+    { url = "https://files.pythonhosted.org/packages/92/e8/d174c91fd48e50101943f042b09af9029064810b734e4160bbe282fa1caa/protobuf-7.34.1-cp310-abi3-manylinux2014_s390x.whl", hash = "sha256:403b093a6e28a960372b44e5eb081775c9b056e816a8029c61231743d63f881a", size = 340198, upload-time = "2026-03-20T17:34:39.871Z" },
+    { url = "https://files.pythonhosted.org/packages/53/1b/3b431694a4dc6d37b9f653f0c64b0a0d9ec074ee810710c0c3da21d67ba7/protobuf-7.34.1-cp310-abi3-manylinux2014_x86_64.whl", hash = "sha256:8ff40ce8cd688f7265326b38d5a1bed9bfdf5e6723d49961432f83e21d5713e4", size = 324267, upload-time = "2026-03-20T17:34:41.1Z" },
+    { url = "https://files.pythonhosted.org/packages/85/29/64de04a0ac142fb685fd09999bc3d337943fb386f3a0ec57f92fd8203f97/protobuf-7.34.1-cp310-abi3-win32.whl", hash = "sha256:34b84ce27680df7cca9f231043ada0daa55d0c44a2ddfaa58ec1d0d89d8bf60a", size = 426628, upload-time = "2026-03-20T17:34:42.536Z" },
+    { url = "https://files.pythonhosted.org/packages/4d/87/cb5e585192a22b8bd457df5a2c16a75ea0db9674c3a0a39fc9347d84e075/protobuf-7.34.1-cp310-abi3-win_amd64.whl", hash = "sha256:e97b55646e6ce5cbb0954a8c28cd39a5869b59090dfaa7df4598a7fba869468c", size = 437901, upload-time = "2026-03-20T17:34:44.112Z" },
+    { url = "https://files.pythonhosted.org/packages/88/95/608f665226bca68b736b79e457fded9a2a38c4f4379a4a7614303d9db3bc/protobuf-7.34.1-py3-none-any.whl", hash = "sha256:bb3812cd53aefea2b028ef42bd780f5b96407247f20c6ef7c679807e9d188f11", size = 170715, upload-time = "2026-03-20T17:34:45.384Z" },
 ]
 
 [[package]]
@@ -608,7 +623,7 @@ wheels = [
 
 [[package]]
 name = "tinker"
-version = "0.18.0"
+version = "0.18.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
@@ -616,15 +631,16 @@ dependencies = [
     { name = "distro" },
     { name = "httpx", extra = ["http2"] },
     { name = "numpy" },
+    { name = "protobuf" },
     { name = "pydantic" },
     { name = "rich" },
     { name = "sniffio" },
     { name = "transformers" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4a/51/0ac9b8962126f4717685b913dcafbe3eeb400c8b2c875e98cbbdc6412b1e/tinker-0.18.0.tar.gz", hash = "sha256:5b5d7404fce9a56e578b595798d61ff89b5ab60fb5be3cfa62bfa9e0601f3c37", size = 213010, upload-time = "2026-04-14T00:02:03.427Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8b/71/e3e13507efdad44dfa3efab13c84df8a7dc3d072550812a9ed6470c6c96e/tinker-0.18.1.tar.gz", hash = "sha256:309019db9052531c32563263168088d32cd56106390679083467dd5539da5236", size = 217135, upload-time = "2026-04-17T00:45:36.002Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7c/4a/a3070adcefcd8e554a8c69c548e6605434d42164a92196d1da16001b7e3d/tinker-0.18.0-py3-none-any.whl", hash = "sha256:99b32dd4aac3790f3a3287dbe6437f7cfabeb25c89df62d9c68e28e359a75edb", size = 197234, upload-time = "2026-04-14T00:02:04.86Z" },
+    { url = "https://files.pythonhosted.org/packages/4f/98/34361893addb9aee69c58b8c52b7b5161149c569082070cde82e7d0eb7a4/tinker-0.18.1-py3-none-any.whl", hash = "sha256:52faf06f06a87159fefbe73ae178b31bf78b2503820cf4b968f5480e5b0db66d", size = 202525, upload-time = "2026-04-17T00:45:34.69Z" },
 ]
 
 [[package]]
