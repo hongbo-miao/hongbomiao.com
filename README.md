@@ -75,6 +75,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **shadcn/ui** - UI component library
 - **Tailwind CSS** - Utility-first CSS framework
 - **Radix Primitives** - Low-level, unstyled, accessible UI primitives
+- **@shiguredo/rnnoise-wasm** - WebAssembly build of RNNoise for real-time browser audio noise suppression
 - **Vitest** - Unit testing, snapshot testing
 - **React Testing Library** - React component testing
 - **Storybook** - Visual testing
@@ -726,7 +727,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - Vision Transformer (ViT)
   - **DINOv3** - Self-supervised vision transformer (ViT) model
 
-### Audio
+### Media
 
 - Live Coding
   - **Strudel** - JavaScript port of Tidal Cycles for live coding dynamic music patterns
@@ -759,12 +760,10 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **sherpa-onnx** - Real-time, on-device voice activity detector (VAD), speaker diarization, speech recognition (ASR), and text-to-speech (TTS) using ONNX models
   - Automatic Speech Recognition (ASR) Evaluation
     - **JiWER** - Automatic speech recognition evaluation, including word error rate (WER), match error rate (MER), word information lost (WIL), word information preserved (WIP), and character error rate (CER)
-
-### Video
-
 - Media Streaming Server
-  - **MediaMTX** - Media streaming server
-  - **Icecast** - Media streaming server
+  - **Icecast** - Media server primarily optimized for internet radio and live audio broadcasting (MP3, AAC, FLAC, Opus)
+  - **MediaMTX** - Zero-dependency, protocol-agnostic media server and proxy used for publishing, routing, recording, and playing back streams across multiple protocols (RTSP, RTMP, HLS, WebRTC, SRT)
+  - **LiveKit** - WebRTC Selective Forwarding Unit (SFU) infrastructure designed for highly scalable, sub-second latency audio, video, and data applications (e.g., video calls, voice agents, and live conferencing)
 
 ## Computing
 
