@@ -97,7 +97,7 @@ docker_build(
 # --- Resource grouping ---
 k8s_resource("pulsar-topic-initialize", labels=["pulsar"], resource_deps=["pulsar"])
 k8s_resource("livekit", labels=["livekit"], resource_deps=["livekit-valkey"], port_forwards=["7880:7880"])
-k8s_resource("grpc-server", labels=["audio-stream"], resource_deps=["pulsar-topic-initialize"])
+k8s_resource("grpc-server", labels=["audio-stream"], resource_deps=["pulsar-topic-initialize"], port_forwards=["50051:50051"])
 k8s_resource("audio-stream-publisher", labels=["audio-stream"], resource_deps=["grpc-server"])
 k8s_resource("pulsar-livekit-bridge", labels=["audio-stream"], resource_deps=["livekit", "pulsar-topic-initialize"], port_forwards=["8080:8080"])
 k8s_resource("audio-stream-transcriber", labels=["audio-stream"], resource_deps=["livekit", "pulsar-topic-initialize"])

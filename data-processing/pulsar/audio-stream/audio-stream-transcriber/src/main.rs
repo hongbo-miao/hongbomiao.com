@@ -38,8 +38,10 @@ async fn main() -> Result<()> {
         &app_config.livekit_api_secret,
         &app_config.livekit_room,
         &app_config.instance_id,
-        &app_config.asr_model_dir,
-        &app_config.silero_vad_model_dir,
+        &app_config.asr_model_type,
+        &app_config.cohere_transcribe_model_dir,
+        &app_config.parakeet_tdt_model_dir,
+        &app_config.ten_vad_model_dir,
         &app_config.zipformer_model_dir,
     )
     .await

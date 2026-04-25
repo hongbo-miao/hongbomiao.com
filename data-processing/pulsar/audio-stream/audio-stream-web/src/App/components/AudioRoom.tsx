@@ -27,7 +27,7 @@ function TrackGrid() {
   const [activeDeviceId, setActiveDeviceId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (tracks.length > 0 && activeDeviceId === null) {
+    if (tracks.length > 0 && activeDeviceId == null) {
       const firstDeviceId = tracks[0]!.publication.trackName?.replace(/^audio-/, '') ?? 'unknown';
       setActiveDeviceId(firstDeviceId);
     }
@@ -87,7 +87,7 @@ export default function AudioRoom({ onDisconnect }: AudioRoomProps) {
     return <p>Error: {connectionError}</p>;
   }
 
-  if (config === null) {
+  if (config == null) {
     return <p>Connecting...</p>;
   }
 

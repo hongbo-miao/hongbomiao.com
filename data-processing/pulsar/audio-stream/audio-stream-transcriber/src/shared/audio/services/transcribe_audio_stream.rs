@@ -1,5 +1,5 @@
 use std::collections::{HashMap, VecDeque};
-use std::sync::{Arc, LazyLock, mpsc};
+use std::sync::{LazyLock, mpsc};
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
 use anyhow::{Result, anyhow};
@@ -14,8 +14,8 @@ use pulsar::{
 };
 use serde_json::json;
 use sherpa_onnx::{
-    OfflineCohereTranscribeModelConfig, OfflineRecognizer, OfflineRecognizerConfig, VadModelConfig,
-    VoiceActivityDetector,
+    OfflineCohereTranscribeModelConfig, OfflineRecognizer, OfflineRecognizerConfig,
+    OfflineTransducerModelConfig, VadModelConfig, VoiceActivityDetector,
 };
 use tracing::{error, info};
 
@@ -33,14 +33,19 @@ const OPUS_FRAME_SAMPLE_COUNT: usize = 320;
 const DEVICE_STALE_TIMEOUT_S: u64 = 5;
 const AUDIO_CHANNEL_BUFFER: usize = 512;
 const ASR_NUM_THREADS: i32 = 2;
-const VAD_WINDOW_SIZE: usize = 512;
+const VAD_WINDOW_SIZE: usize = 256;
 const VAD_BUFFER_DURATION_S: f32 = 60.0;
 const VAD_BUFFER_TRIM_WINDOW_COUNT: usize = 10;
 const VAD_SPEECH_PAD_HEAD_SAMPLES: usize = PCM_SAMPLE_RATE_HZ as usize * 200 / 1000; // 0.2s head padding
-const VAD_MIN_SILENCE_DURATION_S: f32 = 0.2;
+const VAD_THRESHOLD: f32 = 0.4;
+const VAD_MIN_SILENCE_DURATION_S: f32 = 0.08;
+const VAD_MIN_SPEECH_DURATION_S: f32 = 0.1;
+const VAD_MAX_SPEECH_DURATION_S: f32 = 15.0;
 // Keep the last 500ms of chunks unacked so the broker redelivers them as acoustic pre-roll
 // if this pod crashes mid-word, preventing the ASR model from receiving a truncated utterance.
 const ACK_DELAY_MS: u64 = 500;
+const LIVEKIT_RECONNECT_DELAY_S: u64 = 2;
+const MAX_LIVEKIT_PUBLISH_RETRIES: u32 = 3;
 
 struct RawPayload;
 
@@ -84,8 +89,10 @@ pub async fn transcribe_audio_stream(
     livekit_api_secret: &str,
     livekit_room: &str,
     instance_id: &str,
-    asr_model_dir: &str,
-    silero_vad_model_dir: &str,
+    asr_model_type: &str,
+    cohere_transcribe_model_dir: &str,
+    parakeet_tdt_model_dir: &str,
+    ten_vad_model_dir: &str,
     zipformer_model_dir: &str,
 ) -> Result<()> {
     let pulsar_client: Pulsar<TokioExecutor> =
@@ -111,30 +118,69 @@ pub async fn transcribe_audio_stream(
         .build()
         .await?;
 
-    let token = generate_livekit_token(
+    let room = connect_to_livekit_room(
+        livekit_url,
         livekit_api_key,
         livekit_api_secret,
         livekit_room,
         instance_id,
-    )?;
-
-    let (room, _room_event_receiver) = Room::connect(livekit_url, &token, RoomOptions::default())
-        .await
-        .map_err(|error| anyhow!("Failed to connect to LiveKit room: {error}"))?;
-    let room = Arc::new(room);
-
+    )
+    .await?;
     let (transcript_sender, mut transcript_receiver) =
         tokio::sync::mpsc::unbounded_channel::<TranscriptSegment>();
 
-    let room_for_publish = Arc::clone(&room);
+    let livekit_url_for_reconnect = livekit_url.to_string();
+    let livekit_api_key_for_reconnect = livekit_api_key.to_string();
+    let livekit_api_secret_for_reconnect = livekit_api_secret.to_string();
+    let livekit_room_for_reconnect = livekit_room.to_string();
+    let instance_id_for_reconnect = instance_id.to_string();
     let mut transcript_producer = transcript_producer;
     tokio::spawn(async move {
+        let mut room = room;
         while let Some(segment) = transcript_receiver.recv().await {
+            let mut attempt: u32 = 0;
+            loop {
+                match publish_transcript_to_livekit(&room, &segment).await {
+                    Ok(()) => break,
+                    Err(error) => {
+                        if attempt < MAX_LIVEKIT_PUBLISH_RETRIES {
+                            attempt += 1;
+                            error!(
+                                "LiveKit publish failed (attempt {attempt}/{MAX_LIVEKIT_PUBLISH_RETRIES}), reconnecting: {error}"
+                            );
+                            match connect_to_livekit_room(
+                                &livekit_url_for_reconnect,
+                                &livekit_api_key_for_reconnect,
+                                &livekit_api_secret_for_reconnect,
+                                &livekit_room_for_reconnect,
+                                &instance_id_for_reconnect,
+                            )
+                            .await
+                            {
+                                Ok(new_room) => {
+                                    room = new_room;
+                                }
+                                Err(reconnect_error) => {
+                                    error!("Failed to reconnect to LiveKit: {reconnect_error}");
+                                    tokio::time::sleep(Duration::from_secs(
+                                        LIVEKIT_RECONNECT_DELAY_S,
+                                    ))
+                                    .await;
+                                }
+                            }
+                        } else {
+                            error!(
+                                "Dropping transcript segment after {MAX_LIVEKIT_PUBLISH_RETRIES} LiveKit retries: {error}"
+                            );
+                            break;
+                        }
+                    }
+                }
+            }
             if let Err(error) =
-                publish_transcript_segment(&room_for_publish, &mut transcript_producer, segment)
-                    .await
+                publish_transcript_to_pulsar(&mut transcript_producer, &segment).await
             {
-                error!("Failed to publish transcript segment: {error}");
+                error!("Failed to publish transcript segment to Pulsar: {error}");
             }
         }
     });
@@ -189,8 +235,10 @@ pub async fn transcribe_audio_stream(
 
             let transcript_sender_clone = transcript_sender.clone();
             let device_id_clone = device_id.clone();
-            let asr_model_dir_clone = asr_model_dir.to_string();
-            let silero_vad_model_dir_clone = silero_vad_model_dir.to_string();
+            let asr_model_type_clone = asr_model_type.to_string();
+            let cohere_transcribe_model_dir_clone = cohere_transcribe_model_dir.to_string();
+            let parakeet_tdt_model_dir_clone = parakeet_tdt_model_dir.to_string();
+            let ten_vad_model_dir_clone = ten_vad_model_dir.to_string();
             let zipformer_model_dir_clone = zipformer_model_dir.to_string();
 
             std::thread::spawn(move || {
@@ -198,8 +246,10 @@ pub async fn transcribe_audio_stream(
                     device_id_clone,
                     audio_receiver,
                     transcript_sender_clone,
-                    asr_model_dir_clone,
-                    silero_vad_model_dir_clone,
+                    asr_model_type_clone,
+                    cohere_transcribe_model_dir_clone,
+                    parakeet_tdt_model_dir_clone,
+                    ten_vad_model_dir_clone,
                     zipformer_model_dir_clone,
                 );
             });
@@ -272,28 +322,45 @@ pub async fn transcribe_audio_stream(
     Ok(())
 }
 
-fn build_offline_recognizer_config(asr_model_dir: &str) -> OfflineRecognizerConfig {
+fn build_cohere_transcribe_offline_recognizer_config(
+    cohere_transcribe_model_dir: &str,
+) -> OfflineRecognizerConfig {
     let mut config = OfflineRecognizerConfig::default();
     config.model_config.cohere_transcribe = OfflineCohereTranscribeModelConfig {
-        encoder: Some(format!("{asr_model_dir}/encoder.int8.onnx")),
-        decoder: Some(format!("{asr_model_dir}/decoder.int8.onnx")),
+        encoder: Some(format!("{cohere_transcribe_model_dir}/encoder.int8.onnx")),
+        decoder: Some(format!("{cohere_transcribe_model_dir}/decoder.int8.onnx")),
         use_punct: true,
         use_itn: true,
         ..Default::default()
     };
-    config.model_config.tokens = Some(format!("{asr_model_dir}/tokens.txt"));
+    config.model_config.tokens = Some(format!("{cohere_transcribe_model_dir}/tokens.txt"));
     config.model_config.num_threads = ASR_NUM_THREADS;
     config
 }
 
-fn build_vad_config(silero_vad_model_dir: &str) -> VadModelConfig {
+fn build_parakeet_tdt_offline_recognizer_config(
+    parakeet_tdt_model_dir: &str,
+) -> OfflineRecognizerConfig {
+    let mut config = OfflineRecognizerConfig::default();
+    config.model_config.transducer = OfflineTransducerModelConfig {
+        encoder: Some(format!("{parakeet_tdt_model_dir}/encoder.int8.onnx")),
+        decoder: Some(format!("{parakeet_tdt_model_dir}/decoder.int8.onnx")),
+        joiner: Some(format!("{parakeet_tdt_model_dir}/joiner.int8.onnx")),
+    };
+    config.model_config.tokens = Some(format!("{parakeet_tdt_model_dir}/tokens.txt"));
+    config.model_config.model_type = Some("nemo_transducer".to_string());
+    config.model_config.num_threads = ASR_NUM_THREADS;
+    config
+}
+
+fn build_vad_config(ten_vad_model_dir: &str) -> VadModelConfig {
     let mut config = VadModelConfig::default();
-    config.silero_vad.model = Some(format!("{silero_vad_model_dir}/silero_vad.onnx"));
-    config.silero_vad.threshold = 0.45;
-    config.silero_vad.min_silence_duration = VAD_MIN_SILENCE_DURATION_S;
-    config.silero_vad.min_speech_duration = 0.1;
-    config.silero_vad.max_speech_duration = 15.0;
-    config.silero_vad.window_size = VAD_WINDOW_SIZE as i32;
+    config.ten_vad.model = Some(format!("{ten_vad_model_dir}/ten_vad.onnx"));
+    config.ten_vad.threshold = VAD_THRESHOLD;
+    config.ten_vad.min_silence_duration = VAD_MIN_SILENCE_DURATION_S;
+    config.ten_vad.min_speech_duration = VAD_MIN_SPEECH_DURATION_S;
+    config.ten_vad.max_speech_duration = VAD_MAX_SPEECH_DURATION_S;
+    config.ten_vad.window_size = VAD_WINDOW_SIZE as i32;
     config.sample_rate = PCM_SAMPLE_RATE_HZ as i32;
     config
 }
@@ -302,11 +369,14 @@ fn run_asr_thread(
     device_id: String,
     asr_receiver: mpsc::Receiver<Vec<f32>>,
     recognizer: OfflineRecognizer,
+    asr_model_type: String,
     transcript_sender: tokio::sync::mpsc::UnboundedSender<TranscriptSegment>,
 ) {
     for samples in asr_receiver {
         let stream = recognizer.create_stream();
-        stream.set_option("language", "en");
+        if asr_model_type == "cohere-transcribe" {
+            stream.set_option("language", "en");
+        }
         stream.accept_waveform(PCM_SAMPLE_RATE_HZ as i32, &samples);
         recognizer.decode(&stream);
         if let Some(result) = stream.get_result() {
@@ -384,24 +454,36 @@ fn run_zipformer_thread(
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 fn run_vad_thread(
     device_id: String,
     audio_receiver: mpsc::Receiver<Vec<f32>>,
     transcript_sender: tokio::sync::mpsc::UnboundedSender<TranscriptSegment>,
-    asr_model_dir: String,
-    silero_vad_model_dir: String,
+    asr_model_type: String,
+    cohere_transcribe_model_dir: String,
+    parakeet_tdt_model_dir: String,
+    ten_vad_model_dir: String,
     zipformer_model_dir: String,
 ) {
-    let recognizer =
-        match OfflineRecognizer::create(&build_offline_recognizer_config(&asr_model_dir)) {
-            Some(recognizer) => recognizer,
-            None => {
-                error!("Failed to create recognizer for device {device_id}");
-                return;
-            }
-        };
+    let offline_recognizer_config = match asr_model_type.as_str() {
+        "cohere-transcribe" => {
+            build_cohere_transcribe_offline_recognizer_config(&cohere_transcribe_model_dir)
+        }
+        "parakeet-tdt" => build_parakeet_tdt_offline_recognizer_config(&parakeet_tdt_model_dir),
+        unknown => {
+            error!("Unknown ASR_MODEL_TYPE '{unknown}' for device {device_id}");
+            return;
+        }
+    };
+    let recognizer = match OfflineRecognizer::create(&offline_recognizer_config) {
+        Some(recognizer) => recognizer,
+        None => {
+            error!("Failed to create recognizer for device {device_id}");
+            return;
+        }
+    };
     let vad = match VoiceActivityDetector::create(
-        &build_vad_config(&silero_vad_model_dir),
+        &build_vad_config(&ten_vad_model_dir),
         VAD_BUFFER_DURATION_S,
     ) {
         Some(vad) => vad,
@@ -418,12 +500,14 @@ fn run_vad_thread(
         mpsc::sync_channel::<ZipformerMessage>(AUDIO_CHANNEL_BUFFER);
 
     let device_id_for_asr = device_id.clone();
+    let asr_model_type_for_asr = asr_model_type.clone();
     let transcript_sender_for_asr = transcript_sender.clone();
     std::thread::spawn(move || {
         run_asr_thread(
             device_id_for_asr,
             asr_receiver,
             recognizer,
+            asr_model_type_for_asr,
             transcript_sender_for_asr,
         );
     });
@@ -517,11 +601,7 @@ fn run_vad_thread(
     }
 }
 
-async fn publish_transcript_segment(
-    room: &Arc<Room>,
-    transcript_producer: &mut Producer<TokioExecutor>,
-    segment: TranscriptSegment,
-) -> Result<()> {
+async fn publish_transcript_to_livekit(room: &Room, segment: &TranscriptSegment) -> Result<()> {
     let livekit_bytes = json!({
         "device_id": segment.device_id,
         "text": segment.text,
@@ -539,28 +619,54 @@ async fn publish_transcript_segment(
             destination_identities: vec![],
         })
         .await
-        .map_err(|error| anyhow!("Failed to publish transcript to LiveKit: {error}"))?;
+        .map_err(|error| anyhow!("Failed to publish transcript to LiveKit: {error}"))
+}
 
-    if segment.is_final {
-        let mut avro_record = apache_avro::types::Record::new(&TRANSCRIPT_AVRO_SCHEMA)
-            .expect("Failed to create Avro record");
-        avro_record.put("device_id", segment.device_id.clone());
-        avro_record.put("text", segment.text.clone());
-        avro_record.put("timestamp_ns", segment.timestamp_ns);
-        let pulsar_bytes = apache_avro::to_avro_datum(&TRANSCRIPT_AVRO_SCHEMA, avro_record)?;
-
-        transcript_producer
-            .send_non_blocking(TranscriptMessage {
-                payload: pulsar_bytes,
-                partition_key: segment.device_id,
-            })
-            .await
-            .map_err(|error| anyhow!("Failed to send transcript to Pulsar: {error}"))?
-            .await
-            .map_err(|error| anyhow!("Failed to receive Pulsar send acknowledgement: {error}"))?;
+async fn publish_transcript_to_pulsar(
+    transcript_producer: &mut Producer<TokioExecutor>,
+    segment: &TranscriptSegment,
+) -> Result<()> {
+    if !segment.is_final {
+        return Ok(());
     }
 
+    let mut avro_record = apache_avro::types::Record::new(&TRANSCRIPT_AVRO_SCHEMA)
+        .expect("Failed to create Avro record");
+    avro_record.put("device_id", segment.device_id.clone());
+    avro_record.put("text", segment.text.clone());
+    avro_record.put("timestamp_ns", segment.timestamp_ns);
+    let pulsar_bytes = apache_avro::to_avro_datum(&TRANSCRIPT_AVRO_SCHEMA, avro_record)?;
+
+    transcript_producer
+        .send_non_blocking(TranscriptMessage {
+            payload: pulsar_bytes,
+            partition_key: segment.device_id.clone(),
+        })
+        .await
+        .map_err(|error| anyhow!("Failed to send transcript to Pulsar: {error}"))?
+        .await
+        .map_err(|error| anyhow!("Failed to receive Pulsar send acknowledgement: {error}"))?;
+
     Ok(())
+}
+
+async fn connect_to_livekit_room(
+    livekit_url: &str,
+    livekit_api_key: &str,
+    livekit_api_secret: &str,
+    livekit_room: &str,
+    instance_id: &str,
+) -> Result<Room> {
+    let token = generate_livekit_token(
+        livekit_api_key,
+        livekit_api_secret,
+        livekit_room,
+        instance_id,
+    )?;
+    let (room, _room_event_receiver) = Room::connect(livekit_url, &token, RoomOptions::default())
+        .await
+        .map_err(|error| anyhow!("Failed to connect to LiveKit room: {error}"))?;
+    Ok(room)
 }
 
 fn generate_livekit_token(
