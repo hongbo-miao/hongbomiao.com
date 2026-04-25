@@ -6,35 +6,47 @@ services:
     build:
       context: ../..
       dockerfile: api/api-node/Dockerfile.development
-    container_name: hm_api_node
+    container_name: hm-api-node
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     env_file:
       - .env.development.local.example.docker
-    environment:
-      - POSTGRES_HOST=127.0.0.1
-      - REDIS_HOST=127.0.0.1
-    network_mode: "host"
+    ports:
+      - '127.0.0.1:58136:58136'
     restart: unless-stopped
 
   postgres:
     image: postgres:18.3-alpine
-    container_name: hm_postgres
+    container_name: hm-postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres/init_up.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
       - ./postgres/.env.development.local.example
-    network_mode: "host"
+    ports:
+      - '127.0.0.1:5432:5432'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     restart: unless-stopped
 
   redis:
     image: redis:8.6.2-alpine
-    container_name: hm_redis
+    container_name: hm-redis
     volumes:
       - redis_data:/data
-    network_mode: "host"
+    ports:
+      - '127.0.0.1:6379:6379'
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     restart: unless-stopped
 
 volumes:
