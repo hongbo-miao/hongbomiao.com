@@ -80,7 +80,7 @@ services:
     restart: "no"
 
   connector-download:
-    image: docker.io/library/alpine:3.23.3
+    image: docker.io/library/alpine:3.23.4
     volumes:
       - connector-data:/pulsar/connectors
     entrypoint: >
@@ -90,7 +90,7 @@ services:
     restart: "no"
 
   mqtt-on-pulsar-download:
-    image: docker.io/library/alpine:3.23.3
+    image: docker.io/library/alpine:3.23.4
     volumes:
       - mqtt-on-pulsar-data:/pulsar/protocols
     entrypoint: >
@@ -223,7 +223,7 @@ services:
     restart: "no"
 
   mqtt-on-pulsar-ready:
-    image: docker.io/library/alpine:3.23.3
+    image: docker.io/library/alpine:3.23.4
     depends_on:
       pulsar:
         condition: service_healthy
