@@ -1,4 +1,4 @@
-FROM docker.io/python:3.11.15-slim-trixie AS builder
+FROM docker.io/python:3.13.13-slim-trixie AS builder
 COPY --from=ghcr.io/astral-sh/uv:0.11.6 /uv /uvx /bin/
 WORKDIR /usr/src/app
 ENV UV_COMPILE_BYTECODE=1 \
