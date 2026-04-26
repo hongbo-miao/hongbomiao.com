@@ -8,10 +8,8 @@ services:
       dockerfile: api/api-node/Dockerfile.development
     container_name: hm-api-node
     depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+      - postgres
+      - redis
     volumes:
       - ./:/usr/src/app/api/api-node/
       - /usr/src/app/api/api-node/node_modules/
@@ -31,11 +29,6 @@ services:
       - ./postgres/.env.development.local.example
     ports:
       - '127.0.0.1:5432:5432'
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "admin", "-d", "postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
     restart: unless-stopped
 
   redis:
@@ -45,11 +38,6 @@ services:
       - redis_data:/data
     ports:
       - '127.0.0.1:6379:6379'
-    healthcheck:
-      test: ["CMD", "redis-cli", "--raw", "ping"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
     restart: unless-stopped
 
 volumes:
