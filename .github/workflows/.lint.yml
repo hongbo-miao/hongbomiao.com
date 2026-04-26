@@ -115,6 +115,9 @@ name: . Lint
       hm-spark-ingest-from-s3-to-kafka:
         required: true
         type: boolean
+      hm-text-processing-rs:
+        required: true
+        type: boolean
       iads-data-producer:
         required: true
         type: boolean
@@ -843,6 +846,32 @@ jobs:
           cargo fmt --all  -- --check
       - name: Lint Rust (Clippy)
         working-directory: api/api-rust
+        run: |
+          cargo clippy
+
+  lint-rust-hm-text-processing-rs:
+    name: Rust (hm-text-processing-rs)
+    if: ${{ inputs.workflow || inputs.hm-text-processing-rs }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@2b1f5e9b395427c92ee4e3331786ca3c37afe2d7 # v1.16.0
+        with:
+          cache: true
+          rust-src-dir: audio/inverse-text-normalization/hm-text-processing-rs
+      - name: Install dependencies
+        working-directory: audio/inverse-text-normalization/hm-text-processing-rs
+        run: |
+          cargo build --locked
+      - name: Lint Rust (rustfmt)
+        working-directory: audio/inverse-text-normalization/hm-text-processing-rs
+        run: |
+          cargo fmt --all  -- --check
+      - name: Lint Rust (Clippy)
+        working-directory: audio/inverse-text-normalization/hm-text-processing-rs
         run: |
           cargo clippy
 

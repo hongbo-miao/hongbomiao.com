@@ -760,6 +760,8 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **sherpa-onnx** - Real-time, on-device voice activity detector (VAD), speaker diarization, speech recognition (ASR), and text-to-speech (TTS) using ONNX models
   - Automatic Speech Recognition (ASR) Evaluation
     - **JiWER** - Automatic speech recognition evaluation, including word error rate (WER), match error rate (MER), word information lost (WIL), word information preserved (WIP), and character error rate (CER)
+- Inverse Text Normalization (ITN)
+  - **text-processing-rs** - Inverse text normalization (ITN) and text normalization (TN) library
 - Media Streaming Server
   - **Icecast** - Media server primarily optimized for internet radio and live audio broadcasting (MP3, AAC, FLAC, Opus)
   - **MediaMTX** - Zero-dependency, protocol-agnostic media server and proxy used for publishing, routing, recording, and playing back streams across multiple protocols (RTSP, RTMP, HLS, WebRTC, SRT)
