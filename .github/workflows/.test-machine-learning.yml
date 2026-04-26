@@ -192,6 +192,9 @@ name: . Test Machine Learning
       hm-swift:
         required: true
         type: boolean
+      hm-text-processing-rs:
+        required: true
+        type: boolean
       hm-tinker:
         required: true
         type: boolean
@@ -2685,6 +2688,28 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: large-language-model-post-training/fine-tuning/hm-swift
+
+  text-processing-rs-test:
+    name: text-processing-rs | Test
+    if: ${{ inputs.workflow || inputs.hm-text-processing-rs }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@2b1f5e9b395427c92ee4e3331786ca3c37afe2d7 # v1.16.0
+        with:
+          cache: true
+          rust-src-dir: audio/inverse-text-normalization/hm-text-processing-rs
+      - name: Install dependencies
+        working-directory: audio/inverse-text-normalization/hm-text-processing-rs
+        run: |
+          cargo build --locked
+      - name: Test
+        working-directory: audio/inverse-text-normalization/hm-text-processing-rs
+        run: |
+          cargo test --all-features
 
   tinker-test:
     name: Tinker | Test

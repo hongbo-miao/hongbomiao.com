@@ -597,6 +597,8 @@ jobs:
               - 'computer-vision/hm-supervision/detect-objects/**'
             hm-swift:
               - 'large-language-model-post-training/fine-tuning/hm-swift/**'
+            hm-text-processing-rs:
+              - 'audio/inverse-text-normalization/hm-text-processing-rs/**'
             hm-tinker:
               - 'large-language-model-post-training/fine-tuning/hm-tinker/**'
             hm-torchtune:
@@ -1001,6 +1003,7 @@ jobs:
       hm-sunpy: ${{ steps.filter.outputs.hm-sunpy }}
       hm-supervision-detect-objects: ${{ steps.filter.outputs.hm-supervision-detect-objects }}
       hm-swift: ${{ steps.filter.outputs.hm-swift }}
+      hm-text-processing-rs: ${{ steps.filter.outputs.hm-text-processing-rs }}
       hm-tinker: ${{ steps.filter.outputs.hm-tinker }}
       hm-torchtune: ${{ steps.filter.outputs.hm-torchtune }}
       hm-transformers: ${{ steps.filter.outputs.hm-transformers }}
@@ -1142,6 +1145,7 @@ jobs:
       grafana-hm-panel-plugin: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
       hm-spark-find-retired-people-scala: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
       hm-spark-ingest-from-s3-to-kafka: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
+      hm-text-processing-rs: ${{ needs.detect-changes.outputs.hm-text-processing-rs == 'true' }}
       iads-data-producer: ${{ needs.detect-changes.outputs.iads-data-producer == 'true' }}
       kafka-rust-proto-consumer: ${{ needs.detect-changes.outputs.kafka-rust-proto-consumer == 'true' }}
       kafka-rust-proto-producer: ${{ needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}
@@ -1498,6 +1502,7 @@ jobs:
       hm-streamlit-live-line-chart: ${{ needs.detect-changes.outputs.hm-streamlit-live-line-chart == 'true' }}
       hm-streamlit-map: ${{ needs.detect-changes.outputs.hm-streamlit-map == 'true' }}
       hm-swift: ${{ needs.detect-changes.outputs.hm-swift == 'true' }}
+      hm-text-processing-rs: ${{ needs.detect-changes.outputs.hm-text-processing-rs == 'true' }}
       hm-tinker: ${{ needs.detect-changes.outputs.hm-tinker == 'true' }}
       hm-torchtune: ${{ needs.detect-changes.outputs.hm-torchtune == 'true' }}
       hm-transformers: ${{ needs.detect-changes.outputs.hm-transformers == 'true' }}

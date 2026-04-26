@@ -285,6 +285,7 @@ lint-ruby-fix:
 
 lint-rust-rustfmt:
     cd api/api-rust && just lint-rust-rustfmt
+    cd audio/inverse-text-normalization/hm-text-processing-rs && just lint-rust-rustfmt
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-rustfmt
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-rustfmt
     cd data-processing/kafka/kafka-client/kafka-rust/proto-producer && just lint-rust-rustfmt
@@ -309,6 +310,7 @@ lint-rust-rustfmt:
 
 lint-rust-rustfmt-fix:
     cd api/api-rust && just lint-rust-rustfmt-fix
+    cd audio/inverse-text-normalization/hm-text-processing-rs && just lint-rust-rustfmt-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-rustfmt-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-rustfmt-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-producer && just lint-rust-rustfmt-fix
@@ -333,6 +335,7 @@ lint-rust-rustfmt-fix:
 
 lint-rust-clippy:
     cd api/api-rust && just lint-rust-clippy
+    cd audio/inverse-text-normalization/hm-text-processing-rs && just lint-rust-clippy
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-clippy
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-clippy
     cd data-processing/kafka/kafka-client/kafka-rust/proto-producer && just lint-rust-clippy
@@ -357,6 +360,7 @@ lint-rust-clippy:
 
 lint-rust-clippy-fix:
     cd api/api-rust && just lint-rust-clippy-fix
+    cd audio/inverse-text-normalization/hm-text-processing-rs && just lint-rust-clippy-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-clippy-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-clippy-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-producer && just lint-rust-clippy-fix
