@@ -3,11 +3,19 @@
 #![forbid(unsafe_code)]
 #![forbid(unused_must_use)]
 
-use text_processing_rs::{normalize_sentence, tn_normalize_sentence};
+use text_processing_rs::{
+    NormalizeOptions, normalize_sentence_with_options, tn_normalize_sentence,
+};
 
 fn main() {
     // Inverse text normalization (ITN)
-    let result = normalize_sentence("I have twenty one apples.");
+    let options = NormalizeOptions::new()
+        .with_disable_bare_second(true)
+        .with_concat_compound_numbers(true);
+    let result = normalize_sentence_with_options(
+        "United seven eighty eight, please come up on frequency one three five point six two five. Give me a second while I finish coordinating.",
+        options,
+    );
     println!("{result}");
 
     // Text normalization (TN)
