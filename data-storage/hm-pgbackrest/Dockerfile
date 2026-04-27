@@ -1,4 +1,4 @@
-FROM docker.io/ubuntu:noble
+FROM docker.io/ubuntu:resolute
 WORKDIR /usr/src/app
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # https://pgbackrest.org/user-guide.html
