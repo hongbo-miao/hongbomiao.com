@@ -10,7 +10,7 @@ ENV JAVA_HOME=/usr/lib/jvm/default-java
 COPY ["pyproject.toml", "uv.lock", ".python-version", "./"]
 RUN uv sync --frozen --no-dev --no-editable
 
-FROM flink:1.20-java11 AS release
+FROM flink:2.2-java11 AS release
 RUN apt-get update && \
   apt-get install --yes --no-install-recommends python3.11 python3-setuptools curl && \
   update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1 && \
