@@ -20,7 +20,7 @@ services:
     image: postgres:18.3-alpine
     container_name: hm_postgres
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
       - ./postgres/init_up.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
       - ./postgres/.env.development.local.example
