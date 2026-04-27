@@ -17,10 +17,17 @@ use sherpa_onnx::{
     OfflineCohereTranscribeModelConfig, OfflineRecognizer, OfflineRecognizerConfig,
     OfflineTransducerModelConfig, VadModelConfig, VoiceActivityDetector,
 };
+use text_processing_rs::{NormalizeOptions, normalize_sentence_with_options};
 use tracing::{error, info};
 
 use crate::shared::audio::services::create_online_recognizer::create_online_recognizer;
 use crate::shared::audio::types::audio_chunk::AudioChunk;
+
+static NORMALIZE_OPTIONS: LazyLock<NormalizeOptions> = LazyLock::new(|| {
+    NormalizeOptions::new()
+        .with_concat_compound_numbers(true)
+        .with_disable_bare_second(true)
+});
 
 static TRANSCRIPT_AVRO_SCHEMA: LazyLock<apache_avro::Schema> = LazyLock::new(|| {
     apache_avro::Schema::parse_str(include_str!("../../../../../schemas/audio_transcript.avsc"))
@@ -137,7 +144,8 @@ pub async fn transcribe_audio_stream(
     let mut transcript_producer = transcript_producer;
     tokio::spawn(async move {
         let mut room = room;
-        while let Some(segment) = transcript_receiver.recv().await {
+        while let Some(mut segment) = transcript_receiver.recv().await {
+            segment.text = normalize_sentence_with_options(&segment.text, *NORMALIZE_OPTIONS);
             let mut attempt: u32 = 0;
             loop {
                 match publish_transcript_to_livekit(&room, &segment).await {
