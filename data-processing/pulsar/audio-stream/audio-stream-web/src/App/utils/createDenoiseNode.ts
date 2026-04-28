@@ -1,6 +1,6 @@
 import type { Rnnoise } from '@shiguredo/rnnoise-wasm';
 
-export function createDenoiseNode(audioContext: AudioContext, rnnoise: Rnnoise): ScriptProcessorNode {
+export function createDenoiseNode(audioContext: AudioContext, rnnoise: Rnnoise, denoiseStrength: number): ScriptProcessorNode {
   const FRAME_SIZE = rnnoise.frameSize;
   const denoiseState = rnnoise.createDenoiseState();
   const node = audioContext.createScriptProcessor(4096, 1, 1);
@@ -16,10 +16,11 @@ export function createDenoiseNode(audioContext: AudioContext, rnnoise: Rnnoise):
     }
 
     while (inputPending.length >= FRAME_SIZE) {
-      const audioFrame = new Float32Array(inputPending.splice(0, FRAME_SIZE));
+      const rawFrame = inputPending.splice(0, FRAME_SIZE);
+      const audioFrame = new Float32Array(rawFrame);
       denoiseState.processFrame(audioFrame);
-      for (const sample of audioFrame) {
-        outputPending.push(sample);
+      for (let i = 0; i < FRAME_SIZE; i++) {
+        outputPending.push(rawFrame[i] * (1 - denoiseStrength) + audioFrame[i] * denoiseStrength);
       }
     }
 

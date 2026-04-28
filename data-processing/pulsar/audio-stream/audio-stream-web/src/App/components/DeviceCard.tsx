@@ -12,7 +12,7 @@ interface DeviceCardProps {
   onSelect: () => void;
 }
 
-const CANVAS_WIDTH = 360;
+const CANVAS_WIDTH = 400;
 const CANVAS_HEIGHT = 60;
 const FAST_FOURIER_TRANSFORM_SIZE = 2048;
 const SOUND_PROPAGATION_MS = Math.round(1000 / 343);
@@ -32,11 +32,13 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
   const [latencyMs, setLatencyMs] = useState<number | null>(null);
   const minRawLatencyRef = useRef<number>(Infinity);
   const [jitterBufferMs, setJitterBufferMs] = useState<number | null>(null);
+  const [opusDecodeMs, setOpusDecodeMs] = useState<number | null>(null);
   const [audioOutputLatencyMs, setAudioOutputLatencyMs] = useState<number | null>(null);
   const [transcriptLines, setTranscriptLines] = useState<string[]>([]);
   const [interimText, setInterimText] = useState<string | null>(null);
   const [isNoiseCancellationEnabled, setIsNoiseCancellationEnabled] = useState(false);
   const [isRnnoiseReady, setIsRnnoiseReady] = useState(() => getRnnoiseInstance() !== null);
+  const [denoiseStrength, setDenoiseStrength] = useState(0.8);
 
   useDataChannel('transcript', (msg) => {
     const data = JSON.parse(new TextDecoder().decode(msg.payload)) as {
@@ -96,20 +98,27 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
 
             let prevJitterBufferDelay = 0;
             let prevJitterBufferEmittedCount = 0;
+            let prevTotalProcessingDelay = 0;
             statsIntervalId = setInterval(() => {
               setAudioOutputLatencyMs(Math.round((audioContext.outputLatency || audioContext.baseLatency) * 1000));
               receiver.getStats().then((statsReport) => {
                 statsReport.forEach((report) => {
                   if (report.type !== 'inbound-rtp') return;
-                  const inbound = report as RTCInboundRtpStreamStats & { jitterBufferDelay?: number; jitterBufferEmittedCount?: number };
+                  const inbound = report as RTCInboundRtpStreamStats & { jitterBufferDelay?: number; jitterBufferEmittedCount?: number; totalProcessingDelay?: number };
                   const currentDelay = inbound.jitterBufferDelay ?? 0;
                   const currentEmittedCount = inbound.jitterBufferEmittedCount ?? 0;
+                  const currentTotalProcessingDelay = inbound.totalProcessingDelay ?? 0;
                   const deltaDelay = currentDelay - prevJitterBufferDelay;
                   const deltaEmittedCount = currentEmittedCount - prevJitterBufferEmittedCount;
+                  const deltaTotalProcessingDelay = currentTotalProcessingDelay - prevTotalProcessingDelay;
                   prevJitterBufferDelay = currentDelay;
                   prevJitterBufferEmittedCount = currentEmittedCount;
+                  prevTotalProcessingDelay = currentTotalProcessingDelay;
                   if (deltaEmittedCount > 0) {
                     setJitterBufferMs(Math.round((deltaDelay / deltaEmittedCount) * 1000));
+                    if (inbound.totalProcessingDelay !== undefined) {
+                      setOpusDecodeMs(Math.max(0, Math.round(((deltaTotalProcessingDelay - deltaDelay) / deltaEmittedCount) * 1000)));
+                    }
                   }
                 });
               }).catch(() => undefined);
@@ -130,7 +139,7 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
     const rnnoise = getRnnoiseInstance();
     let denoiseNode: ScriptProcessorNode | null = null;
     if (isNoiseCancellationEnabled && rnnoise) {
-      denoiseNode = createDenoiseNode(audioContext, rnnoise);
+      denoiseNode = createDenoiseNode(audioContext, rnnoise, denoiseStrength);
       track.setWebAudioPlugins([denoiseNode, analyser]);
     } else {
       track.setWebAudioPlugins([analyser]);
@@ -181,7 +190,7 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
       }
       track.setWebAudioPlugins([]);
     };
-  }, [trackRef.publication?.track, isActive, room, isNoiseCancellationEnabled, isRnnoiseReady]);
+  }, [trackRef.publication?.track, isActive, room, isNoiseCancellationEnabled, isRnnoiseReady, denoiseStrength]);
 
   const cardStyle: React.CSSProperties = {
     border: isActive ? '2px solid #00aa00' : '1px solid #555',
@@ -200,37 +209,68 @@ export default function DeviceCard({ deviceId, trackRef, isActive, onSelect }: D
             {deviceId}
           </span>
           {isActive && (
-            <button
-              onClick={() => setIsNoiseCancellationEnabled((prev) => !prev)}
-              disabled={!isRnnoiseReady}
-              style={{
-                fontSize: '11px',
-                padding: '2px 8px',
-                background: isNoiseCancellationEnabled ? '#004400' : '#222',
-                color: isNoiseCancellationEnabled ? '#00aa00' : '#aaa',
-                border: `1px solid ${isNoiseCancellationEnabled ? '#00aa00' : '#555'}`,
-                borderRadius: '3px',
-                cursor: isRnnoiseReady ? 'pointer' : 'wait',
-                alignSelf: 'flex-start',
-              }}
-            >
-              {isRnnoiseReady
-                ? isNoiseCancellationEnabled
-                  ? 'Noise cancellation: on'
-                  : 'Noise cancellation: off'
-                : 'Noise cancellation: loading…'}
-            </button>
+            <div style={{
+              display: 'inline-flex',
+              flexDirection: 'column',
+              border: `1px solid ${isNoiseCancellationEnabled ? '#00aa00' : '#555'}`,
+              borderRadius: '3px',
+              overflow: 'hidden',
+              alignSelf: 'flex-start',
+            }}>
+              <button
+                onClick={() => setIsNoiseCancellationEnabled((prev) => !prev)}
+                disabled={!isRnnoiseReady}
+                style={{
+                  fontSize: '11px',
+                  padding: '2px 8px',
+                  background: isNoiseCancellationEnabled ? '#004400' : '#222',
+                  color: isNoiseCancellationEnabled ? '#00aa00' : '#aaa',
+                  border: 'none',
+                  cursor: isRnnoiseReady ? 'pointer' : 'wait',
+                }}
+              >
+                {isRnnoiseReady
+                  ? isNoiseCancellationEnabled
+                    ? 'Noise cancellation: on'
+                    : 'Noise cancellation: off'
+                  : 'Noise cancellation: loading…'}
+              </button>
+              {isRnnoiseReady && (
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '2px 8px',
+                  background: isNoiseCancellationEnabled ? '#004400' : '#1a1a1a',
+                  borderTop: `1px solid ${isNoiseCancellationEnabled ? '#00aa00' : '#555'}`,
+                  opacity: isNoiseCancellationEnabled ? 1 : 0.4,
+                }}>
+                  <input
+                    type="range"
+                    min={0}
+                    max={1}
+                    step={0.05}
+                    value={denoiseStrength}
+                    onChange={(e) => setDenoiseStrength(Number(e.target.value))}
+                    disabled={!isNoiseCancellationEnabled}
+                    style={{ width: '100px', accentColor: '#00aa00' }}
+                  />
+                  <span style={{ fontSize: '10px', color: '#888', width: '28px' }}>{Math.round(denoiseStrength * 100)}%</span>
+                </div>
+              )}
+            </div>
           )}
         </div>
         {isActive && (
           <span style={{ color: '#888', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px', fontSize: '10px' }}>
             <span title="data channel transit time (floor + variance)">{latencyMs !== null ? `Network transit: ${Math.max(0, Math.round(minRawLatencyRef.current)) + latencyMs}ms` : 'Network transit: —'}</span>
             <span title="WebRTC receiver jitter buffer delay">{jitterBufferMs !== null ? `WebRTC jitter buffer: ${jitterBufferMs}ms` : 'WebRTC jitter buffer: —'}</span>
+            <span title="Opus decode time (totalProcessingDelay - jitterBufferDelay); only available in Chrome">{opusDecodeMs !== null ? `Opus decode: ${opusDecodeMs}ms` : 'Opus decode: —'}</span>
             <span title="Web Audio hardware output latency (AudioContext.outputLatency)">{audioOutputLatencyMs !== null ? `Speaker output latency: ${audioOutputLatencyMs}ms` : 'Speaker output latency: —'}</span>
             <span title="sound travel time from speaker to ear at 1 meter (343 m/s)">{`Sound propagation (1m): ${SOUND_PROPAGATION_MS}ms`}</span>
             {latencyMs !== null && jitterBufferMs !== null && audioOutputLatencyMs !== null && minRawLatencyRef.current !== Infinity && (
               <span title="total estimated latency from publish to ear" style={{ color: '#aaa', borderTop: '1px solid #444', paddingTop: '2px', marginTop: '2px' }}>
-                Total: {Math.max(0, Math.round(minRawLatencyRef.current)) + latencyMs + jitterBufferMs + audioOutputLatencyMs + SOUND_PROPAGATION_MS}ms
+                Total: {Math.max(0, Math.round(minRawLatencyRef.current)) + latencyMs + jitterBufferMs + (opusDecodeMs ?? 0) + audioOutputLatencyMs + SOUND_PROPAGATION_MS}ms
               </span>
             )}
           </span>

@@ -142,7 +142,7 @@ pub async fn bridge_pulsar_to_livekit(
                 AudioSourceOptions::default(),
                 PCM_SAMPLE_RATE_HZ,
                 1,
-                2_000,
+                0,
             ));
 
             let track = LocalAudioTrack::create_audio_track(
