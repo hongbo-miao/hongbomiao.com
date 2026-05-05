@@ -1,4 +1,4 @@
-FROM docker.io/permitio/opal-client:0.9.4
+FROM docker.io/permitio/opal-client:0.9.5
 USER root
 WORKDIR /usr/src/app
 
