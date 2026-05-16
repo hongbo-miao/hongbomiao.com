@@ -860,6 +860,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "device-info"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a2ca8e71544c1b67dcdbc2699ab258828aff985e5bc8d5f6b486d90d7df2f848"
+dependencies = [
+ "core-foundation",
+ "jni",
+ "libc",
+ "thiserror 2.0.18",
+ "wasm-bindgen",
+ "web-sys",
+ "windows-sys 0.59.0",
+]
+
+[[package]]
 name = "digest"
 version = "0.10.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2004,11 +2019,12 @@ dependencies = [
 
 [[package]]
 name = "livekit-api"
-version = "0.4.18"
+version = "0.4.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e2247e3127fc52f9cc30f2763726f0508120d0424bd5159464d731cb58e2bea1"
+checksum = "900451a686a1ce8488c420e81a2135831383b03aade6bc3075cf80463d3dd6a4"
 dependencies = [
  "base64 0.21.7",
+ "device-info",
  "futures-util",
  "http 1.4.0",
  "jsonwebtoken",
@@ -4684,6 +4700,15 @@ name = "windows-sys"
 version = "0.52.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "282be5f36a8ce781fad8c8ae18fa3f9beff57ec1b52cb3de0789201425d9a33d"
+dependencies = [
+ "windows-targets 0.52.6",
+]
+
+[[package]]
+name = "windows-sys"
+version = "0.59.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1e38bc4d79ed67fd075bcc251a1c39b32a1776bbe92e5bef1f0bf1f8c531853b"
 dependencies = [
  "windows-targets 0.52.6",
 ]
