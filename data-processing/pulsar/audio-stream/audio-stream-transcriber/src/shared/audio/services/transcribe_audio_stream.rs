@@ -43,9 +43,11 @@ const ASR_NUM_THREADS: i32 = 2;
 const VAD_WINDOW_SIZE: usize = 256;
 const VAD_BUFFER_DURATION_S: f32 = 60.0;
 const VAD_BUFFER_TRIM_WINDOW_COUNT: usize = 10;
-const VAD_SPEECH_PAD_HEAD_SAMPLES: usize = PCM_SAMPLE_RATE_HZ as usize * 200 / 1000; // 0.2s head padding
-const VAD_THRESHOLD: f32 = 0.4;
-const VAD_MIN_SILENCE_DURATION_S: f32 = 0.08;
+// 0.2s head padding
+const VAD_SPEECH_PAD_HEAD_SAMPLES: usize = PCM_SAMPLE_RATE_HZ as usize * 200 / 1000;
+// Lower = more sensitive, more splitting, picks up quiet speech but more false positives; higher = less sensitive, less splitting, misses soft speech but fewer false positives
+const VAD_THRESHOLD: f32 = 0.3;
+const VAD_MIN_SILENCE_DURATION_S: f32 = 0.1;
 const VAD_MIN_SPEECH_DURATION_S: f32 = 0.1;
 const VAD_MAX_SPEECH_DURATION_S: f32 = 15.0;
 // Keep the last 500ms of chunks unacked so the broker redelivers them as acoustic pre-roll
