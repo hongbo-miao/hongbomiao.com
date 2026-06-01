@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Radio Streamer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-950 text-slate-100 min-h-screen">
+    <div class="max-w-2xl mx-auto px-4 py-8">
+      <header class="mb-6">
+        <h1 class="text-2xl font-semibold">Radio Streamer</h1>
+      </header>
+
+      <div
+        id="enable-banner"
+        class="hidden mb-4 rounded-lg bg-amber-500/15 border border-amber-500/40 px-4 py-3 text-amber-200 text-sm cursor-pointer"
+      >
+        Browser audio is suspended. Click here to enable sound.
+      </div>
+
+      <div id="channels" class="space-y-3"></div>
+      <p id="empty" class="text-slate-500 text-sm hidden">No channels configured.</p>
+    </div>
+
+    <script>
+      // Sample rate must match the server's audio.sample_rate (48 kHz). We request
+      // it explicitly so raw PCM plays at the correct pitch.
+      const AUDIO_SAMPLE_RATE = 48000;
+      const RECONNECT_DELAY_MS = 1500;
+
+      const PCM_PLAYER_WORKLET = `
+      class PcmPlayer extends AudioWorkletProcessor {
+        constructor() {
+          super();
+          this.queue = [];
+          this.current = null;
+          this.position = 0;
+          this.queuedSamples = 0;
+          this.port.onmessage = (event) => {
+            if (event.data === "flush") {
+              this.queue = []; this.current = null; this.position = 0; this.queuedSamples = 0;
+              return;
+            }
+            this.queue.push(event.data);
+            this.queuedSamples += event.data.length;
+            // Cap backlog at ~2 s so a stalled tab does not build unbounded latency.
+            while (this.queuedSamples > 96000 && this.queue.length > 1) {
+              this.queuedSamples -= this.queue.shift().length;
+            }
+          };
+        }
+        process(inputs, outputs) {
+          const output = outputs[0][0];
+          for (let i = 0; i < output.length; i++) {
+            if (!this.current || this.position >= this.current.length) {
+              this.current = this.queue.shift() || null;
+              this.position = 0;
+            }
+            if (this.current) {
+              output[i] = this.current[this.position++];
+              this.queuedSamples--;
+            } else {
+              output[i] = 0;
+            }
+          }
+          return true;
+        }
+      }
+      registerProcessor("pcm-player", PcmPlayer);
+    `;
+
+      let audioContext = null;
+      let workletReady = null;
+      const players = new Map(); // channelId -> { socket, node, gainPeak, button, meterBar }
+
+      async function ensureAudioContext() {
+        if (!audioContext) {
+          audioContext = new AudioContext({
+            sampleRate: AUDIO_SAMPLE_RATE,
+          });
+          if (audioContext.sampleRate !== AUDIO_SAMPLE_RATE) {
+            // The worklet plays PCM one sample per render frame with no
+            // resampling, so a rate the browser did not honor shifts pitch.
+            console.warn(
+              `AudioContext sample rate ${audioContext.sampleRate} != ${AUDIO_SAMPLE_RATE}; playback pitch may be off (the player does not resample).`,
+            );
+          }
+          const blob = new Blob([PCM_PLAYER_WORKLET], {
+            type: 'application/javascript',
+          });
+          workletReady = audioContext.audioWorklet.addModule(URL.createObjectURL(blob));
+        }
+        await workletReady;
+        if (audioContext.state === 'suspended') {
+          await audioContext.resume();
+        }
+        updateEnableBanner();
+      }
+
+      function updateEnableBanner() {
+        const banner = document.getElementById('enable-banner');
+        const suspended = audioContext && audioContext.state === 'suspended';
+        banner.classList.toggle('hidden', !suspended);
+      }
+
+      function connectChannel(channel) {
+        const node = new AudioWorkletNode(audioContext, 'pcm-player');
+        node.connect(audioContext.destination);
+
+        const state = { socket: null, node, peak: 0 };
+        players.set(channel.id, state);
+        openSocket(channel, state);
+        return state;
+      }
+
+      function openSocket(channel, state) {
+        const protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+        const socket = new WebSocket(`${protocol}://${location.host}/audio/${channel.id}`);
+        socket.binaryType = 'arraybuffer';
+        state.socket = socket;
+
+        socket.onmessage = (event) => {
+          const pcm = new Int16Array(event.data);
+          const floats = new Float32Array(pcm.length);
+          let peak = 0;
+          for (let i = 0; i < pcm.length; i++) {
+            const value = pcm[i] / 32768;
+            floats[i] = value;
+            const magnitude = Math.abs(value);
+            if (magnitude > peak) peak = magnitude;
+          }
+          state.peak = Math.max(state.peak * 0.6, peak);
+          state.node.port.postMessage(floats, [floats.buffer]);
+        };
+
+        socket.onclose = () => {
+          // Reconnect only if the user still wants this channel playing.
+          if (players.get(channel.id) === state) {
+            setTimeout(() => {
+              if (players.get(channel.id) === state) openSocket(channel, state);
+            }, RECONNECT_DELAY_MS);
+          }
+        };
+
+        socket.onerror = () => socket.close();
+      }
+
+      function stopChannel(channelId) {
+        const state = players.get(channelId);
+        if (!state) return;
+        players.delete(channelId);
+        if (state.socket) {
+          state.socket.onclose = null;
+          state.socket.close();
+        }
+        if (state.node) {
+          state.node.port.postMessage('flush');
+          state.node.disconnect();
+        }
+      }
+
+      async function toggleChannel(channel, button) {
+        if (players.has(channel.id)) {
+          stopChannel(channel.id);
+        } else {
+          await ensureAudioContext();
+          connectChannel(channel);
+        }
+        applyChannelState(channel);
+      }
+
+      // Reflect playing/stopped state on the button, card border, and LIVE tag.
+      function applyChannelState(channel) {
+        const playing = players.has(channel.id);
+        const button = channel.button;
+
+        button.textContent = playing ? '■ Stop' : '▶ Listen';
+        button.className = playing
+          ? 'px-5 py-2 rounded-md bg-rose-600 text-white font-semibold hover:bg-rose-500 min-w-[7.5rem]'
+          : 'px-5 py-2 rounded-md bg-emerald-500 text-slate-900 font-semibold hover:bg-emerald-400 min-w-[7.5rem]';
+
+        if (channel.card) {
+          channel.card.className = playing
+            ? 'flex items-center justify-between rounded-lg bg-slate-900 border-2 border-emerald-500 px-4 py-3'
+            : 'flex items-center justify-between rounded-lg bg-slate-900 border border-slate-800 px-4 py-3';
+        }
+        if (channel.liveTag) {
+          channel.liveTag.classList.toggle('hidden', !playing);
+        }
+      }
+
+      function formatFrequency(hz) {
+        return (hz / 1_000_000).toFixed(3) + ' MHz';
+      }
+
+      function renderChannels(channels) {
+        const container = document.getElementById('channels');
+        container.innerHTML = '';
+        if (channels.length === 0) {
+          document.getElementById('empty').classList.remove('hidden');
+          return;
+        }
+
+        for (const channel of channels) {
+          const card = document.createElement('div');
+          card.className =
+            'flex items-center justify-between rounded-lg bg-slate-900 border border-slate-800 px-4 py-3';
+
+          const left = document.createElement('div');
+          const name = document.createElement('div');
+          name.className = 'font-medium';
+          name.textContent = channel.name;
+          const liveTag = document.createElement('span');
+          liveTag.className = 'hidden ml-2 text-emerald-400 text-xs font-semibold align-middle animate-pulse';
+          liveTag.textContent = '● LIVE';
+          name.appendChild(liveTag);
+          const freq = document.createElement('div');
+          freq.className = 'text-slate-400 text-sm';
+          freq.textContent = formatFrequency(channel.freq);
+
+          const meter = document.createElement('div');
+          meter.className = 'mt-2 h-1.5 w-40 rounded-full bg-slate-800 overflow-hidden';
+          const meterBar = document.createElement('div');
+          meterBar.className = 'h-full w-0 bg-emerald-500 transition-[width] duration-75';
+          meter.appendChild(meterBar);
+
+          left.append(name, freq, meter);
+
+          const button = document.createElement('button');
+          button.addEventListener('click', () => toggleChannel(channel, button));
+
+          card.append(left, button);
+          container.appendChild(card);
+
+          channel.meterBar = meterBar;
+          channel.button = button;
+          channel.card = card;
+          channel.liveTag = liveTag;
+          applyChannelState(channel);
+        }
+
+        requestAnimationFrame(() => animateMeters(channels));
+      }
+
+      function animateMeters(channels) {
+        for (const channel of channels) {
+          const state = players.get(channel.id);
+          const level = state ? Math.min(1, state.peak) : 0;
+          if (channel.meterBar) channel.meterBar.style.width = (level * 100).toFixed(0) + '%';
+          if (state) state.peak *= 0.85;
+        }
+        requestAnimationFrame(() => animateMeters(channels));
+      }
+
+      document.getElementById('enable-banner').addEventListener('click', ensureAudioContext);
+
+      fetch('/channels')
+        .then((response) => response.json())
+        .then(renderChannels)
+        .catch((error) => {
+          document.getElementById('channels').innerHTML =
+            `<div class="text-red-400 text-sm">Failed to load channels: ${error}</div>`;
+        });
+    </script>
+  </body>
+</html>

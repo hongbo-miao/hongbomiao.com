@@ -157,6 +157,9 @@ name: . Lint
       pulsar-audio-stream-pulsar-livekit-bridge:
         required: true
         type: boolean
+      radio-streamer:
+        required: true
+        type: boolean
       udp-receiver:
         required: true
         type: boolean
@@ -1308,6 +1311,36 @@ jobs:
           cargo fmt --all -- --check
       - name: Lint Rust (Clippy)
         working-directory: data-processing/pulsar/audio-stream/pulsar-livekit-bridge
+        run: |
+          cargo clippy
+
+  lint-rust-radio-streamer:
+    name: Rust (radio-streamer)
+    if: ${{ inputs.workflow || inputs.radio-streamer }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Install SoapySDR
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsoapysdr-dev
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@46268bd060767258de96ed93c1251119784f2ab6 # v1.16.1
+        with:
+          cache: true
+          rust-src-dir: software-defined-radio/radio-streamer
+      - name: Install dependencies
+        working-directory: software-defined-radio/radio-streamer
+        run: |
+          cargo build --locked
+      - name: Lint Rust (rustfmt)
+        working-directory: software-defined-radio/radio-streamer
+        run: |
+          cargo fmt --all  -- --check
+      - name: Lint Rust (Clippy)
+        working-directory: software-defined-radio/radio-streamer
         run: |
           cargo clippy
 
