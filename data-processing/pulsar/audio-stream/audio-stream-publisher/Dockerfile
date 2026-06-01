@@ -1,4 +1,4 @@
-FROM docker.io/rust:1.94.1-slim-trixie AS builder
+FROM docker.io/rust:1.95.0-slim-trixie AS builder
 WORKDIR /usr/src/app
 RUN apt-get update && apt-get install --yes --no-install-recommends \
     libssl-dev \
