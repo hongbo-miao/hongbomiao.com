@@ -25,7 +25,7 @@ flowchart TD
     Cast -->|"PCM i16 LE over WebSocket"| Browser["Browser AudioWorklet player"]
 ```
 
-## Digital Down-Converter (DDC) math (polyphase frequency translation)
+## Digital Down-Converter (DDC) Math (Polyphase Frequency Translation)
 
 The DDC searches a wide capture (e.g. 10 MS/s centred at 94.9 MHz) for one narrow FM station (e.g. Bay Country at 94.5 MHz, ~200 kHz wide), shifts it to DC, low-pass filters, and decimates down to 400 kS/s. Three logical steps:
 
@@ -52,7 +52,7 @@ Multiplying by a rotating complex phasor translates the whole spectrum by $-\Del
 
 **Step 3 — Decimate** by $M = F_{s,\text{in}} / F_{s,\text{out}}$ — keep every $M$-th sample (e.g. $M = 25$ for 10 MS/s → 400 kS/s).
 
-### Fusing mix + filter + decimate
+### Fusing Mix + Filter + Decimate
 
 Composing the three steps directly:
 
@@ -100,7 +100,7 @@ Implementation detail: each chunk's FIR window is fed an `FIR_LEN - 1` zero-padd
 
 The phasor accumulates f32 magnitude drift over many multiplies. The implementation renormalises ($\phi \mathrel{/}= |\phi|$) once per chunk when $\bigl| |\phi|^2 - 1 \bigr| > 10^{-6}$ — a few `sqrt`s per second, negligible.
 
-## FM demodulation (polar discriminator)
+## FM Demodulation (Polar Discriminator)
 
 A frequency-modulated signal at baseband is
 
@@ -148,7 +148,7 @@ where:
 - $F_s$ — sample rate of the demod input (the DDC's output rate, e.g. 400 kS/s)
 - $\omega_\text{max}$ — phase step per sample at peak deviation
 
-## De-emphasis
+## De-Emphasis
 
 Broadcast FM transmitters apply **pre-emphasis** — a 1st-order high-pass that boosts high audio frequencies before modulation, so the received signal has lower hiss after equal-and-opposite **de-emphasis** at the receiver. The de-emphasis filter is a single-pole IIR low-pass with time constant $\tau$:
 
@@ -164,7 +164,7 @@ where:
 
 The $-3$ dB corner is $f_c = 1 / (2\pi\tau)$. Without de-emphasis, FM broadcast audio sounds harsh and hissy because the transmitter's pre-emphasis remains in the signal.
 
-## Rational resampler (polyphase L/M)
+## Rational Resampler (Polyphase L/M)
 
 Converting between two sample rates whose ratio is $L/M$ in lowest terms (e.g. 400 kHz → 48 kHz: $L=3$, $M=25$). Conceptually:
 
@@ -193,11 +193,11 @@ where:
 
 No zero multiplies, no discarded outputs — just one $N$-tap convolution per output sample, with the bank selection rotating through $L$ phases.
 
-## AGC (audio automatic gain control)
+## AGC (Audio Automatic Gain Control)
 
 FM demod output level varies with **modulation depth** (a heavily modulated station is loud, a soft-spoken one is quiet) but not with received signal strength (FM is amplitude-independent). AGC adapts to that variation by tracking the audio envelope and applying a gain that lands it on a fixed target.
 
-### Envelope tracker (asymmetric one-pole)
+### Envelope Tracker (Asymmetric One-Pole)
 
 ```math
 e[n] = \begin{cases} \alpha_\text{attack} \cdot e[n-1] + (1 - \alpha_\text{attack}) \cdot |x[n]| & \text{if } |x[n]| > e[n-1] \quad (\text{rising}) \\ \alpha_\text{release} \cdot e[n-1] + (1 - \alpha_\text{release}) \cdot |x[n]| & \text{otherwise} \quad (\text{falling}) \end{cases}
@@ -212,7 +212,7 @@ where:
 
 Fast attack catches transients (a sudden loud passage doesn't clip). Slow release stops the gain from "pumping" during quiet passages between syllables.
 
-### Gain selection and smoothing
+### Gain Selection and Smoothing
 
 ```math
 g_\text{target}[n] = \mathrm{clamp}\left( \frac{T}{\max(e[n],\, \epsilon)},\, 0.1,\, g_\text{max} \right)
