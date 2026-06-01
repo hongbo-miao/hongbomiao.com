@@ -926,11 +926,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Verilog** - Hardware description language
 - **VHDL** - Hardware description language
 
-## Software-Defined Radio (SDR)
-
-- **SoapySDR** - Vendor-neutral software-defined radio (SDR) hardware abstraction library
-- **Airspy R2** - High-performance software-defined radio (SDR) receiver
-
 ## Embedded System
 
 - **pySerial** - Serial communication library
@@ -1246,6 +1241,15 @@ The diagram illustrates the repository's architecture, which is considered overl
       - **Internet Message Access Protocol (IMAP)**
     - **MQTT**
 
+## Wireless
+
+### Software-Defined Radio (SDR)
+
+- **SoapySDR** - Vendor-neutral software-defined radio (SDR) hardware abstraction library
+- **SDR++** - Cross-platform software-defined radio (SDR) receiver software
+- **Airspy R2** - High-performance software-defined radio (SDR) receiver
+- **RTL-SDR Blog V4** - RTL2832U-based software-defined radio (SDR) receiver
+
 ### Wireless Network Standard
 
 - **1G**
@@ -1391,6 +1395,12 @@ The VHDL waveforms are displayed in GTKWave.
 ### Poky - Reference Linux Distribution of the Yocto Project
 
 ![Poky screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/fcb5650c-a33b-4564-ba9e-bca0a666b1a2)
+
+## Wireless
+
+### SDR++ - Software-Defined Radio (SDR) Receiver Software
+
+![SDR++ screenshot](https://github.com/user-attachments/assets/d4cc0078-4aa5-4393-9842-a8ce688fca4b)
 
 ## Database, Data Warehouse, Data Lakehouse
 
