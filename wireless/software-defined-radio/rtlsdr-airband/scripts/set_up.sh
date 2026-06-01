@@ -7,6 +7,7 @@ if [ "$(uname)" != "Darwin" ]; then
 fi
 
 airband_release_tag="v5.2.0"
+soapy_airspy_release_tag="soapy-airspy-0.2.0"
 install_prefix="${HOME}/.local"
 job_count="$(sysctl -n hw.ncpu)"
 
@@ -21,7 +22,8 @@ brew install lame libshout libconfig fftw librtlsdr airspy soapysdr cmake pkg-co
 # installing into the Homebrew prefix lets the SoapySDR runtime auto-load the module.
 brew_prefix="$(brew --prefix)"
 soapy_airspy_dir="${build_root}/SoapyAirspy"
-git clone --depth 1 https://github.com/pothosware/SoapyAirspy.git "${soapy_airspy_dir}"
+git clone --depth 1 --branch "${soapy_airspy_release_tag}" \
+  https://github.com/pothosware/SoapyAirspy.git "${soapy_airspy_dir}"
 cmake -S "${soapy_airspy_dir}" -B "${soapy_airspy_dir}/build" \
   -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
   -DCMAKE_INSTALL_PREFIX="${brew_prefix}"
