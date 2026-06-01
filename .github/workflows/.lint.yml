@@ -1330,17 +1330,17 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@46268bd060767258de96ed93c1251119784f2ab6 # v1.16.1
         with:
           cache: true
-          rust-src-dir: software-defined-radio/radio-streamer
+          rust-src-dir: wireless/software-defined-radio/radio-streamer
       - name: Install dependencies
-        working-directory: software-defined-radio/radio-streamer
+        working-directory: wireless/software-defined-radio/radio-streamer
         run: |
           cargo build --locked
       - name: Lint Rust (rustfmt)
-        working-directory: software-defined-radio/radio-streamer
+        working-directory: wireless/software-defined-radio/radio-streamer
         run: |
           cargo fmt --all  -- --check
       - name: Lint Rust (Clippy)
-        working-directory: software-defined-radio/radio-streamer
+        working-directory: wireless/software-defined-radio/radio-streamer
         run: |
           cargo clippy
 
