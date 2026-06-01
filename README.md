@@ -926,6 +926,11 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Verilog** - Hardware description language
 - **VHDL** - Hardware description language
 
+## Software-Defined Radio (SDR)
+
+- **SoapySDR** - Vendor-neutral software-defined radio (SDR) hardware abstraction library
+- **Airspy R2** - High-performance software-defined radio (SDR) receiver
+
 ## Embedded System
 
 - **pySerial** - Serial communication library

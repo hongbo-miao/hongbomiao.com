@@ -307,6 +307,7 @@ lint-rust-rustfmt:
     cd network/udp/udp-receiver && just lint-rust-rustfmt
     cd network/udp/udp-sender && just lint-rust-rustfmt
     cd operating-system/windows/calculator && just lint-rust-rustfmt
+    cd software-defined-radio/radio-streamer && just lint-rust-rustfmt
 
 lint-rust-rustfmt-fix:
     cd api/api-rust && just lint-rust-rustfmt-fix
@@ -332,6 +333,7 @@ lint-rust-rustfmt-fix:
     cd network/udp/udp-receiver && just lint-rust-rustfmt-fix
     cd network/udp/udp-sender && just lint-rust-rustfmt-fix
     cd operating-system/windows/calculator && just lint-rust-rustfmt-fix
+    cd software-defined-radio/radio-streamer && just lint-rust-rustfmt-fix
 
 lint-rust-clippy:
     cd api/api-rust && just lint-rust-clippy
@@ -357,6 +359,7 @@ lint-rust-clippy:
     cd network/udp/udp-receiver && just lint-rust-clippy
     cd network/udp/udp-sender && just lint-rust-clippy
     cd operating-system/windows/calculator && just lint-rust-clippy
+    cd software-defined-radio/radio-streamer && just lint-rust-clippy
 
 lint-rust-clippy-fix:
     cd api/api-rust && just lint-rust-clippy-fix
@@ -382,6 +385,7 @@ lint-rust-clippy-fix:
     cd network/udp/udp-receiver && just lint-rust-clippy-fix
     cd network/udp/udp-sender && just lint-rust-clippy-fix
     cd operating-system/windows/calculator && just lint-rust-clippy-fix
+    cd software-defined-radio/radio-streamer && just lint-rust-clippy-fix
 
 lint-scala:
     cd data-processing/hm-spark/applications/find-retired-people-scala && just lint-scala

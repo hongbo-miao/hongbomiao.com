@@ -1,0 +1,25 @@
+[package]
+name = "radio-streamer"
+version = "1.0.0"
+edition = "2024"
+
+[dependencies]
+soapysdr = "=0.4.5"
+tokio = { version = "=1.52.3", features = [
+  "rt-multi-thread",
+  "macros",
+  "sync",
+  "signal",
+  "time",
+  "net",
+] }
+tokio-util = { version = "=0.7.18", features = ["rt"] }
+futures = "=0.3.32"
+dotenvy = "=0.15.7"
+serde = { version = "=1.0.228", features = ["derive"] }
+num-complex = "=0.4.6"
+axum = { version = "=0.8.9", features = ["ws"] }
+tower-http = { version = "=0.6.11", features = ["fs", "trace"] }
+tracing = "=0.1.44"
+tracing-subscriber = { version = "=0.3.23", features = ["env-filter", "fmt"] }
+anyhow = "=1.0.102"

@@ -120,6 +120,9 @@ name: . Test Data Processing
       pulsar-sticky-telemetry-stream-validate-function:
         required: true
         type: boolean
+      radio-streamer:
+        required: true
+        type: boolean
 
 jobs:
   ingest-flac-to-parquet-test:
@@ -1299,5 +1302,33 @@ jobs:
           cargo build --locked
       - name: Test
         working-directory: data-processing/pulsar/audio-stream/audio-stream-transcriber
+        run: |
+          cargo test --all-features
+
+  radio-streamer-test:
+    name: Radio Streamer | Test
+    if: ${{ inputs.workflow || inputs.radio-streamer }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Install system dependencies
+        uses: awalsh128/cache-apt-pkgs-action@acb598e5ddbc6f68a970c5da0688d2f3a9f04d05 # v1.6.0
+        with:
+          # libsoapysdr-dev is for the soapysdr crate (Airspy R2 backend)
+          packages: libsoapysdr-dev
+          version: 1.0
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@46268bd060767258de96ed93c1251119784f2ab6 # v1.16.1
+        with:
+          cache: true
+          rust-src-dir: software-defined-radio/radio-streamer
+      - name: Install dependencies
+        working-directory: software-defined-radio/radio-streamer
+        run: |
+          cargo build --locked
+      - name: Test
+        working-directory: software-defined-radio/radio-streamer
         run: |
           cargo test --all-features

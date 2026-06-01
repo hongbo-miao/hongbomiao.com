@@ -741,6 +741,8 @@ jobs:
               - 'vision-language-model/qwen-vl/**'
             qwen3:
               - 'large-language-model-pre-training/training-paradigm/causal-language-model/qwen3/**'
+            radio-streamer:
+              - 'software-defined-radio/radio-streamer/**'
             rnnoise-vad:
               - 'audio/voice-activity-detection/rnnoise-vad/**'
             robot-operating-system:
@@ -1076,6 +1078,7 @@ jobs:
       quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
       qwen-vl: ${{ steps.filter.outputs.qwen-vl }}
       qwen3: ${{ steps.filter.outputs.qwen3 }}
+      radio-streamer: ${{ steps.filter.outputs.radio-streamer }}
       rnnoise-vad: ${{ steps.filter.outputs.rnnoise-vad }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       speculative-decoding: ${{ steps.filter.outputs.speculative-decoding }}
@@ -1159,6 +1162,7 @@ jobs:
       pulsar-audio-stream-publisher: ${{ needs.detect-changes.outputs.pulsar-audio-stream-publisher == 'true' }}
       pulsar-audio-stream-transcriber: ${{ needs.detect-changes.outputs.pulsar-audio-stream-transcriber == 'true' }}
       pulsar-audio-stream-pulsar-livekit-bridge: ${{ needs.detect-changes.outputs.pulsar-audio-stream-pulsar-livekit-bridge == 'true' }}
+      radio-streamer: ${{ needs.detect-changes.outputs.radio-streamer == 'true' }}
       udp-receiver: ${{ needs.detect-changes.outputs.udp-receiver == 'true' }}
       udp-sender: ${{ needs.detect-changes.outputs.udp-sender == 'true' }}
       web-playwright: ${{ needs.detect-changes.outputs.web-playwright == 'true' }}
@@ -1308,6 +1312,7 @@ jobs:
       pulsar-sticky-telemetry-stream-pulsar-publisher: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-pulsar-publisher == 'true' }}
       pulsar-sticky-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-subscriber == 'true' }}
       pulsar-sticky-telemetry-stream-validate-function: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-validate-function == 'true' }}
+      radio-streamer: ${{ needs.detect-changes.outputs.radio-streamer == 'true' }}
 
   test-data-transformation:
     name: Test Data Transformation
