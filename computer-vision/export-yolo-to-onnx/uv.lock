@@ -303,6 +303,18 @@ wheels = [
 ]
 
 [[package]]
+name = "googleapis-common-protos"
+version = "1.73.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "protobuf" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a1/c0/4a54c386282c13449eca8bbe2ddb518181dc113e78d240458a68856b4d69/googleapis_common_protos-1.73.1.tar.gz", hash = "sha256:13114f0e9d2391756a0194c3a8131974ed7bffb06086569ba193364af59163b6", size = 147506, upload-time = "2026-03-26T22:17:38.451Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/dc/82/fcb6520612bec0c39b973a6c0954b6a0d948aadfe8f7e9487f60ceb8bfa6/googleapis_common_protos-1.73.1-py3-none-any.whl", hash = "sha256:e51f09eb0a43a8602f5a915870972e6b4a394088415c79d79605a46d8e826ee8", size = 297556, upload-time = "2026-03-26T22:15:58.455Z" },
+]
+
+[[package]]
 name = "grpcio"
 version = "1.76.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1624,7 +1636,7 @@ wheels = [
 
 [[package]]
 name = "ultralytics"
-version = "8.4.50"
+version = "8.4.54"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "matplotlib" },
@@ -1640,14 +1652,15 @@ dependencies = [
     { name = "torchvision" },
     { name = "ultralytics-thop" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d3/8c/bce090789751d69ecf8b35fbbeca80eddf8f6e9d37287d4b2023eedd6701/ultralytics-8.4.50.tar.gz", hash = "sha256:ab0014d356878dcc0e649255300e23d003a34fdfe5477ee27184b2a8a33409de", size = 1041904, upload-time = "2026-05-13T11:38:08.13Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/72/35/ec8987e1d803ab33700bb4335bacdf176ab70e41e0b150fd0a62834b4a73/ultralytics-8.4.54.tar.gz", hash = "sha256:8adba1d69ce6b8d37e9927f2ff4bef8fc7a309222258fbf2c054caecf6c2f4fd", size = 1064074, upload-time = "2026-05-25T15:00:16.386Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/58/76/ce757434f535b06181794b41c27fde1e68450dd4ff88341d056bf080c9b2/ultralytics-8.4.50-py3-none-any.whl", hash = "sha256:6a611bb9c7d771ceb583971b91360648e810a07c8aa2ba93f61cea275dc78df8", size = 1234897, upload-time = "2026-05-13T11:38:03.92Z" },
+    { url = "https://files.pythonhosted.org/packages/91/72/c93917bdeef7fa667c8e9bd71e3482704945370b257bce61a38bf89d8729/ultralytics-8.4.54-py3-none-any.whl", hash = "sha256:67958bdb17805c36ed6c7e274c09eb09b068d9f801aa5872f33d282d1b13bdf6", size = 1264632, upload-time = "2026-05-25T15:00:10.325Z" },
 ]
 
 [package.optional-dependencies]
 export = [
     { name = "coremltools", marker = "sys_platform != 'win32'" },
+    { name = "googleapis-common-protos" },
     { name = "h5py", marker = "platform_machine == 'aarch64'" },
     { name = "numpy" },
     { name = "onnx", version = "1.17.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'darwin'" },
@@ -1767,7 +1780,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "ultralytics", extras = ["export"], specifier = "==8.4.50" }]
+requires-dist = [{ name = "ultralytics", extras = ["export"], specifier = "==8.4.54" }]
 
 [package.metadata.requires-dev]
 dev = [
