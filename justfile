@@ -695,6 +695,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=system-tool.hm-xxhash
     uv run poe static-type-check-python --package=tokenization.byte-pair-encoding
     uv run poe static-type-check-python --package=vision-language-model.qwen-vl
+    uv run poe static-type-check-python --package=wireless.software-defined-radio.gnuradio-receiver
     uv run poe static-type-check-python --package=world-foundation-model.nvidia-cosmos
 
 static-type-check-typescript:

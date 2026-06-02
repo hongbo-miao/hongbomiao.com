@@ -1,0 +1,22 @@
+# GNU Radio ships its Python bindings inside its own Homebrew venv, so run the
+# flowgraph with that interpreter rather than the system python3.
+
+gnuradio_python := "/opt/homebrew/opt/gnuradio/libexec/venv/bin/python"
+
+set-up:
+    brew install gnuradio soapysdr soapyrtlsdr rtl-sdr
+
+dev:
+    {{ gnuradio_python }} src/main.py
+
+update-lock-file:
+    uv lock
+
+install-dependencies:
+    uv sync --dev
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
