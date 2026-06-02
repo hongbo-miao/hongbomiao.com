@@ -1248,6 +1248,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **SoapySDR** - Vendor-neutral software-defined radio (SDR) hardware abstraction library
 - **SDR++** - Cross-platform software-defined radio (SDR) receiver software
 - **RTLSDR-Airband** - Multichannel AM/narrowband-FM voice demodulator and audio streamer
+- **GNU Radio** - Free and open-source signal processing runtime and software development toolkit for software-defined radio (SDR)
 - **Airspy R2** - High-performance software-defined radio (SDR) receiver
 - **RTL-SDR Blog V4** - RTL2832U-based software-defined radio (SDR) receiver
 
