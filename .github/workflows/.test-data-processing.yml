@@ -12,7 +12,7 @@ name: . Test Data Processing
       flink-stream-tweets:
         required: true
         type: boolean
-      gnuradio-receiver:
+      gnu-radio-receiver:
         required: true
         type: boolean
       hm-cocoindex-embed-markdown-to-postgres:
@@ -1336,9 +1336,9 @@ jobs:
         run: |
           cargo test --all-features
 
-  gnuradio-receiver-test:
+  gnu-radio-receiver-test:
     name: GNU Radio Receiver | Test
-    if: ${{ inputs.workflow || inputs.gnuradio-receiver }}
+    if: ${{ inputs.workflow || inputs.gnu-radio-receiver }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -1349,17 +1349,17 @@ jobs:
         with:
           version: 0.11.16
           enable-cache: true
-          cache-dependency-glob: wireless/software-defined-radio/gnuradio-receiver/uv.lock
+          cache-dependency-glob: wireless/software-defined-radio/gnu-radio-receiver/uv.lock
       - name: Set up Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
-          python-version-file: wireless/software-defined-radio/gnuradio-receiver/.python-version
+          python-version-file: wireless/software-defined-radio/gnu-radio-receiver/.python-version
       - name: Install dependencies
-        working-directory: wireless/software-defined-radio/gnuradio-receiver
+        working-directory: wireless/software-defined-radio/gnu-radio-receiver
         run: |
           uv sync --dev
       - name: Test
-        working-directory: wireless/software-defined-radio/gnuradio-receiver
+        working-directory: wireless/software-defined-radio/gnu-radio-receiver
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1367,4 +1367,4 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: wireless/software-defined-radio/gnuradio-receiver
+          directory: wireless/software-defined-radio/gnu-radio-receiver

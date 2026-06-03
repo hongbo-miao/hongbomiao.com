@@ -393,8 +393,8 @@ jobs:
               - 'small-language-model/gemma/**'
             genetic-algorithm:
               - 'evolutionary-algorithm/genetic-algorithm/**'
-            gnuradio-receiver:
-              - 'wireless/software-defined-radio/gnuradio-receiver/**'
+            gnu-radio-receiver:
+              - 'wireless/software-defined-radio/gnu-radio-receiver/**'
             grafana-hm-dashboard:
               - 'data-visualization/grafana/hm-dashboard/**'
             grafana-hm-panel-plugin:
@@ -909,7 +909,7 @@ jobs:
       format-can-data: ${{ steps.filter.outputs.format-can-data }}
       gemma: ${{ steps.filter.outputs.gemma }}
       genetic-algorithm: ${{ steps.filter.outputs.genetic-algorithm }}
-      gnuradio-receiver: ${{ steps.filter.outputs.gnuradio-receiver }}
+      gnu-radio-receiver: ${{ steps.filter.outputs.gnu-radio-receiver }}
       grafana-hm-dashboard: ${{ steps.filter.outputs.grafana-hm-dashboard }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
@@ -1282,7 +1282,7 @@ jobs:
       workflow: ${{ needs.detect-changes.outputs.workflow-test-data-processing == 'true' }}
       # Applications
       flink-stream-tweets: ${{ needs.detect-changes.outputs.flink-stream-tweets == 'true' }}
-      gnuradio-receiver: ${{ needs.detect-changes.outputs.gnuradio-receiver == 'true' }}
+      gnu-radio-receiver: ${{ needs.detect-changes.outputs.gnu-radio-receiver == 'true' }}
       hm-cocoindex-embed-markdown-to-postgres: ${{ needs.detect-changes.outputs.hm-cocoindex-embed-markdown-to-postgres == 'true' }}
       hm-pathway-aggregate-hourly-events: ${{ needs.detect-changes.outputs.hm-pathway-aggregate-hourly-events == 'true' }}
       hm-spark-analyze-coffee-customers: ${{ needs.detect-changes.outputs.hm-spark-analyze-coffee-customers == 'true' }}
