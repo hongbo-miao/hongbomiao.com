@@ -50,7 +50,7 @@ services:
       start_period: 10s
 
   kafka:
-    image: docker.io/apache/kafka:4.2.0
+    image: docker.io/apache/kafka:4.3.0
     environment:
       - KAFKA_NODE_ID=1
       - KAFKA_PROCESS_ROLES=broker,controller
@@ -75,7 +75,7 @@ services:
       start_period: 10s
 
   topic-initialize:
-    image: docker.io/apache/kafka:4.2.0
+    image: docker.io/apache/kafka:4.3.0
     depends_on:
       kafka:
         condition: service_healthy
