@@ -1,0 +1,17 @@
+brew_prefix := `brew --prefix`
+
+set-up:
+    brew install liquid-dsp soapysdr soapyrtlsdr rtl-sdr sox
+
+build:
+    mkdir -p build
+    c++ -std=c++23 -O2 -Wall -Wextra \
+        -Wno-deprecated-declarations -Wno-return-type-c-linkage \
+        -I{{ brew_prefix }}/include \
+        -L{{ brew_prefix }}/lib \
+        src/main.cpp \
+        -lliquid -lSoapySDR \
+        -o build/liquid-dsp-receiver
+
+dev: build
+    ./build/liquid-dsp-receiver | play -q -t raw -r 48000 -e signed -b 16 -c 1 -
