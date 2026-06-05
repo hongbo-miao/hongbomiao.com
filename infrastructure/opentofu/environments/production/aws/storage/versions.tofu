@@ -13,7 +13,7 @@ terraform {
     # https://search.opentofu.org/provider/hashicorp/external/latest
     external = {
       source  = "hashicorp/external"
-      version = "2.3.5"
+      version = "2.4.0"
     }
   }
   required_version = ">= 1.11"
