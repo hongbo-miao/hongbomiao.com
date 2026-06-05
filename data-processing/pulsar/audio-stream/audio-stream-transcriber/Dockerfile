@@ -1,4 +1,4 @@
-FROM docker.io/rust:1.95.0-slim-trixie AS builder
+FROM docker.io/rust:1.96.0-slim-trixie AS builder
 WORKDIR /usr/src/app
 RUN apt-get update && apt-get install --yes --no-install-recommends \
     cmake g++ libglib2.0-dev libopus-dev libssl-dev pkg-config protobuf-compiler \
