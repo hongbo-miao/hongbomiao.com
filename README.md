@@ -1250,6 +1250,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **RTLSDR-Airband** - Multichannel AM/narrowband-FM voice demodulator and audio streamer
 - **GNU Radio** - Signal processing runtime and software development toolkit for software-defined radio (SDR)
 - **Liquid-DSP** - Digital signal processing (DSP) library for software-defined radio (SDR)
+- **redsea** - Radio data system (RDS) decoder for FM broadcast
 - **Airspy R2** - High-performance software-defined radio (SDR) receiver
 - **RTL-SDR Blog V4** - RTL2832U-based software-defined radio (SDR) receiver
 
