@@ -17,7 +17,7 @@ terraform {
     // https://search.opentofu.org/provider/nats-io/jetstream/latest
     jetstream = {
       source  = "nats-io/jetstream"
-      version = "0.3.0"
+      version = "0.4.0"
     }
   }
   required_version = ">= 1.11"
