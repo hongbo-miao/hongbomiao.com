@@ -1,7 +1,12 @@
 brew_prefix := `brew --prefix`
 
+set shell := ["bash", "-uc"]
+
 set-up:
-    brew install liquid-dsp soapysdr soapyrtlsdr rtl-sdr sox
+    brew install liquid-dsp soapysdr soapyrtlsdr rtl-sdr sox meson ninja libsndfile nlohmann-json jq
+    [ -d build/redsea ] || git clone https://github.com/windytan/redsea.git build/redsea
+    cd build/redsea && { [ -d build ] || meson setup build; }
+    cd build/redsea && meson compile -C build
 
 build:
     mkdir -p build
@@ -14,4 +19,7 @@ build:
         -o build/liquid-dsp-receiver
 
 dev: build
-    ./build/liquid-dsp-receiver | play -q -t raw -r 48000 -e signed -b 16 -c 1 -
+    [ -x build/redsea/build/redsea ] || { echo "redsea is not built; run: just set-up"; exit 1; }
+    ./build/liquid-dsp-receiver \
+        3> >(./build/redsea/build/redsea -u -r 240000 | jq --unbuffered -rnf format-rds.jq 1>&2) \
+        | play -q -t raw -r 48000 -e signed -b 16 -c 1 -

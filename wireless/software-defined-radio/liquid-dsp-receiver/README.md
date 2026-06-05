@@ -18,4 +18,5 @@ flowchart TD
   end
 
   DcBlock -->|"48 kHz mono, s16le PCM on stdout"| Player["sox play / afplay"]
+  Demod -->|"240 kHz multiplex, s16le PCM on file descriptor 3"| Redsea["redsea -u -r 240000 (RDS text)"]
 ```

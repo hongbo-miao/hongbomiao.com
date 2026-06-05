@@ -172,6 +172,7 @@ lint-c-cpp-cpplint:
     uv run poe lint-c-cpp-cpplint --repository=reverse-engineering/hello-c --extensions=c,h --recursive reverse-engineering/hello-c
     uv run poe lint-c-cpp-cpplint --repository=reverse-engineering/hello-cpp --extensions=cpp,hpp --recursive reverse-engineering/hello-cpp
     uv run poe lint-c-cpp-cpplint --repository=robotics/robot-operating-system/src/hm_cpp_package --extensions=cpp,hpp --recursive robotics/robot-operating-system
+    uv run poe lint-c-cpp-cpplint --repository=wireless/software-defined-radio/liquid-dsp-receiver --extensions=cpp,hpp --recursive wireless/software-defined-radio/liquid-dsp-receiver
 
 lint-c-cpp-clang-format-fix:
     clang-format -i -style=file $(git ls-files '**/*.c' '**/*.cpp' '**/*.cu' '**/*.h' '**/*.ino')

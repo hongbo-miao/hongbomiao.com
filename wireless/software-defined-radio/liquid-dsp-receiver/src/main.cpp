@@ -21,6 +21,13 @@ constexpr double WBFM_STATION_HZ = 94900000.0;
 constexpr double TUNER_GAIN_DB = 40.0;
 constexpr char DEVICE_ARGUMENTS[] = "driver=rtlsdr";
 
+// Audio is written to stdout (for playback). The FM multiplex (for RDS decoding) is a second
+// binary stream, so it needs its own destination: file descriptor 3, the first one free after
+// stdin (0), stdout (1) and stderr (2). If the caller redirects file descriptor 3 to an RDS
+// decoder, the multiplex is written there too; otherwise fdopen below returns null and only audio
+// is produced.
+constexpr int MPX_SIDE_CHANNEL_FD = 3;
+
 // RTL-SDR Blog V4 runs cleanly up to 2.4 MS/s. A first decimation by 10 brings
 // that to a 240 kHz intermediate rate; a second decimation by 5 reaches 48 kHz.
 constexpr int DEVICE_SAMPLE_RATE_HZ = 2400000;
@@ -83,6 +90,16 @@ class LiquidObject {
 int main() {
   std::signal(SIGINT, handle_stop_signal);
   std::signal(SIGTERM, handle_stop_signal);
+  // If the fd 3 RDS decoder exits first, writing to its closed pipe raises
+  // SIGPIPE, which by default kills this process. Ignore it and detect the
+  // broken pipe through the failed write instead.
+  std::signal(SIGPIPE, SIG_IGN);
+
+  // When fd 3 is wired to redsea (https://github.com/windytan/redsea), emit the
+  // demodulated multiplex there so a single run produces both audio on stdout
+  // and RDS text. The multiplex still carries the 57 kHz RDS subcarrier. fdopen
+  // returns null when fd 3 is not redirected (the plain "play audio only" case).
+  FILE* mpx_side_channel = fdopen(MPX_SIDE_CHANNEL_FD, "wb");
 
   // SoapySDR source: complex float samples from the RTL-SDR (driver=rtlsdr).
   // The C++ API throws on failure, so a try/catch reports any setup error.
@@ -137,8 +154,8 @@ int main() {
     stream = sdr_source->setupStream(SOAPY_SDR_RX, SOAPY_SDR_CF32);
     sdr_source->activateStream(stream);
 
-    std::println(stderr, "Receiving wbfm at {:.3f} MHz, {} Hz audio (Ctrl-C to stop)",
-                 WBFM_STATION_HZ / 1e6, AUDIO_SAMPLE_RATE_HZ);
+    std::println(stderr, "Receiving wbfm at {:.3f} MHz, {} Hz audio", WBFM_STATION_HZ / 1e6,
+                 AUDIO_SAMPLE_RATE_HZ);
 
     // SOAPY_SDR_CF32 is interleaved float [I, Q], the exact layout of
     // liquid_float_complex, so the read buffer feeds the liquid blocks with no
@@ -149,6 +166,7 @@ int main() {
     std::vector<float> demodulated(READ_CHUNK_SAMPLES / CHANNEL_DECIMATION);
     std::vector<float> audio_samples(READ_CHUNK_SAMPLES / CHANNEL_DECIMATION / AUDIO_DECIMATION);
     std::vector<int16_t> audio_pcm(READ_CHUNK_SAMPLES / CHANNEL_DECIMATION / AUDIO_DECIMATION);
+    std::vector<int16_t> mpx_pcm(READ_CHUNK_SAMPLES / CHANNEL_DECIMATION);
 
     while (keep_running) {
       void* read_buffers[1] = {iq_samples.data()};
@@ -182,6 +200,25 @@ int main() {
                                   channel_samples.data());
       freqdem_demodulate_block(fm_demodulator, channel_samples.data(), channel_count,
                                demodulated.data());
+
+      // De-emphasis (next) is a low-pass that would erase the 57 kHz RDS
+      // subcarrier, so tap the multiplex here, before it runs, and send it to
+      // the fd 3 side channel when redsea is attached.
+      if (mpx_side_channel != nullptr) {
+        for (unsigned int i = 0; i < channel_count; i++) {
+          float scaled = std::clamp(demodulated[i], -1.0f, 1.0f);
+          mpx_pcm[i] = static_cast<int16_t>(std::lrintf(scaled * 32767.0f));
+        }
+        size_t written =
+          std::fwrite(mpx_pcm.data(), sizeof(int16_t), channel_count, mpx_side_channel);
+        // The RDS decoder may have exited; stop writing to the broken pipe so the
+        // loop does not waste effort on a sink that will never drain again.
+        if (written < channel_count || std::fflush(mpx_side_channel) != 0) {
+          std::fclose(mpx_side_channel);
+          mpx_side_channel = nullptr;
+        }
+      }
+
       iirfilt_rrrf_execute_block(de_emphasis, demodulated.data(), channel_count,
                                  demodulated.data());
 
@@ -206,6 +243,11 @@ int main() {
     }
   } catch (const std::exception& error) {
     std::println(stderr, "Receiver error: {}", error.what());
+    // Close the side channel so the RDS decoder sees EOF at the point of the
+    // error rather than at process teardown.
+    if (mpx_side_channel != nullptr) {
+      std::fclose(mpx_side_channel);
+    }
     // The SoapySDR contract requires the stream to be closed before the device
     // is unmade; skipping it can wedge the USB driver until the dongle is
     // physically re-plugged. Mirror the normal-exit cleanup.
@@ -220,6 +262,9 @@ int main() {
   }
 
   std::println(stderr, "Stopping receiver");
+  if (mpx_side_channel != nullptr) {
+    std::fclose(mpx_side_channel);
+  }
   sdr_source->deactivateStream(stream);
   sdr_source->closeStream(stream);
   SoapySDR::Device::unmake(sdr_source);
