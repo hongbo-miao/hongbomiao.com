@@ -1,4 +1,4 @@
-FROM docker.io/rust:1.94.1-slim-trixie AS builder
+FROM docker.io/rust:1.96.0-slim-trixie AS builder
 WORKDIR /usr/src/app
 RUN apt-get update && apt-get install --yes --no-install-recommends pkg-config libssl-dev protobuf-compiler && rm -rf /var/lib/apt/lists/*
 COPY proto/ proto/
