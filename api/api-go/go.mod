@@ -9,7 +9,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/credentials v1.19.18
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.99.1
 	github.com/bep/debounce v1.2.1
-	github.com/buger/jsonparser v1.1.2
+	github.com/buger/jsonparser v1.2.0
 	github.com/dgraph-io/dgo/v230 v230.0.1
 	github.com/gin-contrib/cors v1.7.7
 	github.com/gin-contrib/gzip v1.2.6
