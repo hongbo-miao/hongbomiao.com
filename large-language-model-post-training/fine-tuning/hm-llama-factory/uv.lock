@@ -599,7 +599,7 @@ name = "hm-llama-factory"
 version = "1.0.0"
 source = { virtual = "." }
 dependencies = [
-    { name = "llamafactory", extra = ["metrics"] },
+    { name = "llamafactory" },
 ]
 
 [package.dev-dependencies]
@@ -610,7 +610,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "llamafactory", extras = ["metrics", "torch"], specifier = "==0.9.4" }]
+requires-dist = [{ name = "llamafactory", extras = ["metrics", "torch"], specifier = "==0.9.5" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -685,12 +685,6 @@ wheels = [
 ]
 
 [[package]]
-name = "jieba"
-version = "0.42.1"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c6/cb/18eeb235f833b726522d7ebed54f2278ce28ba9438e3135ab0278d9792a2/jieba-0.42.1.tar.gz", hash = "sha256:055ca12f62674fafed09427f176506079bc135638a14e23e25be909131928db2", size = 19214172, upload-time = "2020-01-20T14:27:23.5Z" }
-
-[[package]]
 name = "jinja2"
 version = "3.1.6"
 source = { registry = "https://pypi.org/simple" }
@@ -700,15 +694,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/df/bf/f7da0350254c0ed7c72f3e33cef02e048281fec7ecec5f032d4aac52226b/jinja2-3.1.6.tar.gz", hash = "sha256:0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d", size = 245115, upload-time = "2025-03-05T20:05:02.478Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl", hash = "sha256:85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67", size = 134899, upload-time = "2025-03-05T20:05:00.369Z" },
-]
-
-[[package]]
-name = "joblib"
-version = "1.5.2"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/e8/5d/447af5ea094b9e4c4054f82e223ada074c552335b9b4b2d14bd9b35a67c4/joblib-1.5.2.tar.gz", hash = "sha256:3faa5c39054b2f03ca547da9b2f52fde67c06240c31853f306aea97f13647b55", size = 331077, upload-time = "2025-08-27T12:15:46.575Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/1e/e8/685f47e0d754320684db4425a0967f7d3fa70126bffd76110b7009a0090f/joblib-1.5.2-py3-none-any.whl", hash = "sha256:4e1f0bdbb987e6d843c70cf43714cb276623def372df3c22fe5266b2670bc241", size = 308396, upload-time = "2025-08-27T12:15:45.188Z" },
 ]
 
 [[package]]
@@ -746,7 +731,7 @@ wheels = [
 
 [[package]]
 name = "llamafactory"
-version = "0.9.4"
+version = "0.9.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "accelerate" },
@@ -781,16 +766,9 @@ dependencies = [
     { name = "tyro" },
     { name = "uvicorn" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/43/1d/e3fafa81bed427268fe5e03d8248fbe4aaa841c6a79c90db1b9ba88501ec/llamafactory-0.9.4.tar.gz", hash = "sha256:d85e257f7d4262177f22b4b65e38cd1da390f70cfa808f32c9c6ae9cc00550a0", size = 5111523, upload-time = "2025-12-31T15:03:52.113Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/13/80/a93533be95fbc18940e0a192b9dce1d7565310f0d365bcad69489d3c0d0d/llamafactory-0.9.5.tar.gz", hash = "sha256:1702c0bfb864e80577a59521d2edcacd2aab05ec6aee06188fcba335a589681f", size = 5208876, upload-time = "2026-05-30T15:58:22.402Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ce/56/0f9775ba4d0c3c727e6a0f0aa09bd57f5f8308c052649b7756c38a029c61/llamafactory-0.9.4-py3-none-any.whl", hash = "sha256:d71e29ed29cdad3b0ad41889d8472edf3bf5b1b0291117702ab1c54edb56386a", size = 398470, upload-time = "2025-12-31T15:03:50.23Z" },
-]
-
-[package.optional-dependencies]
-metrics = [
-    { name = "jieba" },
-    { name = "nltk" },
-    { name = "rouge-chinese" },
+    { url = "https://files.pythonhosted.org/packages/2e/4b/b97735f2ea65ea7f0e9fcd1f595002ad5616b9a638e9e97bad8871069aaa/llamafactory-0.9.5-py3-none-any.whl", hash = "sha256:10776e9b259798bf65f6c5343f6298f0302e92e9cd47472abe29eef69e286c6a", size = 482716, upload-time = "2026-05-30T15:58:20.676Z" },
 ]
 
 [[package]]
@@ -970,21 +948,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/6c/4f/ccdb8ad3a38e583f214547fd2f7ff1fc160c43a75af88e6aec213404b96a/networkx-3.5.tar.gz", hash = "sha256:d4c6f9cf81f52d69230866796b82afbccdec3db7ae4fbd1b65ea750feed50037", size = 2471065, upload-time = "2025-05-29T11:35:07.804Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/eb/8d/776adee7bbf76365fdd7f2552710282c79a4ead5d2a46408c9043a2b70ba/networkx-3.5-py3-none-any.whl", hash = "sha256:0030d386a9a06dee3565298b4a734b68589749a544acbb6c412dc9e2489ec6ec", size = 2034406, upload-time = "2025-05-29T11:35:04.961Z" },
-]
-
-[[package]]
-name = "nltk"
-version = "3.9.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "click" },
-    { name = "joblib" },
-    { name = "regex" },
-    { name = "tqdm" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/3c/87/db8be88ad32c2d042420b6fd9ffd4a149f9a0d7f0e86b3f543be2eeeedd2/nltk-3.9.1.tar.gz", hash = "sha256:87d127bd3de4bd89a4f81265e5fa59cb1b199b27440175370f7417d2bc7ae868", size = 2904691, upload-time = "2024-08-18T19:48:37.769Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/4d/66/7d9e26593edda06e8cb531874633f7c2372279c3b0f46235539fe546df8b/nltk-3.9.1-py3-none-any.whl", hash = "sha256:4fa26829c5b00715afe3061398a8989dc643b92ce7dd93fb4585a70930d168a1", size = 1505442, upload-time = "2024-08-18T19:48:21.909Z" },
 ]
 
 [[package]]
@@ -1202,7 +1165,7 @@ wheels = [
 
 [[package]]
 name = "peft"
-version = "0.15.2"
+version = "0.18.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "accelerate" },
@@ -1216,9 +1179,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "transformers" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/33/65/faa18cd8ffbe0f742c3f2559770646cce2574b9cd28a2a05e8d36f64e968/peft-0.15.2.tar.gz", hash = "sha256:7059029f4d42a092ded1aa117dd366a46084aef638bdd593f6ab0195d5427fcd", size = 472952, upload-time = "2025-04-15T15:27:53.09Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d8/48/147b3ea999560b40a34fd78724c7777aa9d18409c2250bdcaf9c4f2db7fc/peft-0.18.1.tar.gz", hash = "sha256:2dd0d6bfce936d1850e48aaddbd250941c5c02fc8ef3237cd8fd5aac35e0bae2", size = 635030, upload-time = "2026-01-09T13:08:01.136Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/68/85/8e6ea3d1089f2b6de3c1cd34bbbd7560912af9d34b057be3b8b8fefe1da3/peft-0.15.2-py3-none-any.whl", hash = "sha256:0dfc942b03b7af4b7267cd4e30b15e3a4a1d277adc581ce6245fc13f1f93d0a0", size = 411051, upload-time = "2025-04-15T15:27:50.799Z" },
+    { url = "https://files.pythonhosted.org/packages/b3/14/b4e3f574acf349ae6f61f9c000a77f97a3b315b4bb6ad03791e79ae4a568/peft-0.18.1-py3-none-any.whl", hash = "sha256:0bf06847a3551e3019fc58c440cffc9a6b73e6e2962c95b52e224f77bbdb50f1", size = 556960, upload-time = "2026-01-09T13:07:55.865Z" },
 ]
 
 [[package]]
@@ -1575,18 +1538,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/fe/75/af448d8e52bf1d8fa6a9d089ca6c07ff4453d86c65c145d0a300bb073b9b/rich-14.1.0.tar.gz", hash = "sha256:e497a48b844b0320d45007cdebfeaeed8db2a4f4bcf49f15e455cfc4af11eaa8", size = 224441, upload-time = "2025-07-25T07:32:58.125Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e3/30/3c4d035596d3cf444529e0b2953ad0466f6049528a879d27534700580395/rich-14.1.0-py3-none-any.whl", hash = "sha256:536f5f1785986d6dbdea3c75205c473f970777b4a0d6c6dd1b696aa05a3fa04f", size = 243368, upload-time = "2025-07-25T07:32:56.73Z" },
-]
-
-[[package]]
-name = "rouge-chinese"
-version = "1.0.3"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "six" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/07/a6/3e418f8106d3c1b84e2859aa2093c83cb082e4698b02450940cebbe39eac/rouge_chinese-1.0.3.tar.gz", hash = "sha256:4074de21b01a83ca6032fe6d6354c5f618a305da60c994294133be2abf030f4a", size = 21614, upload-time = "2022-09-18T18:50:45.496Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/03/0f/394cf877be7b903881020ef7217f7dc644dad158d52a9353fcab22e3464d/rouge_chinese-1.0.3-py3-none-any.whl", hash = "sha256:afda22cb64f9a0f1d7a19e88d7cd9acfd2c1f5d45bf463ade7ecadf87f30624d", size = 21657, upload-time = "2022-09-18T18:50:43.292Z" },
 ]
 
 [[package]]
