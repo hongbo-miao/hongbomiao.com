@@ -48,25 +48,65 @@ def find_peak_frequency_hz(received: np.ndarray) -> float:
     return float(frequency_bins_hz[peak_index])
 
 
+def close_stream(device: SoapySDR.Device, stream: object) -> None:
+    try:
+        device.deactivateStream(stream)
+    except Exception:
+        logger.exception("Failed to deactivate a SoapySDR stream")
+    try:
+        device.closeStream(stream)
+    except Exception:
+        logger.exception("Failed to close a SoapySDR stream")
+
+
 def run_loopback(device: SoapySDR.Device) -> None:
     tone = build_tone(BUFFER_SAMPLE_COUNT)
-    received = np.empty(BUFFER_SAMPLE_COUNT, dtype=np.complex64)
+    received = np.zeros(BUFFER_SAMPLE_COUNT, dtype=np.complex64)
+    read_buffer = np.zeros(BUFFER_SAMPLE_COUNT, dtype=np.complex64)
 
-    transmit_stream = device.setupStream(SOAPY_SDR_TX, SOAPY_SDR_CF32)
-    receive_stream = device.setupStream(SOAPY_SDR_RX, SOAPY_SDR_CF32)
-    device.activateStream(transmit_stream)
-    device.activateStream(receive_stream)
-
+    transmit_stream = None
+    receive_stream = None
+    has_complete_buffer = False
     try:
+        transmit_stream = device.setupStream(SOAPY_SDR_TX, SOAPY_SDR_CF32)
+        receive_stream = device.setupStream(SOAPY_SDR_RX, SOAPY_SDR_CF32)
+        device.activateStream(transmit_stream)
+        device.activateStream(receive_stream)
+
         deadline = time.monotonic() + LOOPBACK_DURATION_SECONDS
         while time.monotonic() < deadline:
-            device.writeStream(transmit_stream, [tone], BUFFER_SAMPLE_COUNT)
-            device.readStream(receive_stream, [received], BUFFER_SAMPLE_COUNT)
+            transmit_result = device.writeStream(
+                transmit_stream,
+                [tone],
+                BUFFER_SAMPLE_COUNT,
+            )
+            if transmit_result.ret != BUFFER_SAMPLE_COUNT:
+                logger.warning(
+                    f"writeStream transmitted {transmit_result.ret} samples, "
+                    f"expected {BUFFER_SAMPLE_COUNT}",
+                )
+            receive_result = device.readStream(
+                receive_stream,
+                [read_buffer],
+                BUFFER_SAMPLE_COUNT,
+            )
+            if receive_result.ret == BUFFER_SAMPLE_COUNT:
+                np.copyto(received, read_buffer)
+                has_complete_buffer = True
+            else:
+                logger.warning(
+                    f"readStream received {receive_result.ret} samples, "
+                    f"expected {BUFFER_SAMPLE_COUNT}",
+                )
     finally:
-        device.deactivateStream(transmit_stream)
-        device.deactivateStream(receive_stream)
-        device.closeStream(transmit_stream)
-        device.closeStream(receive_stream)
+        if transmit_stream is not None:
+            close_stream(device, transmit_stream)
+        if receive_stream is not None:
+            close_stream(device, receive_stream)
+
+    if not has_complete_buffer:
+        message = "Loopback failed: no complete buffer was received"
+        raise RuntimeError(message)
 
     peak_frequency_hz = find_peak_frequency_hz(received)
     logger.info(
