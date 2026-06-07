@@ -643,6 +643,8 @@ jobs:
               - 'large-language-model-inference/kv-caching/**'
             lance:
               - 'data-storage/lance/**'
+            limesdr-transceiver:
+              - 'wireless/software-defined-radio/limesdr-transceiver/**'
             liquid-neural-network:
               - 'liquid-neural-network/**'
             mamba2:
@@ -1034,6 +1036,7 @@ jobs:
       kafka-sticky-telemetry-stream-subscriber: ${{ steps.filter.outputs.kafka-sticky-telemetry-stream-subscriber }}
       kv-caching: ${{ steps.filter.outputs.kv-caching }}
       lance: ${{ steps.filter.outputs.lance }}
+      limesdr-transceiver: ${{ steps.filter.outputs.limesdr-transceiver }}
       liquid-neural-network: ${{ steps.filter.outputs.liquid-neural-network }}
       mamba2: ${{ steps.filter.outputs.mamba2 }}
       mixture-of-experts: ${{ steps.filter.outputs.mixture-of-experts }}
@@ -1300,6 +1303,7 @@ jobs:
       kafka-rust-zeromq-kafka-bridge: ${{ needs.detect-changes.outputs.kafka-rust-zeromq-kafka-bridge == 'true' }}
       kafka-sticky-telemetry-stream-publisher: ${{ needs.detect-changes.outputs.kafka-sticky-telemetry-stream-publisher == 'true' }}
       kafka-sticky-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.kafka-sticky-telemetry-stream-subscriber == 'true' }}
+      limesdr-transceiver: ${{ needs.detect-changes.outputs.limesdr-transceiver == 'true' }}
       nats-audio-stream-publisher: ${{ needs.detect-changes.outputs.nats-audio-stream-publisher == 'true' }}
       nats-audio-stream-sinker: ${{ needs.detect-changes.outputs.nats-audio-stream-sinker == 'true' }}
       nats-audio-stream-transcriber: ${{ needs.detect-changes.outputs.nats-audio-stream-transcriber == 'true' }}

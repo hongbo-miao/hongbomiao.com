@@ -66,6 +66,9 @@ name: . Test Data Processing
       kafka-sticky-telemetry-stream-subscriber:
         required: true
         type: boolean
+      limesdr-transceiver:
+        required: true
+        type: boolean
       nats-audio-stream-publisher:
         required: true
         type: boolean
@@ -1368,3 +1371,36 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: wireless/software-defined-radio/gnu-radio-receiver
+
+  limesdr-transceiver-test:
+    name: LimeSDR Transceiver | Test
+    if: ${{ inputs.workflow || inputs.limesdr-transceiver }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+        with:
+          version: 0.11.17
+          enable-cache: true
+          cache-dependency-glob: wireless/software-defined-radio/limesdr-transceiver/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version-file: wireless/software-defined-radio/limesdr-transceiver/.python-version
+      - name: Install dependencies
+        working-directory: wireless/software-defined-radio/limesdr-transceiver
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: wireless/software-defined-radio/limesdr-transceiver
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: wireless/software-defined-radio/limesdr-transceiver

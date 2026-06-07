@@ -1,0 +1,19 @@
+soapysdr_python := "/opt/homebrew/opt/python@3.14/bin/python3.14"
+
+set-up:
+    brew install soapysdr limesuite numpy
+
+dev:
+    {{ soapysdr_python }} src/main.py
+
+update-lock-file:
+    uv lock
+
+install-dependencies:
+    uv sync --dev
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
