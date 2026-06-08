@@ -543,6 +543,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **cuML** - GPU-accelerated machine learning library
 - **PyTorch** - Machine learning
   - **torchvision** - PyTorch computer vision models and utilities
+  - **TorchAudio** - PyTorch audio and signal processing
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
   - **TorchServe** - PyTorch models serving
 - **Flax** - Neural network for JAX
@@ -743,6 +744,12 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Streaming Sortformer Diarizer 4spk** - Real-time speaker diarization model for up to 4 speakers using a streaming Transformer-based architecture
 - Audio Signal Analysis
   - **Librosa** - Audio signal analysis
+- Speech Quality Assessment
+  - **Signal-to-Noise Ratio (SNR)** - Reference-free metric comparing speech-frame power against the noise-floor power found in the natural pauses in speech
+  - **TorchAudio-Squim** - TorchAudio Speech Quality and Intelligibility Measures (SQUIM) models for reference-free estimation of speech quality metrics
+    - **Wideband Perceptual Estimation of Speech Quality (PESQ)** - Reference-free perceptual speech quality metric approximating the mean opinion score (MOS)
+    - **Short-Time Objective Intelligibility (STOI)** - Reference-free metric estimating how intelligible the speech is
+    - **Scale-Invariant Signal-to-Distortion Ratio (SI-SDR)** - Reference-free metric estimating how much of the signal is clean speech versus distortion
 - Automatic Speech Recognition (ASR)
   - Automatic Speech Recognition (ASR) Models
     - **Whisper** - Transformer-based automatic speech recognition (ASR) model
