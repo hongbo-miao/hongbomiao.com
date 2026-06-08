@@ -1,6 +1,5 @@
 from audio.types.audio_quality_result import AudioQualityResult
 from report.utils.format_result_row import format_result_row
-from report.utils.summarize_comparison import summarize_comparison
 
 HEADER = (
     f"{'file':<12} {'dur (s)':>8} {'SNR (dB)':>9} "
@@ -11,4 +10,4 @@ HEADER = (
 def format_comparison(results: list[AudioQualityResult]) -> str:
     separator = "-" * len(HEADER)
     rows = [format_result_row(result) for result in results]
-    return "\n".join([HEADER, separator, *rows, "", summarize_comparison(results)])
+    return "\n".join([HEADER, separator, *rows])
