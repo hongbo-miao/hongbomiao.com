@@ -291,6 +291,9 @@ name: . Test Machine Learning
       supervised-fine-tuning-quantized-low-rank-adaptation:
         required: true
         type: boolean
+      torchaudio-squim:
+        required: true
+        type: boolean
       variational-autoencoder:
         required: true
         type: boolean
@@ -2094,6 +2097,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: audio/audio-signal-analysis/hm-librosa
+
+  torchaudio-squim-test:
+    name: TorchAudio SQUIM | Test
+    if: ${{ inputs.workflow || inputs.torchaudio-squim }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+        with:
+          version: 0.11.17
+          enable-cache: true
+          cache-dependency-glob: audio/speech-quality-assessment/torchaudio-squim/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version-file: audio/speech-quality-assessment/torchaudio-squim/.python-version
+      - name: Install dependencies
+        working-directory: audio/speech-quality-assessment/torchaudio-squim
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: audio/speech-quality-assessment/torchaudio-squim
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: audio/speech-quality-assessment/torchaudio-squim
 
   faster-whisper-test:
     name: Faster Whisper | Test
