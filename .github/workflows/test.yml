@@ -770,6 +770,8 @@ jobs:
               - 'parallel-computing/hm-taichi/count-primes/**'
             taichi-fluid-solver:
               - 'parallel-computing/hm-taichi/fluid-solver/**'
+            torchaudio-squim:
+              - 'audio/speech-quality-assessment/torchaudio-squim/**'
             turso:
               - 'data-storage/turso/**'
             udp-receiver:
@@ -1098,6 +1100,7 @@ jobs:
       surrogate-model: ${{ steps.filter.outputs.surrogate-model }}
       taichi-count-primes: ${{ steps.filter.outputs.taichi-count-primes }}
       taichi-fluid-solver: ${{ steps.filter.outputs.taichi-fluid-solver }}
+      torchaudio-squim: ${{ steps.filter.outputs.torchaudio-squim }}
       turso: ${{ steps.filter.outputs.turso }}
       udp-receiver: ${{ steps.filter.outputs.udp-receiver }}
       udp-sender: ${{ steps.filter.outputs.udp-sender }}
@@ -1551,6 +1554,7 @@ jobs:
       streaming-sortformer-diarizer: ${{ needs.detect-changes.outputs.streaming-sortformer-diarizer == 'true' }}
       supervised-fine-tuning-low-rank-adaptation: ${{ needs.detect-changes.outputs.supervised-fine-tuning-low-rank-adaptation == 'true' }}
       supervised-fine-tuning-quantized-low-rank-adaptation: ${{ needs.detect-changes.outputs.supervised-fine-tuning-quantized-low-rank-adaptation == 'true' }}
+      torchaudio-squim: ${{ needs.detect-changes.outputs.torchaudio-squim == 'true' }}
       variational-autoencoder: ${{ needs.detect-changes.outputs.variational-autoencoder == 'true' }}
       vision-language-action-infer: ${{ needs.detect-changes.outputs.vision-language-action-infer == 'true' }}
       vision-language-action-train: ${{ needs.detect-changes.outputs.vision-language-action-train == 'true' }}
