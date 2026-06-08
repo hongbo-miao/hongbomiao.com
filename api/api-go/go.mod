@@ -29,7 +29,7 @@ require (
 	github.com/valkey-io/valkey-go v1.0.75
 	github.com/valkey-io/valkey-go/mock v1.0.75
 	go.elastic.co/apm/module/apmgin/v2 v2.7.10
-	go.elastic.co/apm/module/apmgrpc/v2 v2.7.9
+	go.elastic.co/apm/module/apmgrpc/v2 v2.7.10
 	go.opencensus.io v0.24.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.69.0
 	go.uber.org/atomic v1.11.0
