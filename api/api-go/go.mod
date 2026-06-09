@@ -7,7 +7,7 @@ require (
 	github.com/Masterminds/squirrel v1.5.4
 	github.com/aws/aws-sdk-go-v2 v1.41.10
 	github.com/aws/aws-sdk-go-v2/credentials v1.19.20
-	github.com/aws/aws-sdk-go-v2/service/s3 v1.102.2
+	github.com/aws/aws-sdk-go-v2/service/s3 v1.103.0
 	github.com/bep/debounce v1.2.1
 	github.com/buger/jsonparser v1.2.0
 	github.com/dgraph-io/dgo/v230 v230.0.1
@@ -46,9 +46,9 @@ require (
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.26 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/v4a v1.4.27 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.10 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/checksum v1.9.18 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/checksum v1.9.19 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.26 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/s3shared v1.19.25 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/s3shared v1.19.26 // indirect
 	github.com/aws/smithy-go v1.26.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bytedance/gopkg v0.1.4 // indirect
