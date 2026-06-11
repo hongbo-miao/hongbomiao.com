@@ -1,0 +1,23 @@
+# Host (macOS)
+find-ip-first-time:
+    ping6 -c 3 -I en9 ff02::1 >/dev/null 2>&1 || true
+    ndp -an | grep en9
+
+ssh-first-time:
+    ssh admin@xxxx::xxxx:xxxx:xxxx:xxxx%en9
+
+find-ip:
+    dscacheutil -q host -a name pi-00001.local
+
+ssh:
+    ssh admin@pi-00001.local
+
+# Raspberry Pi
+
+# just add-wifi 'wifi-name' 'xxx'
+add-wifi ssid password:
+    sudo nmcli connection add type wifi con-name "{{ ssid }}" ifname wlan0 ssid "{{ ssid }}" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "{{ password }}"
+    sudo nmcli connection up "{{ ssid }}"
+
+power-off:
+    sudo poweroff
