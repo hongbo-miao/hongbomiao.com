@@ -1,0 +1,29 @@
+load("ext://namespace", "namespace_create")
+load("ext://helm_resource", "helm_resource", "helm_repo")
+
+update_settings(k8s_upsert_timeout_secs=600)
+
+namespace_create("mender")
+
+helm_repo("rustfs-charts", "https://charts.rustfs.com", labels=["rustfs"])
+helm_resource(
+    "rustfs",
+    "rustfs-charts/rustfs",
+    namespace="mender",
+    flags=["--version=0.8.0", "--values=kubernetes/rustfs/helm-chart/values.yaml"],
+    labels=["rustfs"],
+    resource_deps=["rustfs-charts"],
+)
+k8s_yaml(["kubernetes/rustfs/bucket-initialize.yaml"])
+
+helm_repo("mender-charts", "https://charts.mender.io", labels=["mender"])
+helm_resource(
+    "mender",
+    "mender-charts/mender",
+    namespace="mender",
+    flags=["--version=7.8.1", "--values=kubernetes/mender/helm-chart/values.yaml"],
+    labels=["mender"],
+    resource_deps=["mender-charts", "rustfs-bucket-initialize"],
+)
+
+k8s_resource("rustfs-bucket-initialize", labels=["rustfs"], resource_deps=["rustfs"])

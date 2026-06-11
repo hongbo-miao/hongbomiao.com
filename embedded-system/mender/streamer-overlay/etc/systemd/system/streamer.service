@@ -1,0 +1,17 @@
+[Unit]
+Description=streamer
+After=network-online.target streamer-setup.service
+Wants=network-online.target
+Requires=streamer-setup.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/streamer
+Environment=ENVIRONMENT=production
+ExecStart=/opt/streamer/streamer
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

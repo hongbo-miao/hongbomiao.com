@@ -1,0 +1,56 @@
+---
+global:
+  enterprise: false
+  url: http://192.168.10.100:8080
+  storage: aws
+  s3:
+    AWS_URI: http://rustfs-svc:9000
+    AWS_BUCKET: mender-artifact-storage
+    AWS_REGION: us-west-2
+    AWS_ACCESS_KEY_ID: rustfs_admin
+    AWS_SECRET_ACCESS_KEY: rustfs_passw0rd
+    AWS_FORCE_PATH_STYLE: true
+ingress:
+  enabled: false
+mongodb:
+  enabled: true
+  image:
+    tag: 7.0
+  persistence:
+    enabled: true
+    size: 8Gi
+nats:
+  enabled: true
+  cluster:
+    enabled: false
+  nats:
+    jetstream:
+      enabled: true
+      memStorage:
+        enabled: true
+        size: 1Gi
+      fileStorage:
+        enabled: false
+api_gateway:
+  service:
+    type: NodePort
+    httpNodePort: 30080
+  storage_proxy:
+    enabled: true
+    url: http://rustfs-svc:9000
+deployments:
+  automigrate: true
+device_auth:
+  automigrate: true
+inventory:
+  automigrate: true
+useradm:
+  automigrate: true
+workflows:
+  automigrate: true
+iot_manager:
+  automigrate: true
+deviceconnect:
+  automigrate: true
+deviceconfig:
+  automigrate: true
