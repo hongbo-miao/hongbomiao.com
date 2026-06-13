@@ -21,7 +21,7 @@ terraform {
     # https://search.opentofu.org/provider/hashicorp/helm/latest
     helm = {
       source  = "hashicorp/helm"
-      version = "3.1.2"
+      version = "3.2.0"
     }
     # https://search.opentofu.org/provider/gavinbunney/kubectl/latest
     kubectl = {
