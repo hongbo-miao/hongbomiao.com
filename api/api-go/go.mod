@@ -5,7 +5,7 @@ go 1.26.0
 require (
 	contrib.go.opencensus.io/exporter/ocagent v0.7.0
 	github.com/Masterminds/squirrel v1.5.4
-	github.com/aws/aws-sdk-go-v2 v1.41.12
+	github.com/aws/aws-sdk-go-v2 v1.42.0
 	github.com/aws/aws-sdk-go-v2/credentials v1.19.22
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.103.2
 	github.com/bep/debounce v1.2.1
