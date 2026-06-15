@@ -1,0 +1,23 @@
+update-lock-file:
+    uv lock
+
+install-dependencies:
+    uv sync --dev
+
+# Decode live 978 MHz UAT traffic from the Stratux UATRadio over USB serial
+dev:
+    uv run poe dev
+
+# Print raw bytes from the radio - simplest check that it is alive
+listen:
+    uv run python src/listen_raw.py
+
+# Replay synthetic UAT frames so the demo runs without the radio attached
+simulate:
+    uv run poe simulate
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
