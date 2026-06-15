@@ -101,7 +101,7 @@ services:
     restart: "no"
 
   pulsar:
-    image: docker.io/apachepulsar/pulsar:4.2.1
+    image: docker.io/apachepulsar/pulsar:4.2.2
     depends_on:
       connector-download:
         condition: service_completed_successfully
@@ -143,7 +143,7 @@ services:
       start_period: 30s
 
   topic-initialize:
-    image: docker.io/apachepulsar/pulsar:4.2.1
+    image: docker.io/apachepulsar/pulsar:4.2.2
     depends_on:
       pulsar:
         condition: service_healthy
@@ -154,7 +154,7 @@ services:
     restart: "no"
 
   sink-initialize:
-    image: docker.io/apachepulsar/pulsar:4.2.1
+    image: docker.io/apachepulsar/pulsar:4.2.2
     depends_on:
       pulsar:
         condition: service_healthy
@@ -177,7 +177,7 @@ services:
     restart: "no"
 
   jdbc-sink-initialize:
-    image: docker.io/apachepulsar/pulsar:4.2.1
+    image: docker.io/apachepulsar/pulsar:4.2.2
     depends_on:
       pulsar:
         condition: service_healthy
@@ -200,7 +200,7 @@ services:
     restart: "no"
 
   jdbc-batch-results-sink-initialize:
-    image: docker.io/apachepulsar/pulsar:4.2.1
+    image: docker.io/apachepulsar/pulsar:4.2.2
     depends_on:
       pulsar:
         condition: service_healthy
