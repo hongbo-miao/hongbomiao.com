@@ -1,0 +1,74 @@
+mender_convert := justfile_directory() / "../../../mender-convert"
+server_url := "http://192.168.10.100:8080"
+rpi5_config := "configs/raspberrypi/uboot/debian/raspberrypi5_trixie_64bit_config"
+device_image := "raspios-lite-arm64-raspberrypi5_64-mender.img"
+wifi_ssid := env_var_or_default("WIFI_SSID", "wifi-name")
+wifi_password := env_var_or_default("WIFI_PASSWORD", "")
+wifi_country := env_var_or_default("WIFI_COUNTRY", "US")
+poll_seconds := env_var_or_default("MENDER_POLL_SECONDS", "5")
+
+kind-up:
+    kind create cluster --config=kubernetes/kind/kind-cluster.yaml
+
+kind-down:
+    kind delete cluster --name=mender
+
+tilt-up *args:
+    kubectl config use-context kind-mender
+    tilt up {{ args }}
+
+tilt-down:
+    tilt down --delete-namespaces
+
+create-user username="admin@example.com" password="passw0rd":
+    kubectl --context=kind-mender --namespace=mender exec deploy/mender-useradm -- useradm create-user --username="{{ username }}" --password="{{ password }}"
+
+fetch-rpi-os:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd {{ mender_convert }}
+    if [ -f input/raspios-lite-arm64.img ]; then echo "base image already present"; exit 0; fi
+    curl --fail --location --output input/raspios-lite-arm64.img.xz https://downloads.raspberrypi.com/raspios_lite_arm64_latest
+    xz --decompress --force input/raspios-lite-arm64.img.xz
+
+build-device-image artifact="raspios-trixie-arm64-v1": fetch-rpi-os
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd {{ mender_convert }}
+    mkdir -p input/rootfs_overlay/etc/mender
+    printf '{\n  "ServerURL": "%s",\n  "UpdatePollIntervalSeconds": %s,\n  "InventoryPollIntervalSeconds": %s,\n  "RetryPollIntervalSeconds": 30\n}\n' "{{ server_url }}" "{{ poll_seconds }}" "{{ poll_seconds }}" > input/rootfs_overlay/etc/mender/mender.conf
+
+    rm -rf input/rootfs_overlay/usr input/rootfs_overlay/etc/systemd
+    if [ -n "{{ wifi_password }}" ]; then
+        rsync --archive "{{ justfile_directory() }}/device-overlay/" input/rootfs_overlay/
+        sed -i '' \
+            -e "s|__WIFI_SSID__|{{ wifi_ssid }}|g" \
+            -e "s|__WIFI_PSK__|{{ wifi_password }}|g" \
+            -e "s|__WIFI_COUNTRY__|{{ wifi_country }}|g" \
+            input/rootfs_overlay/usr/local/bin/set-up-wifi.sh
+        echo "WiFi overlay generated for SSID '{{ wifi_ssid }}' (country {{ wifi_country }})"
+    else
+        echo "No WIFI_PASSWORD set - building an Ethernet-only image"
+    fi
+    docker volume create mender_work >/dev/null
+    docker volume create mender_deploy >/dev/null
+    rm -f deploy/* 2>/dev/null || true
+    WORK_DIRECTORY=mender_work DEPLOY_DIRECTORY=mender_deploy MENDER_ARTIFACT_NAME="{{ artifact }}" \
+        ./docker-mender-convert \
+            --disk-image input/raspios-lite-arm64.img \
+            --config {{ rpi5_config }} \
+            --overlay input/rootfs_overlay
+    docker run --rm --volume=mender_deploy:/d --volume="$(pwd)/deploy":/out alpine sh -c 'cp -v /d/*.img /d/*.mender /out/'
+    ls -lh deploy/*.img deploy/*.mender
+
+flash-sd-card disk:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    img="{{ mender_convert }}/deploy/{{ device_image }}"
+    test -f "$img" || { echo "No image at $img - run 'just build-device-image' first" >&2; exit 1; }
+    echo "About to ERASE /dev/{{ disk }} and write $img"
+    diskutil unmountDisk "/dev/{{ disk }}"
+    sudo dd if="$img" of="/dev/r{{ disk }}" bs=4m
+    sync
+    diskutil eject "/dev/{{ disk }}"
+    echo "Done. Insert the card into the Pi 5 and power on."

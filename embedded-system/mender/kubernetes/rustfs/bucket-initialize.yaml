@@ -1,0 +1,32 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: rustfs-bucket-initialize
+  namespace: mender
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+        - name: wait-for-rustfs
+          image: docker.io/curlimages/curl:8.19.0
+          command:
+            - sh
+            - -c
+            - 'until curl --silent --fail --max-time 5 http://rustfs-svc:9000/health; do sleep 2; done'
+      containers:
+        - name: rustfs-bucket-initialize
+          image: docker.io/amazon/aws-cli:2.34.32
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              value: rustfs_admin
+            - name: AWS_SECRET_ACCESS_KEY
+              value: rustfs_passw0rd
+            - name: AWS_DEFAULT_REGION
+              value: us-west-2
+          command:
+            - sh
+            - -c
+            - 'aws --endpoint-url http://rustfs-svc:9000 s3 mb s3://mender-artifact-storage || true'

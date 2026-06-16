@@ -939,6 +939,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **cantools** - Controller Area Network (CAN) bus tools
 - **python-can** - Controller Area Network (CAN) bus library
 - **Yocto Project** - Linux distribution creating
+- **Mender** - Over-the-air (OTA) software update and fleet management platform
 - **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
 - **ASTERIOS** - Real-time, safety-critical applications development

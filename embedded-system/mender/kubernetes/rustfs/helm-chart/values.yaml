@@ -1,0 +1,23 @@
+mode:
+  standalone:
+    enabled: true
+  distributed:
+    enabled: false
+secret:
+  rustfs:
+    access_key: rustfs_admin
+    secret_key: rustfs_passw0rd
+config:
+  rustfs:
+    region: us-west-2
+    obs_log_directory: ''
+extraEnv:
+  - name: RUSTFS_UNSAFE_BYPASS_DISK_CHECK
+    value: 'true'
+ingress:
+  enabled: false
+service:
+  type: ClusterIP
+storageclass:
+  name: standard
+  dataStorageSize: 20Gi

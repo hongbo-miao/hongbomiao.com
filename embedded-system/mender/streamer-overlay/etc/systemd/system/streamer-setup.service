@@ -1,0 +1,14 @@
+[Unit]
+Description=streamer first-boot runtime dependency install
+After=network-online.target
+Wants=network-online.target
+# Once the deps are in, the marker file makes this a no-op on later boots.
+ConditionPathExists=!/opt/streamer/.deps-installed
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/streamer-setup.sh
+
+[Install]
+WantedBy=multi-user.target
