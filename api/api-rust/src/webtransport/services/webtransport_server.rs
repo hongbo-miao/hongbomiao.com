@@ -47,7 +47,7 @@ impl WebTransportServer {
             )
         );
 
-        for connection_number in 0.. {
+        for connection_number in 0..=u64::MAX {
             let incoming_session = self.endpoint.accept().await;
 
             tokio::spawn(
