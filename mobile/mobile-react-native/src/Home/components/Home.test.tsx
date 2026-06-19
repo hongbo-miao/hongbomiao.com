@@ -4,8 +4,8 @@ import { ApplicationProvider } from '@ui-kitten/components';
 import HmHome from './Home';
 
 describe('<HmHome />', () => {
-  test('Home', () => {
-    const { getByTestId, toJSON } = render(
+  test('Home', async () => {
+    const { getByTestId, toJSON } = await render(
       <ApplicationProvider {...eva} theme={eva.light}>
         <HmHome />
       </ApplicationProvider>,
