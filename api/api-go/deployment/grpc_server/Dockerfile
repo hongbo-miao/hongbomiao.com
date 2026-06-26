@@ -8,7 +8,7 @@ COPY api/api-go ./
 RUN go build -o ./out/cmd/grpc_server/ ./cmd/grpc_server/main.go
 
 
-FROM docker.io/alpine:3.24.0 AS release
+FROM docker.io/alpine:3.24.1 AS release
 WORKDIR /usr/src/app
 ENV GIN_MODE=release
 
