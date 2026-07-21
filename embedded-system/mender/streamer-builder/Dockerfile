@@ -1,4 +1,4 @@
-FROM debian:trixie-20260610
+FROM debian:13
 
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends \
