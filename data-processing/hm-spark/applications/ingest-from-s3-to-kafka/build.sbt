@@ -3,7 +3,7 @@ version := "1.0"
 scalaVersion := "2.12.20"
 resolvers += "confluent" at "https://packages.confluent.io/maven/"
 
-val sparkVersion = "3.5.8"
+val sparkVersion = "3.5.9"
 
 libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-core" % sparkVersion % "provided",
