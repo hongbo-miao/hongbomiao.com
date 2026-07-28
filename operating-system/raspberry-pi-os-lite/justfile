@@ -19,5 +19,8 @@ add-wifi ssid password:
     sudo nmcli connection add type wifi con-name "{{ ssid }}" ifname wlan0 ssid "{{ ssid }}" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "{{ password }}"
     sudo nmcli connection up "{{ ssid }}"
 
+show-temperature:
+    awk '{print $1/1000 "°C"}' /sys/class/thermal/thermal_zone0/temp
+
 power-off:
     sudo poweroff
