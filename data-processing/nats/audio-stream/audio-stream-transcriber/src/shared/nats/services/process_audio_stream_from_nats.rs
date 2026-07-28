@@ -324,7 +324,9 @@ pub async fn process_audio_stream_from_nats() -> Result<(), Box<dyn std::error::
                         .collect::<Vec<u8>>();
 
                     let samples: Vec<i16> = frame_bytes_data
-                        .chunks_exact(2)
+                        .as_chunks::<2>()
+                        .0
+                        .iter()
                         .map(|chunk| i16::from_le_bytes([chunk[0], chunk[1]]))
                         .collect();
 

@@ -136,7 +136,7 @@ async fn publish_audio_stream(
                 published_chunk_count += 1;
 
                 let pcm_samples: Vec<i16> = pcm_chunk
-                    .chunks_exact(2)
+                    .as_chunks::<2>().0.iter()
                     .map(|bytes| i16::from_le_bytes([bytes[0], bytes[1]]))
                     .collect();
 
