@@ -1,0 +1,15 @@
+[package]
+name = "ffi-rust-calculator"
+version = "1.0.0"
+edition = "2024"
+
+[lib]
+name = "calculator"
+# lib       -> native Rust consumers (`src/main.rs`, `cargo run`)
+# staticlib -> .a for Swift / Xcode to link
+# cdylib    -> .dylib for Python ctypes
+crate-type = ["lib", "staticlib", "cdylib"]
+
+[features]
+default = ["ffi"]
+ffi = []          # C ABI layer; off for pure-Rust consumers who do not need it

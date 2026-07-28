@@ -106,6 +106,9 @@ name: . Lint
       ethereum:
         required: true
         type: boolean
+      ffi-rust-calculator:
+        required: true
+        type: boolean
       grafana-hm-panel-plugin:
         required: true
         type: boolean
@@ -850,6 +853,32 @@ jobs:
           cargo fmt --all  -- --check
       - name: Lint Rust (Clippy)
         working-directory: api/api-rust
+        run: |
+          cargo clippy
+
+  lint-rust-ffi-rust-calculator:
+    name: Rust (ffi-rust-calculator)
+    if: ${{ inputs.workflow || inputs.ffi-rust-calculator }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@46268bd060767258de96ed93c1251119784f2ab6 # v1.16.1
+        with:
+          cache: true
+          rust-src-dir: api/foreign-function-interface/ffi-rust-calculator
+      - name: Install dependencies
+        working-directory: api/foreign-function-interface/ffi-rust-calculator
+        run: |
+          cargo build --locked
+      - name: Lint Rust (rustfmt)
+        working-directory: api/foreign-function-interface/ffi-rust-calculator
+        run: |
+          cargo fmt --all  -- --check
+      - name: Lint Rust (Clippy)
+        working-directory: api/foreign-function-interface/ffi-rust-calculator
         run: |
           cargo clippy
 
