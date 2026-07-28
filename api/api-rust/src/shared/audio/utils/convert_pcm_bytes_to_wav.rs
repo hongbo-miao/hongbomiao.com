@@ -22,7 +22,7 @@ pub fn convert_pcm_bytes_to_wav(pcm_data: &[u8]) -> Result<Vec<u8>> {
     let mut writer = WavWriter::new(&mut cursor, spec)?;
 
     // Convert bytes to i16 samples and write
-    for chunk in pcm_data.chunks_exact(2) {
+    for chunk in pcm_data.as_chunks::<2>().0.iter() {
         let sample = i16::from_le_bytes([chunk[0], chunk[1]]);
         writer.write_sample(sample)?;
     }
