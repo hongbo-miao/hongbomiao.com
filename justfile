@@ -499,6 +499,7 @@ static-type-check-opentofu:
     cd infrastructure/opentofu/environments/production/aws/kubernetes && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/aws/network && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/aws/storage && just static-type-check-opentofu
+    cd infrastructure/opentofu/environments/production/cloudflare && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/grafana && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/harbor && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/nebius/applications && just static-type-check-opentofu

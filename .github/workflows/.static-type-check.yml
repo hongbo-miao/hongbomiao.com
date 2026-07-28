@@ -458,6 +458,25 @@ jobs:
         run: |
           tofu validate
 
+  static-type-check-opentofu-production-cloudflare:
+    name: OpenTofu (production/cloudflare)
+    if: ${{ inputs.workflow || inputs.opentofu-production-cloudflare }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@a1320f892987e89d278cc92dc5adc984fb93aca4 # v2.0.2
+      - name: Initialize OpenTofu
+        working-directory: infrastructure/opentofu/environments/production/cloudflare
+        run: |
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: infrastructure/opentofu/environments/production/cloudflare
+        run: |
+          tofu validate
+
   static-type-check-opentofu-production-grafana:
     name: OpenTofu (production/grafana)
     if: ${{ inputs.workflow || inputs.opentofu-production-grafana }}
