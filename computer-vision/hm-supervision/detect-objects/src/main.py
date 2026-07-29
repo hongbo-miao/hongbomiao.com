@@ -8,7 +8,7 @@ from ultralytics import YOLO
 
 logger = logging.getLogger(__name__)
 
-class_colors = {}
+class_colors: dict[int, tuple[int, int, int]] = {}
 
 
 def generate_random_color(
