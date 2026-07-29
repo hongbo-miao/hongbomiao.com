@@ -1,7 +1,6 @@
 use std::io::Read;
 
 use async_graphql::{Context, Object, SimpleObject, Upload};
-use ndarray::{Array4, CowArray};
 use serde::Serialize;
 use sqlx::PgPool;
 use utoipa::ToSchema;
@@ -49,30 +48,24 @@ impl Mutation {
         let image_data_processed = process_image(&image_data)?;
 
         // Run inference
-        let session = load_model()?;
+        let mut session = load_model()?;
 
         // Create input tensor for ONNX Runtime
-        let input_array = CowArray::from(
-            Array4::from_shape_vec((1, 3, 224, 224), image_data_processed)
-                .map_err(|error| format!("Failed to create input array: {}", error))?,
-        )
-        .into_dyn();
-
-        let input_tensor = ort::Value::from_array(session.allocator(), &input_array)
-            .map_err(|error| format!("Failed to create ONNX tensor: {}", error))?;
+        let input_tensor =
+            ort::value::Tensor::from_array((vec![1usize, 3, 224, 224], image_data_processed))
+                .map_err(|error| format!("Failed to create ONNX tensor: {}", error))?;
 
         let outputs = session
-            .run(vec![input_tensor])
+            .run(ort::inputs![input_tensor])
             .map_err(|error| format!("Failed to run inference: {}", error))?;
 
         // Get output tensor
         let output_tensor = outputs[0]
-            .try_extract::<f32>()
+            .try_extract_tensor::<f32>()
             .map_err(|error| format!("Failed to extract output: {}", error))?;
-        let output = output_tensor.view();
+        let output_slice = output_tensor.1;
 
         // Apply softmax and find max
-        let output_slice = output.as_slice().unwrap();
         let mut softmax_output = vec![0.0f32; output_slice.len()];
 
         // Compute softmax

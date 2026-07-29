@@ -106,6 +106,9 @@ name: . Lint
       ethereum:
         required: true
         type: boolean
+      ffi-rust-calculator:
+        required: true
+        type: boolean
       grafana-hm-panel-plugin:
         required: true
         type: boolean
@@ -853,6 +856,32 @@ jobs:
         run: |
           cargo clippy
 
+  lint-rust-ffi-rust-calculator:
+    name: Rust (ffi-rust-calculator)
+    if: ${{ inputs.workflow || inputs.ffi-rust-calculator }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@46268bd060767258de96ed93c1251119784f2ab6 # v1.16.1
+        with:
+          cache: true
+          rust-src-dir: api/foreign-function-interface/ffi-rust-calculator
+      - name: Install dependencies
+        working-directory: api/foreign-function-interface/ffi-rust-calculator
+        run: |
+          cargo build --locked
+      - name: Lint Rust (rustfmt)
+        working-directory: api/foreign-function-interface/ffi-rust-calculator
+        run: |
+          cargo fmt --all  -- --check
+      - name: Lint Rust (Clippy)
+        working-directory: api/foreign-function-interface/ffi-rust-calculator
+        run: |
+          cargo clippy
+
   lint-rust-hm-text-processing-rs:
     name: Rust (hm-text-processing-rs)
     if: ${{ inputs.workflow || inputs.hm-text-processing-rs }}
@@ -893,7 +922,7 @@ jobs:
           cache: true
           rust-src-dir: autonomy/camera-radar-lidar-fusion
       - name: Install system dependencies
-        uses: awalsh128/cache-apt-pkgs-action@681749ae568c81c2037cb9185e38b709b261bd2f # v1.6.1
+        uses: awalsh128/cache-apt-pkgs-action@553a35bb8ebd9fcabcb1c9451aa4c98e1b4ca8a9 # v1.6.3
         with:
           packages: build-essential clang cmake libavcodec-dev libavformat-dev libclang-dev libjpeg-dev libpng-dev libswscale-dev libtbb-dev libtiff-dev pkg-config
           version: 1.0
@@ -1248,7 +1277,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       - name: Install system dependencies
-        uses: awalsh128/cache-apt-pkgs-action@681749ae568c81c2037cb9185e38b709b261bd2f # v1.6.1
+        uses: awalsh128/cache-apt-pkgs-action@553a35bb8ebd9fcabcb1c9451aa4c98e1b4ca8a9 # v1.6.3
         with:
           # libglib2.0-dev is for livekit
           packages: libglib2.0-dev
@@ -1286,7 +1315,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       - name: Install system dependencies
-        uses: awalsh128/cache-apt-pkgs-action@681749ae568c81c2037cb9185e38b709b261bd2f # v1.6.1
+        uses: awalsh128/cache-apt-pkgs-action@553a35bb8ebd9fcabcb1c9451aa4c98e1b4ca8a9 # v1.6.3
         with:
           # libglib2.0-dev is for livekit
           packages: libglib2.0-dev
@@ -1592,7 +1621,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@847eaa4afeb791b06daa46e8eafa8b1b68d7cfb4 # v2.0.1
+        uses: opentofu/setup-opentofu@a1320f892987e89d278cc92dc5adc984fb93aca4 # v2.0.2
       - name: Lint OpenTofu
         run: |
           tofu fmt -recursive -check

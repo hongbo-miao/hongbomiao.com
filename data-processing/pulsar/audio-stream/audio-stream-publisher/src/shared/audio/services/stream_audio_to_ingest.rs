@@ -118,7 +118,9 @@ fn load_wav_as_16khz_mono(wav_path: &str) -> Result<Vec<i16>> {
 
     let mono_samples: Vec<i16> = if spec.channels == 2 {
         raw_samples
-            .chunks_exact(2)
+            .as_chunks::<2>()
+            .0
+            .iter()
             .map(|pair| ((pair[0] as i32 + pair[1] as i32) / 2) as i16)
             .collect()
     } else {

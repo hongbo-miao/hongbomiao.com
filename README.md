@@ -7,7 +7,7 @@
   <br />
   <p>
     <a href="https://github.com/hongbo-miao/hongbomiao.com/actions"><img alt="GitHub Actions" src="https://img.shields.io/github/actions/workflow/status/hongbo-miao/hongbomiao.com/build.yml?branch=main" /></a>
-    <a href="https://depfu.com/github/hongbo-miao/hongbomiao.com"><img alt="Depfu" src="https://img.shields.io/depfu/dependencies/github/hongbo-miao%2Fhongbomiao.com" /></a>
+    <a href="https://depfu.com/github/hongbo-miao/hongbomiao.com"><img alt="Depfu" src="https://badges.depfu.com/badges/12d31238940cbfa0d2a79a8a4ae93d23/overview.svg" /></a>
     <a href="https://stats.uptimerobot.com/RoOoGTvyWN"><img alt="Uptime Robot status" src="https://img.shields.io/uptimerobot/status/m783305207-c7842815153e530df85633fe" /></a>
     <a href="https://www.http3check.net/?host=hongbomiao.com"><img alt="HTTP/3" src="https://img.shields.io/badge/http%2F3-supported-brightgreen" /></a>
     <a href="https://hstspreload.org/?domain=www.hongbomiao.com"><img alt="Chromium HSTS preload" src="https://img.shields.io/hsts/preload/www.hongbomiao.com" /></a>
@@ -1065,7 +1065,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 ## Bots
 
 - **Renovate** - Dependency updating
-- **Gemini Code Assist** - Code reviewing
 - **CodeRabbit** - Code reviewing
 - **Mergify** - Automatically merging
 - **Stale** - Stale issues and pull requests closing
