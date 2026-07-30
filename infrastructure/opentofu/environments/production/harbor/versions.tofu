@@ -17,7 +17,7 @@ terraform {
     # https://search.opentofu.org/provider/goharbor/harbor/latest
     harbor = {
       source  = "goharbor/harbor"
-      version = "3.12.1"
+      version = "3.12.3"
     }
   }
   required_version = ">= 1.11"
