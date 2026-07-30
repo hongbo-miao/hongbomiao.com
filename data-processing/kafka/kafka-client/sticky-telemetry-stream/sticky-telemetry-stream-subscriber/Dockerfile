@@ -1,4 +1,4 @@
-FROM docker.io/python:3.14.5-slim-trixie AS builder
+FROM docker.io/python:3.14.6-slim-trixie AS builder
 COPY --from=ghcr.io/astral-sh/uv:0.11.6 /uv /uvx /bin/
 WORKDIR /usr/src/app
 ENV UV_COMPILE_BYTECODE=1 \
@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install --yes --no-install-recommends cmake g++ ma
 COPY ["sticky-telemetry-stream-subscriber/pyproject.toml", "sticky-telemetry-stream-subscriber/uv.lock", "sticky-telemetry-stream-subscriber/.python-version", "./"]
 RUN uv sync --frozen --no-dev
 
-FROM docker.io/python:3.14.5-slim-trixie AS release
+FROM docker.io/python:3.14.6-slim-trixie AS release
 WORKDIR /usr/src/app
 COPY --from=builder /usr/local/lib/python3.14/site-packages/ /usr/local/lib/python3.14/site-packages/
 COPY schemas/ ../schemas/

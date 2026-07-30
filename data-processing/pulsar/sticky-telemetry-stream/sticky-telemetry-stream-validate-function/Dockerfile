@@ -1,4 +1,4 @@
-FROM docker.io/python:3.14.5-slim-trixie AS builder
+FROM docker.io/python:3.14.6-slim-trixie AS builder
 COPY --from=ghcr.io/astral-sh/uv:0.11.6 /uv /uvx /bin/
 WORKDIR /usr/src/app
 ENV UV_COMPILE_BYTECODE=1 \
@@ -8,7 +8,7 @@ COPY sticky-telemetry-stream-schema/ sticky-telemetry-stream-schema/
 COPY ["sticky-telemetry-stream-validate-function/pyproject.toml", "sticky-telemetry-stream-validate-function/uv.lock", "sticky-telemetry-stream-validate-function/.python-version", "sticky-telemetry-stream-validate-function/"]
 RUN uv sync --frozen --no-dev --no-editable --directory sticky-telemetry-stream-validate-function
 
-FROM docker.io/python:3.14.5-slim-trixie AS release
+FROM docker.io/python:3.14.6-slim-trixie AS release
 WORKDIR /usr/src/app
 RUN apt-get update && apt-get install --yes --no-install-recommends protobuf-compiler && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /usr/local/lib/python3.14/site-packages/ /usr/local/lib/python3.14/site-packages/
