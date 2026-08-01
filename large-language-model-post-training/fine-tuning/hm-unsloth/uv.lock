@@ -418,7 +418,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "torch", index = "https://download.pytorch.org/whl/cu128" },
-    { name = "unsloth", extras = ["cu128-torch270"], specifier = "==2026.6.2" },
+    { name = "unsloth", extras = ["cu128-torch270"], specifier = "==2026.6.9" },
 ]
 
 [package.metadata.requires-dev]
@@ -594,7 +594,7 @@ name = "mlx"
 version = "0.31.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "mlx-metal", marker = "sys_platform == 'darwin'" },
+    { name = "mlx-metal" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c3/47/5f33906cb03d6a378a697cd2d2641a26b37dea17ee3d9124d7e39e8eca01/mlx-0.31.2-cp312-cp312-macosx_14_0_arm64.whl", hash = "sha256:e5067aaf2be1f3d7bba5be52348775804f111173c1ed04639618fd713b1a530f", size = 584863, upload-time = "2026-04-22T03:14:38.211Z" },
@@ -628,7 +628,7 @@ version = "0.31.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jinja2" },
-    { name = "mlx", marker = "sys_platform == 'darwin'" },
+    { name = "mlx" },
     { name = "numpy" },
     { name = "protobuf" },
     { name = "pyyaml" },
@@ -1692,7 +1692,7 @@ wheels = [
 
 [[package]]
 name = "unsloth"
-version = "2026.6.2"
+version = "2026.6.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "accelerate" },
@@ -1723,9 +1723,9 @@ dependencies = [
     { name = "wheel" },
     { name = "xformers", marker = "(platform_machine == 'AMD64' and 'linux' in sys_platform) or (platform_machine == 'x86_64' and 'linux' in sys_platform) or (platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'x86_64' and sys_platform == 'win32')" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a8/43/04c395b002eefc9a736f14c91d30e2119102524f4d7d8f53b903d2b7fbde/unsloth-2026.6.2.tar.gz", hash = "sha256:4c64575cce1ff999e1a7a5c5d3508bc34b083f05c88bbdeaba298a1877e80bed", size = 77606507, upload-time = "2026-06-10T18:19:30.228Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/86/05/c86f27785a3f5c62b8e037535d9c168af0440c0cb006bd12d8c8c6ade5f8/unsloth-2026.6.9.tar.gz", hash = "sha256:fec791e196c410b4d79c5ce2ccfdef6b69c779a4829ffded7d1158c2e9ba8fc1", size = 78491339, upload-time = "2026-06-22T16:13:07.554Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/76/ac/3b44be3db7dc4b803bd539658815e8a255fd72033ac0cc85d7c203c23cbf/unsloth-2026.6.2-py3-none-any.whl", hash = "sha256:cbe79766e7141a75597968f2eef07e4c01f88deb330a4ab41424ad3a91bc2ab1", size = 73124693, upload-time = "2026-06-10T18:19:25.744Z" },
+    { url = "https://files.pythonhosted.org/packages/ca/6e/a26d81e2ddcd85e3755e15e28f6231c04a48f11d9b06e18cd557c6b16198/unsloth-2026.6.9-py3-none-any.whl", hash = "sha256:e36f1960cde6cdba5105350d37908926254626bd82c09b840a42df2dd0b135f8", size = 73998446, upload-time = "2026-06-22T16:13:03.063Z" },
 ]
 
 [package.optional-dependencies]
@@ -1759,7 +1759,7 @@ cu128-torch270 = [
 
 [[package]]
 name = "unsloth-zoo"
-version = "2026.6.5"
+version = "2026.7.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "accelerate", marker = "platform_machine != 'arm64' or sys_platform != 'darwin'" },
@@ -1790,9 +1790,9 @@ dependencies = [
     { name = "tyro", marker = "platform_machine != 'arm64' or sys_platform != 'darwin'" },
     { name = "wheel" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ad/41/9cf042c3f4c72d0f27caef205f1397e78f5e23649ee126256b2712cd6bff/unsloth_zoo-2026.6.5.tar.gz", hash = "sha256:35a37e71de80dd698632e103095fa1fccd40d115d9bb13e2098fb2a81cfd98ca", size = 929858, upload-time = "2026-06-13T11:39:20.723Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/60/f3/bd71427d758302bcbf5ccdcb87f7a1c6592b7e635eff59d39a050692205d/unsloth_zoo-2026.7.7.tar.gz", hash = "sha256:d98a848bd99d7b8edc879525350e497e8226dae91a4624d9928aa5c5ab48d089", size = 1764779, upload-time = "2026-07-29T15:02:44.118Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6d/38/84ccdb8d3672c6d6c36d8801f74e37bcb3daf8454a295da0effc960bb470/unsloth_zoo-2026.6.5-py3-none-any.whl", hash = "sha256:e1f7fbb733ca599e11a0ad1d150e57bae4463a59ea88358e945ec8d1f8d889c2", size = 1021850, upload-time = "2026-06-13T11:39:18.99Z" },
+    { url = "https://files.pythonhosted.org/packages/7a/cb/a0d62515b2d78e327aa21c7be6a74d9109c1751477978e37ceeb2aca6e2a/unsloth_zoo-2026.7.7-py3-none-any.whl", hash = "sha256:59430350af685c790414d3753d18e39466d48f532d76eda108535f932646ed27", size = 1947563, upload-time = "2026-07-29T15:02:42.386Z" },
 ]
 
 [[package]]
