@@ -138,7 +138,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "marimo", specifier = "==0.23.9" }]
+requires-dist = [{ name = "marimo", specifier = "==0.23.15" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -218,32 +218,32 @@ wheels = [
 
 [[package]]
 name = "marimo"
-version = "0.23.9"
+version = "0.23.15"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "click" },
+    { name = "click", marker = "sys_platform != 'emscripten'" },
     { name = "docutils" },
     { name = "itsdangerous" },
     { name = "jedi" },
-    { name = "loro" },
+    { name = "loro", marker = "sys_platform != 'android' and sys_platform != 'emscripten'" },
     { name = "markdown" },
     { name = "msgspec" },
     { name = "narwhals" },
     { name = "packaging" },
-    { name = "psutil" },
+    { name = "psutil", marker = "sys_platform != 'android' and sys_platform != 'emscripten'" },
     { name = "pygments" },
     { name = "pymdown-extensions" },
     { name = "python-multipart" },
     { name = "pyyaml" },
-    { name = "pyzmq" },
-    { name = "starlette" },
+    { name = "pyzmq", marker = "sys_platform != 'emscripten'" },
+    { name = "starlette", marker = "sys_platform != 'emscripten'" },
     { name = "tomlkit" },
-    { name = "uvicorn" },
-    { name = "websockets" },
+    { name = "uvicorn", marker = "sys_platform != 'emscripten'" },
+    { name = "websockets", marker = "sys_platform != 'emscripten'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/15/be/4a4c7bc1bc160d825c6ae1b4154add505a466532977a5516434ac57ce050/marimo-0.23.9.tar.gz", hash = "sha256:9fb7123aa0dacb202d53bc0989cecd1892435671efc4107b8d8491986b4a6bb9", size = 38538904, upload-time = "2026-06-04T23:06:06.505Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f9/3b/e4a1e24ad97a652d25388ac602a5c35daa62980c0e4b876caddaedce4114/marimo-0.23.15.tar.gz", hash = "sha256:3c672256b420abc2b0509f2bfaedd2ee20af5902306c943cb6632e4d33b82c88", size = 38742179, upload-time = "2026-07-23T19:21:55.696Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/68/f4/ab8be4e65b37deb4d1d780df4a3555e983849ac280b0ec7967801fb438c8/marimo-0.23.9-py3-none-any.whl", hash = "sha256:2cbd50ce9a995c2a256b9a05cc1844f035060e070b8a85fdb32645719817dbdf", size = 38970788, upload-time = "2026-06-04T23:06:01.628Z" },
+    { url = "https://files.pythonhosted.org/packages/fc/12/97b4295858db7bf5251880ffc77919a28a2179d80de62d91923f6933f264/marimo-0.23.15-py3-none-any.whl", hash = "sha256:3198ffa0403f4c5f3e2958e2d2c4d67d12de979d6a001385f95513ea411bb338", size = 39194981, upload-time = "2026-07-23T19:21:51.21Z" },
 ]
 
 [[package]]
