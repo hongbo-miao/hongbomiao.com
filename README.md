@@ -421,9 +421,9 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Apache Hadoop MapReduce** - Data processing framework
 - **Apache Hive** - Distributed data warehousing and SQL-like query language system built on top of Apache Hadoop
 - **Trino** - Distributed SQL query engine
-- **Delta Lake** - Data lakehouse
-- **Apache Iceberg** - Data lakehouse
 - **Apache Paimon** - Streaming data lakehouse
+- **Apache Iceberg** - Data lakehouse
+- **Delta Lake** - Data lakehouse
 - **Apache Doris** - High-performance analytical database
 - **StarRocks** - High-performance analytical database
 - **Snowflake** - Data warehouse
