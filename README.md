@@ -307,13 +307,14 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Data Ingestion
 
-- **Airbyte** - Data integration
+- **Apache SeaTunnel** - Distributed batch & streaming data sync framework
+- **Airbyte** - Data integration and extract-load-transform (ELT) platform
 
 ### Data Orchestration
 
-- **Prefect** - Orchestration platform
-- **Apache Airflow** - Orchestration platform
-- **Temporal** - Orchestration platform
+- **Prefect** - Python-native workflow orchestration platform
+- **Apache Airflow** - DAG-based workflow orchestration platform
+- **Temporal** - Durable execution platform for stateful workflows
 
 ### Data Processing
 
@@ -422,6 +423,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Trino** - Distributed SQL query engine
 - **Delta Lake** - Data lakehouse
 - **Apache Iceberg** - Data lakehouse
+- **Apache Paimon** - Streaming data lakehouse
 - **Apache Doris** - High-performance analytical database
 - **StarRocks** - High-performance analytical database
 - **Snowflake** - Data warehouse

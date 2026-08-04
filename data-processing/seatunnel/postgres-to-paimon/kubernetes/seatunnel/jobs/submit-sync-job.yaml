@@ -1,0 +1,35 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: seatunnel-submit-sync-postgres-to-paimon
+  namespace: postgres-to-paimon
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+        - name: wait-for-seatunnel-master
+          image: docker.io/curlimages/curl:8.19.0
+          command:
+            - sh
+            - -c
+            - 'until curl --silent --fail --max-time 5 http://seatunnel-master:8080/overview; do sleep 5; done'
+      containers:
+        - name: submit-job
+          image: docker.io/curlimages/curl:8.19.0
+          command:
+            - sh
+            - -c
+            - >-
+              curl --fail --location
+              --form 'config_file=@/config/sync-postgres-to-paimon.conf'
+              http://seatunnel-master:8080/submit-job/upload
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          configMap:
+            name: sync-postgres-to-paimon-config

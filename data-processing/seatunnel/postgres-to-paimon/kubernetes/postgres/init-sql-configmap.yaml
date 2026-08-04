@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-sql
+  namespace: postgres-to-paimon
+data:
+  0-pg-hba-replication.sh: |
+    #!/bin/sh
+    set -eu
+    echo "host replication all all scram-sha-256" >> "$PGDATA/pg_hba.conf"
+  init.sql: |
+    create table public.customers (
+        id bigint primary key,
+        name text not null,
+        email text not null,
+        created_at timestamp not null default now()
+    );
+
+    alter table public.customers replica identity full;

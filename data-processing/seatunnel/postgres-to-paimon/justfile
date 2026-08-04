@@ -1,0 +1,24 @@
+kind-up:
+    kind create cluster --config=kubernetes/kind/kind-cluster.yaml
+
+kind-down:
+    kind delete cluster --name=postgres-to-paimon
+
+tilt-up:
+    kubectl config use-context kind-postgres-to-paimon
+    tilt up
+
+seatunnel-master-logs:
+    kubectl --context=kind-postgres-to-paimon --namespace=postgres-to-paimon logs --follow deploy/seatunnel-master
+
+seatunnel-worker-logs:
+    kubectl --context=kind-postgres-to-paimon --namespace=postgres-to-paimon logs --follow deploy/seatunnel-worker
+
+seatunnel-running-jobs:
+    curl --silent http://127.0.0.1:8080/running-jobs | jq
+
+seatunnel-finished-jobs:
+    curl --silent http://127.0.0.1:8080/finished-jobs | jq
+
+psql:
+    kubectl --context=kind-postgres-to-paimon --namespace=postgres-to-paimon exec --stdin --tty deploy/postgres -- psql --username=postgres_admin --dbname=customer_db

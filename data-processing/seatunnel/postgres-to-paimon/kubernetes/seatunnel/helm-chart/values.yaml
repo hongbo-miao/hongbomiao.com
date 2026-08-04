@@ -1,0 +1,20 @@
+namespace: postgres-to-paimon
+image:
+  registry: docker.io/apache/seatunnel
+  tag: "2.3.13"
+# opengauss-jdbc-5.1.0.jar and postgresql-42.4.3.jar both register the class
+# org.postgresql.Driver via META-INF/services/java.sql.Driver. Whichever jar the
+# classloader resolves first shadows the other for every job on the cluster, and
+# the openGauss driver wins here — its wire protocol isn't Postgres-compatible,
+# so any Jdbc source/sink against real PostgreSQL fails with
+# "PSQLException: Protocol error. Session setup failed." We don't use the
+# openGauss connector, so remove the jar before the real entrypoint starts.
+# The chart renders `command` via `{{ .Values.master.command }}` (no toYaml), so a real
+# YAML list gets Go's default space-joined %v formatting instead of a valid flow sequence.
+# Passing the array as a single pre-quoted string literal is the only way to get valid YAML out.
+master:
+  replicas: "1"
+  command: '["/bin/sh", "-c", "rm -f /opt/seatunnel/lib/opengauss-jdbc-5.1.0.jar && /opt/seatunnel/bin/seatunnel-cluster.sh -r master"]'
+worker:
+  replicas: "1"
+  command: '["/bin/sh", "-c", "rm -f /opt/seatunnel/lib/opengauss-jdbc-5.1.0.jar && /opt/seatunnel/bin/seatunnel-cluster.sh -r worker"]'

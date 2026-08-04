@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-data-generator
+  namespace: postgres-to-paimon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-data-generator
+  template:
+    metadata:
+      labels:
+        app: postgres-data-generator
+    spec:
+      containers:
+        - name: postgres-data-generator
+          image: docker.io/postgres:18.4
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eu
+              id=1
+              while true; do
+                psql "postgresql://postgres_admin:passw0rd@postgres:5432/customer_db" \
+                  -c "insert into public.customers (id, name, email) values ($id, 'Generated $id', 'generated-$id@example.com');"
+                id=$((id + 1))
+                sleep 1
+              done
