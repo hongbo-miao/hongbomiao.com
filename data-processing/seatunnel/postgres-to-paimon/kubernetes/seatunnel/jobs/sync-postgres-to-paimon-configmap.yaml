@@ -1,0 +1,52 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sync-postgres-to-paimon-config
+  namespace: postgres-to-paimon
+data:
+  sync-postgres-to-paimon.conf: |
+    env {
+      parallelism = 1
+      job.mode = "STREAMING"
+      # Paimon writes one file per checkpoint; a longer interval batches more rows into
+      # each file instead of flushing a tiny parquet every few seconds.
+      checkpoint.interval = 60000
+    }
+
+    source {
+      Postgres-CDC {
+        url = "jdbc:postgresql://postgres:5432/customer_db"
+        username = "postgres_admin"
+        password = "passw0rd"
+        database-names = ["customer_db"]
+        schema-names = ["public"]
+        # pgoutput ships with vanilla PostgreSQL (10+); no extra decoding extension needed.
+        decoding.plugin.name = "pgoutput"
+        table-names = ["customer_db.public.customers"]
+        table-names-config = [
+          {
+            table = "customer_db.public.customers"
+            primaryKeys = ["id"]
+          }
+        ]
+      }
+    }
+
+    sink {
+      Paimon {
+        warehouse = "s3a://paimon-warehouse/"
+        database = "customer_data"
+        table = "customers"
+        schema_save_mode = "CREATE_SCHEMA_WHEN_NOT_EXIST"
+        data_save_mode = "APPEND_DATA"
+        paimon.table.primary-keys = "id"
+        paimon.hadoop.conf = {
+          fs.s3a.access-key = "rustfs_admin"
+          fs.s3a.secret-key = "passw0rd"
+          fs.s3a.endpoint = "http://rustfs-svc:9000"
+          fs.s3a.path.style.access = true
+          fs.s3a.aws.credentials.provider = "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider"
+        }
+      }
+    }

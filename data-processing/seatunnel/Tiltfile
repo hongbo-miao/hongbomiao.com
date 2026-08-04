@@ -1,0 +1,50 @@
+load("ext://namespace", "namespace_create")
+load("ext://helm_resource", "helm_resource", "helm_repo")
+
+update_settings(k8s_upsert_timeout_secs=600)
+
+namespace_create("seatunnel")
+
+# K8s ConfigMaps & Jobs
+k8s_yaml([
+    "kubernetes/postgres/init-sql-configmap.yaml",
+    "kubernetes/rustfs/bucket-initialize.yaml",
+    "kubernetes/seatunnel/job-configmap.yaml",
+    "kubernetes/seatunnel/seatunnel-job.yaml",
+])
+
+# RustFS (S3 Object Storage)
+helm_repo("rustfs-charts", "https://charts.rustfs.com", labels=["rustfs"])
+helm_resource(
+    "rustfs",
+    "rustfs-charts/rustfs",
+    namespace="seatunnel",
+    flags=["--version=0.8.0", "--values=kubernetes/rustfs/helm-chart/values.yaml"],
+    labels=["rustfs"],
+    resource_deps=["rustfs-charts"],
+)
+
+# PostgreSQL
+helm_repo("bitnami", "https://charts.bitnami.com/bitnami", labels=["postgres"])
+helm_resource(
+    "postgres",
+    "bitnami/postgresql",
+    namespace="seatunnel",
+    flags=["--version=16.4.1", "--values=kubernetes/postgres/helm-chart/values.yaml"],
+    labels=["postgres"],
+    resource_deps=["bitnami"],
+)
+
+# Apache SeaTunnel
+helm_repo("seatunnel-charts", "https://seatunnel.apache.org/helm", labels=["seatunnel"])
+helm_resource(
+    "seatunnel",
+    "seatunnel-charts/seatunnel",
+    namespace="seatunnel",
+    flags=["--version=2.3.9", "--values=kubernetes/seatunnel/helm-chart/values.yaml"],
+    labels=["seatunnel"],
+    resource_deps=["seatunnel-charts", "postgres", "rustfs"],
+)
+
+k8s_resource("rustfs-bucket-initialize", labels=["rustfs"], resource_deps=["rustfs"])
+k8s_resource("seatunnel-job", labels=["seatunnel"], resource_deps=["seatunnel", "postgres", "rustfs-bucket-initialize"])
