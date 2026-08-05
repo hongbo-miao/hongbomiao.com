@@ -157,6 +157,7 @@ export default [
       'robotics/robot-operating-system/bags/**/*',
       'robotics/robot-operating-system/install/**/*',
       'robotics/robot-operating-system/log/**/*',
+      'security/sops/age-key.txt',
       'web-playwright/test-results/**/*',
       'web-playwright/playwright-report/**/*',
       'web/.lighthouseci/**/*',

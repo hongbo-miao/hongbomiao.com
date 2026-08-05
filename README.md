@@ -905,6 +905,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **CodeQL** - Variant analysis
 - **Gitleaks** - Git secret scanning
 - **GitGuardian** - Git secret scanning
+- **SOPS** - Secrets encryption and management
 
 ## System Tool
 

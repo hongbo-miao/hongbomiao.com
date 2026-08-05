@@ -1,0 +1,61 @@
+export SOPS_AGE_KEY_FILE := "./age-key.txt"
+
+install:
+    brew install sops age
+
+# Bootstrap or recover: new key, synced config, artifacts rebuilt from source
+reset-key: clean && sync-config-recipient encrypt verify-roundtrip
+    rm -f age-key.txt
+    age-keygen -o age-key.txt
+    chmod 600 age-key.txt
+
+# The demo steps, in order
+
+# The key file is the source of truth; point .sops.yaml at it so the two never drift
+sync-config-recipient:
+    sed -i '' "s/age1[a-z0-9]*/$(age-keygen -y age-key.txt)/g" .sops.yaml
+    @echo "Recipient in .sops.yaml is now $(age-keygen -y age-key.txt)"
+
+clean:
+    rm -f secrets.yaml .env.production
+
+show-plaintext:
+    cat secrets.unsealed.yaml
+
+encrypt:
+    # Key and field selection come from .sops.yaml, so no flags needed.
+    # --output, not --in-place, so the source survives and this stays repeatable.
+    sops encrypt secrets.unsealed.yaml --output secrets.yaml
+    # Neither filename ends in .env, so SOPS can't infer dotenv from the extension
+    sops encrypt --input-type dotenv --output-type dotenv .env.unsealed.production --output .env.production
+
+show-encrypted:
+    cat secrets.yaml
+
+decrypt:
+    sops decrypt secrets.yaml
+
+verify-roundtrip:
+    sops decrypt secrets.yaml | diff secrets.unsealed.yaml - && echo "Round trip is identical"
+
+extract-api-key:
+    sops decrypt --extract '["api_key"]' secrets.yaml
+
+exec-env:
+    # sops exec-env infers dotenv from the extension too, and has no override
+    # flag, so a name like .env.production defeats it. Replicate it by hand:
+    # decrypt to a subshell and eval, so plaintext still never touches disk.
+    eval "$(sops decrypt --input-type dotenv --output-type dotenv .env.production)" && echo "KEY=$KEY" && echo "PASSWORD=$PASSWORD"
+
+exec-file:
+    # {} is a temp file, removed on exit
+    sops exec-file secrets.yaml 'head -3 {}'
+
+verify-tamper-detection:
+    cp secrets.yaml /tmp/sops-tampered.yaml
+    sed -i '' 's/^region: us-west-2/region: eu-central-1/' /tmp/sops-tampered.yaml
+    # Expected to fail: the MAC covers the plaintext keys too
+    -sops decrypt /tmp/sops-tampered.yaml
+    rm -f /tmp/sops-tampered.yaml
+
+demo: sync-config-recipient clean encrypt show-plaintext show-encrypted decrypt verify-roundtrip extract-api-key exec-env exec-file verify-tamper-detection
