@@ -1,0 +1,8 @@
+# Rules are matched top-to-bottom against the input file path; first match wins.
+# The path matched is the file you pass to `sops encrypt`, i.e. the .unsealed.* source.
+creation_rules:
+  - path_regex: \.unsealed\.yaml$
+    age: age1e2wel43m2wdsknly6w3ur6rcg4udu7ewav8lcr75uq303agvzgjqrfujgs
+    encrypted_regex: ^(password|api_key|private_key)$
+  - path_regex: \.unsealed\.production$
+    age: age1e2wel43m2wdsknly6w3ur6rcg4udu7ewav8lcr75uq303agvzgjqrfujgs
