@@ -23,10 +23,17 @@ data:
         schema-names = ["public"]
         # pgoutput ships with vanilla PostgreSQL (10+); no extra decoding extension needed.
         decoding.plugin.name = "pgoutput"
-        table-names = ["customer_db.public.customers"]
+        table-names = [
+          "customer_db.public.customers",
+          "customer_db.public.orders"
+        ]
         table-names-config = [
           {
             table = "customer_db.public.customers"
+            primaryKeys = ["id"]
+          },
+          {
+            table = "customer_db.public.orders"
             primaryKeys = ["id"]
           }
         ]
@@ -37,7 +44,9 @@ data:
       Paimon {
         warehouse = "s3a://paimon-warehouse/"
         database = "customer_data"
-        table = "customers"
+        # ${table_name} fans the one sink out per source table, so customers and orders
+        # each land in their own Paimon table.
+        table = "${table_name}"
         schema_save_mode = "CREATE_SCHEMA_WHEN_NOT_EXIST"
         data_save_mode = "APPEND_DATA"
         paimon.table.primary-keys = "id"

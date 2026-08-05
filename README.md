@@ -331,6 +331,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **flink-connector-twitter** - Flink Twitter connector
   - **flink-connector-jdbc** - Flink JDBC Connector
   - **flink-connector-redis** - Flink Redis connector
+  - **Flink CDC** - Distributed real-time and batch change data capture (CDC) data integration tool
 - **NATS** - Edge and cloud native messaging system
   - **nats-py** - NATS Python client
   - **async-nats** - NATS Rust client

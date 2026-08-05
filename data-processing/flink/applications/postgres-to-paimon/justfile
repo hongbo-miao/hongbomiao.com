@@ -1,0 +1,53 @@
+kind-up:
+    kind create cluster --config=kubernetes/kind/kind-cluster.yaml
+
+kind-down:
+    kind delete cluster --name=flink-postgres-to-paimon
+
+tilt-up:
+    kubectl config use-context kind-flink-postgres-to-paimon
+    tilt up
+
+flink-jobmanager-logs:
+    kubectl --context=kind-flink-postgres-to-paimon --namespace=postgres-to-paimon logs --follow deploy/flink-jobmanager
+
+flink-taskmanager-logs:
+    kubectl --context=kind-flink-postgres-to-paimon --namespace=postgres-to-paimon logs --follow deploy/flink-taskmanager
+
+flink-jobs:
+    curl --silent http://127.0.0.1:8082/jobs/overview | jq
+
+psql:
+    kubectl --context=kind-flink-postgres-to-paimon --namespace=postgres-to-paimon exec --stdin --tty deploy/postgres -- psql --username=postgres_admin --dbname=customer_db
+
+_psql-command command:
+    kubectl --context=kind-flink-postgres-to-paimon --namespace=postgres-to-paimon exec deploy/postgres -- psql --username=postgres_admin --dbname=customer_db --command="{{ command }}"
+
+add-column:
+    just _psql-command "alter table public.customers add column phone text;"
+    just _psql-command "update public.customers set phone = '555-0100' where id = (select max(id) from public.customers);"
+
+drop-column:
+    just _psql-command "alter table public.customers drop column phone;"
+
+rename-column:
+    just _psql-command "alter table public.customers rename column phone to phone_number;"
+
+postgres-columns:
+    just _psql-command "select table_name, column_name, data_type from information_schema.columns where table_schema = 'public' order by table_name, ordinal_position;"
+
+replication-slots:
+    just _psql-command "select slot_name, plugin, active, confirmed_flush_lsn from pg_replication_slots;"
+
+# The Paimon pipeline connector already registers Paimon's Flink catalog factory, so it is
+# handed to the SQL client with --jar instead of putting a second Paimon bundle on the cluster
+# classpath, which would put a different Paimon version behind the one the pipeline writes with.
+paimon-count:
+    kubectl --context=kind-flink-postgres-to-paimon --namespace=postgres-to-paimon cp queries/count-rows.sql $(kubectl --context=kind-flink-postgres-to-paimon --namespace=postgres-to-paimon get pods --selector=component=jobmanager --output=jsonpath='{.items[0].metadata.name}'):/tmp/count-rows.sql
+    kubectl --context=kind-flink-postgres-to-paimon --namespace=postgres-to-paimon exec deploy/flink-jobmanager -- sh -c '/opt/flink/bin/sql-client.sh --jar /opt/flink/flink-cdc/lib/flink-cdc-pipeline-connector-paimon-*.jar --jar /opt/flink/flink-cdc/lib/paimon-s3-*.jar --file /tmp/count-rows.sql'
+
+postgres-count:
+    just _psql-command "select 'customers' as table_name, count(*) from public.customers union all select 'orders', count(*) from public.orders;"
+
+paimon-schemas:
+    kubectl --context=kind-flink-postgres-to-paimon --namespace=postgres-to-paimon exec deploy/rustfs -- sh -c 'find /data/paimon-warehouse -path "*schema*" -type f | sort'

@@ -1,0 +1,50 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: flink-cdc-submit-sync-postgres-to-paimon
+  namespace: postgres-to-paimon
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+        - name: wait-for-flink-jobmanager
+          image: docker.io/curlimages/curl:8.19.0
+          command:
+            - sh
+            - -c
+            - 'until curl --silent --fail --max-time 5 http://flink-jobmanager:8081/overview; do sleep 5; done'
+      containers:
+        - name: submit-pipeline
+          image: flink-cdc-paimon
+          # The entrypoint is bypassed so it cannot rewrite the configuration baked into
+          # the image.
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eu
+
+              # A retried Job would otherwise submit a second pipeline against the same
+              # replication slot, which Postgres refuses because a slot has one consumer.
+              if flink list --running 2>/dev/null | grep --quiet sync-postgres-to-paimon; then
+                echo "sync-postgres-to-paimon is already running"
+                exit 0
+              fi
+
+              # flink-cdc.sh reads FLINK_HOME both for the submission classpath and for the
+              # rest.address of the cluster to submit to.
+              /opt/flink/flink-cdc/bin/flink-cdc.sh \
+                /etc/flink-cdc/sync-postgres-to-paimon.yaml
+          env:
+            - name: FLINK_HOME
+              value: /opt/flink
+          volumeMounts:
+            - name: pipeline-definition
+              mountPath: /etc/flink-cdc
+      volumes:
+        - name: pipeline-definition
+          configMap:
+            name: sync-postgres-to-paimon

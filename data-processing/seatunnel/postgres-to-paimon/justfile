@@ -5,14 +5,14 @@ kind-down:
     kind delete cluster --name=postgres-to-paimon
 
 tilt-up:
-    kubectl config use-context kind-postgres-to-paimon
+    kubectl config use-context kind-seatunnel-postgres-to-paimon
     tilt up
 
 seatunnel-master-logs:
-    kubectl --context=kind-postgres-to-paimon --namespace=postgres-to-paimon logs --follow deploy/seatunnel-master
+    kubectl --context=kind-seatunnel-postgres-to-paimon --namespace=postgres-to-paimon logs --follow deploy/seatunnel-master
 
 seatunnel-worker-logs:
-    kubectl --context=kind-postgres-to-paimon --namespace=postgres-to-paimon logs --follow deploy/seatunnel-worker
+    kubectl --context=kind-seatunnel-postgres-to-paimon --namespace=postgres-to-paimon logs --follow deploy/seatunnel-worker
 
 seatunnel-running-jobs:
     curl --silent http://127.0.0.1:8080/running-jobs | jq
@@ -21,4 +21,20 @@ seatunnel-finished-jobs:
     curl --silent http://127.0.0.1:8080/finished-jobs | jq
 
 psql:
-    kubectl --context=kind-postgres-to-paimon --namespace=postgres-to-paimon exec --stdin --tty deploy/postgres -- psql --username=postgres_admin --dbname=customer_db
+    kubectl --context=kind-seatunnel-postgres-to-paimon --namespace=postgres-to-paimon exec --stdin --tty deploy/postgres -- psql --username=postgres_admin --dbname=customer_db
+
+_psql-command command:
+    kubectl --context=kind-seatunnel-postgres-to-paimon --namespace=postgres-to-paimon exec deploy/postgres -- psql --username=postgres_admin --dbname=customer_db --command="{{ command }}"
+
+add-column:
+    just _psql-command "alter table public.customers add column phone text;"
+    just _psql-command "update public.customers set phone = '555-0100' where id = (select max(id) from public.customers);"
+
+drop-column:
+    just _psql-command "alter table public.customers drop column phone;"
+
+postgres-columns:
+    just _psql-command "select table_name, column_name, data_type from information_schema.columns where table_schema = 'public' order by table_name, ordinal_position;"
+
+paimon-schemas:
+    kubectl --context=kind-seatunnel-postgres-to-paimon --namespace=postgres-to-paimon exec deploy/rustfs -- sh -c 'find /data/paimon-warehouse -path "*schema*" -type f | sort'
