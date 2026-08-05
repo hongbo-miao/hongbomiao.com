@@ -16,7 +16,7 @@ create table if not exists role
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now(),
     primary key (id),
-    constraint fk_space foreign key (opal_client_id) references opal_client (id)
+    constraint fk_space foreign key (opal_client_id) references opal_client(id)
 );
 
 create trigger update_updated_at
