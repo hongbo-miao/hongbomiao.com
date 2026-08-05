@@ -70,7 +70,7 @@ def main() -> None:
     # Get total number of samples
     num_samples = get_num_samples(data_path)
     if num_samples == 0:
-        logger.exception("No images available in the directory.")
+        logger.error("No images available in the directory.")
         return
 
     pipe = image_pipeline(
