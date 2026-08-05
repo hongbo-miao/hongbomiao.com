@@ -1,0 +1,73 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: paimon-submit-sync-postgres-to-paimon
+  namespace: postgres-to-paimon
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+        - name: wait-for-flink-jobmanager
+          image: docker.io/curlimages/curl:8.19.0
+          command:
+            - sh
+            - -c
+            - 'until curl --silent --fail --max-time 5 http://flink-jobmanager:8081/overview; do sleep 5; done'
+      containers:
+        - name: submit-sync-tables
+          image: flink-paimon-cdc
+          # The entrypoint is bypassed so it cannot rewrite the configuration baked into
+          # the image.
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eu
+
+              # postgres_sync_table syncs exactly one Paimon table, so two source tables
+              # mean two jobs, each owning its own replication slot.
+              #
+              # to-nullable drops every NOT NULL constraint except the primary key. A
+              # dropped upstream column stops arriving in the CDC records, and a rename
+              # looks like a drop plus an add, so a NOT NULL column in Paimon would fail
+              # the job the moment either happens.
+              sync_table() {
+                table=$1
+                slot=$2
+
+                if flink list --running 2>/dev/null | grep --quiet "sync-$table"; then
+                  echo "sync-$table is already running"
+                  return 0
+                fi
+
+                flink run --detached \
+                  -Dpipeline.name="sync-$table" \
+                  /opt/flink/paimon/paimon-flink-action.jar \
+                  postgres_sync_table \
+                  --warehouse s3://paimon-warehouse/ \
+                  --database customer_data \
+                  --table "$table" \
+                  --primary_keys id \
+                  --type_mapping to-nullable \
+                  --postgres_conf hostname=postgres \
+                  --postgres_conf port=5432 \
+                  --postgres_conf username=postgres_admin \
+                  --postgres_conf password=passw0rd \
+                  --postgres_conf database-name=customer_db \
+                  --postgres_conf schema-name=public \
+                  --postgres_conf table-name="$table" \
+                  --postgres_conf slot.name="$slot" \
+                  --postgres_conf decoding.plugin.name=pgoutput \
+                  --catalog_conf metastore=filesystem \
+                  --catalog_conf s3.endpoint=http://rustfs-svc:9000 \
+                  --catalog_conf s3.access-key=rustfs_admin \
+                  --catalog_conf s3.secret-key=passw0rd \
+                  --catalog_conf s3.path.style.access=true \
+                  --table_conf bucket=1
+              }
+
+              sync_table customers paimon_customers
+              sync_table orders paimon_orders

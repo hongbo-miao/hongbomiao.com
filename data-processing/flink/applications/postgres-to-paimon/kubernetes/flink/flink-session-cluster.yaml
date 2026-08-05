@@ -1,0 +1,86 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flink-jobmanager
+  namespace: postgres-to-paimon
+spec:
+  selector:
+    app: flink
+    component: jobmanager
+  ports:
+    - name: rpc
+      port: 6123
+    - name: blob-server
+      port: 6124
+    - name: webui
+      port: 8081
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flink-jobmanager
+  namespace: postgres-to-paimon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flink
+      component: jobmanager
+  template:
+    metadata:
+      labels:
+        app: flink
+        component: jobmanager
+    spec:
+      containers:
+        - name: jobmanager
+          image: flink-cdc-paimon
+          args: ["jobmanager"]
+          env:
+            - name: JOB_MANAGER_RPC_ADDRESS
+              value: flink-jobmanager
+          ports:
+            - containerPort: 6123
+            - containerPort: 6124
+            - containerPort: 8081
+          readinessProbe:
+            httpGet:
+              path: /overview
+              port: 8081
+            initialDelaySeconds: 10
+            periodSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flink-taskmanager
+  namespace: postgres-to-paimon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flink
+      component: taskmanager
+  template:
+    metadata:
+      labels:
+        app: flink
+        component: taskmanager
+    spec:
+      containers:
+        - name: taskmanager
+          image: flink-cdc-paimon
+          args: ["taskmanager"]
+          env:
+            - name: JOB_MANAGER_RPC_ADDRESS
+              value: flink-jobmanager
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            # The image binds to 0.0.0.0, but the taskmanager still has to advertise an
+            # address the jobmanager can dial back on, and a pod name is not resolvable.
+            - name: FLINK_PROPERTIES
+              value: |
+                taskmanager.host: $POD_IP

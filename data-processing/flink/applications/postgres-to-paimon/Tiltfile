@@ -1,0 +1,59 @@
+load("ext://namespace", "namespace_create")
+load("ext://helm_resource", "helm_resource", "helm_repo")
+
+update_settings(k8s_upsert_timeout_secs=600)
+
+namespace_create("postgres-to-paimon")
+
+k8s_yaml([
+    "kubernetes/postgres/init-sql-configmap.yaml",
+    "kubernetes/postgres/postgres.yaml",
+    "kubernetes/postgres/data-generator.yaml",
+])
+k8s_resource("postgres", labels=["postgres"])
+k8s_resource(
+    "postgres-data-generator",
+    labels=["postgres"],
+    resource_deps=["postgres"],
+)
+
+helm_repo("rustfs-charts", "https://charts.rustfs.com", labels=["rustfs"])
+helm_resource(
+    "rustfs",
+    "rustfs-charts/rustfs",
+    namespace="postgres-to-paimon",
+    flags=["--version=0.8.0", "--values=kubernetes/rustfs/helm-chart/values.yaml"],
+    labels=["rustfs"],
+    resource_deps=["rustfs-charts"],
+)
+k8s_yaml(["kubernetes/rustfs/bucket-initialize.yaml"])
+k8s_resource("rustfs-bucket-initialize", labels=["rustfs"], resource_deps=["rustfs"])
+
+docker_build("flink-cdc-paimon", "flink")
+
+k8s_yaml(["kubernetes/flink/flink-session-cluster.yaml"])
+k8s_resource(
+    "flink-jobmanager",
+    # 8081 is left to the sibling data-storage/paimon/postgres-to-paimon example so both
+    # can run at once and be compared.
+    port_forwards=["8082:8081"],
+    labels=["flink"],
+)
+k8s_resource("flink-taskmanager", labels=["flink"], resource_deps=["flink-jobmanager"])
+
+k8s_yaml(
+    [
+        "kubernetes/flink/jobs/sync-postgres-to-paimon-configmap.yaml",
+        "kubernetes/flink/jobs/submit-pipeline-job.yaml",
+    ]
+)
+k8s_resource(
+    "flink-cdc-submit-sync-postgres-to-paimon",
+    labels=["flink"],
+    resource_deps=[
+        "postgres",
+        "rustfs-bucket-initialize",
+        "flink-jobmanager",
+        "flink-taskmanager",
+    ],
+)

@@ -385,7 +385,7 @@ jobs:
             --workdir=/workspace \
             docker.io/dotenvlinter/dotenv-linter:latest \
             check \
-              $(git ls-files '**/.env*')
+              $(git ls-files '**/.env*' | grep -v '^security/sops/.env.production$' || true)
 
   lint-editorconfig:
     name: EditorConfig

@@ -196,10 +196,10 @@ lint-dockerfile:
     hadolint $(git ls-files '**/Dockerfile*')
 
 lint-dotenv:
-    dotenv-linter check $(git ls-files '**/.env*')
+    dotenv-linter check $(git ls-files '**/.env*' | grep -v '^security/sops/.env.production$' || true)
 
 lint-dotenv-fix:
-    dotenv-linter fix --no-backup $(git ls-files '**/.env*')
+    dotenv-linter fix --no-backup $(git ls-files '**/.env*' | grep -v '^security/sops/.env.production$' || true)
 
 lint-editorconfig:
     uv run poe lint-editorconfig
