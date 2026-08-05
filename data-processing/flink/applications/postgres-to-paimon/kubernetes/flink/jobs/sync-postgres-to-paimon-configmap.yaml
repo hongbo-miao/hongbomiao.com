@@ -1,0 +1,52 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sync-postgres-to-paimon
+  namespace: postgres-to-paimon
+data:
+  sync-postgres-to-paimon.yaml: |
+    source:
+      type: postgres
+      hostname: postgres
+      port: 5432
+      username: postgres_admin
+      password: passw0rd
+      # Matched as db.schema.table, and every entry has to name the same database because one
+      # source opens one connection. Unlike Paimon's own postgres_sync_table action, which
+      # syncs a single table per job, one pipeline covers both tables from one slot.
+      tables: customer_db.public.customers,customer_db.public.orders
+      slot.name: flink_cdc_pipeline
+      decoding.plugin.name: pgoutput
+      # Off by default and still marked experimental. Without it the source never infers
+      # column types from pgoutput Relation messages, so no schema change event is ever
+      # emitted and the whole schema.change.behavior setting below has nothing to act on.
+      schema-change.enabled: true
+
+    sink:
+      type: paimon
+      catalog.properties.metastore: filesystem
+      catalog.properties.warehouse: s3://paimon-warehouse/
+      catalog.properties.s3.endpoint: http://rustfs-svc:9000
+      catalog.properties.s3.access-key: rustfs_admin
+      catalog.properties.s3.secret-key: passw0rd
+      catalog.properties.s3.path.style.access: true
+      table.properties.bucket: 1
+
+    # The source emits two-part table ids, because table-id.include-database defaults to
+    # false, so without routing these would land in a Paimon database called public. Routing
+    # them to customer_data keeps the target identical to the sibling examples.
+    route:
+      - source-table: public.customers
+        sink-table: customer_data.customers
+      - source-table: public.orders
+        sink-table: customer_data.orders
+
+    pipeline:
+      name: sync-postgres-to-paimon
+      parallelism: 2
+      # evolve forwards every schema change to Paimon as real DDL, drops included. The
+      # alternative worth knowing is lenient, which keeps a dropped column and backfills
+      # null, and turns a rename into a new nullable column: the same shape as passing
+      # to-nullable to Paimon's postgres_sync_table action.
+      schema.change.behavior: evolve
