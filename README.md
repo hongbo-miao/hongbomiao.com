@@ -136,6 +136,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **axum** - Web framework
   - **Axum Test** - End-to-end testing
+- **Rig** - Large language model (LLM) application framework
 - **WTransport** - WebTransport
 - **Tokio** - Asynchronous runtime
   - **tokio-stream** - Stream utilities and adapters
@@ -332,6 +333,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **flink-connector-jdbc** - Flink JDBC Connector
   - **flink-connector-redis** - Flink Redis connector
   - **Flink CDC** - Distributed real-time and batch change data capture (CDC) data integration tool
+- **Apache Fluss** - Streaming storage for real-time analytics
 - **NATS** - Edge and cloud native messaging system
   - **nats-py** - NATS Python client
   - **async-nats** - NATS Rust client
@@ -647,6 +649,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - Large Language Model (LLM) Gateway
   - **LiteLLM** - Large language model (LLM) gateway
 - Large Language Model (LLM) Application
+  - **Rig** - Large language model (LLM) application framework
   - **PydanticAI** - Large language model (LLM) agent framework
   - **LangGraph** - Large language model (LLM) workflow library
   - **LlamaIndex** - Large language model (LLM) data framework

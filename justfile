@@ -287,6 +287,7 @@ lint-ruby-fix:
 lint-rust-rustfmt:
     cd api/api-rust && just lint-rust-rustfmt
     cd api/foreign-function-interface/ffi-rust-calculator && just lint-rust-rustfmt
+    cd api/real-time-ai-agent/agent && just lint-rust-rustfmt
     cd audio/inverse-text-normalization/hm-text-processing-rs && just lint-rust-rustfmt
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-rustfmt
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-rustfmt

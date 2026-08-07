@@ -1,0 +1,44 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: agent
+  namespace: real-time-ai-agent
+spec:
+  selector:
+    app: agent
+  ports:
+    - name: http
+      port: 8083
+      targetPort: 8083
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agent
+  namespace: real-time-ai-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agent
+  template:
+    metadata:
+      labels:
+        app: agent
+    spec:
+      containers:
+        - name: agent
+          image: agent
+          ports:
+            - containerPort: 8083
+          env:
+            - name: FLUSS_BOOTSTRAP_SERVERS
+              value: coordinator-server-hs.real-time-ai-agent.svc.cluster.local:9124
+            - name: OPENROUTER_MODEL
+              value: anthropic/claude-sonnet-5
+            - name: OPENROUTER_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: openrouter
+                  key: api-key
