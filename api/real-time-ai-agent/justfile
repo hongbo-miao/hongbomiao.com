@@ -1,0 +1,10 @@
+kind-up:
+    kind create cluster --config=kubernetes/kind/kind-cluster.yaml
+
+kind-down:
+    kind delete cluster --name=real-time-ai-agent
+
+tilt-up:
+    kubectl config use-context kind-real-time-ai-agent
+    # export OPENROUTER_API_KEY=xxx
+    tilt up

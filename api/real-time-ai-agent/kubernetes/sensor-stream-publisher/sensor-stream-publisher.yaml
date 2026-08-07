@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sensor-stream-publisher
+  namespace: real-time-ai-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sensor-stream-publisher
+  template:
+    metadata:
+      labels:
+        app: sensor-stream-publisher
+    spec:
+      containers:
+        - name: sensor-stream-publisher
+          image: sensor-stream-publisher
+          env:
+            - name: FLUSS_BOOTSTRAP_SERVERS
+              value: coordinator-server-hs.real-time-ai-agent.svc.cluster.local:9124

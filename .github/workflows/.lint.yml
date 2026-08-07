@@ -163,6 +163,9 @@ name: . Lint
       radio-streamer:
         required: true
         type: boolean
+      real-time-ai-agent:
+        required: true
+        type: boolean
       udp-receiver:
         required: true
         type: boolean
@@ -1371,6 +1374,38 @@ jobs:
           cargo fmt --all  -- --check
       - name: Lint Rust (Clippy)
         working-directory: wireless/software-defined-radio/radio-streamer
+        run: |
+          cargo clippy
+
+  lint-rust-real-time-ai-agent:
+    name: Rust (real-time-ai-agent)
+    if: ${{ inputs.workflow || inputs.real-time-ai-agent }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      # protoc is for fluss-rs
+      - name: Install protoc
+        uses: arduino/setup-protoc@c65c819552d16ad3c9b72d9dfd5ba5237b9c906b # v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 34.1
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@46268bd060767258de96ed93c1251119784f2ab6 # v1.16.1
+        with:
+          cache: true
+          rust-src-dir: api/real-time-ai-agent/agent
+      - name: Install dependencies
+        working-directory: api/real-time-ai-agent/agent
+        run: |
+          cargo build --locked
+      - name: Lint Rust (rustfmt)
+        working-directory: api/real-time-ai-agent/agent
+        run: |
+          cargo fmt --all -- --check
+      - name: Lint Rust (Clippy)
+        working-directory: api/real-time-ai-agent/agent
         run: |
           cargo clippy
 

@@ -1,0 +1,71 @@
+load("ext://namespace", "namespace_create")
+load("ext://helm_resource", "helm_resource", "helm_repo")
+load("ext://secret", "secret_from_dict")
+
+update_settings(k8s_upsert_timeout_secs=600)
+
+namespace_create("real-time-ai-agent")
+
+k8s_yaml(["kubernetes/zookeeper/zookeeper.yaml"])
+k8s_resource("zookeeper", labels=["zookeeper"])
+
+helm_repo(
+    "fluss-charts",
+    "https://downloads.apache.org/incubator/fluss/helm-chart",
+    labels=["fluss"],
+)
+helm_resource(
+    "fluss",
+    "fluss-charts/fluss",
+    namespace="real-time-ai-agent",
+    flags=["--version=0.9.1-incubating", "--values=kubernetes/fluss/helm-chart/values.yaml"],
+    deps=["kubernetes/fluss/helm-chart/values.yaml"],
+    labels=["fluss"],
+    resource_deps=["fluss-charts", "zookeeper"],
+)
+
+docker_build("sensor-stream-publisher", "sensor-stream-publisher")
+k8s_yaml(["kubernetes/sensor-stream-publisher/sensor-stream-publisher.yaml"])
+k8s_resource(
+    "sensor-stream-publisher",
+    labels=["publisher"],
+    resource_deps=["fluss"],
+)
+
+# Read from the host environment rather than a committed file so the API key
+# never ends up in version control. OpenRouter fronts many providers behind
+# one OpenAI-compatible API, so this works with any OpenRouter key rather
+# than requiring a separate Anthropic account.
+k8s_yaml(secret_from_dict(
+    "openrouter",
+    namespace="real-time-ai-agent",
+    inputs={"api-key": os.getenv("OPENROUTER_API_KEY", "")},
+))
+
+docker_build("agent", "agent")
+k8s_yaml(["kubernetes/agent/agent.yaml"])
+k8s_resource(
+    "agent",
+    port_forwards=["8083:8083"],
+    labels=["agent"],
+    # Give the publisher a head start so the first /ask has readings to see.
+    resource_deps=["fluss", "sensor-stream-publisher"],
+)
+
+# Chat UI for the agent's OpenAI-compatible API (POST /v1/chat/completions,
+# GET /v1/models).
+helm_repo(
+    "open-webui-charts",
+    "https://helm.openwebui.com/",
+    labels=["open-webui"],
+)
+helm_resource(
+    "open-webui",
+    "open-webui-charts/open-webui",
+    namespace="real-time-ai-agent",
+    flags=["--values=kubernetes/open-webui/helm-chart/values.yaml"],
+    deps=["kubernetes/open-webui/helm-chart/values.yaml"],
+    port_forwards=["8084:80"],
+    labels=["open-webui"],
+    resource_deps=["open-webui-charts", "agent"],
+)

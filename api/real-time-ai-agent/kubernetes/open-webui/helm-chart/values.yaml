@@ -1,0 +1,23 @@
+# https://github.com/open-webui/helm-charts/blob/main/charts/open-webui/values.yaml
+ollama:
+  enabled: false
+pipelines:
+  enabled: false
+persistence:
+  enabled: false
+extraEnvVars:
+  - name: WEBUI_AUTH
+    value: "false"
+  - name: OPENAI_API_BASE_URLS
+    value: http://agent.real-time-ai-agent.svc.cluster.local:8083/v1
+  - name: OPENAI_API_KEYS
+    value: xxx
+  - name: DEFAULT_MODELS
+    value: sensor-agent
+  - name: DEFAULT_PROMPT_SUGGESTIONS
+    value: |
+      [
+        {"title": ["Which sensors are running hot right now, and by how much?"], "content": "Which sensors are running hot right now, and by how much?"},
+        {"title": ["What is the exact current status of sensor 1?"], "content": "What is the exact current status of sensor 1?"},
+        {"title": ["Show me the last 10 raw sensor readings."], "content": "Show me the last 10 raw sensor readings."}
+      ]

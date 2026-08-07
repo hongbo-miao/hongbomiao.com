@@ -1,0 +1,16 @@
+---
+# https://github.com/apache/fluss/blob/main/helm/values.yaml
+image:
+  tag: 0.9.1-incubating
+coordinator:
+  numberOfReplicas: 1
+tablet:
+  numberOfReplicas: 1
+configurationOverrides:
+  default.bucket.number: 1
+  default.replication.factor: 1
+  zookeeper.address: zookeeper.real-time-ai-agent.svc.cluster.local:2181
+  zookeeper.path.root: /fluss
+  data.dir: /tmp/fluss/data
+  remote.data.dir: /tmp/fluss/remote-data
+  internal.listener.name: INTERNAL

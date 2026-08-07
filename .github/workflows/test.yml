@@ -755,6 +755,8 @@ jobs:
               - 'large-language-model-pre-training/training-paradigm/causal-language-model/qwen3/**'
             radio-streamer:
               - 'wireless/software-defined-radio/radio-streamer/**'
+            real-time-ai-agent:
+              - 'api/real-time-ai-agent/**'
             rnnoise-vad:
               - 'audio/voice-activity-detection/rnnoise-vad/**'
             robot-operating-system:
@@ -1096,6 +1098,7 @@ jobs:
       qwen-vl: ${{ steps.filter.outputs.qwen-vl }}
       qwen3: ${{ steps.filter.outputs.qwen3 }}
       radio-streamer: ${{ steps.filter.outputs.radio-streamer }}
+      real-time-ai-agent: ${{ steps.filter.outputs.real-time-ai-agent }}
       rnnoise-vad: ${{ steps.filter.outputs.rnnoise-vad }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       speculative-decoding: ${{ steps.filter.outputs.speculative-decoding }}
@@ -1182,6 +1185,7 @@ jobs:
       pulsar-audio-stream-transcriber: ${{ needs.detect-changes.outputs.pulsar-audio-stream-transcriber == 'true' }}
       pulsar-audio-stream-pulsar-livekit-bridge: ${{ needs.detect-changes.outputs.pulsar-audio-stream-pulsar-livekit-bridge == 'true' }}
       radio-streamer: ${{ needs.detect-changes.outputs.radio-streamer == 'true' }}
+      real-time-ai-agent: ${{ needs.detect-changes.outputs.real-time-ai-agent == 'true' }}
       udp-receiver: ${{ needs.detect-changes.outputs.udp-receiver == 'true' }}
       udp-sender: ${{ needs.detect-changes.outputs.udp-sender == 'true' }}
       web-playwright: ${{ needs.detect-changes.outputs.web-playwright == 'true' }}
@@ -1270,6 +1274,7 @@ jobs:
       ffi-rust-calculator: ${{ needs.detect-changes.outputs.ffi-rust-calculator == 'true' }}
       hm-locust: ${{ needs.detect-changes.outputs.hm-locust == 'true' }}
       k6: ${{ needs.detect-changes.outputs.k6 == 'true' }}
+      real-time-ai-agent: ${{ needs.detect-changes.outputs.real-time-ai-agent == 'true' }}
 
   test-data-orchestration:
     name: Test Data Orchestration
