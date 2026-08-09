@@ -1,4 +1,4 @@
-FROM docker.io/node:24.16.0-trixie-slim AS builder
+FROM docker.io/node:24.18.1-trixie-slim AS builder
 WORKDIR /app
 COPY audio-stream-web/package.json audio-stream-web/package-lock.json ./
 RUN npm install
