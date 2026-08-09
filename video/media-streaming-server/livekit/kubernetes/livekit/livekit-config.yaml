@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: livekit-config
+  namespace: livekit
+data:
+  livekit.yaml: |
+    port: 7880
+    rtc:
+      tcp_port: 7881
+      udp_port: 7882
+      use_external_ip: false
+      # The browser reaches the ICE ports through the kind host port mappings, so
+      # the candidates have to be advertised as 127.0.0.1 rather than the pod IP.
+      node_ip: 127.0.0.1
+    redis:
+      address: livekit-valkey:6379
+    keys:
+      livekit_api_key: livekit_api_s3cr3t
+    logging:
+      level: info

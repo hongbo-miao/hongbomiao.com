@@ -1,0 +1,9 @@
+kind-up:
+    kind create cluster --config=kubernetes/kind/kind-cluster.yaml
+
+kind-down:
+    kind delete cluster --name=livekit
+
+tilt-up:
+    kubectl config use-context kind-livekit
+    tilt up

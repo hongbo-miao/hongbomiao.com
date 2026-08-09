@@ -1,0 +1,45 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: multimedia-publisher
+  namespace: livekit
+spec:
+  selector:
+    app: multimedia-publisher
+  ports:
+    - name: http
+      port: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multimedia-publisher
+  namespace: livekit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multimedia-publisher
+  template:
+    metadata:
+      labels:
+        app: multimedia-publisher
+    spec:
+      enableServiceLinks: false
+      containers:
+        - name: multimedia-publisher
+          image: multimedia-publisher
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ENVIRONMENT
+              value: development
+            - name: LIVEKIT_API_KEY
+              value: livekit_api_key
+            - name: LIVEKIT_API_SECRET
+              value: livekit_api_s3cr3t
+            - name: S3_ACCESS_KEY
+              value: rustfs_admin
+            - name: S3_SECRET_KEY
+              value: passw0rd

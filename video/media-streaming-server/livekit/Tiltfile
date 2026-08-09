@@ -1,0 +1,65 @@
+load("ext://namespace", "namespace_create")
+load("ext://helm_resource", "helm_resource", "helm_repo")
+
+namespace_create("livekit")
+
+helm_repo("valkey-repo", "https://valkey.io/valkey-helm/", labels=["livekit"])
+helm_resource(
+    "livekit-valkey",
+    "valkey-repo/valkey",
+    namespace="livekit",
+    flags=["--values=kubernetes/livekit-valkey/helm-chart/values.yaml"],
+    labels=["livekit"],
+    resource_deps=["valkey-repo"],
+)
+
+helm_repo("rustfs-charts", "https://charts.rustfs.com", labels=["rustfs"])
+helm_resource(
+    "rustfs",
+    "rustfs-charts/rustfs",
+    namespace="livekit",
+    flags=["--version=0.8.0", "--values=kubernetes/rustfs/helm-chart/values.yaml"],
+    labels=["rustfs"],
+    resource_deps=["rustfs-charts"],
+)
+k8s_yaml(["kubernetes/rustfs/bucket-initialize.yaml"])
+k8s_resource("rustfs-bucket-initialize", labels=["rustfs"], resource_deps=["rustfs"])
+
+k8s_yaml([
+    "kubernetes/livekit/livekit-config.yaml",
+    "kubernetes/livekit/livekit.yaml",
+])
+k8s_resource(
+    "livekit",
+    labels=["livekit"],
+    resource_deps=["livekit-valkey"],
+    port_forwards=["7880:7880"],
+)
+
+k8s_yaml([
+    "kubernetes/livekit-egress/livekit-egress-config.yaml",
+    "kubernetes/livekit-egress/livekit-egress.yaml",
+])
+k8s_resource(
+    "livekit-egress",
+    labels=["livekit"],
+    resource_deps=["livekit"],
+)
+
+docker_build("multimedia-publisher", "multimedia-publisher")
+k8s_yaml(["kubernetes/multimedia-publisher/multimedia-publisher.yaml"])
+k8s_resource(
+    "multimedia-publisher",
+    labels=["livekit"],
+    resource_deps=["livekit-egress", "rustfs-bucket-initialize"],
+    port_forwards=["8080:8080"],
+)
+
+docker_build("web", "web")
+k8s_yaml(["kubernetes/web/web.yaml"])
+k8s_resource(
+    "web",
+    labels=["livekit"],
+    resource_deps=["multimedia-publisher"],
+    port_forwards=["8081:80"],
+)

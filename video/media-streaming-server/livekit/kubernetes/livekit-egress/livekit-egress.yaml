@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: livekit-egress
+  namespace: livekit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: livekit-egress
+  template:
+    metadata:
+      labels:
+        app: livekit-egress
+    spec:
+      enableServiceLinks: false
+      containers:
+        - name: livekit-egress
+          image: docker.io/livekit/egress:v1.11.0
+          env:
+            - name: EGRESS_CONFIG_FILE
+              value: /etc/egress/config.yaml
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - name: livekit-egress-config
+              mountPath: /etc/egress/config.yaml
+              subPath: config.yaml
+              readOnly: true
+      volumes:
+        - name: livekit-egress-config
+          configMap:
+            name: livekit-egress-config

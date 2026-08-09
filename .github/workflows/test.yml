@@ -666,6 +666,8 @@ jobs:
               - 'machine-learning/model-context-protocol/**'
             modern-bert:
               - 'large-language-model-pre-training/training-paradigm/masked-language-model/modern-bert/**'
+            multimedia-publisher:
+              - 'video/media-streaming-server/livekit/multimedia-publisher/**'
             national-instruments-hm-pyvisa:
               - 'hardware-in-the-loop/national-instruments/hm-pyvisa/**'
             national-instruments-hm-tdms:
@@ -1055,6 +1057,7 @@ jobs:
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
       model-context-protocol: ${{ steps.filter.outputs.model-context-protocol }}
       modern-bert: ${{ steps.filter.outputs.modern-bert }}
+      multimedia-publisher: ${{ steps.filter.outputs.multimedia-publisher }}
       national-instruments-hm-pyvisa: ${{ steps.filter.outputs.national-instruments-hm-pyvisa }}
       national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
       national-instruments-hm-veristand: ${{ steps.filter.outputs.national-instruments-hm-veristand }}
@@ -1179,6 +1182,7 @@ jobs:
       mobile-android: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
       mobile-ios: ${{ needs.detect-changes.outputs.mobile-ios == 'true' }}
       mobile-react-native: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
+      multimedia-publisher: ${{ needs.detect-changes.outputs.multimedia-publisher == 'true' }}
       national-instruments-veristand-zeromq-bridge: ${{ needs.detect-changes.outputs.national-instruments-veristand-zeromq-bridge == 'true' }}
       pulsar-audio-stream-grpc-server: ${{ needs.detect-changes.outputs.pulsar-audio-stream-grpc-server == 'true' }}
       pulsar-audio-stream-publisher: ${{ needs.detect-changes.outputs.pulsar-audio-stream-publisher == 'true' }}
@@ -1274,6 +1278,7 @@ jobs:
       ffi-rust-calculator: ${{ needs.detect-changes.outputs.ffi-rust-calculator == 'true' }}
       hm-locust: ${{ needs.detect-changes.outputs.hm-locust == 'true' }}
       k6: ${{ needs.detect-changes.outputs.k6 == 'true' }}
+      multimedia-publisher: ${{ needs.detect-changes.outputs.multimedia-publisher == 'true' }}
       real-time-ai-agent: ${{ needs.detect-changes.outputs.real-time-ai-agent == 'true' }}
 
   test-data-orchestration:
