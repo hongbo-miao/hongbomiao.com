@@ -1,0 +1,15 @@
+---
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: livekit
+nodes:
+  - role: control-plane
+    # WebRTC media cannot travel over "kubectl port-forward", so the ICE ports are
+    # mapped straight from the host into the node and exposed as a NodePort service.
+    extraPortMappings:
+      - containerPort: 30881
+        hostPort: 7881
+        protocol: TCP
+      - containerPort: 30882
+        hostPort: 7882
+        protocol: UDP

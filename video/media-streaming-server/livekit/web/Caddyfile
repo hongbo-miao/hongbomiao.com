@@ -1,0 +1,20 @@
+:80 {
+	handle /token* {
+		reverse_proxy {$TOKEN_SERVER_URL}
+	}
+
+	handle /stream* {
+		reverse_proxy {$TOKEN_SERVER_URL}
+	}
+
+	handle_path /hls/* {
+		rewrite * /livekit-hls{uri}
+		reverse_proxy {$RUSTFS_URL}
+	}
+
+	handle {
+		root * /usr/share/caddy
+		try_files {path} /index.html
+		file_server
+	}
+}

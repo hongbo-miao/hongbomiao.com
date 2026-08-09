@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  namespace: livekit
+spec:
+  selector:
+    app: web
+  ports:
+    - name: http
+      port: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: livekit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      enableServiceLinks: false
+      containers:
+        - name: web
+          image: web
+          ports:
+            - containerPort: 80
+          env:
+            - name: TOKEN_SERVER_URL
+              value: http://multimedia-publisher.livekit:8080
+            - name: RUSTFS_URL
+              value: http://rustfs-svc.livekit:9000

@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: livekit-egress-config
+  namespace: livekit
+data:
+  config.yaml: |
+    api_key: livekit_api_key
+    api_secret: livekit_api_s3cr3t
+    ws_url: ws://livekit:7880
+    insecure: true
+    redis:
+      address: livekit-valkey:6379
+    health_port: 9090
+    log_level: info

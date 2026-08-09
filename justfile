@@ -310,6 +310,7 @@ lint-rust-rustfmt:
     cd network/udp/udp-receiver && just lint-rust-rustfmt
     cd network/udp/udp-sender && just lint-rust-rustfmt
     cd operating-system/windows/calculator && just lint-rust-rustfmt
+    cd video/media-streaming-server/livekit/multimedia-publisher && just lint-rust-rustfmt
     cd wireless/software-defined-radio/radio-streamer && just lint-rust-rustfmt
 
 lint-rust-rustfmt-fix:
@@ -337,6 +338,7 @@ lint-rust-rustfmt-fix:
     cd network/udp/udp-receiver && just lint-rust-rustfmt-fix
     cd network/udp/udp-sender && just lint-rust-rustfmt-fix
     cd operating-system/windows/calculator && just lint-rust-rustfmt-fix
+    cd video/media-streaming-server/livekit/multimedia-publisher && just lint-rust-rustfmt-fix
     cd wireless/software-defined-radio/radio-streamer && just lint-rust-rustfmt-fix
 
 lint-rust-clippy:
@@ -364,6 +366,7 @@ lint-rust-clippy:
     cd network/udp/udp-receiver && just lint-rust-clippy
     cd network/udp/udp-sender && just lint-rust-clippy
     cd operating-system/windows/calculator && just lint-rust-clippy
+    cd video/media-streaming-server/livekit/multimedia-publisher && just lint-rust-clippy
     cd wireless/software-defined-radio/radio-streamer && just lint-rust-clippy
 
 lint-rust-clippy-fix:
@@ -391,6 +394,7 @@ lint-rust-clippy-fix:
     cd network/udp/udp-receiver && just lint-rust-clippy-fix
     cd network/udp/udp-sender && just lint-rust-clippy-fix
     cd operating-system/windows/calculator && just lint-rust-clippy-fix
+    cd video/media-streaming-server/livekit/multimedia-publisher && just lint-rust-clippy-fix
     cd wireless/software-defined-radio/radio-streamer && just lint-rust-clippy-fix
 
 lint-scala:

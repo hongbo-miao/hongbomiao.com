@@ -1,11 +1,11 @@
 FROM docker.io/node:24.16.0-trixie-slim AS builder
 WORKDIR /app
-COPY audio-stream-web/package.json audio-stream-web/package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm install
-COPY audio-stream-web/ .
+COPY . .
 RUN npm run build
 
 FROM docker.io/caddy:2.11.4-alpine AS release
 COPY --from=builder /app/dist /usr/share/caddy
-COPY audio-stream-web/Caddyfile /etc/caddy/Caddyfile
+COPY Caddyfile /etc/caddy/Caddyfile
 EXPOSE 80

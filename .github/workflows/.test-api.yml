@@ -33,6 +33,9 @@ name: . Test API
       k6:
         required: true
         type: boolean
+      multimedia-publisher:
+        required: true
+        type: boolean
       real-time-ai-agent:
         required: true
         type: boolean
@@ -322,5 +325,39 @@ jobs:
           cargo build --locked
       - name: Test
         working-directory: api/real-time-ai-agent/agent
+        run: |
+          cargo test --all-features
+
+  multimedia-publisher-test:
+    name: API - Multimedia Publisher | Test
+    if: ${{ inputs.workflow || inputs.multimedia-publisher }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Install system dependencies
+        uses: awalsh128/cache-apt-pkgs-action@553a35bb8ebd9fcabcb1c9451aa4c98e1b4ca8a9 # v1.6.3
+        with:
+          # libglib2.0-dev is for livekit
+          packages: libglib2.0-dev
+          version: 1.0
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@c65c819552d16ad3c9b72d9dfd5ba5237b9c906b # v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 34.1
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@46268bd060767258de96ed93c1251119784f2ab6 # v1.16.1
+        with:
+          cache: true
+          rust-src-dir: video/media-streaming-server/livekit/multimedia-publisher
+      - name: Install dependencies
+        working-directory: video/media-streaming-server/livekit/multimedia-publisher
+        run: |
+          cargo build --locked
+      - name: Test
+        working-directory: video/media-streaming-server/livekit/multimedia-publisher
         run: |
           cargo test --all-features
