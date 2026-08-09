@@ -50,7 +50,7 @@ docker_build("multimedia-publisher", "multimedia-publisher")
 k8s_yaml(["kubernetes/multimedia-publisher/multimedia-publisher.yaml"])
 k8s_resource(
     "multimedia-publisher",
-    labels=["livekit"],
+    labels=["publisher"],
     resource_deps=["livekit-egress", "rustfs-bucket-initialize"],
     port_forwards=["8080:8080"],
 )
@@ -59,7 +59,7 @@ docker_build("web", "web")
 k8s_yaml(["kubernetes/web/web.yaml"])
 k8s_resource(
     "web",
-    labels=["livekit"],
+    labels=["web"],
     resource_deps=["multimedia-publisher"],
     port_forwards=["8081:80"],
 )

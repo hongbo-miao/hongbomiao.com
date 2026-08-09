@@ -42,6 +42,12 @@ function SubscribedPane() {
     };
   }, [videoTrack]);
 
+  useEffect(() => {
+    for (const participant of room.remoteParticipants.values()) {
+      participant.setVolume(isAudioEnabled ? 1 : 0);
+    }
+  }, [isAudioEnabled, room]);
+
   return (
     <PlayerPane
       title="WebRTC"
@@ -58,13 +64,10 @@ function SubscribedPane() {
         if (willEnable) {
           void room.startAudio();
         }
-        for (const participant of room.remoteParticipants.values()) {
-          participant.setVolume(willEnable ? 1 : 0);
-        }
       }}
     >
       <video ref={videoRef} autoPlay playsInline muted style={{ height: '100%', width: '100%' }} />
-      <RoomAudioRenderer />
+      <RoomAudioRenderer muted={!isAudioEnabled} />
     </PlayerPane>
   );
 }
