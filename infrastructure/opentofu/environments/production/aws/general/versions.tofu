@@ -8,12 +8,12 @@ terraform {
     # https://search.opentofu.org/provider/hashicorp/aws/latest
     aws = {
       source  = "hashicorp/aws"
-      version = "6.56.0"
+      version = "6.57.1"
     }
     # https://search.opentofu.org/provider/hashicorp/awscc/latest
     awscc = {
       source  = "hashicorp/awscc"
-      version = "1.94.0"
+      version = "1.95.0"
     }
   }
   required_version = ">= 1.11"
