@@ -91,21 +91,22 @@ jobs:
       # To use a Gemfile which is not at the root
       # https://github.com/ruby/setup-ruby#caching-bundle-install-automatically
       BUNDLE_GEMFILE: ${{ github.workspace }}/mobile/mobile-ios/Gemfile
-      IOS_SIMULATOR: platform=iOS Simulator,name=iPhone 17 Pro,OS=26.4
+      IOS_SIMULATOR: platform=iOS Simulator,name=iPhone 17 Pro,OS=26.5
     steps:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       - name: Set up Xcode
         uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
         with:
-          xcode-version: 26.4.0
+          xcode-version: 26.5.0
       - name: Set up Ruby
-        uses: ruby/setup-ruby@0cb964fd540e0a24c900370abf38a33466142735 # v1.305.0
+        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1.321.0
         with:
           working-directory: mobile/mobile-ios
           bundler-cache: true
       - name: Set up Tuist
         run: |
+          brew trust tuist/tuist
           brew install tuist/tuist/tuist
       - name: Install dependencies
         working-directory: mobile/mobile-ios
