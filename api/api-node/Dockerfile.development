@@ -1,4 +1,4 @@
-FROM docker.io/node:22.23.1-trixie-slim AS base
+FROM docker.io/node:22.23.2-trixie-slim AS base
 WORKDIR /usr/src/app
 
 FROM base AS web-builder
