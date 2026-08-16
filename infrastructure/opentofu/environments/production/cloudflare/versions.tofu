@@ -17,7 +17,7 @@ terraform {
     # https://search.opentofu.org/provider/cloudflare/cloudflare/latest
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "5.22.0"
+      version = "5.23.0"
     }
   }
   required_version = ">= 1.11"
