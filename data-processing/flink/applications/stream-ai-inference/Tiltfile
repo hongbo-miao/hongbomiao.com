@@ -1,0 +1,99 @@
+load("ext://namespace", "namespace_create")
+load("ext://helm_resource", "helm_resource", "helm_repo")
+
+namespace_create("stream-ai-inference")
+
+k8s_yaml([
+    "kubernetes/zookeeper/zookeeper.yaml",
+    "kubernetes/rustfs/credentials-secret.yaml",
+    "kubernetes/rustfs/bucket-initialize.yaml",
+    "kubernetes/knowledge-base-loader.yaml",
+    "kubernetes/flink/triage-and-answer-support-ticket.yaml",
+    "kubernetes/flink/fluss-datalake-tiering.yaml",
+])
+
+host_ollama_address = str(
+    local(
+        "docker exec flink-stream-ai-inference-control-plane" +
+        " getent hosts host.docker.internal | awk '{print $1}'",
+        quiet=True,
+    )
+).strip()
+if not host_ollama_address:
+    fail(
+        "Could not resolve host.docker.internal from the kind node. Is the cluster up" +
+        " (`just kind-up`)?"
+    )
+k8s_yaml(
+    blob(
+        str(read_file("kubernetes/ollama/host-ollama.yaml"))
+            .replace("HOST_OLLAMA_ADDRESS", host_ollama_address)
+    )
+)
+
+helm_repo("rustfs-charts", "https://charts.rustfs.com", labels=["rustfs"])
+helm_resource(
+    "rustfs",
+    "rustfs-charts/rustfs",
+    namespace="stream-ai-inference",
+    flags=["--version=0.8.0", "--values=kubernetes/rustfs/helm-chart/values.yaml"],
+    labels=["rustfs"],
+    resource_deps=["rustfs-charts"],
+)
+k8s_resource("rustfs-bucket-initialize", labels=["rustfs"], resource_deps=["rustfs"])
+
+helm_repo(
+    "fluss-charts",
+    "https://downloads.apache.org/incubator/fluss/helm-chart",
+    labels=["fluss"],
+)
+helm_resource(
+    "fluss",
+    "fluss-charts/fluss",
+    namespace="stream-ai-inference",
+    flags=["--version=0.9.1-incubating", "--values=kubernetes/fluss/helm-chart/values.yaml"],
+    deps=["kubernetes/fluss/helm-chart/values.yaml"],
+    labels=["fluss"],
+    resource_deps=["fluss-charts", "zookeeper"],
+)
+k8s_resource("zookeeper", labels=["fluss"])
+
+helm_repo(
+    "flink-operator-repo",
+    "https://downloads.apache.org/flink/flink-kubernetes-operator-1.15.0/",
+    labels=["flink"],
+)
+helm_resource(
+    "flink-kubernetes-operator",
+    "flink-operator-repo/flink-kubernetes-operator",
+    namespace="stream-ai-inference",
+    flags=["--version=1.15.0", "--values=kubernetes/flink-kubernetes-operator/helm-chart/values.yaml"],
+    labels=["flink"],
+    resource_deps=["flink-operator-repo"],
+)
+
+docker_build("stream-ai-inference", "triage-and-answer-support-ticket")
+k8s_image_json_path(
+    "{.spec.image}",
+    kind="FlinkDeployment",
+    name="triage-and-answer-support-ticket",
+    namespace="stream-ai-inference",
+)
+k8s_image_json_path(
+    "{.spec.image}", kind="FlinkDeployment", name="fluss-datalake-tiering", namespace="stream-ai-inference"
+)
+k8s_resource(
+    "knowledge-base-loader",
+    labels=["stream-ai-inference"],
+    resource_deps=["rustfs-bucket-initialize"],
+)
+k8s_resource(
+    "triage-and-answer-support-ticket",
+    labels=["stream-ai-inference"],
+    resource_deps=["knowledge-base-loader", "flink-kubernetes-operator", "fluss"],
+)
+k8s_resource(
+    "fluss-datalake-tiering",
+    labels=["fluss"],
+    resource_deps=["flink-kubernetes-operator", "fluss", "rustfs-bucket-initialize"],
+)

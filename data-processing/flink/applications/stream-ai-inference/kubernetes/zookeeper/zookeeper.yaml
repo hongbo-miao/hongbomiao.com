@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zookeeper
+  namespace: stream-ai-inference
+spec:
+  selector:
+    app: zookeeper
+  ports:
+    - name: client
+      port: 2181
+      targetPort: 2181
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper
+  namespace: stream-ai-inference
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zookeeper
+  template:
+    metadata:
+      labels:
+        app: zookeeper
+    spec:
+      containers:
+        - name: zookeeper
+          image: docker.io/zookeeper:3.9.2
+          ports:
+            - containerPort: 2181
+          readinessProbe:
+            tcpSocket:
+              port: 2181
+            initialDelaySeconds: 5
+            periodSeconds: 5

@@ -1,0 +1,55 @@
+kind-up:
+    kind create cluster --config=kubernetes/kind/kind-cluster.yaml
+
+kind-down:
+    kind delete cluster --name=flink-stream-ai-inference
+
+tilt-up:
+    kubectl config use-context kind-flink-stream-ai-inference
+    tilt up
+
+tilt-down:
+    kubectl get flinkdeployments.flink.apache.org --namespace=stream-ai-inference --output=name | xargs -I {} kubectl patch {} --namespace=stream-ai-inference --patch='{"metadata":{"finalizers":[]}}' --type=merge
+    tilt down --delete-namespaces
+
+ollama-serve:
+    OLLAMA_HOST=0.0.0.0:11434 ollama serve
+
+ollama-pull:
+    ollama pull qwen3:0.6b
+    ollama pull all-minilm:22m
+
+ollama-list:
+    curl --silent http://127.0.0.1:11434/api/tags | jq
+
+flink-ui:
+    kubectl --context=kind-flink-stream-ai-inference --namespace=stream-ai-inference port-forward svc/triage-and-answer-support-ticket-rest 25784:8081
+
+union-read-report:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    image=$(kubectl --context=kind-flink-stream-ai-inference --namespace=stream-ai-inference get pod --selector=app=triage-and-answer-support-ticket,component=jobmanager --output=jsonpath='{.items[0].spec.containers[0].image}')
+    echo "using image ${image}"
+    kubectl --context=kind-flink-stream-ai-inference --namespace=stream-ai-inference delete job union-read-report --ignore-not-found
+    sed "s|image: stream-ai-inference$|image: ${image}|" kubernetes/union-read-report.yaml \
+        | kubectl --context=kind-flink-stream-ai-inference --namespace=stream-ai-inference apply --filename=-
+    kubectl --context=kind-flink-stream-ai-inference --namespace=stream-ai-inference wait --for=condition=complete --timeout=10m job/union-read-report
+    job_log=$(kubectl --context=kind-flink-stream-ai-inference --namespace=stream-ai-inference logs job/union-read-report)
+    # No output filtering here on purpose. The Job runs with `-Dlog4j.root.level=WARN`, so the log
+    # is already just the banner plus the pinned evidence loggers. Filtering by line was the wrong
+    # layer anyway: Flink logs multi-line messages (wrapped SQL, temp-dir lists) where only the
+    # first line carries a level prefix, so continuation lines always leaked through mid-banner.
+    grep --invert-match --extended-regexp '^[0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3} (INFO|WARN|ERROR) ' <<< "$job_log"
+    echo " The split the planner resolved — the definitive check:"
+    echo "----------------------------------------------------------------"
+    echo "  a snapshotId next to a startingOffset well above 0 means one scan"
+    echo "  took history from that Paimon snapshot and only the tail from the"
+    echo "  Fluss log. Unlike the row counts above, this holds even when every"
+    echo "  recent write is an upsert of a key Paimon already has."
+    echo
+    grep --only-matching --extended-regexp 'LakeSnapshotAndFlussLogSplit\{.*' <<< "$job_log" \
+        | head -1 \
+        | grep --only-matching --extended-regexp 'snapshotId=[0-9]+|startingOffset=[0-9-]+|stoppingOffset=[0-9-]+|tableId=[0-9]+' \
+        | sort --unique \
+        | sed 's/^/  /'
+    echo "================================================================"

@@ -32,10 +32,6 @@ k8s_resource(
     resource_deps=["fluss"],
 )
 
-# Read from the host environment rather than a committed file so the API key
-# never ends up in version control. OpenRouter fronts many providers behind
-# one OpenAI-compatible API, so this works with any OpenRouter key rather
-# than requiring a separate Anthropic account.
 k8s_yaml(secret_from_dict(
     "openrouter",
     namespace="real-time-ai-agent",
@@ -48,12 +44,9 @@ k8s_resource(
     "agent",
     port_forwards=["8083:8083"],
     labels=["agent"],
-    # Give the publisher a head start so the first /ask has readings to see.
     resource_deps=["fluss", "sensor-stream-publisher"],
 )
 
-# Chat UI for the agent's OpenAI-compatible API (POST /v1/chat/completions,
-# GET /v1/models).
 helm_repo(
     "open-webui-charts",
     "https://helm.openwebui.com/",
@@ -65,7 +58,7 @@ helm_resource(
     namespace="real-time-ai-agent",
     flags=["--values=kubernetes/open-webui/helm-chart/values.yaml"],
     deps=["kubernetes/open-webui/helm-chart/values.yaml"],
-    port_forwards=["8084:80"],
+    port_forwards=["8084:8080"],
     labels=["open-webui"],
     resource_deps=["open-webui-charts", "agent"],
 )
