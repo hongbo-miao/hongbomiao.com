@@ -1,0 +1,102 @@
+load("ext://namespace", "namespace_create")
+load("ext://helm_resource", "helm_resource", "helm_repo")
+
+update_settings(k8s_upsert_timeout_secs=600)
+
+namespace_create("storage-compute-decoupled")
+
+helm_repo("rustfs-charts", "https://charts.rustfs.com", labels=["rustfs"])
+helm_resource(
+    "rustfs",
+    "rustfs-charts/rustfs",
+    namespace="storage-compute-decoupled",
+    flags=["--version=0.8.0", "--values=kubernetes/rustfs/helm-chart/values.yaml"],
+    labels=["rustfs"],
+    resource_deps=["rustfs-charts"],
+    deps=["kubernetes/rustfs/helm-chart/values.yaml"],
+)
+k8s_yaml([
+    "kubernetes/rustfs/credentials-secret.yaml",
+    "kubernetes/rustfs/bucket-initialize.yaml",
+])
+k8s_resource("rustfs-bucket-initialize", labels=["rustfs"], resource_deps=["rustfs"])
+
+helm_repo("doris-charts", "https://charts.selectdb.com", labels=["doris"])
+
+k8s_yaml([
+    "kubernetes/foundationdb/crds/foundationdbclusters.yaml",
+    "kubernetes/foundationdb/crds/foundationdbbackups.yaml",
+    "kubernetes/foundationdb/crds/foundationdbrestores.yaml",
+])
+helm_resource(
+    "foundationdb",
+    "doris-charts/doris-foundationdb",
+    namespace="storage-compute-decoupled",
+    flags=[
+        "--version=25.8.0",
+        "--values=kubernetes/foundationdb/helm-chart/values.yaml",
+        "--skip-crds",
+    ],
+    labels=["foundationdb"],
+    resource_deps=["doris-charts"],
+    deps=["kubernetes/foundationdb/helm-chart/values.yaml"],
+)
+
+# The chart's FoundationDBCluster template has no values hook for spec.faultDomain.
+# On a single-node kind cluster every pod shares one real zone, so without it the operator's coordinator selection fails with "Could only select 1 processes, but 3 are required".
+local_resource(
+    "foundationdb-fault-domain-patch",
+    cmd="kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled patch foundationdbcluster doris-fdb --type=merge --patch='{\"spec\":{\"faultDomain\":{\"key\":\"foundationdb.org/none\"}}}'",
+    resource_deps=["foundationdb"],
+    labels=["foundationdb"],
+)
+local_resource(
+    "foundationdb-available",
+    cmd="kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled wait --for=jsonpath='{.status.health.available}'=true foundationdbcluster/doris-fdb --timeout=600s",
+    resource_deps=["foundationdb-fault-domain-patch"],
+    labels=["foundationdb"],
+)
+helm_resource(
+    "doris-operator",
+    "doris-charts/doris-operator",
+    namespace="storage-compute-decoupled",
+    flags=["--version=25.8.0", "--values=kubernetes/doris-operator/helm-chart/values.yaml"],
+    labels=["doris"],
+    resource_deps=["doris-charts"],
+    deps=["kubernetes/doris-operator/helm-chart/values.yaml"],
+)
+k8s_kind("DorisDisaggregatedCluster", api_version="disaggregated.cluster.doris.com/v1")
+k8s_yaml([
+    "kubernetes/doris/ms-configmap.yaml",
+    "kubernetes/doris/fe-configmap.yaml",
+    "kubernetes/doris/be-configmap.yaml",
+    "kubernetes/doris/disaggregated-cluster.yaml",
+])
+k8s_resource(
+    "doris",
+    new_name="doris-disaggregated-cluster",
+    labels=["doris"],
+    resource_deps=["doris-operator", "foundationdb-available"],
+    objects=["ms-configmap", "fe-configmap", "be-configmap"],
+)
+docker_build("doris-paimon-seed", "flink")
+k8s_yaml([
+    "kubernetes/paimon-seed/flink-session-cluster.yaml",
+    "kubernetes/paimon-seed/seed-sql-configmap.yaml",
+    "kubernetes/paimon-seed/submit-seed-job.yaml",
+])
+k8s_resource("flink-jobmanager", port_forwards=["8084:8081"], labels=["paimon-seed"])
+k8s_resource("flink-taskmanager", labels=["paimon-seed"], resource_deps=["flink-jobmanager"])
+k8s_resource(
+    "paimon-seed-submit",
+    labels=["paimon-seed"],
+    resource_deps=["flink-jobmanager", "flink-taskmanager", "rustfs-bucket-initialize"],
+)
+
+docker_build("doris-arrow-flight-sql-client", "arrow-flight-sql-client")
+k8s_yaml(["kubernetes/arrow-flight-sql-client/deployment.yaml"])
+k8s_resource(
+    "doris-arrow-flight-sql-client",
+    labels=["doris"],
+    resource_deps=["doris-disaggregated-cluster"],
+)

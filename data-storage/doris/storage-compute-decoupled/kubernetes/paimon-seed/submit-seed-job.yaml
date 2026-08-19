@@ -1,0 +1,32 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: paimon-seed-submit
+  namespace: storage-compute-decoupled
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+        - name: wait-for-flink-jobmanager
+          image: docker.io/curlimages/curl:8.21.0
+          command:
+            - sh
+            - -c
+            - 'until curl --silent --fail --max-time 5 http://flink-jobmanager:8081/overview; do sleep 5; done'
+      containers:
+        - name: paimon-seed-submit
+          image: doris-paimon-seed
+          command:
+            - /opt/flink/bin/sql-client.sh
+            - --file
+            - /etc/paimon-seed/seed.sql
+          volumeMounts:
+            - name: seed-sql
+              mountPath: /etc/paimon-seed
+      volumes:
+        - name: seed-sql
+          configMap:
+            name: paimon-seed-sql

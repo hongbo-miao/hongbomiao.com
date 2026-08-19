@@ -1,0 +1,30 @@
+# Content matches the doris-disaggregated chart's ms-configmap.yaml template
+# (https://charts.selectdb.com/doris-disaggregated-25.8.0.tgz), hand-copied here because the
+# chart itself is not used — see README for why.
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ms-configmap
+  namespace: storage-compute-decoupled
+data:
+  doris_cloud.conf: |
+    # meta_service
+    brpc_listen_port = 5000
+    brpc_num_threads = -1
+    brpc_idle_timeout_sec = 30
+    http_token = greedisgood9999
+
+    # doris txn config
+    label_keep_max_second = 259200
+    expired_txn_scan_key_nums = 1000
+
+    # logging
+    log_dir = ./log/
+    log_level = info
+    log_size_mb = 1024
+    log_filenum_quota = 10
+    log_immediate_flush = false
+
+    # max stage num
+    max_num_stages = 40

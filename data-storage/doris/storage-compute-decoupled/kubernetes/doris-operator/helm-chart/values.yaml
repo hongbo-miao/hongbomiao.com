@@ -1,0 +1,8 @@
+# https://charts.selectdb.com/doris-operator-25.8.0.tgz values.yaml
+---
+dorisOperator:
+  image:
+    repository: apache/doris
+    # Pinned to match the chart version (25.8.0) rather than the newer operator-26.0.1 image,
+    # so the controller and the CRDs the chart installs stay from the same release.
+    tag: operator-25.8.0

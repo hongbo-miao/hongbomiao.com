@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: paimon-seed-sql
+  namespace: storage-compute-decoupled
+data:
+  seed.sql: |
+    create catalog paimon_catalog with (
+        'type' = 'paimon',
+        'warehouse' = 's3://paimon-warehouse/',
+        's3.endpoint' = 'http://rustfs-svc:9000',
+        's3.access-key' = 'rustfs_admin',
+        's3.secret-key' = 'passw0rd',
+        's3.path.style.access' = 'true'
+    );
+
+    set 'execution.runtime-mode' = 'batch';
+
+    create database if not exists paimon_catalog.sensor_db;
+
+    create table if not exists paimon_catalog.sensor_db.sensor_reading (
+        device_id int,
+        reading double,
+        recorded_at timestamp(3)
+    );
+
+    -- 2 million rows across 500 devices: enough to be a non-trivial read, small enough for
+    -- a laptop-sized kind cluster to write in a few minutes.
+    create temporary table sensor_source (
+        device_id int,
+        reading double,
+        recorded_at timestamp(3)
+    ) with (
+        'connector' = 'datagen',
+        'number-of-rows' = '2000000',
+        'fields.device_id.min' = '1',
+        'fields.device_id.max' = '500',
+        -- Without explicit bounds, datagen's default double range overflows to Infinity when
+        -- summed across 2M rows, which breaks the cross-compute-group checksum comparison this
+        -- demo relies on to prove reads are identical.
+        'fields.reading.min' = '0.0',
+        'fields.reading.max' = '100.0'
+    );
+
+    insert into paimon_catalog.sensor_db.sensor_reading select * from sensor_source;

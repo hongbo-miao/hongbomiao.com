@@ -1,0 +1,54 @@
+kind-up:
+    kind create cluster --config=kubernetes/kind/kind-cluster.yaml
+
+kind-down:
+    kind delete cluster --name=doris-storage-compute-decoupled
+
+tilt-up:
+    kubectl config use-context kind-doris-storage-compute-decoupled
+    tilt up
+
+tilt-down:
+    tilt down --delete-namespaces
+
+# fdb-kubernetes-operator names pods "<cluster>-<process-class>-<random-suffix>", not by
+# ordinal, so this has to go through a label selector rather than a fixed pod name.
+fdb-status:
+    kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled exec $(kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled get pods --selector=foundationdb.org/fdb-cluster-name=doris-fdb --output=jsonpath='{.items[0].metadata.name}') --container=foundationdb -- fdbcli --exec "status"
+
+# The operator names every object "<DorisDisaggregatedCluster name>-<component>"; the CR is
+# named "doris" (kubernetes/doris/disaggregated-cluster.yaml), so FE is "doris-fe", the meta
+# service is "doris-ms", and each compute group is "doris-<uniqueId>".
+storage-vault-up:
+    kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled exec --stdin statefulset/doris-fe -- mysql -h127.0.0.1 -P9030 -uroot < queries/storage-vault.sql
+
+show-compute-groups:
+    kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled exec --stdin statefulset/doris-fe -- mysql -h127.0.0.1 -P9030 -uroot < queries/compute-group.sql
+
+paimon-count:
+    kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled cp queries/flink-paimon-count.sql $(kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled get pods --selector=component=jobmanager --output=jsonpath='{.items[0].metadata.name}'):/tmp/flink-paimon-count.sql
+    kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled exec deploy/flink-jobmanager -- /opt/flink/bin/sql-client.sh --file /tmp/flink-paimon-count.sql
+
+paimon-catalog-up:
+    kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled exec --stdin statefulset/doris-fe -- mysql -h127.0.0.1 -P9030 -uroot < queries/paimon-catalog.sql
+
+users-up:
+    kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled exec --stdin statefulset/doris-fe -- mysql -h127.0.0.1 -P9030 -uroot < queries/users.sql
+
+# Query path only: DDL (users, catalog, storage vault) stays on the mysql-protocol recipes above,
+# since the FE has to exist and be reachable by mysql before this client pod is even useful. The
+# Arrow Flight SQL client itself connects to the FE's headless service (doris-fe-internal) rather
+# than doris-fe, since the operator does not publish port 8070 on the regular ClusterIP Service.
+same-table-both-groups-application-a:
+    kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled exec --stdin deploy/doris-arrow-flight-sql-client -- env DORIS_USER=application_a_user DORIS_PASSWORD=passw0rd /usr/local/bin/arrow-flight-sql-client < queries/same-table-both-groups.sql
+
+same-table-both-groups-application-b:
+    kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled exec --stdin deploy/doris-arrow-flight-sql-client -- env DORIS_USER=application_b_user DORIS_PASSWORD=passw0rd /usr/local/bin/arrow-flight-sql-client < queries/same-table-both-groups.sql
+
+# The isolation proof: which backend pods actually served this query's results, read straight
+# from the FlightEndpoint locations the FE hands back over Arrow Flight SQL.
+backend-provenance-application-a:
+    kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled exec --stdin deploy/doris-arrow-flight-sql-client -- env DORIS_USER=application_a_user DORIS_PASSWORD=passw0rd DORIS_SHOULD_SHOW_BACKENDS=true /usr/local/bin/arrow-flight-sql-client < queries/same-table-both-groups.sql
+
+backend-provenance-application-b:
+    kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled exec --stdin deploy/doris-arrow-flight-sql-client -- env DORIS_USER=application_b_user DORIS_PASSWORD=passw0rd DORIS_SHOULD_SHOW_BACKENDS=true /usr/local/bin/arrow-flight-sql-client < queries/same-table-both-groups.sql
