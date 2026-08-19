@@ -1,0 +1,48 @@
+---
+apiVersion: flink.apache.org/v1beta1
+kind: FlinkDeployment
+metadata:
+  name: fluss-datalake-tiering
+  namespace: stream-ai-inference
+spec:
+  image: stream-ai-inference
+  flinkVersion: v2_2
+  flinkConfiguration:
+    taskmanager.numberOfTaskSlots: '1'
+    restart-strategy.type: fixed-delay
+    restart-strategy.fixed-delay.attempts: '2147483647'
+    restart-strategy.fixed-delay.delay: 10s
+  serviceAccount: flink
+  jobManager:
+    resource:
+      memory: 1024Mi
+      cpu: 0.25
+  taskManager:
+    resource:
+      memory: 1024Mi
+      cpu: 0.25
+  job:
+    jarURI: local:///opt/flink/usrlib/fluss-flink-tiering-0.9.1-incubating.jar
+    args:
+      - --fluss.bootstrap.servers
+      - coordinator-server-hs.stream-ai-inference.svc.cluster.local:9124
+      - --datalake.format
+      - paimon
+      - --datalake.paimon.metastore
+      - filesystem
+      - --datalake.paimon.warehouse
+      - s3://paimon-warehouse/fluss
+      - --datalake.paimon.s3.endpoint
+      - http://rustfs-svc:9000
+      - --datalake.paimon.s3.access-key
+      - rustfs_admin
+      - --datalake.paimon.s3.secret-key
+      - passw0rd
+      - --datalake.paimon.s3.path.style.access
+      - 'true'
+      - --datalake.paimon.table-default.snapshot.num-retained.min
+      - '200'
+      - --datalake.paimon.table-default.snapshot.time-retained
+      - 24h
+    parallelism: 1
+    upgradeMode: stateless

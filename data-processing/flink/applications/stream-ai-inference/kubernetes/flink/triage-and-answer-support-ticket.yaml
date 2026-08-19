@@ -1,0 +1,65 @@
+---
+apiVersion: flink.apache.org/v1beta1
+kind: FlinkDeployment
+metadata:
+  name: triage-and-answer-support-ticket
+  namespace: stream-ai-inference
+spec:
+  image: stream-ai-inference
+  flinkVersion: v2_2
+  flinkConfiguration:
+    taskmanager.numberOfTaskSlots: '1'
+    restart-strategy.type: fixed-delay
+    restart-strategy.fixed-delay.attempts: '2147483647'
+    restart-strategy.fixed-delay.delay: 10s
+    execution.checkpointing.interval: 30s
+    state.checkpoints.dir: s3://flink-checkpoints/triage-and-answer-support-ticket
+    s3.endpoint: http://rustfs-svc:9000
+    s3.access.key: rustfs_admin
+    s3.secret.key: passw0rd
+    s3.path.style.access: 'true'
+  serviceAccount: flink
+  podTemplate:
+    spec:
+      containers:
+        - name: flink-main-container
+          env:
+            - name: OLLAMA_BASE_URL
+              value: http://ollama:11434
+            - name: OLLAMA_CHAT_MODEL
+              value: 'qwen3:0.6b'
+            - name: OLLAMA_EMBEDDING_MODEL
+              value: all-minilm:22m
+            - name: EMBEDDING_DIMENSION
+              value: '384'
+            - name: KNOWLEDGE_BASE_DATASET_URI
+              value: s3://vector-store/knowledge-base.lance
+            - name: S3_ENDPOINT
+              value: http://rustfs-svc:9000
+            - name: S3_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: rustfs-credentials
+                  key: access-key
+            - name: S3_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: rustfs-credentials
+                  key: secret-key
+            - name: FLUSS_BOOTSTRAP_SERVERS
+              value: coordinator-server-hs.stream-ai-inference.svc.cluster.local:9124
+  jobManager:
+    resource:
+      memory: 1200Mi
+      cpu: 0.5
+  taskManager:
+    resource:
+      # Two lookup joins, the Fluss client's buffers, and the Lance JNI all share this one slot
+      # alongside the existing ML_PREDICT/VECTOR_SEARCH pipeline.
+      memory: 2048Mi
+      cpu: 0.5
+  job:
+    jarURI: local:///opt/flink/usrlib/flink-stream-ai-inference-0.1.jar
+    entryClass: com.hongbomiao.Main
+    parallelism: 1
+    upgradeMode: stateless

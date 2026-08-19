@@ -1,0 +1,49 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: union-read-report
+  namespace: stream-ai-inference
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: union-read-report
+          image: stream-ai-inference
+          # Bare `java`, same as knowledge-base-loader.yaml — the fluss-flink connector jars live
+          # in Flink's own lib/, and this reporter never runs through Flink's own launcher. That also
+          # means the Dockerfile's env.java.opts.all does not reach this JVM, so the --add-opens
+          # Arrow needs has to be repeated here: the union read decodes the Fluss-side log records
+          # through Arrow (LogRecordReadContext), which dies with "Failed to initialize MemoryUtil"
+          # without it — and only on the union query, since the '$lake' one never touches Fluss.
+          #
+          # log4j.root.level is read by the app jar's log4j2.properties. This job's banner is its
+          # entire output, and a Flink MiniCluster otherwise buries it under thousands of INFO
+          # lines; the two loggers that carry the union-read evidence are pinned back to INFO there.
+          command:
+            - sh
+            - -c
+            - >-
+              java
+              --add-opens=java.base/java.nio=ALL-UNNAMED
+              --add-opens=java.base/java.util=ALL-UNNAMED
+              -Dlog4j.root.level=WARN
+              -cp "/opt/flink/lib/*:/opt/flink/usrlib/flink-stream-ai-inference-0.1.jar"
+              com.hongbomiao.UnionReadReporter
+          env:
+            - name: FLUSS_BOOTSTRAP_SERVERS
+              value: coordinator-server-hs.stream-ai-inference.svc.cluster.local:9124
+            - name: S3_ENDPOINT
+              value: http://rustfs-svc:9000
+            - name: S3_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: rustfs-credentials
+                  key: access-key
+            - name: S3_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: rustfs-credentials
+                  key: secret-key

@@ -1,0 +1,95 @@
+---
+# https://github.com/apache/fluss/blob/main/helm/values.yaml
+image:
+  tag: 0.9.1-incubating
+paimonPluginInitContainer: &paimonPluginInitContainer
+  name: stage-paimon-plugin
+  image: docker.io/curlimages/curl:8.19.0
+  command:
+    - sh
+    - -c
+    - >-
+      curl --silent --fail --create-dirs
+      -o /paimon-plugin/fluss-lake-paimon-0.9.1-incubating.jar
+      https://repo1.maven.org/maven2/org/apache/fluss/fluss-lake-paimon/0.9.1-incubating/fluss-lake-paimon-0.9.1-incubating.jar &&
+      curl --silent --fail --create-dirs
+      -o /paimon-plugin/paimon-bundle-1.3.1.jar
+      https://repo1.maven.org/maven2/org/apache/paimon/paimon-bundle/1.3.1/paimon-bundle-1.3.1.jar &&
+      curl --silent --fail --create-dirs
+      -o /paimon-plugin/hadoop-client-api-3.3.6.jar
+      https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-client-api/3.3.6/hadoop-client-api-3.3.6.jar &&
+      curl --silent --fail --create-dirs
+      -o /paimon-plugin/hadoop-client-runtime-3.3.6.jar
+      https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-client-runtime/3.3.6/hadoop-client-runtime-3.3.6.jar &&
+      curl --silent --fail --create-dirs
+      -o /paimon-plugin/paimon-s3-1.3.1.jar
+      https://repo1.maven.org/maven2/org/apache/paimon/paimon-s3/1.3.1/paimon-s3-1.3.1.jar
+  volumeMounts:
+    - name: paimon-plugin
+      mountPath: /paimon-plugin
+paimonPluginVolume: &paimonPluginVolume
+  name: paimon-plugin
+  emptyDir: {}
+paimonPluginVolumeMount: &paimonPluginVolumeMount
+  name: paimon-plugin
+  mountPath: /opt/fluss/plugins/paimon
+tablet:
+  numberOfReplicas: 1
+  storage:
+    enabled: true
+    size: 5Gi
+    storageClass: standard
+  initContainers:
+    - *paimonPluginInitContainer
+  extraVolumes:
+    - *paimonPluginVolume
+  extraVolumeMounts:
+    - *paimonPluginVolumeMount
+coordinator:
+  numberOfReplicas: 1
+  initContainers:
+    - *paimonPluginInitContainer
+  extraVolumes:
+    - *paimonPluginVolume
+  extraVolumeMounts:
+    - *paimonPluginVolumeMount
+configurationOverrides:
+  default.bucket.number: 1
+  default.replication.factor: 1
+  zookeeper.address: zookeeper.stream-ai-inference.svc.cluster.local:2181
+  zookeeper.path.root: /fluss
+  data.dir: /tmp/fluss/data
+  # `remote.data.dir` must be storage the Flink client can read too, not just a pod-local path — see
+  # README.md's "remote.data.dir must be storage the clients can reach" gotcha.
+  remote.data.dir: s3://fluss-remote-data/kv
+  s3.endpoint: http://rustfs-svc:9000
+  s3.region: us-west-2
+  s3.access-key: rustfs_admin
+  s3.secret-key: passw0rd
+  s3.path-style-access: true
+  # Forces Fluss to fetch client credentials via STS AssumeRole rather than GetSessionToken, which
+  # RustFS doesn't implement. RustFS doesn't validate the ARN's contents. See README.md.
+  s3.assumed.role.arn: arn:aws:iam::000000000000:role/fluss-remote-data
+  s3.assumed.role.sts.endpoint: http://rustfs-svc:9000
+  internal.listener.name: INTERNAL
+  # Lets the coordinator auto-create the matching Paimon table for any table with
+  # 'table.datalake.enabled' = 'true' (see Main.java) — the actual tiering still runs as its own
+  # Flink job (kubernetes/flink/fluss-datalake-tiering.yaml). See README.md's Streamhouse section.
+  datalake.format: paimon
+  datalake.paimon.metastore: filesystem
+  datalake.paimon.warehouse: s3://paimon-warehouse/fluss
+  datalake.paimon.s3.endpoint: http://rustfs-svc:9000
+  datalake.paimon.s3.access-key: rustfs_admin
+  datalake.paimon.s3.secret-key: passw0rd
+  datalake.paimon.s3.path.style.access: true
+  # Paimon snapshot retention for every lake table this coordinator auto-creates. Headroom, kept
+  # deliberately generous: a union read's lake side plans against the snapshot Fluss recorded a
+  # log-offset boundary for, which trails the writer's LATEST by several commits, and at Paimon's
+  # stock 'snapshot.num-retained.min' = 10 the 30s 'table.datalake.freshness' in Main.java would
+  # leave a retained window of only ~5 minutes for the reader to work inside.
+  # 'table-default.' is Paimon's own catalog-level prefix and applies when this catalog CREATES a
+  # table, so it has to be set before the tiered tables first appear; Fluss 0.9.1 has no per-table
+  # equivalent (it rejects 'table.datalake.paimon.*'). Also set on the tiering job, which is the
+  # writer and therefore the process that runs expiration. See README.md's Streamhouse section.
+  datalake.paimon.table-default.snapshot.num-retained.min: 200
+  datalake.paimon.table-default.snapshot.time-retained: 24h

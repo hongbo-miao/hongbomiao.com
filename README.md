@@ -332,6 +332,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **flink-connector-twitter** - Flink Twitter connector
   - **flink-connector-jdbc** - Flink JDBC Connector
   - **flink-connector-redis** - Flink Redis connector
+  - **flink-model-openai** - Flink OpenAI model provider
   - **Flink CDC** - Distributed real-time and batch change data capture (CDC) data integration tool
 - **Apache Fluss** - Streaming storage for real-time analytics
 - **NATS** - Edge and cloud native messaging system
