@@ -1,0 +1,24 @@
+# Long-running rather than a Job per query: every recipe in this demo's justfile drives Doris
+# through `kubectl exec` into a standing pod (see storage-vault-up, same-table-both-groups-application-a),
+# and the isolation test alone fires 40 concurrent queries. A Job per query would mean 40 Job objects to
+# create and reap instead of 40 kubectl execs into one pod.
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doris-arrow-flight-sql-client
+  namespace: storage-compute-decoupled
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: doris-arrow-flight-sql-client
+  template:
+    metadata:
+      labels:
+        app: doris-arrow-flight-sql-client
+    spec:
+      containers:
+        - name: doris-arrow-flight-sql-client
+          image: doris-arrow-flight-sql-client
+          command: ["sleep", "infinity"]

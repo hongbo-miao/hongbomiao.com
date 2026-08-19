@@ -1,0 +1,1 @@
+show compute groups;
