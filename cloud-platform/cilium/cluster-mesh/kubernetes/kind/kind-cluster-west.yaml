@@ -1,0 +1,14 @@
+---
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: cilium-cluster-mesh-west
+networking:
+  # Cilium replaces the default CNI and kube-proxy, matching the production install.
+  disableDefaultCNI: true
+  kubeProxyMode: none
+  # Pod and service CIDRs must not overlap with the east cluster.
+  podSubnet: 10.10.0.0/16
+  serviceSubnet: 10.11.0.0/16
+nodes:
+  - role: control-plane
+  - role: worker

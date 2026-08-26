@@ -1,0 +1,25 @@
+---
+# Represents another service inside the mesh calling the backend east-west. Internal callers
+# target the ClusterIP directly so they get Cilium's in-mesh cross-cluster failover, rather
+# than hairpinning out through the edge load balancer.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: internal-client
+  namespace: cluster-mesh
+  labels:
+    app: internal-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: internal-client
+  template:
+    metadata:
+      labels:
+        app: internal-client
+    spec:
+      containers:
+        - name: internal-client
+          image: docker.io/curlimages/curl:8.11.0
+          command: ["sleep", "infinity"]

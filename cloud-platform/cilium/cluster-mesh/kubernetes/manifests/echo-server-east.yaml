@@ -1,0 +1,48 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: echo-server-content
+  namespace: cluster-mesh
+data:
+  Caddyfile: |
+    :80 {
+        root * /usr/share/caddy
+        file_server
+    }
+  index.html: |
+    {"cluster": "east"}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-server
+  namespace: cluster-mesh
+  labels:
+    app: echo-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: echo-server
+  template:
+    metadata:
+      labels:
+        app: echo-server
+    spec:
+      containers:
+        - name: echo-server
+          image: docker.io/caddy:2.10-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: echo-server-content
+              mountPath: /etc/caddy/Caddyfile
+              subPath: Caddyfile
+            - name: echo-server-content
+              mountPath: /usr/share/caddy/index.html
+              subPath: index.html
+      volumes:
+        - name: echo-server-content
+          configMap:
+            name: echo-server-content

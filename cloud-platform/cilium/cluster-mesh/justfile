@@ -1,0 +1,153 @@
+WEST_CLUSTER := "cilium-cluster-mesh-west"
+EAST_CLUSTER := "cilium-cluster-mesh-east"
+WEST_CONTEXT := "kind-" + WEST_CLUSTER
+EAST_CONTEXT := "kind-" + EAST_CLUSTER
+NAMESPACE := "cluster-mesh"
+EDGE_CONTAINER_NAME := "edge-load-balancer"
+EXTERNAL_CLIENT_CONTAINER_NAME := "external-client"
+KIND_NETWORK := "kind"
+# Docker Desktop does not reliably publish over IPv6, and macOS resolves "localhost" to
+# ::1 first, so the edge is bound and dialed explicitly over IPv4.
+EDGE_HOST := "127.0.0.1"
+EDGE_PORT := "8080"
+EDGE_STATS_PORT := "8404"
+CILIUM_VERSION := "1.19.7"
+HELM_RELEASE_NAME := "cilium"
+
+kind-up:
+    kind create cluster --config=kubernetes/kind/kind-cluster-west.yaml
+    kind create cluster --config=kubernetes/kind/kind-cluster-east.yaml
+
+kind-down:
+    kind delete cluster --name={{ WEST_CLUSTER }}
+    kind delete cluster --name={{ EAST_CLUSTER }}
+
+add-helm-repository:
+    helm repo add cilium https://helm.cilium.io
+    helm repo update cilium
+
+# Cluster mesh needs one shared CA, so west installs first and east reuses its CA.
+install-cilium: add-helm-repository install-cilium-west copy-certificate-authority install-cilium-east
+
+install-cilium-west:
+    helm install {{ HELM_RELEASE_NAME }} cilium/cilium \
+        --version={{ CILIUM_VERSION }} \
+        --namespace=kube-system \
+        --kube-context={{ WEST_CONTEXT }} \
+        --values=kubernetes/cilium/cilium-values-west.yaml
+
+install-cilium-east:
+    helm install {{ HELM_RELEASE_NAME }} cilium/cilium \
+        --version={{ CILIUM_VERSION }} \
+        --namespace=kube-system \
+        --kube-context={{ EAST_CONTEXT }} \
+        --values=kubernetes/cilium/cilium-values-east.yaml
+
+copy-certificate-authority:
+    kubectl --context={{ WEST_CONTEXT }} --namespace=kube-system get secret cilium-ca -o yaml \
+        | kubectl --context={{ EAST_CONTEXT }} --namespace=kube-system apply -f -
+
+connect-cluster-mesh:
+    cilium clustermesh connect --context={{ WEST_CONTEXT }} --destination-context={{ EAST_CONTEXT }}
+
+deploy-application:
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/manifests/namespace.yaml
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/manifests/namespace.yaml
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/manifests/echo-server-west.yaml
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/manifests/echo-server-east.yaml
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/manifests/echo-server-global-service.yaml
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/manifests/echo-server-global-service.yaml
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/manifests/internal-client.yaml
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} rollout status deployment/echo-server
+    kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} rollout status deployment/echo-server
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} rollout status deployment/internal-client
+
+test-global-service:
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} exec deploy/internal-client -- \
+        sh -c 'for i in $(seq 1 20); do curl -s echo-server; echo; done' \
+        | sort | uniq -c
+
+test-failover:
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} scale deployment/echo-server --replicas=0
+    sleep 5
+    just test-global-service
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} scale deployment/echo-server --replicas=2
+
+apply-network-policy:
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/manifests/allow-west-client-network-policy.yaml
+
+install-ingress: add-traefik-helm-repository install-ingress-west install-ingress-east
+
+add-traefik-helm-repository:
+    helm repo add traefik https://traefik.github.io/charts
+    helm repo update traefik
+
+install-ingress-west:
+    helm install traefik traefik/traefik \
+        --namespace=traefik \
+        --create-namespace \
+        --kube-context={{ WEST_CONTEXT }} \
+        --values=kubernetes/traefik/traefik-values.yaml
+    kubectl --context={{ WEST_CONTEXT }} --namespace=traefik rollout status deployment/traefik
+
+install-ingress-east:
+    helm install traefik traefik/traefik \
+        --namespace=traefik \
+        --create-namespace \
+        --kube-context={{ EAST_CONTEXT }} \
+        --values=kubernetes/traefik/traefik-values.yaml
+    kubectl --context={{ EAST_CONTEXT }} --namespace=traefik rollout status deployment/traefik
+
+deploy-ingress-route:
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/manifests/echo-server-ingress.yaml
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/manifests/echo-server-ingress.yaml
+
+# Stands in for a Cloudflare Load Balancer sitting in front of both clusters.
+edge-up:
+    docker run --detach \
+        --name={{ EDGE_CONTAINER_NAME }} \
+        --network={{ KIND_NETWORK }} \
+        --publish={{ EDGE_HOST }}:{{ EDGE_PORT }}:80 \
+        --publish={{ EDGE_HOST }}:{{ EDGE_STATS_PORT }}:8404 \
+        --volume=$PWD/edge/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro \
+        docker.io/haproxy:3.1-alpine
+
+edge-down:
+    docker rm --force {{ EDGE_CONTAINER_NAME }}
+
+# Which cluster the edge picked, and which cluster ultimately served the request.
+test-edge:
+    for i in $(seq 1 20); do curl -s http://{{ EDGE_HOST }}:{{ EDGE_PORT }}; echo; done | sort | uniq -c
+
+# Cilium-tier failure: local pods disappear but the cluster ingress stays healthy, so the
+# edge keeps both clusters in rotation and the mesh silently serves from the remote cluster.
+test-mesh-failover:
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} scale deployment/echo-server --replicas=0
+    sleep 5
+    just test-edge
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} scale deployment/echo-server --replicas=2
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} rollout status deployment/echo-server
+
+# Edge-tier failure: the whole west ingress goes away, so the edge health check ejects
+# that cluster from the pool after ~6 seconds.
+test-edge-failover:
+    kubectl --context={{ WEST_CONTEXT }} --namespace=traefik scale deployment/traefik --replicas=0
+    sleep 10
+    just test-edge
+    kubectl --context={{ WEST_CONTEXT }} --namespace=traefik scale deployment/traefik --replicas=1
+    kubectl --context={{ WEST_CONTEXT }} --namespace=traefik rollout status deployment/traefik
+
+# A human browsing the site: lives outside both clusters, on the same docker network, and
+# only ever talks to the edge load balancer. Hubble sees this as the "world" identity.
+external-client-up:
+    docker run --detach \
+        --name={{ EXTERNAL_CLIENT_CONTAINER_NAME }} \
+        --network={{ KIND_NETWORK }} \
+        docker.io/curlimages/curl:8.11.0 \
+        sh -c 'while true; do curl --silent http://{{ EDGE_CONTAINER_NAME }}; echo; sleep 1; done'
+
+external-client-down:
+    docker rm --force {{ EXTERNAL_CLIENT_CONTAINER_NAME }}
+
+test-connectivity:
+    cilium connectivity test --context={{ WEST_CONTEXT }} --multi-cluster={{ EAST_CONTEXT }}
