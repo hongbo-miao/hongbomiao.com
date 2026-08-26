@@ -900,6 +900,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 ## Authentication, Authorization, Security
 
 - **Defguard** - Zero-trust virtual private network (VPN) with WireGuard-based multi-factor authentication (MFA) and single sign-on (SSO)
+SSO, MFA, Passkeys, OIDC, SAML, SCIM
+- **ZITADEL** - Identity and access management (IAM) platform for authentication, SSO, MFA, passkeys, and authorization, with OAuth 2.0, OIDC, SAML, and SCIM support
 - **Ory Hydra** - OAuth 2.0 and OpenID Connect server
 - **Open Policy Agent (OPA)** - Policy-based control
 - **OPAL** - Open-policy administration layer

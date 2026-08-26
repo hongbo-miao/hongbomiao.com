@@ -1,0 +1,101 @@
+# https://github.com/zitadel/zitadel-charts/blob/zitadel-10.0.4/charts/zitadel/values.yaml
+---
+replicaCount: 3
+imageRegistry: harbor.hongbomiao.com/docker-hub-proxy-cache
+postgresql:
+  enabled: false
+env:
+  - name: ZITADEL_DATABASE_POSTGRES_DSN
+    valueFrom:
+      secretKeyRef:
+        name: hm-zitadel-secret
+        key: postgres-dsn
+zitadel:
+  masterkeySecretName: hm-zitadel-secret
+  configSecretName: hm-zitadel-secret
+  configSecretKey: config-yaml
+  configmapConfig:
+    ExternalDomain: zitadel.hongbomiao.com
+    ExternalPort: 443
+    ExternalSecure: true
+    TLS:
+      Enabled: false
+    FirstInstance:
+      Org:
+        Human:
+          UserName: zitadel-admin
+          Email: zitadel-admin@zitadel.hongbomiao.com
+          PasswordChangeRequired: false
+        Machine:
+          Machine:
+            Username: zitadel-bootstrap-sa
+            Name: Bootstrap Service Account
+          MachineKey: null
+          Pat:
+            ExpirationDate: "2027-01-01T00:00:00Z"
+ingress:
+  enabled: true
+  className: traefik
+  annotations:
+    # https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: zitadel.hongbomiao.com
+  tls:
+    - hosts:
+        - zitadel.hongbomiao.com
+      secretName: hm-zitadel-certificate
+login:
+  enabled: true
+  replicaCount: 3
+  ingress:
+    enabled: true
+    className: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      traefik.ingress.kubernetes.io/router.tls: "true"
+    tls:
+      - hosts:
+          - zitadel.hongbomiao.com
+        secretName: hm-zitadel-certificate
+  resources:
+    requests:
+      cpu: 50m
+      memory: 256Mi
+    limits:
+      memory: 1Gi
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: zitadel-login
+          topologyKey: kubernetes.io/hostname
+  nodeSelector:
+    environment: production
+  tolerations:
+    - key: environment
+      operator: Equal
+      value: production
+      effect: NoSchedule
+resources:
+  requests:
+    cpu: 50m
+    memory: 250Mi
+  limits:
+    memory: 500Mi
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: zitadel
+        topologyKey: kubernetes.io/hostname
+nodeSelector:
+  environment: production
+tolerations:
+  - key: environment
+    operator: Equal
+    value: production
+    effect: NoSchedule

@@ -1,0 +1,21 @@
+# https://cert-manager.io/docs/usage/certificate
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hm-zitadel-certificate
+  namespace: production-hm-zitadel
+  labels:
+    app.kubernetes.io/name: zitadel
+    app.kubernetes.io/part-of: production-hm-zitadel
+spec:
+  secretName: hm-zitadel-certificate
+  issuerRef:
+    name: hm-lets-encrypt-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - zitadel.hongbomiao.com
+  privateKey:
+    algorithm: ECDSA
+    size: 384
+    rotationPolicy: Always

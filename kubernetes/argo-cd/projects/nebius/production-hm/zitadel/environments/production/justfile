@@ -1,0 +1,10 @@
+# Zitadel's setup are Helm pre-install hooks (Argo CD PreSync) and read this secret, so the secret has to exist before they run
+seal-zitadel-secret:
+    cat secrets/hm-zitadel-secret.unsealed.yaml | \
+    kubeseal \
+        --cert=https://sealed-secrets.hongbomiao.com/v1/cert.pem \
+        --format=yaml | \
+    kubectl annotate --local --filename=- --output=yaml \
+        argocd.argoproj.io/hook=PreSync \
+        argocd.argoproj.io/sync-wave=-5 \
+        > kubernetes-manifests/hm-zitadel-secret.yaml
