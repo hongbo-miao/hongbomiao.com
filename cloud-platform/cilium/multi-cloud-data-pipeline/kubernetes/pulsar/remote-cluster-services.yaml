@@ -1,0 +1,65 @@
+# Applied identically to both clusters. Each Service's selector includes a "cloud: <name>"
+# label that only one cloud's Pulsar pods carry (set via helm-chart/values-*.yaml labels:),
+# so in that cloud the Service has real local endpoints, and in the other cloud it has none --
+# which is what makes a Cilium global service resolve to the remote cluster only, over the
+# WireGuard-encrypted mesh, instead of load-balancing across both.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oxia-config-store
+  namespace: data-pipeline
+  annotations:
+    service.cilium.io/global: "true"
+spec:
+  selector:
+    app: pulsar
+    release: pulsar
+    component: oxia-server
+    cloud: west
+  ports:
+    - name: public
+      port: 6648
+      targetPort: 6648
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: broker-west
+  namespace: data-pipeline
+  annotations:
+    service.cilium.io/global: "true"
+spec:
+  selector:
+    app: pulsar
+    release: pulsar
+    component: broker
+    cloud: west
+  ports:
+    - name: pulsar
+      port: 6650
+      targetPort: 6650
+    - name: http
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: broker-east
+  namespace: data-pipeline
+  annotations:
+    service.cilium.io/global: "true"
+spec:
+  selector:
+    app: pulsar
+    release: pulsar
+    component: broker
+    cloud: east
+  ports:
+    - name: pulsar
+      port: 6650
+      targetPort: 6650
+    - name: http
+      port: 8080
+      targetPort: 8080

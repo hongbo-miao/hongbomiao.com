@@ -410,6 +410,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Loki** - Log aggregation system
 - **RocksDB** - Embedded key-value store
 - **Valkey** - Distributed in-memory key-value store
+- **FoundationDB** - Distributed transactional key-value store
 - **Apache Cassandra** - Distributed wide-column NoSQL database
 - **Faiss** - Vector search and similarity library
 - **LanceDB** - Embedded vector database

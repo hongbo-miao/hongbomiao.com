@@ -1,0 +1,64 @@
+# https://github.com/apache/pulsar-helm-chart/blob/master/charts/pulsar/values.yaml
+#
+# Geo-replication needs a configuration store shared by both clusters, and west's Oxia is it.
+# West leaves configurationMetadataStoreUrl unset, which falls back to metadataStoreUrl -- this
+# cluster's own Oxia. East overrides it; see values-east.yaml.
+#
+# Both clusters' pods share identical Service/pod DNS names, so any address one cluster hands
+# the other to "reconnect to" resolves locally in the caller's cluster instead -- silently
+# looping back home. Every advertised address below is therefore a cloud-scoped global service
+# name from remote-cluster-services.yaml, which resolves to the right cluster from either side.
+---
+initialize: true
+useReleaseStatus: false
+clusterName: west
+# Selected on by remote-cluster-services.yaml to pick out this cloud's pods.
+labels:
+  cloud: west
+affinity:
+  anti_affinity: false
+volumes:
+  persistence: false
+components:
+  zookeeper: false
+  oxia: true
+  bookkeeper: true
+  broker: true
+  proxy: false
+  autorecovery: false
+  toolset: false
+  functions: false
+oxia:
+  initialShardCount: 1
+  replicationFactor: 1
+  coordinator:
+    # The chart advertises each Oxia server by its own pod FQDN, which east resolves to east's
+    # Oxia. oxia-coordinator-config-west.yaml swaps in the global service name instead.
+    customConfigMapName: oxia-coordinator-config
+    podMonitor:
+      enabled: false
+  server:
+    replicas: 1
+    podMonitor:
+      enabled: false
+bookkeeper:
+  replicaCount: 1
+  podMonitor:
+    enabled: false
+broker:
+  replicaCount: 1
+  podMonitor:
+    enabled: false
+  configData:
+    managedLedgerDefaultEnsembleSize: "1"
+    managedLedgerDefaultWriteQuorum: "1"
+    managedLedgerDefaultAckQuorum: "1"
+    advertisedAddress: broker-west
+autorecovery:
+  podMonitor:
+    enabled: false
+proxy:
+  podMonitor:
+    enabled: false
+victoria-metrics-k8s-stack:
+  enabled: false

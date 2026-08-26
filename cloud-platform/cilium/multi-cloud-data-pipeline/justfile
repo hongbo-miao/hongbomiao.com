@@ -1,0 +1,282 @@
+WEST_CLUSTER := "data-pipeline-west"
+EAST_CLUSTER := "data-pipeline-east"
+WEST_CONTEXT := "kind-" + WEST_CLUSTER
+EAST_CONTEXT := "kind-" + EAST_CLUSTER
+NAMESPACE := "data-pipeline"
+CILIUM_VERSION := "1.19.7"
+PULSAR_CHART_VERSION := "4.7.0"
+EDGE_CONTAINER_NAME := "edge-load-balancer"
+EDGE_DEVICE_CONTAINER_NAME := "edge-device"
+KIND_NETWORK := "kind"
+EDGE_PORT := "8090"
+HELM_RELEASE_NAME := "cilium"
+
+kind-up:
+    kind create cluster --config=kubernetes/kind/kind-cluster-west.yaml
+    kind create cluster --config=kubernetes/kind/kind-cluster-east.yaml
+
+kind-down:
+    kind delete cluster --name={{ WEST_CLUSTER }}
+    kind delete cluster --name={{ EAST_CLUSTER }}
+
+create-namespace:
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/namespace.yaml
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/namespace.yaml
+
+add-cilium-helm-repository:
+    helm repo add cilium https://helm.cilium.io
+    helm repo update cilium
+
+# Cluster mesh needs one shared CA, so west installs first and east reuses its CA.
+install-cilium: add-cilium-helm-repository install-cilium-west copy-certificate-authority install-cilium-east
+
+install-cilium-west:
+    helm install {{ HELM_RELEASE_NAME }} cilium/cilium \
+        --version={{ CILIUM_VERSION }} \
+        --namespace=kube-system \
+        --kube-context={{ WEST_CONTEXT }} \
+        --values=kubernetes/cilium/cilium-values-west.yaml
+
+install-cilium-east:
+    helm install {{ HELM_RELEASE_NAME }} cilium/cilium \
+        --version={{ CILIUM_VERSION }} \
+        --namespace=kube-system \
+        --kube-context={{ EAST_CONTEXT }} \
+        --values=kubernetes/cilium/cilium-values-east.yaml
+
+copy-certificate-authority:
+    kubectl --context={{ WEST_CONTEXT }} --namespace=kube-system get secret cilium-ca -o yaml \
+        | kubectl --context={{ EAST_CONTEXT }} --namespace=kube-system apply -f -
+
+connect-cluster-mesh:
+    cilium clustermesh connect --context={{ WEST_CONTEXT }} --destination-context={{ EAST_CONTEXT }}
+
+add-pulsar-helm-repository:
+    helm repo add pulsar https://pulsar.apache.org/charts
+    helm repo update pulsar
+
+install-pulsar: add-pulsar-helm-repository deploy-oxia-coordinator-config deploy-remote-cluster-services install-pulsar-west install-pulsar-east
+
+deploy-oxia-coordinator-config:
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/pulsar/oxia-coordinator-config-west.yaml
+
+install-pulsar-west:
+    helm install pulsar pulsar/pulsar \
+        --version={{ PULSAR_CHART_VERSION }} \
+        --namespace={{ NAMESPACE }} \
+        --kube-context={{ WEST_CONTEXT }} \
+        --values=kubernetes/pulsar/helm-chart/values-west.yaml
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} rollout status statefulset/pulsar-oxia-server --timeout=180s
+
+install-pulsar-east:
+    helm install pulsar pulsar/pulsar \
+        --version={{ PULSAR_CHART_VERSION }} \
+        --namespace={{ NAMESPACE }} \
+        --kube-context={{ EAST_CONTEXT }} \
+        --values=kubernetes/pulsar/helm-chart/values-east.yaml
+
+deploy-remote-cluster-services:
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/pulsar/remote-cluster-services.yaml
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/pulsar/remote-cluster-services.yaml
+
+initialize-geo-replication:
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/pulsar/geo-replication-initialize-west.yaml
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} wait --for=condition=complete --timeout=180s job/geo-replication-initialize
+
+# Publishes from west, consumes from east -- proves geo-replication actually moves data
+# across the mesh, not just that both clusters exist.
+# The subscription is created before anything is produced, and read back with peek-messages
+# rather than a live `pulsar-client consume`: without a durable cursor, a replicated message
+# with no reader can be garbage-collected almost immediately (namespace retention defaults to
+# 0), and a blocking consume has no way to distinguish "nothing replicated yet" from "hung".
+test-geo-replication:
+    kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} exec statefulset/pulsar-broker -- \
+        bin/pulsar-admin --admin-url=http://pulsar-broker:8080 topics create-subscription \
+        persistent://telemetry/sensor/reading --subscription=geo-replication-test --messageId=earliest
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} exec statefulset/pulsar-broker -- \
+        bin/pulsar-client produce persistent://telemetry/sensor/reading --messages="geo-replication-test-message"
+    sleep 5
+    kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} exec statefulset/pulsar-broker -- \
+        bin/pulsar-admin --admin-url=http://pulsar-broker:8080 topics peek-messages \
+        persistent://telemetry/sensor/reading --subscription=geo-replication-test --count=1
+
+build-sensor-gateway:
+    docker build --tag=sensor-gateway:local sensor-gateway/
+
+load-sensor-gateway-image:
+    kind load docker-image sensor-gateway:local --name={{ WEST_CLUSTER }}
+    kind load docker-image sensor-gateway:local --name={{ EAST_CLUSTER }}
+
+deploy-gateway: build-sensor-gateway load-sensor-gateway-image
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/sensor-gateway/sensor-gateway-west.yaml
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/sensor-gateway/sensor-gateway-east.yaml
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} rollout status deployment/sensor-gateway
+    kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} rollout status deployment/sensor-gateway
+
+# Stands in for a Cloudflare Load Balancer sitting in front of both clouds' gateways --
+# same pattern as cloud-platform/cilium/cluster-mesh's edge tier.
+edge-up:
+    docker run --detach \
+        --name={{ EDGE_CONTAINER_NAME }} \
+        --network={{ KIND_NETWORK }} \
+        --publish={{ EDGE_PORT }}:80 \
+        --volume=$PWD/edge/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro \
+        docker.io/haproxy:3.1-alpine
+
+edge-down:
+    docker rm --force {{ EDGE_CONTAINER_NAME }}
+
+# A simulated edge device: lives outside both clusters and posts one reading per second
+# through the edge load balancer, so a single device's traffic can land on either cloud.
+edge-device-up:
+    docker run --detach \
+        --name={{ EDGE_DEVICE_CONTAINER_NAME }} \
+        --network={{ KIND_NETWORK }} \
+        docker.io/curlimages/curl:8.11.0 \
+        sh -c 'i=0; while true; do i=$((i+1)); curl --silent --request POST \
+            --header "Content-Type: application/json" \
+            --data "{\"device_id\": \"edge-device-1\", \"temperature_c\": 21.5, \"humidity_pct\": 40.0}" \
+            http://{{ EDGE_CONTAINER_NAME }}/readings; echo; sleep 1; done'
+
+edge-device-down:
+    docker rm --force {{ EDGE_DEVICE_CONTAINER_NAME }}
+
+# Which cloud's gateway accepted the last 20 readings, and whether they actually landed on
+# the shared telemetry/sensor/reading topic.
+test-ingest:
+    docker logs --tail=20 {{ EDGE_DEVICE_CONTAINER_NAME }} | grep cloud | sort | uniq -c
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} exec statefulset/pulsar-broker -- \
+        bin/pulsar-admin --admin-url=http://pulsar-broker:8080 topics stats \
+        persistent://telemetry/sensor/reading | grep -E "msgInCounter|storageSize"
+
+install-rustfs:
+    helm repo add rustfs-charts https://charts.rustfs.com
+    helm repo update rustfs-charts
+    helm install rustfs rustfs-charts/rustfs \
+        --version=0.8.0 \
+        --namespace={{ NAMESPACE }} \
+        --kube-context={{ WEST_CONTEXT }} \
+        --values=kubernetes/rustfs/helm-chart/values.yaml
+    helm install rustfs rustfs-charts/rustfs \
+        --version=0.8.0 \
+        --namespace={{ NAMESPACE }} \
+        --kube-context={{ EAST_CONTEXT }} \
+        --values=kubernetes/rustfs/helm-chart/values.yaml
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/rustfs/credentials-secret.yaml
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/rustfs/credentials-secret.yaml
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/rustfs/bucket-initialize.yaml
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/rustfs/bucket-initialize.yaml
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} wait --for=condition=complete --timeout=180s job/rustfs-bucket-initialize
+    kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} wait --for=condition=complete --timeout=180s job/rustfs-bucket-initialize
+
+build-telemetry-flink-image:
+    docker build --tag=telemetry-flink:local flink/
+
+load-telemetry-flink-image:
+    kind load docker-image telemetry-flink:local --name={{ WEST_CLUSTER }}
+    kind load docker-image telemetry-flink:local --name={{ EAST_CLUSTER }}
+
+# Each cloud runs its own Flink session cluster against its own local RustFS -- duplicate
+# compute reading from that cloud's own Pulsar, not a shared writer.
+install-flink: build-telemetry-flink-image load-telemetry-flink-image
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/flink/flink-session-cluster.yaml
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/flink/flink-session-cluster.yaml
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} rollout status deployment/flink-jobmanager
+    kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} rollout status deployment/flink-jobmanager
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} rollout status deployment/flink-taskmanager
+    kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} rollout status deployment/flink-taskmanager
+
+submit-telemetry-sink:
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/flink/jobs/telemetry-sink-sql-configmap.yaml
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/flink/jobs/telemetry-sink-sql-configmap.yaml
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/flink/jobs/submit-telemetry-sink-job.yaml
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/flink/jobs/submit-telemetry-sink-job.yaml
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} wait --for=condition=complete --timeout=180s job/submit-telemetry-sink
+    kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} wait --for=condition=complete --timeout=180s job/submit-telemetry-sink
+
+# Row counts should match between the two clouds once both have caught up to the same
+# point in their (independently replicated) topics -- proof each cloud recomputed the
+# same result from its own local Pulsar, not that they share a warehouse.
+paimon-count:
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} cp queries/telemetry-count.sql $(kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} get pods --selector=component=jobmanager --output=jsonpath='{.items[0].metadata.name}'):/tmp/telemetry-count.sql
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} exec deploy/flink-jobmanager -- /opt/flink/bin/sql-client.sh --file /tmp/telemetry-count.sql
+    kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} cp queries/telemetry-count.sql $(kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} get pods --selector=component=jobmanager --output=jsonpath='{.items[0].metadata.name}'):/tmp/telemetry-count.sql
+    kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} exec deploy/flink-jobmanager -- /opt/flink/bin/sql-client.sh --file /tmp/telemetry-count.sql
+
+add-doris-helm-repository:
+    helm repo add doris-charts https://charts.selectdb.com
+    helm repo update doris-charts
+
+deploy-foundationdb-crds:
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/foundationdb/crds/
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/foundationdb/crds/
+
+install-foundationdb: add-doris-helm-repository deploy-foundationdb-crds
+    helm install foundationdb doris-charts/doris-foundationdb \
+        --version=25.8.0 \
+        --namespace={{ NAMESPACE }} \
+        --kube-context={{ WEST_CONTEXT }} \
+        --values=kubernetes/foundationdb/helm-chart/values.yaml \
+        --skip-crds
+    helm install foundationdb doris-charts/doris-foundationdb \
+        --version=25.8.0 \
+        --namespace={{ NAMESPACE }} \
+        --kube-context={{ EAST_CONTEXT }} \
+        --values=kubernetes/foundationdb/helm-chart/values.yaml \
+        --skip-crds
+
+# The chart's FoundationDBCluster template has no values hook for spec.faultDomain. On a
+# single-node kind cluster every pod shares one real zone, so without it the operator's
+# coordinator selection fails with "Could only select 1 processes, but 3 are required" -- same
+# patch the reference storage-compute-decoupled lab applies via Tilt's local_resource.
+patch-foundationdb-fault-domain:
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} patch foundationdbcluster doris-fdb --type=merge --patch='{"spec":{"faultDomain":{"key":"foundationdb.org/none"}}}'
+    kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} patch foundationdbcluster doris-fdb --type=merge --patch='{"spec":{"faultDomain":{"key":"foundationdb.org/none"}}}'
+
+wait-foundationdb-available:
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} wait --for=jsonpath='{.status.health.available}'=true foundationdbcluster/doris-fdb --timeout=600s
+    kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} wait --for=jsonpath='{.status.health.available}'=true foundationdbcluster/doris-fdb --timeout=600s
+
+install-doris-operator: add-doris-helm-repository
+    helm install doris-operator doris-charts/doris-operator \
+        --version=25.8.0 \
+        --namespace={{ NAMESPACE }} \
+        --kube-context={{ WEST_CONTEXT }} \
+        --values=kubernetes/doris-operator/helm-chart/values.yaml
+    helm install doris-operator doris-charts/doris-operator \
+        --version=25.8.0 \
+        --namespace={{ NAMESPACE }} \
+        --kube-context={{ EAST_CONTEXT }} \
+        --values=kubernetes/doris-operator/helm-chart/values.yaml
+
+deploy-doris-cluster:
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/doris/ms-configmap.yaml -f kubernetes/doris/fe-configmap.yaml -f kubernetes/doris/be-configmap.yaml -f kubernetes/doris/disaggregated-cluster.yaml
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/doris/ms-configmap.yaml -f kubernetes/doris/fe-configmap.yaml -f kubernetes/doris/be-configmap.yaml -f kubernetes/doris/disaggregated-cluster.yaml
+
+wait-doris-available:
+    for context in {{ WEST_CONTEXT }} {{ EAST_CONTEXT }}; do \
+        for statefulset in doris-fe doris-serving; do \
+            until kubectl --context=$context --namespace={{ NAMESPACE }} get statefulset $statefulset > /dev/null 2>&1; do sleep 10; done; \
+            kubectl --context=$context --namespace={{ NAMESPACE }} rollout status statefulset/$statefulset --timeout=900s; \
+        done; \
+    done
+
+install-doris: install-foundationdb patch-foundationdb-fault-domain wait-foundationdb-available install-doris-operator deploy-doris-cluster wait-doris-available
+
+storage-vault-up:
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} exec --stdin statefulset/doris-fe -- mysql -h127.0.0.1 -P9030 -uroot < queries/storage-vault.sql
+    kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} exec --stdin statefulset/doris-fe -- mysql -h127.0.0.1 -P9030 -uroot < queries/storage-vault.sql
+
+paimon-catalog-up:
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} exec --stdin statefulset/doris-fe -- mysql -h127.0.0.1 -P9030 -uroot < queries/paimon-catalog.sql
+    kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} exec --stdin statefulset/doris-fe -- mysql -h127.0.0.1 -P9030 -uroot < queries/paimon-catalog.sql
+
+deploy-doris-fe-global-service:
+    kubectl --context={{ WEST_CONTEXT }} apply -f kubernetes/doris/fe-global-service.yaml
+    kubectl --context={{ EAST_CONTEXT }} apply -f kubernetes/doris/fe-global-service.yaml
+
+# Row counts should be close but not necessarily identical -- each cloud computed its own
+# answer from its own warehouse, fed by its own local Pulsar and its own Flink job.
+doris-count:
+    kubectl --context={{ WEST_CONTEXT }} --namespace={{ NAMESPACE }} exec --stdin statefulset/doris-fe -- mysql -h127.0.0.1 -P9030 -uroot < queries/doris-telemetry-count.sql
+    kubectl --context={{ EAST_CONTEXT }} --namespace={{ NAMESPACE }} exec --stdin statefulset/doris-fe -- mysql -h127.0.0.1 -P9030 -uroot < queries/doris-telemetry-count.sql

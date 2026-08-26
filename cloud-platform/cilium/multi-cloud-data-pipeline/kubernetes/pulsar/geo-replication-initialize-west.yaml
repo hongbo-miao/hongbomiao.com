@@ -1,0 +1,57 @@
+# Registers both clusters, and a tenant/namespace allowed to replicate between them, against
+# the shared configuration store. Runs once, from west, since both brokers see the same store.
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: geo-replication-initialize
+  namespace: data-pipeline
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+        - name: wait-for-broker
+          image: docker.io/apachepulsar/pulsar:4.0.12
+          command:
+            - sh
+            - -c
+            - "until bin/pulsar-admin --admin-url http://pulsar-broker:8080 brokers healthcheck; do sleep 2; done"
+      containers:
+        - name: geo-replication-initialize
+          image: docker.io/apachepulsar/pulsar:4.0.12
+          command:
+            - sh
+            - -c
+            - |
+              set -e
+              # Each cluster's bundled pulsar-init job already registered a cluster entry
+              # pointing at its LOCAL "pulsar-broker" hostname, so the URLs are always
+              # overwritten here rather than skipped when the cluster already exists.
+              bin/pulsar-admin --admin-url http://pulsar-broker:8080 clusters get west > /dev/null 2>&1 && \
+                bin/pulsar-admin --admin-url http://pulsar-broker:8080 clusters update west \
+                  --broker-url pulsar://broker-west:6650 \
+                  --url http://broker-west:8080 || \
+                bin/pulsar-admin --admin-url http://pulsar-broker:8080 clusters create west \
+                  --broker-url pulsar://broker-west:6650 \
+                  --url http://broker-west:8080
+              bin/pulsar-admin --admin-url http://pulsar-broker:8080 clusters get east > /dev/null 2>&1 && \
+                bin/pulsar-admin --admin-url http://pulsar-broker:8080 clusters update east \
+                  --broker-url pulsar://broker-east:6650 \
+                  --url http://broker-east:8080 || \
+                bin/pulsar-admin --admin-url http://pulsar-broker:8080 clusters create east \
+                  --broker-url pulsar://broker-east:6650 \
+                  --url http://broker-east:8080
+              bin/pulsar-admin --admin-url http://pulsar-broker:8080 tenants get telemetry > /dev/null 2>&1 || \
+                bin/pulsar-admin --admin-url http://pulsar-broker:8080 tenants create telemetry \
+                  --allowed-clusters west,east
+              # There is no "namespaces get"; existence is checked by listing instead.
+              bin/pulsar-admin --admin-url http://pulsar-broker:8080 namespaces list telemetry 2>/dev/null | grep -q telemetry/sensor || \
+                bin/pulsar-admin --admin-url http://pulsar-broker:8080 namespaces create telemetry/sensor \
+                  --clusters west,east
+              # Default retention is 0: a replicated message with no durable cursor can be
+              # garbage-collected before anything reads it. 10 minutes gives Flink and the
+              # verification recipes room to run.
+              bin/pulsar-admin --admin-url http://pulsar-broker:8080 namespaces set-retention telemetry/sensor \
+                --size -1 --time 10m

@@ -1,0 +1,75 @@
+# Hand-written rather than rendered from the doris-disaggregated chart: that chart's
+# be-configmap.yaml hardcodes a 100Gi file cache with no values override, which cannot fit a
+# kind-sized PVC. The doris-operator chart still supplies the CRD and controller; only this CR
+# and its ConfigMaps (fe-configmap.yaml, be-configmap.yaml, ms-configmap.yaml) are plain
+# manifests.
+#
+# Trimmed from the reference storage-compute-decoupled lab to one meta service replica and a
+# single "serving" compute group with one BE, since this lab runs a full Doris stack per cloud
+# rather than one -- and this cluster has no need for the reference lab's multi-tenant
+# compute-group isolation demo.
+---
+apiVersion: disaggregated.cluster.doris.com/v1
+kind: DorisDisaggregatedCluster
+metadata:
+  name: doris
+  namespace: data-pipeline
+spec:
+  metaService:
+    image: apache/doris:ms-4.1.3
+    replicas: 1
+    fdb:
+      configMapNamespaceName:
+        name: doris-fdb-config
+        namespace: data-pipeline
+    configMaps:
+      - name: ms-configmap
+        mountPath: /etc/doris
+    requests:
+      cpu: 250m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 1Gi
+  feSpec:
+    replicas: 1
+    electionNumber: 1
+    image: apache/doris:fe-4.1.3
+    configMaps:
+      - name: fe-configmap
+        mountPath: /etc/doris
+    logNotStore: false
+    requests:
+      cpu: 250m
+      memory: 1536Mi
+    limits:
+      cpu: 1
+      memory: 1536Mi
+    persistentVolumes:
+      - persistentVolumeClaimSpec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 5Gi
+  computeGroups:
+    - uniqueId: serving
+      replicas: 1
+      image: apache/doris:be-4.1.3
+      requests:
+        cpu: 250m
+        memory: 1536Mi
+      limits:
+        cpu: 1
+        memory: 1536Mi
+      configMaps:
+        - name: be-configmap
+          mountPath: /etc/doris
+      logNotStore: false
+      persistentVolumes:
+        - persistentVolumeClaimSpec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 5Gi
