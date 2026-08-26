@@ -1,7 +1,6 @@
 seal-secret:
     cat secrets/hm-spark-history-server-secret.unsealed.yaml | \
     kubeseal \
-        --controller-namespace=production-hm-sealed-secrets \
-        --controller-name=sealed-secrets \
+        --cert=https://sealed-secrets.hongbomiao.com/v1/cert.pem \
         --format=yaml \
         > kubernetes-manifests/hm-spark-history-server-secret.yaml

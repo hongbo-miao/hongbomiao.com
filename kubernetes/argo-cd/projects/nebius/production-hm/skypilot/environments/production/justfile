@@ -1,39 +1,34 @@
 seal-hm-skypilot-secret:
     cat secrets/hm-skypilot-secret.unsealed.yaml | \
     kubeseal \
-        --controller-namespace=production-hm-sealed-secrets \
-        --controller-name=sealed-secrets \
+        --cert=https://sealed-secrets.hongbomiao.com/v1/cert.pem \
         --format=yaml \
         > kubernetes-manifests/hm-skypilot-secret.yaml
 
 seal-lambda-secret:
     cat secrets/lambda-secret.unsealed.yaml | \
     kubeseal \
-        --controller-namespace=production-hm-sealed-secrets \
-        --controller-name=sealed-secrets \
+        --cert=https://sealed-secrets.hongbomiao.com/v1/cert.pem \
         --format=yaml \
         > kubernetes-manifests/lambda-secret.yaml
 
 seal-nebius-secret:
     cat secrets/nebius-secret.unsealed.yaml | \
     kubeseal \
-        --controller-namespace=production-hm-sealed-secrets \
-        --controller-name=sealed-secrets \
+        --cert=https://sealed-secrets.hongbomiao.com/v1/cert.pem \
         --format=yaml \
         > kubernetes-manifests/nebius-secret.yaml
 
 seal-runpod-secret:
     cat secrets/runpod-secret.unsealed.yaml | \
     kubeseal \
-        --controller-namespace=production-hm-sealed-secrets \
-        --controller-name=sealed-secrets \
+        --cert=https://sealed-secrets.hongbomiao.com/v1/cert.pem \
         --format=yaml \
         > kubernetes-manifests/runpod-secret.yaml
 
 seal-vast-secret:
     cat secrets/vast-secret.unsealed.yaml | \
     kubeseal \
-        --controller-namespace=production-hm-sealed-secrets \
-        --controller-name=sealed-secrets \
+        --cert=https://sealed-secrets.hongbomiao.com/v1/cert.pem \
         --format=yaml \
         > kubernetes-manifests/vast-secret.yaml

@@ -28,6 +28,9 @@ spec:
         - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
           targetRevision: main
           ref: config
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          path: '{{.path.path}}/kubernetes-manifests'
       destination:
         namespace: '{{.environment}}-hm-sealed-secrets'
         server: https://kubernetes.default.svc
