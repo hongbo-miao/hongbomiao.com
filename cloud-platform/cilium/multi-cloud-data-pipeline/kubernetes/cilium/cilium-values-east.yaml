@@ -1,0 +1,41 @@
+---
+cluster:
+  name: east
+  id: 2
+ipam:
+  mode: kubernetes
+routingMode: tunnel
+tunnelProtocol: vxlan
+kubeProxyReplacement: true
+# kind has no in-cluster kube-proxy, so Cilium needs a direct API server address.
+k8sServiceHost: data-pipeline-east-control-plane
+k8sServicePort: 6443
+encryption:
+  enabled: true
+  type: wireguard
+operator:
+  replicas: 1
+clustermesh:
+  useAPIServer: true
+  apiserver:
+    service:
+      # kind has no LoadBalancer, so the mesh API server is reached over a node port
+      # on the shared docker bridge.
+      type: NodePort
+      nodePort: 32382
+    tls:
+      authMode: legacy
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+  ui:
+    enabled: true
+  metrics:
+    enabled:
+      - dns:query;ignoreAAAA
+      - drop
+      - tcp
+      - flow
+      - icmp
+      - http

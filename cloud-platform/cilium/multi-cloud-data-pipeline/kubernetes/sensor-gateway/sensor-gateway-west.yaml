@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sensor-gateway
+  namespace: data-pipeline
+  labels:
+    app: sensor-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sensor-gateway
+  template:
+    metadata:
+      labels:
+        app: sensor-gateway
+    spec:
+      containers:
+        - name: sensor-gateway
+          image: sensor-gateway:local
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CLOUD_NAME
+              value: west
+            - name: PULSAR_SERVICE_URL
+              value: pulsar://pulsar-broker:6650
+            - name: PULSAR_TOPIC
+              value: persistent://telemetry/sensor/reading
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sensor-gateway
+  namespace: data-pipeline
+spec:
+  selector:
+    app: sensor-gateway
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30090
+  type: NodePort

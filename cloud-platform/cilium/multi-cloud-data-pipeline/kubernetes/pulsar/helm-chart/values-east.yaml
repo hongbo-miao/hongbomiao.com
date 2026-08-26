@@ -1,0 +1,57 @@
+# https://github.com/apache/pulsar-helm-chart/blob/master/charts/pulsar/values.yaml
+#
+# See values-west.yaml. This cluster keeps its own Oxia for local metadata and points only its
+# configuration metadata store at west's.
+---
+initialize: true
+useReleaseStatus: false
+clusterName: east
+labels:
+  cloud: east
+affinity:
+  anti_affinity: false
+volumes:
+  persistence: false
+components:
+  zookeeper: false
+  oxia: true
+  bookkeeper: true
+  broker: true
+  proxy: false
+  autorecovery: false
+  toolset: false
+  functions: false
+oxia:
+  initialShardCount: 1
+  replicationFactor: 1
+  coordinator:
+    podMonitor:
+      enabled: false
+  server:
+    replicas: 1
+    podMonitor:
+      enabled: false
+bookkeeper:
+  replicaCount: 1
+  podMonitor:
+    enabled: false
+broker:
+  replicaCount: 1
+  podMonitor:
+    enabled: false
+  configData:
+    managedLedgerDefaultEnsembleSize: "1"
+    managedLedgerDefaultWriteQuorum: "1"
+    managedLedgerDefaultAckQuorum: "1"
+    advertisedAddress: broker-east
+    # The chart's Oxia branch sets metadataStoreUrl but leaves configurationMetadataStoreUrl to
+    # the operator, so this is the hook that makes a shared configuration store possible.
+    configurationMetadataStoreUrl: oxia://oxia-config-store:6648/broker
+autorecovery:
+  podMonitor:
+    enabled: false
+proxy:
+  podMonitor:
+    enabled: false
+victoria-metrics-k8s-stack:
+  enabled: false

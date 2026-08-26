@@ -1,0 +1,61 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telemetry-sink-sql
+  namespace: data-pipeline
+data:
+  telemetry-sink.sql: |
+    create catalog paimon_catalog with (
+        'type' = 'paimon',
+        'warehouse' = 's3://paimon-warehouse/',
+        's3.endpoint' = 'http://rustfs-svc:9000',
+        's3.access-key' = 'rustfs_admin',
+        's3.secret-key' = 'passw0rd',
+        's3.path.style.access' = 'true'
+    );
+
+    create database if not exists paimon_catalog.telemetry;
+
+    -- Same table name and schema in both clouds' independent warehouses -- each cloud's
+    -- Flink consumes its own local Pulsar and writes its own copy. This is intentional
+    -- duplicate compute, not a shared writer: nothing here reads or writes the other
+    -- cloud's object storage.
+    create table if not exists paimon_catalog.telemetry.sensor_reading (
+        device_id string,
+        timestamp_ns bigint,
+        temperature_c double,
+        humidity_pct double
+    ) with (
+        'bucket' = '1',
+        -- This is an append-only table (no primary key -- every reading is kept, not just
+        -- the latest per device), and Paimon requires an explicit bucket-key for bucketed
+        -- append mode.
+        'bucket-key' = 'device_id'
+    );
+
+    -- One partition/consumer, so the default Exclusive subscription is enough; a topic
+    -- geo-replicated across two brokers still resolves through the local "pulsar-broker"
+    -- service address, so this table definition is identical in both clouds.
+    create temporary table pulsar_source (
+        device_id string,
+        timestamp_ns bigint,
+        temperature_c double,
+        humidity_pct double
+    ) with (
+        'connector' = 'pulsar',
+        'topics' = 'persistent://telemetry/sensor/reading',
+        'service-url' = 'pulsar://pulsar-broker:6650',
+        'source.subscription-name' = 'flink-telemetry-sink',
+        'source.start.message-id' = 'earliest',
+        'value.format' = 'json',
+        -- A malformed message on this topic (e.g. from `pulsar-admin`/`pulsar-client` CLI
+        -- testing, which writes raw, non-JSON bytes) would otherwise crash this task with no
+        -- restart-strategy configured, permanently halting ingestion for the whole topic.
+        'value.json.ignore-parse-errors' = 'true'
+    );
+
+    -- A streaming INSERT: the SQL client submits and returns once accepted, since DML runs
+    -- asynchronously by default. The job then keeps running on the session cluster.
+    insert into paimon_catalog.telemetry.sensor_reading
+    select device_id, timestamp_ns, temperature_c, humidity_pct from pulsar_source;

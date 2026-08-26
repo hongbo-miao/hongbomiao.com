@@ -1,0 +1,23 @@
+# Fronts only the FE (MySQL protocol, 9030). Each cloud's FE queries its own local BEs, so
+# query execution never spans clouds even though this Service is global -- "affinity: local"
+# means clients get the local FE whenever it is healthy, and only fail over to the remote
+# cloud's FE (with the remote cloud's own answers, computed from its own warehouse) if the
+# local one is down. This is the one case in this lab where making a stateful service global
+# is safe, precisely because both clouds hold an independent, complete copy of the data.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: doris-fe-global
+  namespace: data-pipeline
+  annotations:
+    service.cilium.io/global: "true"
+    service.cilium.io/affinity: "local"
+spec:
+  selector:
+    app.doris.disaggregated.cluster: doris
+    app.doris.disaggregated.type: fe
+  ports:
+    - name: mysql
+      port: 9030
+      targetPort: 9030

@@ -1,0 +1,33 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: submit-telemetry-sink
+  namespace: data-pipeline
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+        - name: wait-for-flink-jobmanager
+          image: docker.io/curlimages/curl:8.21.0
+          command:
+            - sh
+            - -c
+            - 'until curl --silent --fail --max-time 5 http://flink-jobmanager:8081/overview; do sleep 5; done'
+      containers:
+        - name: submit-telemetry-sink
+          image: telemetry-flink:local
+          imagePullPolicy: IfNotPresent
+          command:
+            - /opt/flink/bin/sql-client.sh
+            - --file
+            - /etc/telemetry-sink/telemetry-sink.sql
+          volumeMounts:
+            - name: telemetry-sink-sql
+              mountPath: /etc/telemetry-sink
+      volumes:
+        - name: telemetry-sink-sql
+          configMap:
+            name: telemetry-sink-sql
