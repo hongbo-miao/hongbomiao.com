@@ -1,15 +1,13 @@
 seal-argo-cd-image-updater-harbor-secret:
     cat secrets/harbor-image-updater-secret.unsealed.yaml | \
     kubeseal \
-        --controller-namespace=production-hm-sealed-secrets \
-        --controller-name=sealed-secrets \
+        --cert=https://sealed-secrets.hongbomiao.com/v1/cert.pem \
         --format=yaml \
         > kubernetes-manifests/argo-cd-image-updater-harbor-secret.yaml
 
 seal-hm-kubernetes-applications-ssh-secret:
     cat secrets/hm-kubernetes-applications-ssh-secret.unsealed.yaml | \
     kubeseal \
-        --controller-namespace=production-hm-sealed-secrets \
-        --controller-name=sealed-secrets \
+        --cert=https://sealed-secrets.hongbomiao.com/v1/cert.pem \
         --format=yaml \
         > kubernetes-manifests/hm-kubernetes-applications-ssh-secret.yaml

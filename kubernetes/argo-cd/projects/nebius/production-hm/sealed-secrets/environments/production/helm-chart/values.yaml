@@ -13,3 +13,18 @@ resources:
     memory: 100Mi
   limits:
     memory: 200Mi
+ingress:
+  enabled: true
+  hostname: sealed-secrets.hongbomiao.com
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: sealed-secrets.hongbomiao.com
+  tls: false
+  extraTls:
+    - hosts:
+        - sealed-secrets.hongbomiao.com
+      secretName: hm-sealed-secrets-certificate
