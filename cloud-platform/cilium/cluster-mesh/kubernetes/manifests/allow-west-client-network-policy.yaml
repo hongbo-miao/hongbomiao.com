@@ -1,0 +1,24 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-west-client
+  namespace: cluster-mesh
+spec:
+  endpointSelector:
+    matchLabels:
+      app: echo-server
+  ingress:
+    # East-west: only the internal client in the west cluster may reach this backend
+    # directly. Selecting on io.cilium.k8s.policy.cluster is what makes the rule
+    # cluster-aware.
+    - fromEndpoints:
+        - matchLabels:
+            app: internal-client
+            io.cilium.k8s.policy.cluster: west
+    # North-south: the ingress controller terminates external traffic and must be allowed
+    # explicitly. Without this rule Traefik is itself an unauthorized client and every
+    # request through the ingress hangs on a blocked backend.
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: traefik

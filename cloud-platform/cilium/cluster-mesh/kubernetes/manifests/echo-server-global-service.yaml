@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo-server
+  namespace: cluster-mesh
+  annotations:
+    service.cilium.io/global: "true"
+    # Traefik resolves services to pod endpoint IPs by default, which bypasses the
+    # ClusterIP and therefore bypasses the Cilium global service entirely. Native LB
+    # makes Traefik send traffic to the ClusterIP so cluster mesh can do the failover.
+    traefik.ingress.kubernetes.io/service.nativelb: "true"
+spec:
+  selector:
+    app: echo-server
+  ports:
+    - port: 80
+      targetPort: 80

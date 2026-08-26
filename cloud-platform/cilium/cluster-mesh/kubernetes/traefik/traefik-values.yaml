@@ -1,0 +1,20 @@
+---
+# kind has no cloud load balancer, so Traefik is exposed on a fixed node port that the
+# simulated edge load balancer dials. In production this would be a real LoadBalancer
+# service fronted by the west or east cluster's load balancer.
+image:
+  registry: docker.io
+service:
+  spec:
+    type: NodePort
+ports:
+  web:
+    nodePort: 30080
+  websecure:
+    expose:
+      default: false
+providers:
+  kubernetesIngress:
+    enabled: true
+  kubernetesCRD:
+    enabled: true
