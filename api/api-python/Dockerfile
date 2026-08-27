@@ -1,4 +1,4 @@
-FROM docker.io/python:3.14.6-slim-trixie AS base
+FROM docker.io/python:3.14.7-slim-trixie AS base
 COPY --from=ghcr.io/astral-sh/uv:0.12.1 /uv /uvx /bin/
 WORKDIR /usr/src/app
 ENV PYTHONFAULTHANDLER=1 \
