@@ -1196,6 +1196,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **TShark** - Network protocol analyzer
 
+### Network Security
+
+- **strongSwan** - Internet Protocol Security (IPsec) virtual private network (VPN) daemon with Internet Key Exchange version 2 (IKEv2)
+
 ### Communication Standard
 
 - **Open Systems Interconnection (OSI) model**
