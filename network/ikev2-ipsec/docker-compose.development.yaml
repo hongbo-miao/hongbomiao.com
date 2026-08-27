@@ -1,0 +1,72 @@
+# https://docs.docker.com/reference/compose-file/
+---
+name: ipsec-development
+services:
+  cloud-gateway:
+    build: .
+    volumes:
+      - ./cloud-gateway/swanctl.conf:/etc/swanctl/conf.d/site-to-site.conf:ro
+      - ./disable-unavailable-plugins.conf:/etc/strongswan.d/99-disable-unavailable-plugins.conf:ro
+      - ./scripts/start-gateway.sh:/scripts/start-gateway.sh:ro
+    networks:
+      cloud-lan:
+        ipv4_address: 10.20.0.10
+      internet:
+        ipv4_address: 198.51.100.10
+    entrypoint: ['/scripts/start-gateway.sh']
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      net.ipv4.ip_forward: 1
+      net.ipv4.conf.all.rp_filter: 0
+
+  cloud-server:
+    build: .
+    networks:
+      cloud-lan:
+        ipv4_address: 10.20.0.100
+    entrypoint: ['/bin/sh', '-c', 'ip route add 10.10.0.0/24 via 10.20.0.10 && sleep infinity']
+    cap_add:
+      - NET_ADMIN
+
+  on-premises-gateway:
+    build: .
+    volumes:
+      - ./on-premises-gateway/swanctl.conf:/etc/swanctl/conf.d/site-to-site.conf:ro
+      - ./disable-unavailable-plugins.conf:/etc/strongswan.d/99-disable-unavailable-plugins.conf:ro
+      - ./scripts/start-gateway.sh:/scripts/start-gateway.sh:ro
+    networks:
+      on-premises-lan:
+        ipv4_address: 10.10.0.20
+      internet:
+        ipv4_address: 198.51.100.20
+    entrypoint: ['/scripts/start-gateway.sh']
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      net.ipv4.ip_forward: 1
+      net.ipv4.conf.all.rp_filter: 0
+
+  on-premises-server:
+    build: .
+    networks:
+      on-premises-lan:
+        ipv4_address: 10.10.0.100
+    entrypoint: ['/bin/sh', '-c', 'ip route add 10.20.0.0/24 via 10.10.0.20 && sleep infinity']
+    cap_add:
+      - NET_ADMIN
+
+networks:
+  cloud-lan:
+    ipam:
+      config:
+        - subnet: 10.20.0.0/24
+  internet:
+    internal: true
+    ipam:
+      config:
+        - subnet: 198.51.100.0/24
+  on-premises-lan:
+    ipam:
+      config:
+        - subnet: 10.10.0.0/24
