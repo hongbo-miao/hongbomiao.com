@@ -12,6 +12,9 @@ name: . Test Data Orchestration
       hm-airflow:
         required: true
         type: boolean
+      hm-dbos:
+        required: true
+        type: boolean
       hm-prefect-calculate:
         required: true
         type: boolean
@@ -58,6 +61,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: data-orchestration/hm-airflow
+
+  dbos-test:
+    name: DBOS | Test
+    if: ${{ inputs.workflow || inputs.hm-dbos }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Install uv
+        uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39 # v8.2.0
+        with:
+          version: 0.11.33
+          enable-cache: true
+          cache-dependency-glob: data-orchestration/hm-dbos/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version-file: data-orchestration/hm-dbos/.python-version
+      - name: Install dependencies
+        working-directory: data-orchestration/hm-dbos
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-orchestration/hm-dbos
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: data-orchestration/hm-dbos
 
   prefect-calculate-test:
     name: Prefect (calculate) | Test

@@ -1,0 +1,27 @@
+update-lock-file:
+    uv lock
+
+install-dependencies:
+    uv sync --dev
+
+dev:
+    uv run poe dev
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
+
+docker-compose-up:
+    docker compose --file=docker-compose.development.yaml up --detach
+
+docker-compose-stop:
+    docker compose --file=docker-compose.development.yaml stop
+
+docker-compose-down:
+    docker compose --file=docker-compose.development.yaml down --volumes
+
+docker-compose-restart:
+    docker compose --file=docker-compose.development.yaml down --volumes
+    docker compose --file=docker-compose.development.yaml up --detach --build

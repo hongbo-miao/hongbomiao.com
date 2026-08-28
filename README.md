@@ -314,8 +314,9 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### Data Orchestration
 
 - **Prefect** - Python-native workflow orchestration platform
-- **Apache Airflow** - DAG-based workflow orchestration platform
+- **DBOS** - Database-backed durable execution framework
 - **Temporal** - Durable execution platform for stateful workflows
+- **Apache Airflow** - DAG-based workflow orchestration platform
 
 ### Data Processing
 
