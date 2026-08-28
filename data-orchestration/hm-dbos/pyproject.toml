@@ -1,0 +1,24 @@
+[project]
+name = "hm-dbos"
+version = "1.0.0"
+requires-python = "==3.14.7"
+dependencies = [
+  "dbos==2.31.0",
+  "pydantic-settings==2.14.2",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.48.0",
+  "pytest-cov==7.1.0",
+  "pytest==9.1.1",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.11.0"
+
+[tool.poe.tasks]
+dev = { cmd = "python src/main.py", env = { ENVIRONMENT = "development" } }
+test = { cmd = "pytest --verbose --verbose", env = { ENVIRONMENT = "test" } }
+test-coverage = { cmd = "pytest --cov=. --cov-report=xml", env = { ENVIRONMENT = "test" } }

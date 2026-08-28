@@ -1,0 +1,25 @@
+# https://docs.docker.com/reference/compose-file/
+---
+name: hm-dbos-development
+services:
+  hm-dbos-postgres:
+    image: docker.io/library/postgres:18.4-trixie
+    container_name: hm-dbos-postgres
+    volumes:
+      - hm-dbos-postgres-data:/var/lib/postgresql
+    environment:
+      POSTGRES_USER: postgres_admin
+      POSTGRES_PASSWORD: postgres_passw0rd
+      POSTGRES_DB: hm_dbos
+    ports:
+      - '127.0.0.1:5432:5432'
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready --username=postgres_admin -p 5432 -d hm_dbos"]
+      interval: 2s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  hm-dbos-postgres-data:

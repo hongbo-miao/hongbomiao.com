@@ -436,6 +436,8 @@ jobs:
               - 'data-visualization/hm-dash/csv-visualizer/**'
             hm-dash-parquet-visualizer:
               - 'data-visualization/hm-dash/parquet-visualizer/**'
+            hm-dbos:
+              - 'data-orchestration/hm-dbos/**'
             hm-deepspeed:
               - 'large-language-model-pre-training/training-optimization/hm-deepspeed/**'
             hm-diart:
@@ -942,6 +944,7 @@ jobs:
       hm-daft-analyze-transactions: ${{ steps.filter.outputs.hm-daft-analyze-transactions }}
       hm-dash-csv-visualizer: ${{ steps.filter.outputs.hm-dash-csv-visualizer }}
       hm-dash-parquet-visualizer: ${{ steps.filter.outputs.hm-dash-parquet-visualizer }}
+      hm-dbos: ${{ steps.filter.outputs.hm-dbos }}
       hm-deepeval: ${{ steps.filter.outputs.hm-deepeval }}
       hm-deepspeed: ${{ steps.filter.outputs.hm-deepspeed }}
       hm-diart: ${{ steps.filter.outputs.hm-diart }}
@@ -1291,6 +1294,7 @@ jobs:
       workflow: ${{ needs.detect-changes.outputs.workflow-test-data-orchestration == 'true' }}
       # Applications
       hm-airflow: ${{ needs.detect-changes.outputs.hm-airflow == 'true' }}
+      hm-dbos: ${{ needs.detect-changes.outputs.hm-dbos == 'true' }}
       hm-prefect-calculate: ${{ needs.detect-changes.outputs.hm-prefect-calculate == 'true' }}
       hm-prefect-daft-analysis: ${{ needs.detect-changes.outputs.hm-prefect-daft-analysis == 'true' }}
       hm-prefect-greet: ${{ needs.detect-changes.outputs.hm-prefect-greet == 'true' }}

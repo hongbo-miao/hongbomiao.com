@@ -566,6 +566,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=data-extraction.hm-mineru
     uv run poe static-type-check-python --package=data-extraction.hm-olmocr
     uv run poe static-type-check-python --package=data-orchestration.hm-airflow
+    uv run poe static-type-check-python --package=data-orchestration.hm-dbos
     uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.calculate
     uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.daft-analysis
     uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.greet
