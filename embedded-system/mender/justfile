@@ -13,12 +13,9 @@ kind-up:
 kind-down:
     kind delete cluster --name=mender
 
-tilt-up *args:
+tilt-up:
     kubectl config use-context kind-mender
-    tilt up {{ args }}
-
-tilt-down:
-    tilt down --delete-namespaces
+    tilt up
 
 create-user username="admin@example.com" password="passw0rd":
     kubectl --context=kind-mender --namespace=mender exec deploy/mender-useradm -- useradm create-user --username="{{ username }}" --password="{{ password }}"

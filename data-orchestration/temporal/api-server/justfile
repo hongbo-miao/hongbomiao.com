@@ -1,0 +1,26 @@
+install-toolchain:
+    rustup install
+
+update:
+    cargo update
+
+check:
+    cargo check --package=api-server
+
+dev:
+    TEMPORAL_SERVER_URL=http://localhost:7233 cargo run --package=api-server
+
+test:
+    cargo test --package=api-server --all-features
+
+lint-rust-clippy:
+    cargo clippy --package=api-server
+
+lint-rust-clippy-fix:
+    cargo clippy --package=api-server --fix --allow-dirty --allow-staged
+
+lint-rust-rustfmt:
+    cargo fmt --package=api-server -- --check
+
+lint-rust-rustfmt-fix:
+    cargo fmt --package=api-server

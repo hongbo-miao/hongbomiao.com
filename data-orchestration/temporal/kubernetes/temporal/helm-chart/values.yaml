@@ -1,0 +1,38 @@
+# https://github.com/temporalio/helm-charts/blob/main/charts/temporal/values.yaml
+---
+server:
+  config:
+    persistence:
+      defaultStore: default
+      visibilityStore: visibility
+      # Immutable after the first deploy.
+      numHistoryShards: 512
+      datastores:
+        default:
+          sql:
+            createDatabase: true
+            manageSchema: true
+            pluginName: postgres12
+            driverName: postgres12
+            databaseName: temporal
+            connectAddr: "postgres.hm-postgres.svc.cluster.local:5432"
+            connectProtocol: tcp
+            user: postgres_admin
+            password: postgres_passw0rd
+        visibility:
+          sql:
+            createDatabase: true
+            manageSchema: true
+            pluginName: postgres12
+            driverName: postgres12
+            databaseName: temporal_visibility
+            connectAddr: "postgres.hm-postgres.svc.cluster.local:5432"
+            connectProtocol: tcp
+            user: postgres_admin
+            password: postgres_passw0rd
+    namespaces:
+      create: true
+      namespace:
+        - name: recording-report
+web:
+  enabled: true

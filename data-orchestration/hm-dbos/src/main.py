@@ -1,9 +1,7 @@
 from config import config
 from dbos import DBOS, DBOSConfig, SetWorkflowID
 
-# DBOS checkpoints workflow and step state into this Postgres database, so a
-# crashed process can resume a workflow from its last completed step instead
-# of starting over.
+# DBOS checkpoints workflow and step state into this Postgres database, so a crashed process can resume a workflow from its last completed step instead of starting over.
 dbos_config: DBOSConfig = {
     "name": "hm-dbos",
     "application_version": "1.0.0",
@@ -32,9 +30,8 @@ def record_payment(amount: float, exchange_rate: float) -> float:
 
 @DBOS.workflow()
 def process_payment_workflow(amount: float, currency_code: str) -> float:
-    # Workflow bodies must be deterministic: no I/O, randomness, or clock
-    # reads here. All of that belongs in steps, which are checkpointed
-    # independently and re-run at most once each after a crash.
+    # Workflow bodies must be deterministic: no I/O, randomness, or clock reads here.
+    # All of that belongs in steps, which are checkpointed independently and re-run at most once each after a crash.
     exchange_rate = fetch_exchange_rate(currency_code)
     DBOS.sleep(2)
     return record_payment(amount, exchange_rate)
@@ -44,9 +41,7 @@ if __name__ == "__main__":
     DBOS(config=dbos_config)
     DBOS.launch()
 
-    # A fixed workflow ID is an idempotency key: running this script again
-    # with the same ID returns the recorded result instead of re-executing
-    # the steps.
+    # A fixed workflow ID is an idempotency key: running this script again with the same ID returns the recorded result instead of re-executing the steps.
     with SetWorkflowID("process-payment-example"):
         result = process_payment_workflow(100.0, "EUR")
 
