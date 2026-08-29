@@ -1,0 +1,38 @@
+load("ext://namespace", "namespace_create")
+load("ext://helm_resource", "helm_resource", "helm_repo")
+
+update_settings(k8s_upsert_timeout_secs=600)
+
+namespace_create("hm-temporal")
+namespace_create("hm-postgres")
+namespace_create("hm-recording-report")
+
+k8s_yaml(["kubernetes/postgres/postgres.yaml"])
+k8s_resource("postgres", labels=["postgres"])
+
+helm_repo("temporal-charts", "https://go.temporal.io/helm-charts", labels=["temporal"])
+helm_resource(
+    "temporal",
+    "temporal-charts/temporal",
+    namespace="hm-temporal",
+    flags=["--version=1.6.0", "--values=kubernetes/temporal/helm-chart/values.yaml", "--timeout=900s"],
+    deps=["kubernetes/temporal/helm-chart/values.yaml"],
+    # The whole chart release (server, admintools, web) is one Tilt resource,
+    # so both the frontend and the web UI are forwarded here.
+    port_forwards=["7233:7233", "8233:8080"],
+    labels=["temporal"],
+    resource_deps=["temporal-charts", "postgres"],
+)
+
+docker_build("worker", ".", dockerfile="worker/Dockerfile")
+k8s_yaml(["kubernetes/worker/worker.yaml"])
+k8s_resource("worker", labels=["worker"], resource_deps=["temporal"])
+
+docker_build("api-server", ".", dockerfile="api-server/Dockerfile")
+k8s_yaml(["kubernetes/api-server/api-server.yaml"])
+k8s_resource(
+    "api-server",
+    port_forwards=["8085:8085"],
+    labels=["api-server"],
+    resource_deps=["temporal"],
+)

@@ -1,0 +1,26 @@
+install-toolchain:
+    rustup install
+
+update:
+    cargo update
+
+check:
+    cargo check --package=worker
+
+dev:
+    TEMPORAL_SERVER_URL=http://localhost:7233 cargo run --package=worker
+
+test:
+    cargo test --package=worker --all-features
+
+lint-rust-clippy:
+    cargo clippy --package=worker
+
+lint-rust-clippy-fix:
+    cargo clippy --package=worker --fix --allow-dirty --allow-staged
+
+lint-rust-rustfmt:
+    cargo fmt --package=worker -- --check
+
+lint-rust-rustfmt-fix:
+    cargo fmt --package=worker

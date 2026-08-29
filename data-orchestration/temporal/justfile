@@ -1,19 +1,36 @@
-# https://docs.temporal.io/docs/tctl/environment-variables
+kind-up:
+    kind create cluster --config=kubernetes/kind/kind-cluster.yaml
 
-export TEMPORAL_CLI_NAMESPACE := "default"
-export TEMPORAL_CLI_SHOW_STACKS := "1"
+kind-down:
+    kind delete cluster --name=hm-temporal
 
-temporal--namespace-register:
-    tctl --namespace=default namespace register
+tilt-up:
+    kubectl config use-context kind-hm-temporal
+    tilt up
 
-temporal-namespace-describe:
-    tctl namespace describe
+upload-recording:
+    curl --request POST localhost:8085/graphql \
+        --header 'content-type: application/json' \
+        --data '{"query":"mutation { uploadRecording(recordingId: \"recording-2020-01-01-001\", requesterEmail: \"requester@duckcorp.io\") { workflowId } }"}'
 
-temporal-workflow-run:
-    tctl workflow run --taskqueue=hello-world --workflow_type=Workflow --input='"temporal"'
+get-recording-stage:
+    curl --request POST localhost:8085/graphql \
+        --header 'content-type: application/json' \
+        --data '{"query":"query { recordingStage(recordingId: \"recording-2020-01-01-001\") }"}'
 
-temporal-workflow-start:
-    tctl workflow start --taskqueue=hello-world --workflow_type=Workflow --input='"temporal"'
+delete-recording:
+    curl --request POST localhost:8085/graphql \
+        --header 'content-type: application/json' \
+        --data '{"query":"mutation { deleteRecording(recordingId: \"recording-2020-01-01-001\") { workflowId } }"}'
+
+temporal-workflow-list:
+    kubectl exec --namespace=hm-temporal deployment/temporal-admintools -- \
+        temporal workflow list --namespace=recording-report
+
+temporal-workflow-show:
+    kubectl exec --namespace=hm-temporal deployment/temporal-admintools -- \
+        temporal workflow show --namespace=recording-report --workflow-id=recording-report-recording-2020-01-01-001
 
 temporal-taskqueue-describe:
-    tctl taskqueue describe --taskqueue=hello-world
+    kubectl exec --namespace=hm-temporal deployment/temporal-admintools -- \
+        temporal task-queue describe --namespace=recording-report --task-queue=recording-report

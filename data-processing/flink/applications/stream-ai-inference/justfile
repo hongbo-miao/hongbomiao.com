@@ -8,10 +8,6 @@ tilt-up:
     kubectl config use-context kind-flink-stream-ai-inference
     tilt up
 
-tilt-down:
-    kubectl get flinkdeployments.flink.apache.org --namespace=stream-ai-inference --output=name | xargs -I {} kubectl patch {} --namespace=stream-ai-inference --patch='{"metadata":{"finalizers":[]}}' --type=merge
-    tilt down --delete-namespaces
-
 ollama-serve:
     OLLAMA_HOST=0.0.0.0:11434 ollama serve
 

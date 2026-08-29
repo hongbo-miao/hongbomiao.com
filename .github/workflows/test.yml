@@ -781,6 +781,8 @@ jobs:
               - 'parallel-computing/hm-taichi/count-primes/**'
             taichi-fluid-solver:
               - 'parallel-computing/hm-taichi/fluid-solver/**'
+            temporal-api-server:
+              - 'data-orchestration/temporal/api-server/**'
             torchaudio-squim:
               - 'audio/speech-quality-assessment/torchaudio-squim/**'
             turso:
@@ -1115,6 +1117,7 @@ jobs:
       surrogate-model: ${{ steps.filter.outputs.surrogate-model }}
       taichi-count-primes: ${{ steps.filter.outputs.taichi-count-primes }}
       taichi-fluid-solver: ${{ steps.filter.outputs.taichi-fluid-solver }}
+      temporal-api-server: ${{ steps.filter.outputs.temporal-api-server }}
       torchaudio-squim: ${{ steps.filter.outputs.torchaudio-squim }}
       turso: ${{ steps.filter.outputs.turso }}
       udp-receiver: ${{ steps.filter.outputs.udp-receiver }}
@@ -1193,6 +1196,7 @@ jobs:
       pulsar-audio-stream-pulsar-livekit-bridge: ${{ needs.detect-changes.outputs.pulsar-audio-stream-pulsar-livekit-bridge == 'true' }}
       radio-streamer: ${{ needs.detect-changes.outputs.radio-streamer == 'true' }}
       real-time-ai-agent: ${{ needs.detect-changes.outputs.real-time-ai-agent == 'true' }}
+      temporal-api-server: ${{ needs.detect-changes.outputs.temporal-api-server == 'true' }}
       udp-receiver: ${{ needs.detect-changes.outputs.udp-receiver == 'true' }}
       udp-sender: ${{ needs.detect-changes.outputs.udp-sender == 'true' }}
       web-playwright: ${{ needs.detect-changes.outputs.web-playwright == 'true' }}
@@ -1299,6 +1303,7 @@ jobs:
       hm-prefect-daft-analysis: ${{ needs.detect-changes.outputs.hm-prefect-daft-analysis == 'true' }}
       hm-prefect-greet: ${{ needs.detect-changes.outputs.hm-prefect-greet == 'true' }}
       hm-prefect-ingest-parquet-to-iceberg: ${{ needs.detect-changes.outputs.hm-prefect-ingest-parquet-to-iceberg == 'true' }}
+      temporal-api-server: ${{ needs.detect-changes.outputs.temporal-api-server == 'true' }}
 
   test-data-processing:
     name: Test Data Processing

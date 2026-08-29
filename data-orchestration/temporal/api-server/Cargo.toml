@@ -1,0 +1,17 @@
+[package]
+name = "api-server"
+version = "1.0.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "=1.0.104"
+async-graphql = "=7.2.1"
+async-graphql-axum = "=7.2.1"
+axum = "=0.8.9"
+serde = { version = "=1.0.229", features = ["derive"] }
+shared = { path = "../shared" }
+temporalio-client = "=0.7.0"
+temporalio-common = "=0.7.0"
+tokio = { version = "=1.53.1", features = ["full"] }
+tracing = "=0.1.41"
+tracing-subscriber = "=0.3.20"

@@ -302,6 +302,7 @@ lint-rust-rustfmt:
     cd data-processing/pulsar/audio-stream/grpc-server && just lint-rust-rustfmt
     cd data-processing/pulsar/audio-stream/pulsar-livekit-bridge && just lint-rust-rustfmt
     cd data-processing/pulsar/sticky-telemetry-stream/sticky-telemetry-stream-mqtt-publisher && just lint-rust-rustfmt
+    cd data-orchestration/temporal/api-server && just lint-rust-rustfmt
     cd data-transport/arrow-flight/arrow-flight-server && just lint-rust-rustfmt
     cd data-transport/dust-dds/dust-dds-publisher && just lint-rust-rustfmt
     cd data-transport/dust-dds/dust-dds-subscriber && just lint-rust-rustfmt
