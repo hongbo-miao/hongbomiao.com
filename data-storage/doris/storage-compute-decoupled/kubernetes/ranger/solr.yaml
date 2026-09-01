@@ -1,0 +1,45 @@
+# Stays empty -- the Doris plugin never emits access audits (see README, Audit). Kept only because
+# the Admin image's baked-in install.properties sets audit_store=solr.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ranger-solr
+  namespace: ranger
+spec:
+  selector:
+    app: ranger-solr
+  ports:
+    - name: solr
+      port: 8983
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ranger-solr
+  namespace: ranger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ranger-solr
+  template:
+    metadata:
+      labels:
+        app: ranger-solr
+    spec:
+      containers:
+        - name: ranger-solr
+          image: docker.io/apache/ranger-solr:2.8.0
+          args:
+            - solr-precreate
+            - ranger_audits
+            - /opt/solr/server/solr/configsets/ranger_audits/conf
+          ports:
+            - containerPort: 8983
+          readinessProbe:
+            httpGet:
+              path: /solr/ranger_audits/admin/ping
+              port: 8983
+            initialDelaySeconds: 20
+            periodSeconds: 5

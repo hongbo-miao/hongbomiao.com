@@ -1,0 +1,39 @@
+{
+  "service": "doris",
+  "name": "paimon-catalog-select",
+  "policyType": 0,
+  "isEnabled": true,
+  "isAuditEnabled": true,
+  "resources": {
+    "catalog": {
+      "values": ["paimon_catalog"],
+      "isExcludes": false,
+      "isRecursive": false
+    },
+    "database": {
+      "values": ["*"],
+      "isExcludes": false,
+      "isRecursive": false
+    },
+    "table": {
+      "values": ["*"],
+      "isExcludes": false,
+      "isRecursive": false
+    },
+    "column": {
+      "values": ["*"],
+      "isExcludes": false,
+      "isRecursive": false
+    }
+  },
+  "policyItems": [
+    {
+      "accesses": [
+        { "type": "SELECT", "isAllowed": true },
+        { "type": "SHOW", "isAllowed": true }
+      ],
+      "users": ["application_a_user", "application_b_user"],
+      "delegateAdmin": false
+    }
+  ]
+}

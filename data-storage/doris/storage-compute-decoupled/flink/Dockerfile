@@ -43,7 +43,7 @@ RUN /opt/flink/bin/config-parser-utils.sh /opt/flink/conf /opt/flink/bin /opt/fl
     -Dtaskmanager.numberOfTaskSlots=4 \
     -Dexecution.checkpointing.interval=60s \
     -Dexecution.checkpointing.dir=s3://flink-checkpoints/checkpoints \
-    -Ds3.endpoint=http://rustfs-svc:9000 \
+    -Ds3.endpoint=http://rustfs-svc.rustfs:9000 \
     -Ds3.access-key=rustfs_admin \
     -Ds3.secret-key=passw0rd \
     -Ds3.path.style.access=true

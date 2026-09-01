@@ -1,0 +1,512 @@
+# Registers the "doris" service type with Ranger Admin so a Doris service instance can be
+# created. Checked in rather than fetched at deploy time: this is a personal-fork artifact
+# (https://github.com/morningman/ranger/blob/doris-plugin/agents-common/src/main/resources/service-defs/ranger-servicedef-doris.json)
+# with no ASF release, so pinning the exact JSON here keeps this demo reproducible even if that
+# fork disappears. Uploaded by kubernetes/ranger/bootstrap-job.yaml via
+# POST /service/plugins/definitions.
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ranger-doris-service-definition
+  namespace: ranger
+data:
+  ranger-servicedef-doris.json: |
+    {
+      "name": "doris",
+      "displayName": "Apache Doris",
+      "implClass": "org.apache.ranger.services.doris.RangerServiceDoris",
+      "label": "Doris",
+      "description": "Apache Doris",
+      "resources": [
+        {
+          "itemId": 1,
+          "name": "catalog",
+          "type": "string",
+          "level": 10,
+          "parent": "",
+          "mandatory": true,
+          "isValidLeaf": true,
+          "lookupSupported": true,
+          "recursiveSupported": false,
+          "excludesSupported": true,
+          "matcher": "org.apache.ranger.plugin.resourcematcher.RangerDefaultResourceMatcher",
+          "matcherOptions": {
+            "wildCard": true,
+            "ignoreCase": true
+          },
+          "validationRegEx": "",
+          "validationMessage": "",
+          "uiHint": "",
+          "accessTypeRestrictions": [
+            "GRANT",
+            "SELECT",
+            "LOAD",
+            "ALTER",
+            "CREATE",
+            "DROP",
+            "SHOW",
+            "SHOW_VIEW"
+          ],
+          "label": "Doris Catalog",
+          "description": "Doris Catalog"
+        },
+        {
+          "itemId": 2,
+          "name": "database",
+          "type": "string",
+          "level": 20,
+          "parent": "catalog",
+          "mandatory": true,
+          "isValidLeaf": true,
+          "lookupSupported": true,
+          "recursiveSupported": false,
+          "excludesSupported": true,
+          "matcher": "org.apache.ranger.plugin.resourcematcher.RangerDefaultResourceMatcher",
+          "matcherOptions": {
+            "wildCard": true,
+            "ignoreCase": true
+          },
+          "validationRegEx": "",
+          "validationMessage": "",
+          "uiHint": "",
+          "accessTypeRestrictions": [
+            "GRANT",
+            "SELECT",
+            "LOAD",
+            "ALTER",
+            "CREATE",
+            "DROP",
+            "SHOW",
+            "SHOW_VIEW"
+          ],
+          "label": "Doris Database",
+          "description": "Doris Database"
+        },
+        {
+          "itemId": 3,
+          "name": "table",
+          "type": "string",
+          "level": 30,
+          "parent": "database",
+          "mandatory": true,
+          "isValidLeaf": true,
+          "lookupSupported": true,
+          "recursiveSupported": false,
+          "excludesSupported": true,
+          "matcher": "org.apache.ranger.plugin.resourcematcher.RangerDefaultResourceMatcher",
+          "matcherOptions": {
+            "wildCard": true,
+            "ignoreCase": true
+          },
+          "validationRegEx": "",
+          "validationMessage": "",
+          "uiHint": "",
+          "accessTypeRestrictions": [
+            "GRANT",
+            "SELECT",
+            "LOAD",
+            "ALTER",
+            "CREATE",
+            "DROP",
+            "SHOW",
+            "SHOW_VIEW"
+          ],
+          "label": "Doris Table",
+          "description": "Doris Table"
+        },
+        {
+          "itemId": 4,
+          "name": "column",
+          "type": "string",
+          "level": 40,
+          "parent": "table",
+          "mandatory": true,
+          "lookupSupported": true,
+          "recursiveSupported": false,
+          "excludesSupported": true,
+          "matcher": "org.apache.ranger.plugin.resourcematcher.RangerDefaultResourceMatcher",
+          "matcherOptions": {
+            "wildCard": true,
+            "ignoreCase": true
+          },
+          "validationRegEx": "",
+          "validationMessage": "",
+          "uiHint": "",
+          "accessTypeRestrictions": [
+            "SELECT"
+          ],
+          "label": "Doris Column",
+          "description": "Doris Column"
+        },
+        {
+          "itemId": 5,
+          "name": "resource",
+          "type": "string",
+          "level": 10,
+          "parent": "",
+          "mandatory": true,
+          "isValidLeaf": true,
+          "lookupSupported": true,
+          "recursiveSupported": false,
+          "excludesSupported": true,
+          "matcher": "org.apache.ranger.plugin.resourcematcher.RangerDefaultResourceMatcher",
+          "matcherOptions": {
+            "wildCard": true,
+            "ignoreCase": true
+          },
+          "validationRegEx": "",
+          "validationMessage": "",
+          "uiHint": "",
+          "accessTypeRestrictions": [
+            "USAGE"
+          ],
+          "label": "Doris Resource",
+          "description": "Doris Resource"
+        },
+        {
+          "itemId": 6,
+          "name": "workload_group",
+          "type": "string",
+          "level": 10,
+          "parent": "",
+          "mandatory": true,
+          "isValidLeaf": true,
+          "lookupSupported": true,
+          "recursiveSupported": false,
+          "excludesSupported": true,
+          "matcher": "org.apache.ranger.plugin.resourcematcher.RangerDefaultResourceMatcher",
+          "matcherOptions": {
+            "wildCard": true,
+            "ignoreCase": true
+          },
+          "validationRegEx": "",
+          "validationMessage": "",
+          "uiHint": "",
+          "accessTypeRestrictions": [
+            "USAGE"
+          ],
+          "label": "Doris Workload Group",
+          "description": "Doris Workload Group"
+        },
+        {
+          "itemId": 7,
+          "name": "global",
+          "type": "string",
+          "level": 10,
+          "parent": "",
+          "mandatory": true,
+          "isValidLeaf": true,
+          "lookupSupported": false,
+          "recursiveSupported": false,
+          "excludesSupported": false,
+          "matcher": "org.apache.ranger.plugin.resourcematcher.RangerDefaultResourceMatcher",
+          "matcherOptions": {
+            "wildCard": true,
+            "ignoreCase": true
+          },
+          "validationRegEx": "",
+          "validationMessage": "",
+          "uiHint": "",
+          "accessTypeRestrictions": [
+            "ADMIN",
+            "NODE",
+            "GRANT",
+            "SELECT",
+            "LOAD",
+            "ALTER",
+            "CREATE",
+            "DROP",
+            "SHOW",
+            "SHOW_VIEW"
+          ],
+          "label": "Doris Global",
+          "description": "Doris Global"
+        },
+        {
+          "itemId": 8,
+          "name": "compute_group",
+          "type": "string",
+          "level": 10,
+          "parent": "",
+          "mandatory": true,
+          "isValidLeaf": true,
+          "lookupSupported": true,
+          "recursiveSupported": false,
+          "excludesSupported": true,
+          "matcher": "org.apache.ranger.plugin.resourcematcher.RangerDefaultResourceMatcher",
+          "matcherOptions": {
+            "wildCard": true,
+            "ignoreCase": true
+          },
+          "validationRegEx": "",
+          "validationMessage": "",
+          "uiHint": "",
+          "accessTypeRestrictions": [
+            "USAGE"
+          ],
+          "label": "Doris Compute Group",
+          "description": "Doris Compute Group"
+        },
+        {
+          "itemId": 9,
+          "name": "storage_vault",
+          "type": "string",
+          "level": 10,
+          "parent": "",
+          "mandatory": true,
+          "isValidLeaf": true,
+          "lookupSupported": true,
+          "recursiveSupported": false,
+          "excludesSupported": true,
+          "matcher": "org.apache.ranger.plugin.resourcematcher.RangerDefaultResourceMatcher",
+          "matcherOptions": {
+            "wildCard": true,
+            "ignoreCase": true
+          },
+          "validationRegEx": "",
+          "validationMessage": "",
+          "uiHint": "",
+          "accessTypeRestrictions": [
+            "USAGE"
+          ],
+          "label": "Doris Storage Vault",
+          "description": "Doris Storage Vault"
+        }
+      ],
+      "accessTypes": [
+        {
+          "itemId": 1,
+          "name": "ADMIN",
+          "label": "ADMIN"
+        },
+        {
+          "itemId": 2,
+          "name": "NODE",
+          "label": "NODE"
+        },
+        {
+          "itemId": 3,
+          "name": "GRANT",
+          "label": "GRANT"
+        },
+        {
+          "itemId": 4,
+          "name": "SELECT",
+          "label": "SELECT"
+        },
+        {
+          "itemId": 5,
+          "name": "LOAD",
+          "label": "LOAD"
+        },
+        {
+          "itemId": 6,
+          "name": "ALTER",
+          "label": "ALTER"
+        },
+        {
+          "itemId": 7,
+          "name": "CREATE",
+          "label": "CREATE"
+        },
+        {
+          "itemId": 8,
+          "name": "DROP",
+          "label": "DROP"
+        },
+        {
+          "itemId": 9,
+          "name": "SHOW_VIEW",
+          "label": "SHOW_VIEW"
+        },
+        {
+          "itemId": 10,
+          "name": "USAGE",
+          "label": "USAGE"
+        },
+        {
+          "itemId": 11,
+          "name": "SHOW",
+          "label": "SHOW"
+        }
+      ],
+      "configs": [
+        {
+          "itemId": 1,
+          "name": "username",
+          "type": "string",
+          "mandatory": true,
+          "validationRegEx": "",
+          "validationMessage": "",
+          "uiHint": "",
+          "label": "Username"
+        },
+        {
+          "itemId": 2,
+          "name": "password",
+          "type": "password",
+          "mandatory": false,
+          "validationRegEx": "",
+          "validationMessage": "",
+          "uiHint": "",
+          "label": "Password"
+        },
+        {
+          "itemId": 3,
+          "name": "jdbc.driver_class",
+          "type": "string",
+          "mandatory": true,
+          "validationRegEx": "",
+          "validationMessage": "",
+          "uiHint": "",
+          "defaultValue": "com.mysql.cj.jdbc.Driver"
+        },
+        {
+          "itemId": 4,
+          "name": "jdbc.url",
+          "type": "string",
+          "mandatory": true,
+          "defaultValue": "",
+          "validationRegEx": "",
+          "validationMessage": "",
+          "uiHint": ""
+        }
+      ],
+      "enums": [],
+      "contextEnrichers": [],
+      "policyConditions": [],
+      "dataMaskDef": {
+        "accessTypes": [
+          {
+            "name": "SELECT"
+          }
+        ],
+        "resources": [
+          {
+            "name": "catalog",
+            "matcherOptions": {
+              "wildCard": "true"
+            },
+            "lookupSupported": true,
+            "uiHint": "{ \"singleValue\":true }"
+          },
+          {
+            "name": "database",
+            "matcherOptions": {
+              "wildCard": "true"
+            },
+            "lookupSupported": true,
+            "uiHint": "{ \"singleValue\":true }"
+          },
+          {
+            "name": "table",
+            "matcherOptions": {
+              "wildCard": "true"
+            },
+            "lookupSupported": true,
+            "uiHint": "{ \"singleValue\":true }"
+          },
+          {
+            "name": "column",
+            "matcherOptions": {
+              "wildCard": "true"
+            },
+            "lookupSupported": true,
+            "uiHint": "{ \"singleValue\":true }"
+          }
+        ],
+        "maskTypes": [
+          {
+            "itemId": 1,
+            "name": "MASK",
+            "label": "Redact",
+            "description": "Replace lowercase with 'x', uppercase with 'X', digits with '0'",
+            "transformer": "regexp_replace(regexp_replace(regexp_replace({col},'([A-Z])', 'x'),'([a-z])','x'),'([0-9])','n')",
+            "dataMaskOptions": {}
+          },
+          {
+            "itemId": 2,
+            "name": "MASK_SHOW_LAST_4",
+            "label": "Partial mask: show last 4",
+            "description": "Show last 4 characters; replace rest with 'X'",
+            "transformer": "LPAD(RIGHT({col}, 4), CHAR_LENGTH({col}), 'X')"
+          },
+          {
+            "itemId": 3,
+            "name": "MASK_SHOW_FIRST_4",
+            "label": "Partial mask: show first 4",
+            "description": "Show first 4 characters; replace rest with 'x'",
+            "transformer": "RPAD(LEFT({col}, 4), CHAR_LENGTH({col}), 'X')"
+          },
+          {
+            "itemId": 4,
+            "name": "MASK_HASH",
+            "label": "Hash",
+            "description": "Hash the value of a varchar with sha256",
+            "transformer": "hex(sha2({col}, 256))"
+          },
+          {
+            "itemId": 5,
+            "name": "MASK_NULL",
+            "label": "Nullify",
+            "description": "Replace with NULL"
+          },
+          {
+            "itemId": 6,
+            "name": "MASK_NONE",
+            "label": "Unmasked (retain original value)",
+            "description": "No masking"
+          },
+          {
+            "itemId": 12,
+            "name": "MASK_DATE_SHOW_YEAR",
+            "label": "Date: show only year",
+            "description": "Date: show only year",
+            "transformer": "date_trunc({col}, 'year')"
+          },
+          {
+            "itemId": 13,
+            "name": "CUSTOM",
+            "label": "Custom",
+            "description": "Custom"
+          }
+        ]
+      },
+      "rowFilterDef": {
+        "accessTypes": [
+          {
+            "name": "SELECT"
+          }
+        ],
+        "resources": [
+          {
+            "name": "catalog",
+            "matcherOptions": {
+              "wildCard": "true"
+            },
+            "lookupSupported": true,
+            "mandatory": true,
+            "uiHint": "{ \"singleValue\":true }"
+          },
+          {
+            "name": "database",
+            "matcherOptions": {
+              "wildCard": "true"
+            },
+            "lookupSupported": true,
+            "mandatory": true,
+            "uiHint": "{ \"singleValue\":true }"
+          },
+          {
+            "name": "table",
+            "matcherOptions": {
+              "wildCard": "true"
+            },
+            "lookupSupported": true,
+            "mandatory": true,
+            "uiHint": "{ \"singleValue\":true }"
+          }
+        ]
+      }
+    }

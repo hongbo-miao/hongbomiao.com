@@ -1,7 +1,7 @@
 create catalog paimon_catalog with (
     'type' = 'paimon',
     'warehouse' = 's3://paimon-warehouse/',
-    's3.endpoint' = 'http://rustfs-svc:9000',
+    's3.endpoint' = 'http://rustfs-svc.rustfs:9000',
     's3.access-key' = 'rustfs_admin',
     's3.secret-key' = 'passw0rd',
     's3.path.style.access' = 'true'

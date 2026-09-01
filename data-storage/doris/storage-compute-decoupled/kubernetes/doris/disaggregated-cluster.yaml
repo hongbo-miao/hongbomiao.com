@@ -9,7 +9,7 @@ apiVersion: disaggregated.cluster.doris.com/v1
 kind: DorisDisaggregatedCluster
 metadata:
   name: doris
-  namespace: storage-compute-decoupled
+  namespace: doris
 spec:
   metaService:
     image: apache/doris:ms-4.1.3
@@ -17,7 +17,7 @@ spec:
     fdb:
       configMapNamespaceName:
         name: doris-fdb-config
-        namespace: storage-compute-decoupled
+        namespace: foundationdb
     configMaps:
       - name: ms-configmap
         mountPath: /etc/doris

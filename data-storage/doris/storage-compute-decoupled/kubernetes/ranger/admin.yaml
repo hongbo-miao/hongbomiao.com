@@ -1,0 +1,68 @@
+# Deliberately no install.properties ConfigMap: the entrypoint always overwrites that file from its
+# own template and appends only the password fields from the env vars below, so a mounted file
+# would be discarded. The template's defaults already match these Service names.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ranger-admin
+  namespace: ranger
+spec:
+  selector:
+    app: ranger-admin
+  ports:
+    - name: http
+      port: 6080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ranger-admin
+  namespace: ranger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ranger-admin
+  template:
+    metadata:
+      labels:
+        app: ranger-admin
+    spec:
+      initContainers:
+        - name: wait-for-ranger-db
+          image: docker.io/curlimages/curl:8.21.0
+          command:
+            - sh
+            - -c
+            - 'until nc -z ranger-db 5432; do sleep 2; done'
+      containers:
+        - name: ranger-admin
+          image: doris-ranger-admin
+          env:
+            - name: KERBEROS_ENABLED
+              value: "false"
+            - name: RANGER_DB_TYPE
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: Passw0rd1
+            - name: RANGER_DB_USER
+              value: rangeradmin
+            - name: RANGER_DB_PASSWORD
+              value: Passw0rd1
+          ports:
+            - containerPort: 6080
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1536Mi
+            limits:
+              cpu: 1
+              memory: 1536Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 6080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 30
