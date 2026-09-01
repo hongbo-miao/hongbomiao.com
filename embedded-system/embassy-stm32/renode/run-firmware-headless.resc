@@ -1,0 +1,7 @@
+:name: firmware (headless)
+using sysbus
+mach create "firmware"
+machine LoadPlatformDescription @renode/stm32f4-discovery.repl
+sysbus.usart2 CreateFileBackend @/tmp/uart.log true
+logLevel -1 sysbus.gpioPortD.UserLED
+sysbus LoadELF @target/thumbv7em-none-eabihf/release/firmware

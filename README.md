@@ -144,10 +144,10 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **tower-http** - HTTP middleware and utilities (compression, CORS, timeout, trace)
   - **tower-governor** - Rate limiting
 - **Serde** - Serialization and deserialization framework
-- **futures-rs** - Foundational traits and utilities for async programming (Future, Stream, Sink)
+- **futures-rs** - Foundational traits and utilities for asynchronous programming (Future, Stream, Sink)
 - **OnceCell** - Lazy initialization of static values and global state
 - **async-graphql** - GraphQL (query, mutation, subscription, depth limit, complexity limit)
-- **SQLx** - Async SQL toolkit
+- **SQLx** - Asynchronous SQL toolkit
 - **Rayon** - Data parallelism
 - **PyO3** - Rust bindings to the Python interpreter
 - **ort** - ONNX Runtime
@@ -962,9 +962,11 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Jetson Nano** - Single-board computer (SBC)
 - **Jetson TX2** - Single-board computer (SBC)
 - **RISC-V** - Open standard instruction set architecture (ISA)
+- **Embassy** - Asynchronous Rust framework for bare-metal embedded systems
 
 ## Simulation
 
+- **Renode** - Multi-node embedded systems simulation and virtual development framework
 - **Surrogate Modeling Toolbox (SMT)** - Surrogate modeling
 - **AnyLogic** - Simulation modeling tool
 - **LabVIEW** - Graphical programming environment

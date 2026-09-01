@@ -308,6 +308,7 @@ lint-rust-rustfmt:
     cd data-transport/dust-dds/dust-dds-subscriber && just lint-rust-rustfmt
     cd data-visualization/iads/iads-rtstation/iads-data-producer && just lint-rust-rustfmt
     cd data-visualization/iads/iads-rtstation/zeromq-iads-bridge && just lint-rust-rustfmt
+    cd embedded-system/embassy-stm32 && just lint-rust-rustfmt
     cd network/udp/udp-receiver && just lint-rust-rustfmt
     cd network/udp/udp-sender && just lint-rust-rustfmt
     cd operating-system/windows/calculator && just lint-rust-rustfmt
@@ -336,6 +337,7 @@ lint-rust-rustfmt-fix:
     cd data-transport/dust-dds/dust-dds-subscriber && just lint-rust-rustfmt-fix
     cd data-visualization/iads/iads-rtstation/iads-data-producer && just lint-rust-rustfmt-fix
     cd data-visualization/iads/iads-rtstation/zeromq-iads-bridge && just lint-rust-rustfmt-fix
+    cd embedded-system/embassy-stm32 && just lint-rust-rustfmt-fix
     cd network/udp/udp-receiver && just lint-rust-rustfmt-fix
     cd network/udp/udp-sender && just lint-rust-rustfmt-fix
     cd operating-system/windows/calculator && just lint-rust-rustfmt-fix
@@ -364,6 +366,7 @@ lint-rust-clippy:
     cd data-transport/dust-dds/dust-dds-subscriber && just lint-rust-clippy
     cd data-visualization/iads/iads-rtstation/iads-data-producer && just lint-rust-clippy
     cd data-visualization/iads/iads-rtstation/zeromq-iads-bridge && just lint-rust-clippy
+    cd embedded-system/embassy-stm32 && just lint-rust-clippy
     cd network/udp/udp-receiver && just lint-rust-clippy
     cd network/udp/udp-sender && just lint-rust-clippy
     cd operating-system/windows/calculator && just lint-rust-clippy
@@ -392,6 +395,7 @@ lint-rust-clippy-fix:
     cd data-transport/dust-dds/dust-dds-subscriber && just lint-rust-clippy-fix
     cd data-visualization/iads/iads-rtstation/iads-data-producer && just lint-rust-clippy-fix
     cd data-visualization/iads/iads-rtstation/zeromq-iads-bridge && just lint-rust-clippy-fix
+    cd embedded-system/embassy-stm32 && just lint-rust-clippy-fix
     cd network/udp/udp-receiver && just lint-rust-clippy-fix
     cd network/udp/udp-sender && just lint-rust-clippy-fix
     cd operating-system/windows/calculator && just lint-rust-clippy-fix
