@@ -1,0 +1,32 @@
+install-toolchain:
+    rustup install
+
+update:
+    cargo update
+
+check:
+    cargo check
+
+build:
+    cargo build --locked --release
+
+set-up:
+    brew install renode/tap/renode
+
+simulate: build
+    renode renode/run-firmware.resc
+
+simulate-headless: build
+    renode --console --disable-xwt -e "include @renode/run-firmware-headless.resc" -e "emulation RunFor \"00:00:05\"" -e "quit"
+
+lint-rust-clippy:
+    cargo clippy
+
+lint-rust-clippy-fix:
+    cargo clippy --fix --allow-dirty --allow-staged
+
+lint-rust-rustfmt:
+    cargo fmt --all -- --check
+
+lint-rust-rustfmt-fix:
+    cargo fmt --all

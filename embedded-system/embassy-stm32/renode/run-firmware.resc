@@ -1,0 +1,8 @@
+:name: firmware
+using sysbus
+mach create "firmware"
+machine LoadPlatformDescription @renode/stm32f4-discovery.repl
+showAnalyzer sysbus.usart2
+logLevel -1 sysbus.gpioPortD.UserLED
+sysbus LoadELF @target/thumbv7em-none-eabihf/release/firmware
+start

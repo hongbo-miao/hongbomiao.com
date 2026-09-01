@@ -360,6 +360,8 @@ jobs:
               - 'data-transport/dust-dds/dust-dds-publisher/**'
             dust-dds-subscriber:
               - 'data-transport/dust-dds/dust-dds-subscriber/**'
+            embassy-stm32:
+              - 'embedded-system/embassy-stm32/**'
             ethereum:
               - 'ethereum/**'
             flightradar24:
@@ -916,6 +918,7 @@ jobs:
       direct-preference-optimization-low-rank-adaptation: ${{ steps.filter.outputs.direct-preference-optimization-low-rank-adaptation }}
       dust-dds-publisher: ${{ steps.filter.outputs.dust-dds-publisher }}
       dust-dds-subscriber: ${{ steps.filter.outputs.dust-dds-subscriber }}
+      embassy-stm32: ${{ steps.filter.outputs.embassy-stm32 }}
       ethereum: ${{ steps.filter.outputs.ethereum }}
       export-yolo-to-onnx: ${{ steps.filter.outputs.export-yolo-to-onnx }}
       feature-store: ${{ steps.filter.outputs.feature-store }}
@@ -1174,6 +1177,7 @@ jobs:
       api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}
       api-rust: ${{ needs.detect-changes.outputs.api-rust == 'true' }}
       camera-radar-lidar-fusion: ${{ needs.detect-changes.outputs.camera-radar-lidar-fusion == 'true' }}
+      embassy-stm32: ${{ needs.detect-changes.outputs.embassy-stm32 == 'true' }}
       ethereum: ${{ needs.detect-changes.outputs.ethereum == 'true' }}
       ffi-rust-calculator: ${{ needs.detect-changes.outputs.ffi-rust-calculator == 'true' }}
       grafana-hm-panel-plugin: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
@@ -1642,6 +1646,7 @@ jobs:
       decode-can-blf-data: ${{ needs.detect-changes.outputs.decode-can-blf-data == 'true' }}
       decode-can-mf4-data: ${{ needs.detect-changes.outputs.decode-can-mf4-data == 'true' }}
       decode-can-trc-data: ${{ needs.detect-changes.outputs.decode-can-trc-data == 'true' }}
+      embassy-stm32: ${{ needs.detect-changes.outputs.embassy-stm32 == 'true' }}
       format-can-data: ${{ needs.detect-changes.outputs.format-can-data == 'true' }}
       hm-serial: ${{ needs.detect-changes.outputs.hm-serial == 'true' }}
       pack-unpack-data: ${{ needs.detect-changes.outputs.pack-unpack-data == 'true' }}

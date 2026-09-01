@@ -18,6 +18,9 @@ name: . Test Embedded System
       decode-can-trc-data:
         required: true
         type: boolean
+      embassy-stm32:
+        required: true
+        type: boolean
       format-can-data:
         required: true
         type: boolean
@@ -127,6 +130,33 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: embedded-system/decode-can-trc-data
+
+  embassy-stm32-test:
+    name: embassy-stm32 | Test
+    if: ${{ inputs.workflow || inputs.embassy-stm32 }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@46268bd060767258de96ed93c1251119784f2ab6 # v1.16.1
+        with:
+          cache: true
+          rust-src-dir: embedded-system/embassy-stm32
+      - name: Install Renode
+        run: |
+          curl --location --output renode.tar.gz https://github.com/renode/renode/releases/download/v1.16.1/renode-1.16.1.linux-portable.tar.gz
+          tar --extract --file renode.tar.gz
+          echo "$(pwd)/renode_1.16.1_portable" >> "$GITHUB_PATH"
+      - name: Build
+        working-directory: embedded-system/embassy-stm32
+        run: |
+          cargo build --locked --release
+      - name: Test
+        working-directory: embedded-system/embassy-stm32
+        run: |
+          renode --console --disable-xwt -e 'include @renode/run-firmware-headless.resc' -e 'emulation RunFor "00:00:05"' -e 'quit'
 
   format-can-data-test:
     name: Format CAN Data | Test

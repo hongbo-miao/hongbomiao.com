@@ -103,6 +103,9 @@ name: . Lint
       camera-radar-lidar-fusion:
         required: true
         type: boolean
+      embassy-stm32:
+        required: true
+        type: boolean
       ethereum:
         required: true
         type: boolean
@@ -960,6 +963,32 @@ jobs:
           cargo fmt --all  -- --check
       - name: Lint Rust (Clippy)
         working-directory: autonomy/camera-radar-lidar-fusion
+        run: |
+          cargo clippy
+
+  lint-rust-embassy-stm32:
+    name: Rust (embassy-stm32)
+    if: ${{ inputs.workflow || inputs.embassy-stm32 }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@46268bd060767258de96ed93c1251119784f2ab6 # v1.16.1
+        with:
+          cache: true
+          rust-src-dir: embedded-system/embassy-stm32
+      - name: Install dependencies
+        working-directory: embedded-system/embassy-stm32
+        run: |
+          cargo build --locked
+      - name: Lint Rust (rustfmt)
+        working-directory: embedded-system/embassy-stm32
+        run: |
+          cargo fmt --all  -- --check
+      - name: Lint Rust (Clippy)
+        working-directory: embedded-system/embassy-stm32
         run: |
           cargo clippy
 
