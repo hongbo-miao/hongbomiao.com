@@ -146,9 +146,9 @@ jobs:
           rust-src-dir: embedded-system/embassy-stm32
       - name: Install Renode
         run: |
-          curl --location --output renode.tar.gz https://github.com/renode/renode/releases/download/v1.16.1/renode-1.16.1.linux-portable.tar.gz
+          curl --location --output renode.tar.gz https://github.com/renode/renode/releases/download/v1.16.1/renode-1.16.1.linux-arm64-portable-dotnet.tar.gz
           tar --extract --file renode.tar.gz
-          echo "$(pwd)/renode_1.16.1_portable" >> "$GITHUB_PATH"
+          echo "$(pwd)/renode_1.16.1-dotnet_portable" >> "$GITHUB_PATH"
       - name: Build
         working-directory: embedded-system/embassy-stm32
         run: |
