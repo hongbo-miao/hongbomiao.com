@@ -1,11 +1,14 @@
 # Based on the doris-disaggregated chart's fe-configmap.yaml template, with the JVM heap sized
 # down from the chart default (8192m) to fit a laptop-sized kind node.
+#
+# The FE entrypoint symlinks every key of this ConfigMap into fe/conf/ except fe.conf itself, so
+# the ranger-doris-* keys need no extra image, initContainer, or volume.
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: fe-configmap
-  namespace: storage-compute-decoupled
+  namespace: doris
 data:
   fe.conf: |
     CUR_DATE=`date +%Y%m%d-%H%M%S`
@@ -18,3 +21,56 @@ data:
     query_port = 9030
     edit_log_port = 9010
     enable_fqdn_mode = true
+    access_controller_type = ranger-doris
+  ranger-doris-security.xml: |
+    <?xml version="1.0" encoding="UTF-8"?>
+    <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+    <configuration>
+        <property>
+            <name>ranger.plugin.doris.policy.cache.dir</name>
+            <value>/opt/apache-doris/fe/log/ranger-doris-policy-cache</value>
+        </property>
+        <property>
+            <name>ranger.plugin.doris.policy.pollIntervalMs</name>
+            <value>30000</value>
+        </property>
+        <property>
+            <name>ranger.plugin.doris.policy.rest.client.connection.timeoutMs</name>
+            <value>60000</value>
+        </property>
+        <property>
+            <name>ranger.plugin.doris.policy.rest.client.read.timeoutMs</name>
+            <value>60000</value>
+        </property>
+        <property>
+            <name>ranger.plugin.doris.policy.rest.url</name>
+            <value>http://ranger-admin.ranger:6080</value>
+        </property>
+        <property>
+            <name>ranger.plugin.doris.policy.source.impl</name>
+            <value>org.apache.ranger.admin.client.RangerAdminRESTClient</value>
+        </property>
+        <property>
+            <name>ranger.plugin.doris.service.name</name>
+            <value>doris</value>
+        </property>
+    </configuration>
+  # Doris emits no audit events however this is configured (see README, Audit). Do not enable a
+  # destination: the FE bundles only ranger-audit-core, so anything but file crash-loops it.
+  ranger-doris-audit.xml: |
+    <?xml version="1.0" encoding="UTF-8"?>
+    <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+    <configuration>
+        <property>
+            <name>xasecure.audit.is.enabled</name>
+            <value>false</value>
+        </property>
+    </configuration>
+  log4j.properties: |
+    log4j.rootLogger = info,D
+    log4j.appender.D = org.apache.log4j.DailyRollingFileAppender
+    log4j.appender.D.File = /opt/apache-doris/fe/log/ranger.log
+    log4j.appender.D.Append = true
+    log4j.appender.D.Threshold = INFO
+    log4j.appender.D.layout = org.apache.log4j.PatternLayout
+    log4j.appender.D.layout.ConversionPattern = %-d{yyyy-MM-dd HH:mm:ss}  [ %t:%r ] - [ %p ]  %m%n

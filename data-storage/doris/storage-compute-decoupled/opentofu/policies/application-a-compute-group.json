@@ -1,0 +1,21 @@
+{
+  "service": "doris",
+  "name": "application-a-compute-group-usage",
+  "policyType": 0,
+  "isEnabled": true,
+  "isAuditEnabled": true,
+  "resources": {
+    "compute_group": {
+      "values": ["application_a"],
+      "isExcludes": false,
+      "isRecursive": false
+    }
+  },
+  "policyItems": [
+    {
+      "accesses": [{ "type": "USAGE", "isAllowed": true }],
+      "users": ["application_a_user"],
+      "delegateAdmin": false
+    }
+  ]
+}

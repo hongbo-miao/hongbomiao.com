@@ -3,7 +3,7 @@
 create storage vault if not exists doris_storage_vault
 properties (
     "type" = "S3",
-    "s3.endpoint" = "rustfs-svc:9000",
+    "s3.endpoint" = "rustfs-svc.rustfs:9000",
     "s3.region" = "us-west-2",
     "s3.bucket" = "doris-storage-vault",
     "s3.root.path" = "doris",

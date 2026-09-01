@@ -1,0 +1,50 @@
+# The Service must be named ranger-db -- the db_host default baked into the Admin image.
+#
+# The password must satisfy Ranger's complexity rule (8+ chars, upper, lower, digit): the Admin
+# image reuses it for its own admin login, and that reset silently no-ops on a weak password,
+# leaving admin/admin active.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ranger-db
+  namespace: ranger
+spec:
+  selector:
+    app: ranger-db
+  ports:
+    - name: postgres
+      port: 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ranger-db
+  namespace: ranger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ranger-db
+  template:
+    metadata:
+      labels:
+        app: ranger-db
+    spec:
+      containers:
+        - name: ranger-db
+          image: docker.io/apache/ranger-db:2.8.0
+          env:
+            - name: POSTGRES_PASSWORD
+              value: Passw0rd1
+            - name: RANGER_DB_USER
+              value: rangeradmin
+            - name: RANGER_DB_PASSWORD
+              value: Passw0rd1
+          ports:
+            - containerPort: 5432
+          readinessProbe:
+            exec:
+              command: ["su", "-c", "pg_isready -q", "postgres"]
+            initialDelaySeconds: 10
+            periodSeconds: 5

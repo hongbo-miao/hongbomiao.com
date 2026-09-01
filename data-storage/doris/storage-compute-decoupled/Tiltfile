@@ -3,13 +3,19 @@ load("ext://helm_resource", "helm_resource", "helm_repo")
 
 update_settings(k8s_upsert_timeout_secs=600)
 
-namespace_create("storage-compute-decoupled")
+# One namespace per service group, matching the labels=[...] groupings below, so cross-namespace
+# dependencies are explicit at the DNS layer rather than implicit same-namespace defaults.
+namespace_create("rustfs")
+namespace_create("foundationdb")
+namespace_create("doris")
+namespace_create("ranger")
+namespace_create("paimon-seed")
 
 helm_repo("rustfs-charts", "https://charts.rustfs.com", labels=["rustfs"])
 helm_resource(
     "rustfs",
     "rustfs-charts/rustfs",
-    namespace="storage-compute-decoupled",
+    namespace="rustfs",
     flags=["--version=0.8.0", "--values=kubernetes/rustfs/helm-chart/values.yaml"],
     labels=["rustfs"],
     resource_deps=["rustfs-charts"],
@@ -21,6 +27,28 @@ k8s_yaml([
 ])
 k8s_resource("rustfs-bucket-initialize", labels=["rustfs"], resource_deps=["rustfs"])
 
+docker_build("doris-ranger-admin", "ranger")
+k8s_yaml([
+    "kubernetes/ranger/postgres.yaml",
+    "kubernetes/ranger/solr.yaml",
+    "kubernetes/ranger/admin.yaml",
+    "kubernetes/ranger/doris-service-definition-configmap.yaml",
+    "kubernetes/ranger/bootstrap-job.yaml",
+])
+k8s_resource("ranger-db", labels=["ranger"])
+k8s_resource("ranger-solr", labels=["ranger"])
+k8s_resource(
+    "ranger-admin",
+    port_forwards=["6080:6080"],
+    labels=["ranger"],
+    resource_deps=["ranger-db", "ranger-solr"],
+)
+k8s_resource(
+    "ranger-doris-bootstrap",
+    labels=["ranger"],
+    resource_deps=["ranger-admin"],
+)
+
 helm_repo("doris-charts", "https://charts.selectdb.com", labels=["doris"])
 
 k8s_yaml([
@@ -31,7 +59,7 @@ k8s_yaml([
 helm_resource(
     "foundationdb",
     "doris-charts/doris-foundationdb",
-    namespace="storage-compute-decoupled",
+    namespace="foundationdb",
     flags=[
         "--version=25.8.0",
         "--values=kubernetes/foundationdb/helm-chart/values.yaml",
@@ -42,24 +70,25 @@ helm_resource(
     deps=["kubernetes/foundationdb/helm-chart/values.yaml"],
 )
 
-# The chart's FoundationDBCluster template has no values hook for spec.faultDomain.
-# On a single-node kind cluster every pod shares one real zone, so without it the operator's coordinator selection fails with "Could only select 1 processes, but 3 are required".
+# The chart's FoundationDBCluster template has no values hook for spec.faultDomain. On a
+# single-node kind cluster every pod shares one zone, so without this patch the operator's
+# coordinator selection fails with "Could only select 1 processes, but 3 are required".
 local_resource(
     "foundationdb-fault-domain-patch",
-    cmd="kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled patch foundationdbcluster doris-fdb --type=merge --patch='{\"spec\":{\"faultDomain\":{\"key\":\"foundationdb.org/none\"}}}'",
+    cmd="kubectl --context=kind-doris-storage-compute-decoupled --namespace=foundationdb patch foundationdbcluster doris-fdb --type=merge --patch='{\"spec\":{\"faultDomain\":{\"key\":\"foundationdb.org/none\"}}}'",
     resource_deps=["foundationdb"],
     labels=["foundationdb"],
 )
 local_resource(
     "foundationdb-available",
-    cmd="kubectl --context=kind-doris-storage-compute-decoupled --namespace=storage-compute-decoupled wait --for=jsonpath='{.status.health.available}'=true foundationdbcluster/doris-fdb --timeout=600s",
+    cmd="kubectl --context=kind-doris-storage-compute-decoupled --namespace=foundationdb wait --for=jsonpath='{.status.health.available}'=true foundationdbcluster/doris-fdb --timeout=600s",
     resource_deps=["foundationdb-fault-domain-patch"],
     labels=["foundationdb"],
 )
 helm_resource(
     "doris-operator",
     "doris-charts/doris-operator",
-    namespace="storage-compute-decoupled",
+    namespace="doris",
     flags=["--version=25.8.0", "--values=kubernetes/doris-operator/helm-chart/values.yaml"],
     labels=["doris"],
     resource_deps=["doris-charts"],
@@ -76,7 +105,7 @@ k8s_resource(
     "doris",
     new_name="doris-disaggregated-cluster",
     labels=["doris"],
-    resource_deps=["doris-operator", "foundationdb-available"],
+    resource_deps=["doris-operator", "foundationdb-available", "ranger-doris-bootstrap"],
     objects=["ms-configmap", "fe-configmap", "be-configmap"],
 )
 docker_build("doris-paimon-seed", "flink")

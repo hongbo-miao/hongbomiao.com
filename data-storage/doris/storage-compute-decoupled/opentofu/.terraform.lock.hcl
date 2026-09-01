@@ -1,0 +1,24 @@
+# This file is maintained automatically by "tofu init".
+# Manual edits may be lost in future updates.
+
+provider "registry.terraform.io/gr8-toolkit/ranger" {
+  version     = "0.1.0"
+  constraints = "0.1.0"
+  hashes = [
+    "h1:R/Xh5CEZlt6TpPfVIbLbXXEGzxKtGGZ+0fbqAzL/XI8=",
+    "zh:1c3e89cf19118fc07d7b04257251fc9897e722c16e0a0df7b07fcd261f8c12e7",
+    "zh:284b731564c73871e8853132cf5cd4e1c0d5737c767bb9305f331332cae34b05",
+    "zh:34936b4a14b3b6a5b834d57dab8281653fe80c803b744522cdc8862404ab06be",
+    "zh:46f7181dea0379b9886702597371f85fb11298118b468eb6883fb2f159b9304e",
+    "zh:65ac82c73f2d5725d4475ce1b9517781ec706d26f8f4eeb1805fb1933312f785",
+    "zh:7681fc32e042db9d54e35a9671cacfcaffd5130726a83468445da79d12414ee5",
+    "zh:8444bd0323e7138e10f0cf490da118f0397dc23698f7ab1b7db0b3be9755fc33",
+    "zh:883f09e29bb0dd77e9fb239787e505135938a703d4adf71a6d01a40eaed5cce5",
+    "zh:945609afa6979cfc42c4b6ccc082a9106a525e1e6cf30e2115943dab2e79917b",
+    "zh:a00e5bd661c49f893039f2b4cc8542ac330277e429db7d1aedef768033755e5c",
+    "zh:cb72fee89aaa296d25005296ea5c5c1cb807c1b2583c2889d6641f72fa251e76",
+    "zh:e84535a155b31ecb9d39947b479048f71717750d4f2993f5c9651de2ae76a7cd",
+    "zh:e8868710d591673bba1cfd87be7e320873c94af5956d7b4b006c9370e0821e67",
+    "zh:fd159eb272e0f128c159c025e3f49a362006fddc61722c49e0ef38d8a0275fc0",
+  ]
+}

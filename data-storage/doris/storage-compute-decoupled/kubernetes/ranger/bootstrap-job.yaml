@@ -1,0 +1,82 @@
+# The Terraform ranger provider has only a ranger_policy resource, so the service definition, the
+# "doris" service, and the users are created here. The users exist because Ranger rejects a policy
+# naming a user it does not know.
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ranger-doris-bootstrap
+  namespace: ranger
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+        - name: wait-for-ranger-admin
+          image: docker.io/curlimages/curl:8.21.0
+          command:
+            - sh
+            - -c
+            - 'until curl --silent --fail --max-time 5 http://ranger-admin:6080/; do sleep 5; done'
+      containers:
+        - name: ranger-doris-bootstrap
+          image: docker.io/curlimages/curl:8.21.0
+          volumeMounts:
+            - name: doris-service-definition
+              mountPath: /etc/ranger
+          command:
+            - sh
+            - -c
+            - |
+              set -eu
+              RANGER_URL=http://ranger-admin:6080
+              AUTH="admin:Passw0rd1"
+
+              # Guarded so a re-run of this Job does not fail the second time.
+              if curl --silent --fail --user "$AUTH" "$RANGER_URL/service/plugins/definitions/name/doris" > /dev/null 2>&1; then
+                echo "Service definition 'doris' already registered"
+              else
+                curl --silent --show-error --fail --user "$AUTH" \
+                  --header "Accept: application/json" --header "Content-Type: application/json" \
+                  --request POST "$RANGER_URL/service/plugins/definitions" \
+                  --data @/etc/ranger/ranger-servicedef-doris.json
+              fi
+
+              # default.policy.users applies only at creation time, so it must be in this first
+              # POST body -- a later update will not pick it up.
+              if curl --silent --fail --user "$AUTH" "$RANGER_URL/service/public/v2/api/service/name/doris" > /dev/null 2>&1; then
+                echo "Service 'doris' already exists"
+              else
+                curl --silent --show-error --fail --user "$AUTH" \
+                  --header "Accept: application/json" --header "Content-Type: application/json" \
+                  --request POST "$RANGER_URL/service/public/v2/api/service/" \
+                  --data '{
+                    "name": "doris",
+                    "type": "doris",
+                    "isEnabled": true,
+                    "configs": {
+                      "username": "root",
+                      "password": "",
+                      "jdbc.driver_class": "com.mysql.cj.jdbc.Driver",
+                      "jdbc.url": "jdbc:mysql://doris-fe.doris:9030?useSSL=false",
+                      "resource.lookup.timeout.value.in.ms": "10000",
+                      "default.policy.users": "root,admin"
+                    }
+                  }'
+              fi
+
+              for doris_user in application_a_user application_b_user; do
+                if curl --silent --fail --user "$AUTH" "$RANGER_URL/service/xusers/users/userName/$doris_user" > /dev/null 2>&1; then
+                  echo "Ranger user '$doris_user' already exists"
+                else
+                  curl --silent --show-error --fail --user "$AUTH" \
+                    --header "Accept: application/json" --header "Content-Type: application/json" \
+                    --request POST "$RANGER_URL/service/xusers/secure/users" \
+                    --data "{\"name\": \"$doris_user\", \"firstName\": \"$doris_user\", \"password\": \"Passw0rd1\", \"userRoleList\": [\"ROLE_USER\"]}"
+                fi
+              done
+      volumes:
+        - name: doris-service-definition
+          configMap:
+            name: ranger-doris-service-definition

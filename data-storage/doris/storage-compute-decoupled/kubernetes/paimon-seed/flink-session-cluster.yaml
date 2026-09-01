@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: flink-jobmanager
-  namespace: storage-compute-decoupled
+  namespace: paimon-seed
 spec:
   selector:
     app: flink
@@ -20,7 +20,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flink-jobmanager
-  namespace: storage-compute-decoupled
+  namespace: paimon-seed
 spec:
   replicas: 1
   selector:
@@ -55,7 +55,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flink-taskmanager
-  namespace: storage-compute-decoupled
+  namespace: paimon-seed
 spec:
   replicas: 1
   selector:

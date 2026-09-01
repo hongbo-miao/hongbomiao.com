@@ -3,7 +3,7 @@
 create catalog if not exists paimon_catalog properties (
     "type" = "paimon",
     "warehouse" = "s3://paimon-warehouse/",
-    "s3.endpoint" = "http://rustfs-svc:9000",
+    "s3.endpoint" = "http://rustfs-svc.rustfs:9000",
     "s3.region" = "us-west-2",
     "s3.access_key" = "rustfs_admin",
     "s3.secret_key" = "passw0rd",

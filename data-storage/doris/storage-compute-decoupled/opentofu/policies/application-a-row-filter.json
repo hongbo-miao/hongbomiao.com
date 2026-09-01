@@ -1,0 +1,34 @@
+{
+  "service": "doris",
+  "name": "application-a-sensor-reading-row-filter",
+  "policyType": 2,
+  "isEnabled": true,
+  "isAuditEnabled": true,
+  "resources": {
+    "catalog": {
+      "values": ["paimon_catalog"],
+      "isExcludes": false,
+      "isRecursive": false
+    },
+    "database": {
+      "values": ["sensor_db"],
+      "isExcludes": false,
+      "isRecursive": false
+    },
+    "table": {
+      "values": ["sensor_reading"],
+      "isExcludes": false,
+      "isRecursive": false
+    }
+  },
+  "rowFilterPolicyItems": [
+    {
+      "accesses": [{ "type": "SELECT", "isAllowed": true }],
+      "users": ["application_a_user"],
+      "delegateAdmin": false,
+      "rowFilterInfo": {
+        "filterExpr": "device_id <= 100"
+      }
+    }
+  ]
+}
