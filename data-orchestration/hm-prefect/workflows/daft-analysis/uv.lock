@@ -1,10 +1,9 @@
 version = 1
 revision = 3
-requires-python = "==3.13.14"
+requires-python = "==3.13.15"
 resolution-markers = [
     "sys_platform == 'darwin'",
-    "sys_platform != 'darwin' and sys_platform != 'win32'",
-    "sys_platform == 'win32'",
+    "sys_platform != 'darwin'",
 ]
 
 [[package]]
@@ -79,8 +78,7 @@ version = "1.9.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "certifi" },
-    { name = "click", version = "8.2.1", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'win32'" },
-    { name = "click", version = "8.3.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'win32'" },
+    { name = "click" },
     { name = "markdown" },
     { name = "pyyaml" },
     { name = "requests" },
@@ -270,28 +268,12 @@ wheels = [
 name = "click"
 version = "8.2.1"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "sys_platform == 'darwin'",
-    "sys_platform != 'darwin' and sys_platform != 'win32'",
+dependencies = [
+    { name = "colorama", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/60/6c/8ca2efa64cf75a977a0d7fac081354553ebe483345c734fb6b6515d96bbc/click-8.2.1.tar.gz", hash = "sha256:27c491cc05d968d271d5a1db13e3b5a184636d9d930f148c50b038f0d0646202", size = 286342, upload-time = "2025-05-20T23:19:49.832Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/85/32/10bb5764d90a8eee674e9dc6f4db6a0ab47c8c4d0d83c27f7c39ac415a4d/click-8.2.1-py3-none-any.whl", hash = "sha256:61a3265b914e850b85317d0b3109c7f8cd35a670f963866005d6ef1d5175a12b", size = 102215, upload-time = "2025-05-20T23:19:47.796Z" },
-]
-
-[[package]]
-name = "click"
-version = "8.3.0"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "sys_platform == 'win32'",
-]
-dependencies = [
-    { name = "colorama" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/46/61/de6cd827efad202d7057d93e0fed9294b96952e188f7384832791c7b2254/click-8.3.0.tar.gz", hash = "sha256:e7b8232224eba16f4ebe410c25ced9f7875cb5f3263ffc93cc3e8da705e229c4", size = 276943, upload-time = "2025-09-18T17:32:23.696Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/db/d3/9dcc0f5797f070ec8edf30fbadfb200e71d9db6b84d211e3b2085a7589a0/click-8.3.0-py3-none-any.whl", hash = "sha256:9b9f285302c6e3064f4330c05f05b81945b2a39544279343e6e7c5f27a9baddc", size = 107295, upload-time = "2025-09-18T17:32:22.42Z" },
 ]
 
 [[package]]
@@ -422,7 +404,7 @@ wheels = [
 
 [[package]]
 name = "daft"
-version = "0.7.23"
+version = "0.7.24"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "fsspec" },
@@ -431,11 +413,11 @@ dependencies = [
     { name = "tqdm" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ea/3d/19621ac6b75b0a05860f1300bbf51f0afab77d6fa89eee33d863522ce996/daft-0.7.23-cp310-abi3-macosx_10_12_x86_64.whl", hash = "sha256:2e0401ab2b6aba0c44356e80898522d81570c5e923a721a720c4d16f559c1098", size = 55747933, upload-time = "2026-08-05T21:58:19.94Z" },
-    { url = "https://files.pythonhosted.org/packages/3a/a7/68d72113e10b32068675b22e75d2d76ce947fa8317a3e13af5ff3161db3b/daft-0.7.23-cp310-abi3-macosx_11_0_arm64.whl", hash = "sha256:2884b0e15f31107edf745e4cd58fef3fc083face532f52120f97dfd3669cc552", size = 51602439, upload-time = "2026-08-05T21:58:23.112Z" },
-    { url = "https://files.pythonhosted.org/packages/5e/82/e004e73e781fa2e7da6362531bbbd305f0d04d10ee61a1f2cb6c5a6b5b35/daft-0.7.23-cp310-abi3-manylinux_2_24_aarch64.whl", hash = "sha256:bb73eaa39c317284e1e8cbfb85dc71bbb9e6de400455e865e1bff92dd721e949", size = 53911416, upload-time = "2026-08-05T21:58:26.246Z" },
-    { url = "https://files.pythonhosted.org/packages/98/7a/3b52af66b5cc1be79cf15403b9db2677f14e76fa637844bfa6d85ce5d78e/daft-0.7.23-cp310-abi3-manylinux_2_24_x86_64.whl", hash = "sha256:4fd93b1d39308f7e06dd56cd92abbcf0bc0d13cedc51f189bf9a7ca1074945be", size = 56126245, upload-time = "2026-08-05T21:58:29.964Z" },
-    { url = "https://files.pythonhosted.org/packages/40/f2/9fdbe7132e63d69a6906b04524b927b96581e0436d8b74e91d3f176e0710/daft-0.7.23-cp310-abi3-win_amd64.whl", hash = "sha256:d90e2c4832ec2df622109a43884055187ad1fd8de3cdd77fe7abcd47f4fbc36b", size = 55232502, upload-time = "2026-08-05T21:58:32.997Z" },
+    { url = "https://files.pythonhosted.org/packages/8b/73/80a3c8311a5d4e56a4e3b6f1d0b875373437c29944e59ba90bed2617984a/daft-0.7.24-cp310-abi3-macosx_10_12_x86_64.whl", hash = "sha256:d5f03d04211f185763cc23aedebd6a7476d8377e8032b5cafb1e4d8924933b23", size = 55690416, upload-time = "2026-08-15T00:28:43.993Z" },
+    { url = "https://files.pythonhosted.org/packages/99/f2/64f4f495f3f96bbd59d1330162864b54e91ea0b9ec135bd2cfc73b04f92c/daft-0.7.24-cp310-abi3-macosx_11_0_arm64.whl", hash = "sha256:87e425dc402b5660f64fce6ad0c6b666737a9f381862c555358bb5fa2a043529", size = 51583689, upload-time = "2026-08-15T00:28:47.884Z" },
+    { url = "https://files.pythonhosted.org/packages/d4/57/b8539bf40be805f6fbf540f5d50bf131be4a7cc5f779819f753678cdd926/daft-0.7.24-cp310-abi3-manylinux_2_24_aarch64.whl", hash = "sha256:8f968f31d3568ef4ada5cac6b4349d47d493d793002c7c72f64f5bd840e2d20b", size = 54092497, upload-time = "2026-08-15T00:28:51.167Z" },
+    { url = "https://files.pythonhosted.org/packages/75/0b/a4e2c9e48054da34b619d0a04e0b23d2b22ce88ba51d1cb8db40872c455a/daft-0.7.24-cp310-abi3-manylinux_2_24_x86_64.whl", hash = "sha256:4fa090e263247aec1975d7bf1be46ca494d29df2638803880a3a901a79e6887d", size = 56315893, upload-time = "2026-08-15T00:28:54.518Z" },
+    { url = "https://files.pythonhosted.org/packages/59/e7/80753a416ada1c0e45b721d0715199203f617db70fb4d813564a7ef13ce2/daft-0.7.24-cp310-abi3-win_amd64.whl", hash = "sha256:339f4c5e5bfce11e3c750c900668d843b85cb65fcee1d9e952d78d9867cb811e", size = 55013342, upload-time = "2026-08-15T00:28:57.913Z" },
 ]
 
 [package.optional-dependencies]
@@ -447,8 +429,7 @@ deltalake = [
     { name = "deltalake" },
 ]
 ray = [
-    { name = "ray", version = "2.47.1", source = { registry = "https://pypi.org/simple" }, extra = ["client", "data"], marker = "sys_platform == 'win32'" },
-    { name = "ray", version = "2.52.1", source = { registry = "https://pypi.org/simple" }, extra = ["client", "data"], marker = "sys_platform != 'win32'" },
+    { name = "ray", extra = ["client", "data"] },
 ]
 
 [[package]]
@@ -468,20 +449,21 @@ wheels = [
 
 [[package]]
 name = "deltalake"
-version = "1.5.1"
+version = "1.6.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "arro3-core" },
     { name = "deprecated" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2d/30/4cdaa52aa82c808019b100c108d98d2ae71b3a94b167b94824f40b8c02c8/deltalake-1.5.1.tar.gz", hash = "sha256:e75f5c0c0e3a4aae350701fd2c4122d57a182eddce335c5554ea345984d18885", size = 5397239, upload-time = "2026-04-21T18:52:18.333Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/08/ca/62354ebb384806b3496b25708ac605af54c5ed11cb2a8111ea1892aec9c9/deltalake-1.6.3.tar.gz", hash = "sha256:b7176c9d2a48b3ad339902e6216cdde813857b9628ef53e972889c71d2836fc4", size = 5556567, upload-time = "2026-08-21T19:07:33.7Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d1/39/a74eed5cfa015cc98633499afd555b81dc1c3da476b5222e6cb347dc63ec/deltalake-1.5.1-cp310-abi3-macosx_10_12_x86_64.whl", hash = "sha256:1ddbcd7ee3eeb9a776db7445a36bde78a94a131abe09450b0c4c4b83e8ae79d1", size = 40775578, upload-time = "2026-04-21T19:25:55.303Z" },
-    { url = "https://files.pythonhosted.org/packages/88/82/e6650c0233393ef273250c3f5fefa7036ad94adec976232e0e829f4e744f/deltalake-1.5.1-cp310-abi3-macosx_11_0_arm64.whl", hash = "sha256:f3462997e6767382d178cb16e63a30a7a101af08403f7a59c0089a4afdba507b", size = 37372747, upload-time = "2026-04-21T19:29:11.254Z" },
-    { url = "https://files.pythonhosted.org/packages/68/ce/8e4f617b15f9f1e7589a4075f0a1fb5872ad003b92d3b508b81ed4ab1cdc/deltalake-1.5.1-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:96c00b7334f19d6e71e184b333ac85bb6c61ddfb1e14dc276f99f6c62061c13b", size = 41621146, upload-time = "2026-04-21T18:52:15.754Z" },
-    { url = "https://files.pythonhosted.org/packages/5d/da/4827ea253f8000dd2342c62e5acaed2d6ebeffc72e635a8b48b40b600d89/deltalake-1.5.1-cp310-abi3-manylinux_2_28_aarch64.whl", hash = "sha256:4a7afb96f379a07ec4f97fc69d3afa3a6355a2302b2fd790a91f0a1dc7b8e6a4", size = 40344335, upload-time = "2026-04-21T18:41:43.497Z" },
-    { url = "https://files.pythonhosted.org/packages/fa/1b/e1326d3e51ec093617b881d5ca2f854380eeadd47d632c8d005988e8a12e/deltalake-1.5.1-cp310-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:0f792f95f4b53d820ae045051dd28f8815a314b6d6165cf81e86250070152579", size = 41632084, upload-time = "2026-04-21T18:53:01.989Z" },
-    { url = "https://files.pythonhosted.org/packages/8a/13/2e4ba13f67fc4db43489ce933d4a25d5b6a167967b0f8a62ce09273ff83e/deltalake-1.5.1-cp310-abi3-win_amd64.whl", hash = "sha256:e3e93a90fa19174b39b66d28fd2d83d99bfb946649b49efa2db602a25a6a4a0c", size = 43960717, upload-time = "2026-04-21T19:17:35.544Z" },
+    { url = "https://files.pythonhosted.org/packages/e8/26/048812e37921a88935fc75811905dab15a97fc76570a7f6716e68b855cce/deltalake-1.6.3-cp310-abi3-macosx_10_12_x86_64.whl", hash = "sha256:c25928df2a30a19dec3f86ffd931fd59b7f175b5781ba998b34001eb4d49e1f7", size = 50660228, upload-time = "2026-08-21T20:17:39.96Z" },
+    { url = "https://files.pythonhosted.org/packages/50/54/56c21b2c7dcee35ad84fcd4aeb73043440320e7ed0114185610a4dd96e14/deltalake-1.6.3-cp310-abi3-macosx_11_0_arm64.whl", hash = "sha256:8cec745b5dff6581c0b26c5136e3f9eea7ac715a684fe4459b5c37c66407ae02", size = 46966574, upload-time = "2026-08-21T20:16:22.369Z" },
+    { url = "https://files.pythonhosted.org/packages/9b/d8/68505832d7fdf3cae5f4bcf5bb1d7fb31a8e07f909515bf845b09b3ec58c/deltalake-1.6.3-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:1a5163ed5550f5b83ba6f9a95b5e3dff09934a3165fb80ee0ab8e5919782ac6c", size = 51885971, upload-time = "2026-08-21T19:40:39.213Z" },
+    { url = "https://files.pythonhosted.org/packages/6a/5a/18a21ca1b75228e2a5655616e2493f7dfe7c75397c5b7a616299342feeae/deltalake-1.6.3-cp310-abi3-manylinux_2_28_aarch64.whl", hash = "sha256:d5aa5f89367deca941ed5e8496b6f6521b42ff0380609ff7a02f771ae9ae7abe", size = 50801364, upload-time = "2026-08-21T19:26:16.964Z" },
+    { url = "https://files.pythonhosted.org/packages/7a/e0/038b81370988e47e80e8e243355a49c3f58c20624375df6c5140f922dfd1/deltalake-1.6.3-cp310-abi3-musllinux_1_2_aarch64.whl", hash = "sha256:8f2de230b5cd979b3b984db3b9a24bf14722d4b46a4d062b41fe3fd2e5bfbd68", size = 50802730, upload-time = "2026-08-21T19:26:21.044Z" },
+    { url = "https://files.pythonhosted.org/packages/5e/c2/5cf8b65d6ddb2a3b0b0b1f4359ddbfba1afa93764bb6e19fc4d31dd8dba8/deltalake-1.6.3-cp310-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:b51d0109b0a86b336c7254a01495536d69c72593663d8de0bc320aa4523c0502", size = 51904607, upload-time = "2026-08-21T19:39:05.074Z" },
+    { url = "https://files.pythonhosted.org/packages/63/91/28cb7e0edf10f05f1025e2b4bb0085a1b23aa11472c06e43f1c5897c183e/deltalake-1.6.3-cp310-abi3-win_amd64.whl", hash = "sha256:7920a60510376f3c90feb62d182063b0202f117411e73ff9f23ffe969b800dce", size = 55409423, upload-time = "2026-08-21T20:04:36.967Z" },
 ]
 
 [[package]]
@@ -1125,8 +1107,7 @@ dependencies = [
     { name = "asgi-lifespan" },
     { name = "asyncpg" },
     { name = "cachetools" },
-    { name = "click", version = "8.2.1", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'win32'" },
-    { name = "click", version = "8.3.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'win32'" },
+    { name = "click" },
     { name = "cloudpickle" },
     { name = "coolname" },
     { name = "cryptography" },
@@ -1251,7 +1232,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "daft", extras = ["aws", "deltalake", "ray"], specifier = "==0.7.23" },
+    { name = "daft", extras = ["aws", "deltalake", "ray"], specifier = "==0.7.24" },
     { name = "prefect", specifier = "==3.7.8" },
     { name = "prefect-client", specifier = "==3.7.8" },
 ]
@@ -1568,43 +1549,10 @@ wheels = [
 
 [[package]]
 name = "ray"
-version = "2.47.1"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "sys_platform == 'win32'",
-]
-dependencies = [
-    { name = "click", version = "8.3.0", source = { registry = "https://pypi.org/simple" } },
-    { name = "filelock" },
-    { name = "jsonschema" },
-    { name = "msgpack" },
-    { name = "packaging" },
-    { name = "protobuf" },
-    { name = "pyyaml" },
-    { name = "requests" },
-]
-
-[package.optional-dependencies]
-client = [
-    { name = "grpcio" },
-]
-data = [
-    { name = "fsspec" },
-    { name = "numpy" },
-    { name = "pandas" },
-    { name = "pyarrow" },
-]
-
-[[package]]
-name = "ray"
 version = "2.52.1"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "sys_platform == 'darwin'",
-    "sys_platform != 'darwin' and sys_platform != 'win32'",
-]
 dependencies = [
-    { name = "click", version = "8.2.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "click" },
     { name = "filelock" },
     { name = "jsonschema" },
     { name = "msgpack" },
@@ -1960,8 +1908,7 @@ name = "typer"
 version = "0.19.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "click", version = "8.2.1", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'win32'" },
-    { name = "click", version = "8.3.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'win32'" },
+    { name = "click" },
     { name = "rich" },
     { name = "shellingham" },
     { name = "typing-extensions" },
@@ -2036,8 +1983,7 @@ name = "uvicorn"
 version = "0.38.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "click", version = "8.2.1", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'win32'" },
-    { name = "click", version = "8.3.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'win32'" },
+    { name = "click" },
     { name = "h11" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cb/ce/f06b84e2697fef4688ca63bdb2fdf113ca0a3be33f94488f2cadb690b0cf/uvicorn-0.38.0.tar.gz", hash = "sha256:fd97093bdd120a2609fc0d3afe931d4d4ad688b6e75f0f929fde1bc36fe0e91d", size = 80605, upload-time = "2025-10-18T13:46:44.63Z" }
