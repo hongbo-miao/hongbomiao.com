@@ -129,6 +129,9 @@ name: . Test Data Processing
       radio-streamer:
         required: true
         type: boolean
+      swim-consumer:
+        required: true
+        type: boolean
 
 jobs:
   ingest-flac-to-parquet-test:
@@ -1404,3 +1407,22 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: wireless/software-defined-radio/limesdr-transceiver
+
+  swim-consumer-test:
+    name: SWIM Consumer | Test
+    if: ${{ inputs.workflow || inputs.swim-consumer }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Set up Java
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: corretto
+          cache: maven
+          java-version-file: data-ingestion/swim-consumer/.java-version
+      - name: Test
+        working-directory: data-ingestion/swim-consumer
+        run: |
+          mvn test
