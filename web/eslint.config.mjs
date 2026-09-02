@@ -67,6 +67,7 @@ export default [
       '**/coverage.xml',
       '**/coverage/**/*',
       '**/data/**/*',
+      '**/dependency-reduced-pom.xml',
       '**/dist/**/*',
       '**/models/**/*',
       '**/node_modules/**/*',

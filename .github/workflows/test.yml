@@ -779,6 +779,8 @@ jobs:
               - 'large-language-model-post-training/fine-tuning/supervised-fine-tuning/quantized-low-rank-adaptation/**'
             surrogate-model:
               - 'scientific-computing/surrogate-model/**'
+            swim-consumer:
+              - 'data-ingestion/swim-consumer/**'
             taichi-count-primes:
               - 'parallel-computing/hm-taichi/count-primes/**'
             taichi-fluid-solver:
@@ -1118,6 +1120,7 @@ jobs:
       supervised-fine-tuning-low-rank-adaptation: ${{ steps.filter.outputs.supervised-fine-tuning-low-rank-adaptation }}
       supervised-fine-tuning-quantized-low-rank-adaptation: ${{ steps.filter.outputs.supervised-fine-tuning-quantized-low-rank-adaptation }}
       surrogate-model: ${{ steps.filter.outputs.surrogate-model }}
+      swim-consumer: ${{ steps.filter.outputs.swim-consumer }}
       taichi-count-primes: ${{ steps.filter.outputs.taichi-count-primes }}
       taichi-fluid-solver: ${{ steps.filter.outputs.taichi-fluid-solver }}
       temporal-api-server: ${{ steps.filter.outputs.temporal-api-server }}
@@ -1358,6 +1361,7 @@ jobs:
       pulsar-sticky-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-subscriber == 'true' }}
       pulsar-sticky-telemetry-stream-validate-function: ${{ needs.detect-changes.outputs.pulsar-sticky-telemetry-stream-validate-function == 'true' }}
       radio-streamer: ${{ needs.detect-changes.outputs.radio-streamer == 'true' }}
+      swim-consumer: ${{ needs.detect-changes.outputs.swim-consumer == 'true' }}
 
   test-data-transformation:
     name: Test Data Transformation
