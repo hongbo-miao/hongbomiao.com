@@ -1,0 +1,32 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-apicurio-registry-ingress
+  namespace: production-hm-apicurio-registry
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: apicurio-registry.hongbomiao.com
+  labels:
+    app.kubernetes.io/name: apicurio-registry
+    app.kubernetes.io/part-of: production-hm-apicurio-registry
+spec:
+  rules:
+    - host: apicurio-registry.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hm-apicurio-registry-service
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - apicurio-registry.hongbomiao.com
+      secretName: hm-apicurio-registry-certificate

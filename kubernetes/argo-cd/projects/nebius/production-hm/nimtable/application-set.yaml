@@ -17,10 +17,10 @@ spec:
       name: '{{.path.basename}}-nimtable'
     spec:
       project: production-hm
-      source:
-        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
-        targetRevision: main
-        path: '{{.path.path}}/kubernetes-manifests'
+      sources:
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          path: '{{.path.path}}/kubernetes-manifests'
       destination:
         namespace: '{{.path.basename}}-hm-nimtable'
         server: https://kubernetes.default.svc

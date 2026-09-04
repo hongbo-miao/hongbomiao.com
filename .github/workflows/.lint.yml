@@ -765,6 +765,35 @@ jobs:
         run: |
           npm run lint-natural-language
 
+  lint-opentofu:
+    name: OpenTofu
+    if: ${{ inputs.workflow || inputs.opentofu }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@a1320f892987e89d278cc92dc5adc984fb93aca4 # v2.0.2
+      - name: Lint OpenTofu
+        run: |
+          tofu fmt -recursive -check
+
+  lint-packer:
+    name: Packer
+    if: ${{ inputs.workflow || inputs.packer }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Set up Packer
+        uses: hashicorp/setup-packer@ce93c3c08a6c2ff2275bf4b54ff0d9a75f6c9789 # v3.4.0
+      - name: Lint Packer
+        working-directory: infrastructure/packer/nebius-ubuntu
+        run: |
+          packer fmt -check -diff .
+
   lint-protocol-buffers-api-go:
     name: Protocol Buffers (api-go)
     if: ${{ inputs.workflow || inputs.api-go }}
@@ -1754,35 +1783,6 @@ jobs:
         working-directory: mobile/mobile-ios
         run: |
           mint run swift-format lint . --recursive --strict
-
-  lint-opentofu:
-    name: OpenTofu
-    if: ${{ inputs.workflow || inputs.opentofu }}
-    runs-on: ubuntu-24.04-arm
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
-      - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@a1320f892987e89d278cc92dc5adc984fb93aca4 # v2.0.2
-      - name: Lint OpenTofu
-        run: |
-          tofu fmt -recursive -check
-
-  lint-packer:
-    name: Packer
-    if: ${{ inputs.workflow || inputs.packer }}
-    runs-on: ubuntu-24.04-arm
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
-      - name: Set up Packer
-        uses: hashicorp/setup-packer@ce93c3c08a6c2ff2275bf4b54ff0d9a75f6c9789 # v3.4.0
-      - name: Lint Packer
-        working-directory: infrastructure/packer/nebius-ubuntu
-        run: |
-          packer fmt -check -diff .
 
   lint-toml:
     name: TOML

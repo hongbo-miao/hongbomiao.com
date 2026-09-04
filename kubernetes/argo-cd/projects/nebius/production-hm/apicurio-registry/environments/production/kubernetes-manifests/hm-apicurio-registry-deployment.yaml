@@ -1,0 +1,73 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hm-apicurio-registry-deployment
+  namespace: production-hm-apicurio-registry
+  labels:
+    app.kubernetes.io/name: apicurio-registry
+    app.kubernetes.io/part-of: production-hm-apicurio-registry
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: apicurio-registry
+  template:
+    metadata:
+      labels:
+        app: apicurio-registry
+    spec:
+      nodeSelector:
+        environment: production
+      tolerations:
+        - key: environment
+          operator: Equal
+          value: production
+          effect: NoSchedule
+      containers:
+        - name: apicurio-registry
+          image: harbor.hongbomiao.com/docker-hub-proxy-cache/apicurio/apicurio-registry:3.2.4
+          ports:
+            - containerPort: 8080
+          env:
+            - name: QUARKUS_PROFILE
+              value: prod
+            - name: APICURIO_LOG_LEVEL
+              value: INFO
+            - name: APICURIO_STORAGE_KIND
+              value: sql
+            - name: APICURIO_STORAGE_SQL_KIND
+              value: postgresql
+            - name: APICURIO_DATASOURCE_URL
+              value: jdbc:postgresql://private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432/apicurio_registry_db
+            - name: APICURIO_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: hm-apicurio-registry-secret
+                  key: username
+            - name: APICURIO_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hm-apicurio-registry-secret
+                  key: password
+            - name: QUARKUS_HTTP_CORS_ORIGINS
+              value: '*'
+          readinessProbe:
+            httpGet:
+              path: /apis/registry/v3/system/info
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /apis/registry/v3/system/info
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 100m
+            limits:
+              memory: 1Gi
+              cpu: 500m

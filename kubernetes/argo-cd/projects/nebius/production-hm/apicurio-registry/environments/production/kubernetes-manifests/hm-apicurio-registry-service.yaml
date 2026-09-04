@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hm-apicurio-registry-service
+  namespace: production-hm-apicurio-registry
+  labels:
+    app.kubernetes.io/name: apicurio-registry
+    app.kubernetes.io/part-of: production-hm-apicurio-registry
+spec:
+  selector:
+    app: apicurio-registry
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080

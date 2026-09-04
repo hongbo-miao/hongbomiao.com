@@ -216,6 +216,28 @@ module "airbyte_postgres" {
   backup_retention_policy      = "14d"
 }
 
+# Apicurio Registry
+# Apicurio Registry - Postgres
+module "apicurio_registry_postgres" {
+  source                       = "../../../../modules/nebius/postgres_cluster"
+  project_id                   = var.project_id
+  network_id                   = var.vpc_network_id
+  postgres_version             = "16"
+  pooling_mode                 = "SESSION"
+  postgres_cluster_name        = "${var.environment}-apicurio-registry-postgres"
+  bootstrap_database_name      = "bootstrap_db"
+  bootstrap_user_name          = "bootstrap_user"
+  bootstrap_user_password      = var.apicurio_registry_postgres_bootstrap_user_password
+  public_access                = false
+  disk_size_gib                = 16
+  host_count                   = 3
+  platform                     = "cpu-d3"
+  preset                       = "4vcpu-16gb"
+  labels                       = var.common_labels
+  backup_window_start_time_utc = "10:00:00"
+  backup_retention_policy      = "7d"
+}
+
 # Gatus
 # Gatus - Postgres
 module "gatus_postgres" {
@@ -924,5 +946,27 @@ module "trino_gateway_postgres" {
   preset                       = "4vcpu-16gb"
   labels                       = var.common_labels
   backup_window_start_time_utc = "9:00:00"
+  backup_retention_policy      = "14d"
+}
+
+# Zitadel
+# Zitadel - Postgres
+module "zitadel_postgres" {
+  source                       = "../../../../modules/nebius/postgres_cluster"
+  project_id                   = var.project_id
+  network_id                   = var.vpc_network_id
+  postgres_version             = "16"
+  pooling_mode                 = "SESSION"
+  postgres_cluster_name        = "${var.environment}-zitadel-postgres"
+  bootstrap_database_name      = "bootstrap_db"
+  bootstrap_user_name          = "bootstrap_user"
+  bootstrap_user_password      = var.zitadel_postgres_bootstrap_user_password
+  public_access                = false
+  disk_size_gib                = 64
+  host_count                   = 3
+  platform                     = "cpu-d3"
+  preset                       = "4vcpu-16gb"
+  labels                       = var.common_labels
+  backup_window_start_time_utc = "10:00:00"
   backup_retention_policy      = "14d"
 }
