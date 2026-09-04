@@ -1,4 +1,4 @@
-FROM docker.io/rust:1.96.1-slim-trixie AS builder
+FROM docker.io/rust:1.98.0-slim-trixie AS builder
 WORKDIR /build
 COPY . .
 RUN cargo build --locked --release
