@@ -465,6 +465,12 @@ lint-opentofu:
 lint-opentofu-fix:
     tofu fmt -recursive
 
+lint-packer:
+    cd infrastructure/packer/nebius-ubuntu && just lint-packer
+
+lint-packer-fix:
+    cd infrastructure/packer/nebius-ubuntu && just lint-packer-fix
+
 lint-swift-format:
     cd mobile/mobile-ios && just lint-swift-format
 

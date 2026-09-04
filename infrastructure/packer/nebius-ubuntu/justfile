@@ -1,0 +1,14 @@
+initialize:
+    packer init .
+
+build:
+    packer build .
+
+lint-packer:
+    packer fmt -check -diff .
+
+lint-packer-fix:
+    packer fmt .
+
+static-type-check-packer:
+    packer validate .
