@@ -27,11 +27,12 @@ ports:
     expose:
       default: true
   web:
-    redirections:
-      entryPoint:
-        to: websecure
-        scheme: https
-        permanent: true
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
     transport:
       respondingTimeouts:
         readTimeout: 30m
@@ -50,10 +51,9 @@ resources:
     memory: 100Mi
   limits:
     memory: 200Mi
-globalArguments: []
-logs:
-  access:
-    enabled: true
-    format: json
-# additionalArguments:
-#   - --log.level=DEBUG
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+accessLog:
+  enabled: true
+  format: json
