@@ -880,6 +880,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Atlantis** - OpenTofu and Terraform pull request automation
 - **Ansible** - Configuration management and automation
 - **Vagrant** - Development environments building and distributing
+- **Packer** - Machine image building
 
 ## Ops
 

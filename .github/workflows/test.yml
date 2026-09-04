@@ -276,6 +276,8 @@ jobs:
               - '**/*.tofu'
               - '**/.terraform.lock.hcl'
               - 'infrastructure/opentofu/**'
+            packer:
+              - 'infrastructure/packer/**'
             toml:
               - '**/*.toml'
               - 'taplo.toml'
@@ -872,6 +874,7 @@ jobs:
       opentofu-production-snowflake-general: ${{ steps.filter.outputs.opentofu-production-snowflake-general }}
       opentofu-production-trino-gateway: ${{ steps.filter.outputs.opentofu-production-trino-gateway }}
       opentofu: ${{ steps.filter.outputs.opentofu }}
+      packer: ${{ steps.filter.outputs.packer }}
       python: ${{ steps.filter.outputs.python }}
       qml: ${{ steps.filter.outputs.qml }}
       ruby: ${{ steps.filter.outputs.ruby }}
@@ -1164,6 +1167,7 @@ jobs:
       matlab: ${{ needs.detect-changes.outputs.matlab == 'true' }}
       natural-language: ${{ needs.detect-changes.outputs.natural-language == 'true' }}
       opentofu: ${{ needs.detect-changes.outputs.opentofu == 'true' }}
+      packer: ${{ needs.detect-changes.outputs.packer == 'true' }}
       python: ${{ needs.detect-changes.outputs.python == 'true' }}
       qml: ${{ needs.detect-changes.outputs.qml == 'true' }}
       ruby: ${{ needs.detect-changes.outputs.ruby == 'true' }}

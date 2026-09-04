@@ -1,0 +1,7 @@
+project_id                       = "project-xxxxxxxxxxxxxxxxxxxxxx"
+vpc_subnet_id                    = "vpcsubnet-xxxxxxxxxxxxxxxxxx"
+base_image_id                    = "computeimage-u00wnbprfsj88njm19"
+image_version                    = "0.0.1"
+service_account_id               = "serviceaccount-xxxxxxxxxxxxxxxxxx"
+service_account_public_key_id    = "publickey-xxxxxxxxxxxxxxxxxx"
+service_account_private_key_file = "~/.nebius/packer-image-builder.pem"
