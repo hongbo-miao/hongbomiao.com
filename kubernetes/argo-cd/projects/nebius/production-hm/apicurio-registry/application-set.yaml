@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: production-speaches
+  name: production-apicurio-registry
   namespace: production-hm-argo-cd
 spec:
   goTemplate: true
@@ -10,11 +10,11 @@ spec:
     - git:
         repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
         revision: main
-        directories:
-          - path: kubernetes/argo-cd/projects/nebius/production-hm/speaches/environments/*
+        files:
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/apicurio-registry/environments/*/config.yaml
   template:
     metadata:
-      name: '{{.path.basename}}-speaches'
+      name: '{{.environment}}-apicurio-registry'
     spec:
       project: production-hm
       sources:
@@ -22,7 +22,7 @@ spec:
           targetRevision: main
           path: '{{.path.path}}/kubernetes-manifests'
       destination:
-        namespace: '{{.path.basename}}-speaches'
+        namespace: '{{.environment}}-hm-apicurio-registry'
         server: https://kubernetes.default.svc
       syncPolicy:
         syncOptions:

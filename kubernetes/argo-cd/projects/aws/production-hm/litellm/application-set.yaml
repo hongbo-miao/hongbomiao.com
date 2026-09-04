@@ -17,10 +17,10 @@ spec:
       name: '{{.environment}}-litellm'
     spec:
       project: production-hm
-      source:
-        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
-        targetRevision: main
-        path: '{{.path.path}}/kubernetes-manifests'
+      sources:
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          path: '{{.path.path}}/kubernetes-manifests'
       destination:
         namespace: '{{.environment}}-hm-litellm'
         server: https://kubernetes.default.svc

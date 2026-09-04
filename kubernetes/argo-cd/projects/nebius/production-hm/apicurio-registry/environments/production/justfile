@@ -1,0 +1,6 @@
+seal-secret:
+    cat secrets/hm-apicurio-registry-secret.unsealed.yaml | \
+    kubeseal \
+        --cert=https://sealed-secrets.hongbomiao.com/v1/cert.pem \
+        --format=yaml \
+        > kubernetes-manifests/hm-apicurio-registry-secret.yaml

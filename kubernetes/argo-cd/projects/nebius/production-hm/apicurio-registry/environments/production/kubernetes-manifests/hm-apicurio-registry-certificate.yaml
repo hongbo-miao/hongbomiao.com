@@ -1,0 +1,21 @@
+# https://cert-manager.io/docs/usage/certificate
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hm-apicurio-registry-certificate
+  namespace: production-hm-apicurio-registry
+  labels:
+    app.kubernetes.io/name: apicurio-registry
+    app.kubernetes.io/part-of: production-hm-apicurio-registry
+spec:
+  secretName: hm-apicurio-registry-certificate
+  issuerRef:
+    name: hm-lets-encrypt-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - apicurio-registry.hongbomiao.com
+  privateKey:
+    algorithm: ECDSA
+    size: 384
+    rotationPolicy: Always

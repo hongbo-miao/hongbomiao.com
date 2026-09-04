@@ -20,6 +20,10 @@ variable "airbyte_postgres_bootstrap_user_password" {
   type      = string
   sensitive = true
 }
+variable "apicurio_registry_postgres_bootstrap_user_password" {
+  type      = string
+  sensitive = true
+}
 variable "gatus_postgres_bootstrap_user_password" {
   type      = string
   sensitive = true
@@ -53,6 +57,10 @@ variable "skypilot_postgres_bootstrap_user_password" {
   sensitive = true
 }
 variable "trino_gateway_postgres_bootstrap_user_password" {
+  type      = string
+  sensitive = true
+}
+variable "zitadel_postgres_bootstrap_user_password" {
   type      = string
   sensitive = true
 }
