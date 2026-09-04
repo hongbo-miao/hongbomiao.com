@@ -220,6 +220,9 @@ jobs:
             opentofu-production-airbyte:
               - 'infrastructure/opentofu/environments/production/airbyte/**'
               - 'infrastructure/opentofu/modules/**'
+            opentofu-production-apicurio-registry:
+              - 'infrastructure/opentofu/environments/production/apicurio-registry/**'
+              - 'infrastructure/opentofu/modules/**'
             opentofu-production-argo-cd:
               - 'infrastructure/opentofu/environments/production/argo-cd/**'
               - 'infrastructure/opentofu/modules/**'
@@ -270,6 +273,9 @@ jobs:
               - 'infrastructure/opentofu/modules/**'
             opentofu-production-trino-gateway:
               - 'infrastructure/opentofu/environments/production/trino-gateway/**'
+              - 'infrastructure/opentofu/modules/**'
+            opentofu-production-zitadel:
+              - 'infrastructure/opentofu/environments/production/zitadel/**'
               - 'infrastructure/opentofu/modules/**'
             opentofu:
               - '**/*.tfvars'
@@ -857,6 +863,7 @@ jobs:
       matlab: ${{ steps.filter.outputs.matlab }}
       natural-language: ${{ steps.filter.outputs.natural-language }}
       opentofu-production-airbyte: ${{ steps.filter.outputs.opentofu-production-airbyte }}
+      opentofu-production-apicurio-registry: ${{ steps.filter.outputs.opentofu-production-apicurio-registry }}
       opentofu-production-argo-cd: ${{ steps.filter.outputs.opentofu-production-argo-cd }}
       opentofu-production-aws-general: ${{ steps.filter.outputs.opentofu-production-aws-general }}
       opentofu-production-aws-kubernetes: ${{ steps.filter.outputs.opentofu-production-aws-kubernetes }}
@@ -873,6 +880,7 @@ jobs:
       opentofu-production-snowflake-data: ${{ steps.filter.outputs.opentofu-production-snowflake-data }}
       opentofu-production-snowflake-general: ${{ steps.filter.outputs.opentofu-production-snowflake-general }}
       opentofu-production-trino-gateway: ${{ steps.filter.outputs.opentofu-production-trino-gateway }}
+      opentofu-production-zitadel: ${{ steps.filter.outputs.opentofu-production-zitadel }}
       opentofu: ${{ steps.filter.outputs.opentofu }}
       packer: ${{ steps.filter.outputs.packer }}
       python: ${{ steps.filter.outputs.python }}
@@ -1227,6 +1235,7 @@ jobs:
       python: ${{ needs.detect-changes.outputs.python == 'true' }}
       # OpenTofu
       opentofu-production-airbyte: ${{ needs.detect-changes.outputs.opentofu-production-airbyte == 'true' }}
+      opentofu-production-apicurio-registry: ${{ needs.detect-changes.outputs.opentofu-production-apicurio-registry == 'true' }}
       opentofu-production-argo-cd: ${{ needs.detect-changes.outputs.opentofu-production-argo-cd == 'true' }}
       opentofu-production-aws-general: ${{ needs.detect-changes.outputs.opentofu-production-aws-general == 'true' }}
       opentofu-production-aws-kubernetes: ${{ needs.detect-changes.outputs.opentofu-production-aws-kubernetes == 'true' }}
@@ -1243,6 +1252,7 @@ jobs:
       opentofu-production-snowflake-data: ${{ needs.detect-changes.outputs.opentofu-production-snowflake-data == 'true' }}
       opentofu-production-snowflake-general: ${{ needs.detect-changes.outputs.opentofu-production-snowflake-general == 'true' }}
       opentofu-production-trino-gateway: ${{ needs.detect-changes.outputs.opentofu-production-trino-gateway == 'true' }}
+      opentofu-production-zitadel: ${{ needs.detect-changes.outputs.opentofu-production-zitadel == 'true' }}
       # Applications
       api-go: ${{ needs.detect-changes.outputs.api-go == 'true' }}
       api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}

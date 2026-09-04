@@ -15,6 +15,9 @@ name: . Static Type Check
       opentofu-production-airbyte:
         required: true
         type: boolean
+      opentofu-production-apicurio-registry:
+        required: true
+        type: boolean
       opentofu-production-argo-cd:
         required: true
         type: boolean
@@ -61,6 +64,9 @@ name: . Static Type Check
         required: true
         type: boolean
       opentofu-production-trino-gateway:
+        required: true
+        type: boolean
+      opentofu-production-zitadel:
         required: true
         type: boolean
       # Applications
@@ -342,6 +348,25 @@ jobs:
           tofu init -backend=false
       - name: Static type check OpenTofu
         working-directory: infrastructure/opentofu/environments/production/airbyte
+        run: |
+          tofu validate
+
+  static-type-check-opentofu-production-apicurio-registry:
+    name: OpenTofu (production/apicurio-registry)
+    if: ${{ inputs.workflow || inputs.opentofu-production-apicurio-registry }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@a1320f892987e89d278cc92dc5adc984fb93aca4 # v2.0.2
+      - name: Initialize OpenTofu
+        working-directory: infrastructure/opentofu/environments/production/apicurio-registry
+        run: |
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: infrastructure/opentofu/environments/production/apicurio-registry
         run: |
           tofu validate
 
@@ -665,6 +690,25 @@ jobs:
           tofu init -backend=false
       - name: Static type check OpenTofu
         working-directory: infrastructure/opentofu/environments/production/trino-gateway
+        run: |
+          tofu validate
+
+  static-type-check-opentofu-production-zitadel:
+    name: OpenTofu (production/zitadel)
+    if: ${{ inputs.workflow || inputs.opentofu-production-zitadel }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@a1320f892987e89d278cc92dc5adc984fb93aca4 # v2.0.2
+      - name: Initialize OpenTofu
+        working-directory: infrastructure/opentofu/environments/production/zitadel
+        run: |
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: infrastructure/opentofu/environments/production/zitadel
         run: |
           tofu validate
 
