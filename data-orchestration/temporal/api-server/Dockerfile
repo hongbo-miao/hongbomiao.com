@@ -1,4 +1,4 @@
-FROM docker.io/rust:1.93-trixie AS builder
+FROM docker.io/rust:1.97-trixie AS builder
 
 # The Temporal SDK's proto types are generated from .proto files in a build
 # script, so protoc has to be on the builder even though nothing needs it at
