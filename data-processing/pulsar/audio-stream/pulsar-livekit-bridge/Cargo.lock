@@ -1811,15 +1811,14 @@ checksum = "b6d2cec3eae94f9f509c767b45932f1ada8350c4bdb85af2fcab4a3c14807981"
 
 [[package]]
 name = "libwebrtc"
-version = "0.3.45"
+version = "0.3.52"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e222d9f53f1fc61dd2656c4835657d987bd387019e8f6026329c918178044eff"
+checksum = "8718693f33f921a97c784f34fcbf085ebe68989e53bf4802f93aa8e083cf0a65"
 dependencies = [
  "cxx",
  "jni",
  "js-sys",
  "lazy_static",
- "livekit-runtime",
  "log",
  "parking_lot",
  "rtrb",
@@ -1827,6 +1826,7 @@ dependencies = [
  "serde_json",
  "thiserror 2.0.18",
  "tokio",
+ "tokio-stream",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
@@ -1856,9 +1856,9 @@ checksum = "92daf443525c4cce67b150400bc2316076100ce0b3686209eb8cf3c31612e6f0"
 
 [[package]]
 name = "livekit"
-version = "0.8.2"
+version = "0.8.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "44208faa5d473486f5276d809e1f1a4d52a3642485327deea026706f1fc476cf"
+checksum = "d591ed539d9d3f6a268c7b8c8636a1239882e99d453ae9ebbe19f9579d39cb44"
 dependencies = [
  "base64 0.22.1",
  "bmrng",
@@ -1873,7 +1873,7 @@ dependencies = [
  "livekit-common",
  "livekit-data-stream",
  "livekit-datatrack",
- "livekit-protocol",
+ "livekit-protocol 0.7.13",
  "livekit-runtime",
  "log",
  "parking_lot",
@@ -1888,25 +1888,24 @@ dependencies = [
 
 [[package]]
 name = "livekit-api"
-version = "0.6.2"
+version = "0.6.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "106fcb7c471981f5b6bf5794a7dd4081873bd9d69a0573403c9db345e5d92f13"
+checksum = "35d1477ba65e4a5d74c47ceb982e9c582a4543c1b774607652085482821978a6"
 dependencies = [
  "base64 0.21.7",
  "bytes",
  "device-info",
  "flate2",
- "hmac",
  "http",
- "jsonwebtoken",
  "livekit-common",
  "livekit-net",
- "livekit-protocol",
+ "livekit-protocol 0.7.13",
  "livekit-runtime",
+ "livekit-token",
  "log",
  "os_info",
  "parking_lot",
- "pbjson-types",
+ "pbjson-types 0.6.0",
  "prost 0.12.6",
  "rand 0.9.4",
  "reqwest",
@@ -1914,7 +1913,6 @@ dependencies = [
  "serde",
  "serde_json",
  "sha2",
- "signature",
  "thiserror 2.0.18",
  "tokio",
  "url",
@@ -1922,18 +1920,18 @@ dependencies = [
 
 [[package]]
 name = "livekit-common"
-version = "0.1.1"
+version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f903bfee33454f21c553dbf14d6f4ffbf062157b23b04fde9821cbb94ff01169"
+checksum = "a41d06b9a8c37ad2691faabc091394101c876c2eb8ab1e61b3b021b4d5aacfd4"
 dependencies = [
- "livekit-protocol",
+ "livekit-protocol 0.8.1",
 ]
 
 [[package]]
 name = "livekit-data-stream"
-version = "0.1.2"
+version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2dfdf91af5f2dade508e2f81c7f63c79f77461f3d15cabe6b7059fe5f2839d58"
+checksum = "e424524e3a8278e5a5d498e18817c017df922dae37551943e3afbf1458843e88"
 dependencies = [
  "async-compression",
  "bmrng",
@@ -1942,10 +1940,10 @@ dependencies = [
  "from_variants",
  "futures-util",
  "livekit-common",
- "livekit-protocol",
+ "livekit-protocol 0.8.1",
  "log",
  "parking_lot",
- "prost 0.12.6",
+ "prost 0.14.4",
  "thiserror 2.0.18",
  "tokio",
  "tokio-stream",
@@ -1954,9 +1952,9 @@ dependencies = [
 
 [[package]]
 name = "livekit-datatrack"
-version = "0.1.13"
+version = "0.1.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "376a22d6dae592bff4068a551343461b8e683ffe70aab92e037fb91cb9237ad2"
+checksum = "04807eb67d0796ab4c225a99dec0d9ac8062a6bf6ea5cb13a5c1776f2c3b2f74"
 dependencies = [
  "anyhow",
  "bytes",
@@ -1964,8 +1962,7 @@ dependencies = [
  "futures-core",
  "futures-util",
  "indexmap 2.14.0",
- "livekit-protocol",
- "livekit-runtime",
+ "livekit-protocol 0.7.13",
  "log",
  "rand 0.9.4",
  "thiserror 2.0.18",
@@ -1994,13 +1991,25 @@ dependencies = [
 
 [[package]]
 name = "livekit-protocol"
-version = "0.7.12"
+version = "0.7.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "526f22bddf409e5f15449d55cf341647d7c16a1f43df9db9b05be106e4208e1c"
+checksum = "a76389797ee45f81577ee00d9f8a5d816bec8f9284988374bd20cdc1119c13e4"
 dependencies = [
- "pbjson",
- "pbjson-types",
+ "pbjson 0.6.0",
+ "pbjson-types 0.6.0",
  "prost 0.12.6",
+ "serde",
+]
+
+[[package]]
+name = "livekit-protocol"
+version = "0.8.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "39029b01173f266fbb60a7f546616cef882427e32452594030868df585970024"
+dependencies = [
+ "pbjson 0.9.0",
+ "pbjson-types 0.9.0",
+ "prost 0.14.4",
  "serde",
 ]
 
@@ -2012,6 +2021,21 @@ checksum = "532e84c6cdc5fe774f2b5d9912597b5f3bea561927a48296d03e24549d21c3f6"
 dependencies = [
  "tokio",
  "tokio-stream",
+]
+
+[[package]]
+name = "livekit-token"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bc9c914fdcfb38e7e48acfe5dfa1a64eb01a4e3f42c37f792e48b0705a8cc7c4"
+dependencies = [
+ "hmac",
+ "jsonwebtoken",
+ "livekit-protocol 0.7.13",
+ "serde",
+ "sha2",
+ "signature",
+ "thiserror 2.0.18",
 ]
 
 [[package]]
@@ -2581,6 +2605,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "pbjson"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e8edd1efdd8ab23ba9cb9ace3d9987a72663d5d7c9f74fa00b51d6213645cf6c"
+dependencies = [
+ "base64 0.22.1",
+ "serde",
+]
+
+[[package]]
 name = "pbjson-build"
 version = "0.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2593,6 +2627,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "pbjson-build"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2ed4d5c6ae95e08ac768883c8401cf0e8deb4e6e1d6a4e1fd3d2ec4f0ec63200"
+dependencies = [
+ "heck 0.5.0",
+ "itertools 0.14.0",
+ "prost 0.14.4",
+ "prost-types 0.14.4",
+]
+
+[[package]]
 name = "pbjson-types"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2600,10 +2646,25 @@ checksum = "18f596653ba4ac51bdecbb4ef6773bc7f56042dc13927910de1684ad3d32aa12"
 dependencies = [
  "bytes",
  "chrono",
- "pbjson",
- "pbjson-build",
+ "pbjson 0.6.0",
+ "pbjson-build 0.6.2",
  "prost 0.12.6",
  "prost-build 0.12.6",
+ "serde",
+]
+
+[[package]]
+name = "pbjson-types"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a14e2757d877c0f607a82ce1b8560e224370f159d66c5d52eb55ea187ef0350e"
+dependencies = [
+ "bytes",
+ "chrono",
+ "pbjson 0.9.0",
+ "pbjson-build 0.9.0",
+ "prost 0.14.4",
+ "prost-build 0.14.4",
  "serde",
 ]
 
@@ -4374,9 +4435,9 @@ dependencies = [
 
 [[package]]
 name = "webrtc-sys"
-version = "0.3.42"
+version = "0.3.49"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2bd328126bc3653b10eab635579f74a562a472ff032ff09b5d1681d35e6201fd"
+checksum = "b803a52c561fbb9faaf09c1b6fc0260f337cbc1ae6f2a525f673c77eb4411022"
 dependencies = [
  "cc",
  "cxx",
@@ -4389,9 +4450,9 @@ dependencies = [
 
 [[package]]
 name = "webrtc-sys-build"
-version = "0.3.18"
+version = "0.3.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7d46da6b5a5cbd091fae0400f77189f4ca4807c0d9442b85838a584f28720570"
+checksum = "0cd4f418e16f4b7ba028e6b5c70e4f532c7d2b5ca39726d42b699f3e4591ed5c"
 dependencies = [
  "anyhow",
  "fs2",
