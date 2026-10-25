@@ -1,4 +1,4 @@
-FROM docker.io/alpine:3.24.1
+FROM docker.io/alpine:3.24.2
 
 RUN apk update \
   && apk --no-cache add curl \
